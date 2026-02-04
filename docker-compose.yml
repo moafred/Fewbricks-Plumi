@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: plumi-postgres
+    environment:
+      POSTGRES_USER: plumi
+      POSTGRES_PASSWORD: plumi_dev
+      POSTGRES_DB: plumi
+    ports:
+      - '5435:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

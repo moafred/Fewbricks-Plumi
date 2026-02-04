@@ -1,0 +1,48 @@
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// Un joueur (enfant)
+model Player {
+  id        String   @id @default(cuid())
+  name      String
+  avatarUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sessions Session[]
+}
+
+/// Une session de jeu (5-10 minutes)
+model Session {
+  id        String   @id @default(cuid())
+  playerId  String
+  startedAt DateTime @default(now())
+  endedAt   DateTime?
+
+  player   Player    @relation(fields: [playerId], references: [id])
+  attempts Attempt[]
+
+  @@index([playerId])
+}
+
+/// Une tentative de réponse à un exercice
+model Attempt {
+  id        String   @id @default(cuid())
+  sessionId String
+  verbId    String
+  pronoun   String
+  answer    String
+  correct   Boolean
+  createdAt DateTime @default(now())
+
+  session Session @relation(fields: [sessionId], references: [id])
+
+  @@index([sessionId])
+  @@index([verbId, pronoun])
+}

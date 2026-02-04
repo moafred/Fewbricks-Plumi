@@ -1,0 +1,60 @@
+{
+  "name": "plumi",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.28.2",
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "build": "pnpm -r build",
+    "build:frontend": "pnpm --filter @plumi/frontend build",
+    "build:backend": "pnpm --filter @plumi/backend build",
+    "lint": "pnpm -r lint",
+    "format": "pnpm -r format",
+    "typecheck": "pnpm -r typecheck",
+    "prepare": "husky || true",
+    "db:generate": "pnpm --filter @plumi/backend db:generate",
+    "db:migrate": "pnpm --filter @plumi/backend db:migrate",
+    "db:studio": "pnpm --filter @plumi/backend db:studio"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.30",
+    "@typescript-eslint/eslint-plugin": "^8.54.0",
+    "@typescript-eslint/parser": "^8.54.0",
+    "eslint": "^9.39.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.8.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@prisma/client",
+      "@prisma/engines",
+      "esbuild",
+      "prisma",
+      "vue-demi"
+    ]
+  },
+  "lint-staged": {
+    "apps/frontend/**/*.{vue,ts,tsx,js,jsx}": [
+      "pnpm --filter @plumi/frontend exec eslint --fix",
+      "prettier --write"
+    ],
+    "apps/backend/**/*.{ts,js}": [
+      "pnpm --filter @plumi/backend exec eslint --fix",
+      "prettier --write"
+    ],
+    "packages/**/*.{ts,js}": [
+      "prettier --write"
+    ],
+    "**/*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  }
+}

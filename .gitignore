@@ -1,0 +1,53 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+build/
+*.tsbuildinfo
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Testing
+coverage/
+.nyc_output/
+
+# Docker volumes
+postgres_data/
+
+# Git worktrees
+.worktrees/
+
+# Claude & AI Agent state
+.claude/
+.agent/
+.agents/
+.gemini/
+.opencode/
+*.db
+*.db-journal
+*.sqlite
+
+# Local personal settings
+.mcp.json
