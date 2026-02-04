@@ -3,8 +3,8 @@ import cors from '@fastify/cors';
 import helmet from '@fastify/helmet';
 import { CONJUGATIONS } from '@plumi/shared';
 
-const PORT = Number(process.env.PORT) || 3001;
-const CORS_ORIGIN = process.env.CORS_ORIGIN || 'http://localhost:5174';
+const PORT = Number(process.env.PORT);
+const CORS_ORIGIN = process.env.CORS_ORIGIN!;
 
 const fastify = Fastify({ logger: true });
 

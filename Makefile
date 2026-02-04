@@ -1,7 +1,7 @@
 # Charger les variables d'environnement
 -include .env
 
-.PHONY: init upgrade install up-db db-wait build-shared generate migrate dev storybook typecheck lint help
+.PHONY: init upgrade install env up-db db-wait build-shared generate migrate dev storybook typecheck lint help
 
 # Afficher l'aide par défaut
 help:
@@ -15,7 +15,7 @@ help:
 	@echo "  make install   : Installe les dépendances"
 
 # Initialisation complète du projet
-init: install up-db db-wait build-shared generate migrate
+init: env install up-db db-wait build-shared generate migrate
 	@echo "Projet initialisé avec succès !"
 
 # Mise à jour (dépendances + base de données)
@@ -23,6 +23,9 @@ upgrade: install build-shared generate migrate
 	@echo "Projet mis à jour avec succès !"
 
 # --- Sous-tâches ---
+
+env:
+	@test -f .env || cp .env.example .env && echo ".env créé depuis .env.example"
 
 install:
 	pnpm install

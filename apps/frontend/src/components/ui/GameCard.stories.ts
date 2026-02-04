@@ -1,0 +1,45 @@
+import type { Meta, StoryObj } from '@storybook/vue3';
+import GameCard from './GameCard.vue';
+import { HatIcon, GrimoireIcon } from '../icons';
+
+const meta: Meta<typeof GameCard> = {
+  title: 'UI/GameCard',
+  component: GameCard,
+};
+
+export default meta;
+type Story = StoryObj<typeof GameCard>;
+
+export const TriSorcier: Story = {
+  render: () => ({
+    components: { GameCard, HatIcon },
+    template: `
+      <GameCard
+        title="Le Tri du Sorcier"
+        description="Trie les formes conjuguées dans le bon chapeau : être ou avoir ?"
+        accent-color="text-magic-300"
+      >
+        <template #icon>
+          <HatIcon :size="48" class="text-magic-300" />
+        </template>
+      </GameCard>
+    `,
+  }),
+};
+
+export const Grimoire: Story = {
+  render: () => ({
+    components: { GameCard, GrimoireIcon },
+    template: `
+      <GameCard
+        title="Le Grimoire"
+        description="Trouve la bonne formule magique pour chaque pronom et verbe !"
+        accent-color="text-royal-300"
+      >
+        <template #icon>
+          <GrimoireIcon :size="48" class="text-royal-300" />
+        </template>
+      </GameCard>
+    `,
+  }),
+};

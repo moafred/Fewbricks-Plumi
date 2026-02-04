@@ -278,6 +278,20 @@ GamePhase: 'discovery' | 'challenge' | 'response' | 'resolution'
    - La vérité métier (conjugaisons, règles de progression, calcul de points) réside dans le **Backend**.
    - Le Frontend affiche et optimise l'UX. Il ne décide JAMAIS d'une règle métier.
 
+10. **Zéro Code Mort** :
+    - Pas de code commenté, de fonctions inutilisées, de variables orphelines, d'imports non utilisés.
+    - Si du code n'est plus appelé, on le supprime. Git est l'historique.
+
+11. **Zéro Code Historique Fonctionnel** :
+    - Pas de code gardé "au cas où" ou "pour référence".
+    - Pas de `// ancien comportement`, `// deprecated`, `// TODO: supprimer`.
+    - Si c'est remplacé, c'est supprimé.
+
+12. **Zéro Fallback Silencieux** :
+    - Pas de `|| valeurParDéfaut` qui masque une erreur de configuration.
+    - Les valeurs d'environnement sont obligatoires : si elles manquent, l'app doit crasher au démarrage, pas fonctionner avec des valeurs fantômes.
+    - Préférer `!` (non-null assertion) ou une validation explicite au démarrage plutôt qu'un fallback silencieux.
+
 ### Règles de Contribution
 
 - **Vérifier l'existant AVANT de coder** : Explorer le codebase pour identifier patterns, composants réutilisables, types partagés. Ne pas réinventer ce qui existe.
