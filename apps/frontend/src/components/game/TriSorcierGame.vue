@@ -1,18 +1,49 @@
 <script setup lang="ts">
-import { watch, onUnmounted } from 'vue';
-import type { VerbId } from '@plumi/shared';
+import { ref, computed, watch, onUnmounted } from 'vue';
+import type { VerbId, Tense } from '@plumi/shared';
 import { useGameStore } from '@/stores/game';
+import { useKeyboardNavigation, useBackNavigation } from '@/composables';
 import SortingHat from './SortingHat.vue';
 import WordCard from './WordCard.vue';
 import ProgressStars from './ProgressStars.vue';
 import GameResult from './GameResult.vue';
+import KeyboardGuide from '@/components/ui/KeyboardGuide.vue';
 import type { HatState } from './SortingHat.vue';
+
+const props = withDefaults(defineProps<{ tense?: Tense }>(), { tense: 'present' });
 
 const emit = defineEmits<{
   home: [];
 }>();
 
 const game = useGameStore();
+
+const tenseLabels: Record<Tense, string> = {
+  present: 'Présent',
+  futur: 'Futur',
+  imparfait: 'Imparfait',
+  passe_compose: 'Passé composé',
+};
+
+// Les deux choix possibles (être à gauche, avoir à droite)
+const hatChoices = ref<VerbId[]>(['etre', 'avoir']);
+const isChallenge = computed(() => game.phase === 'challenge');
+
+const { focusedIndex, resetFocus } = useKeyboardNavigation(
+  hatChoices,
+  (verbId) => game.submitAnswer(verbId),
+  isChallenge,
+);
+
+// Reset focus quand on passe à un nouvel item
+watch(
+  () => game.currentIndex,
+  () => resetFocus(),
+);
+
+// Navigation retour vers l'accueil
+const canGoBack = ref(true);
+useBackNavigation(() => emit('home'), canGoBack);
 
 let resolutionTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -59,8 +90,8 @@ function hatState(verbId: VerbId): HatState {
   return 'incorrect';
 }
 
-// Start the game on mount
-game.startGame();
+// Start the game on mount with the provided tense
+game.startGame(props.tense);
 </script>
 
 <template>
@@ -71,7 +102,7 @@ game.startGame();
         <GameResult
           :score="game.score"
           :total="game.items.length"
-          @replay="game.startGame()"
+          @replay="game.startGame(game.currentTense)"
           @home="emit('home')"
         />
       </div>
@@ -79,8 +110,11 @@ game.startGame();
 
     <!-- Playing -->
     <template v-else>
-      <!-- Progress stars -->
-      <div class="w-full max-w-md">
+      <!-- Header: tense badge + progress stars -->
+      <div class="w-full max-w-md flex flex-col gap-2">
+        <span class="self-center px-3 py-1 rounded-full bg-royal-500/30 text-royal-200 text-sm font-medium">
+          {{ tenseLabels[game.currentTense] }}
+        </span>
         <ProgressStars
           :results="game.results"
           :current="game.currentIndex"
@@ -108,19 +142,29 @@ game.startGame();
       </div>
 
       <!-- Sorting hats -->
-      <div class="flex items-center justify-center gap-6 md:gap-12 pb-8">
-        <SortingHat
-          verb-id="etre"
-          label="être"
-          :state="hatState('etre')"
-          @tap="onTap"
-        />
-        <SortingHat
-          verb-id="avoir"
-          label="avoir"
-          :state="hatState('avoir')"
-          @tap="onTap"
-        />
+      <div class="flex flex-col items-center gap-6 pb-8">
+        <div class="flex items-center justify-center gap-10 md:gap-16">
+          <SortingHat
+            verb-id="etre"
+            label="être"
+            :state="hatState('etre')"
+            :focused="focusedIndex === 0 && game.phase === 'challenge'"
+            @tap="onTap"
+          />
+          <SortingHat
+            verb-id="avoir"
+            label="avoir"
+            :state="hatState('avoir')"
+            :focused="focusedIndex === 1 && game.phase === 'challenge'"
+            @tap="onTap"
+          />
+        </div>
+
+        <!-- Keyboard Hints -->
+        <div v-if="game.phase === 'challenge'" class="hidden lg:flex gap-8 opacity-60">
+           <KeyboardGuide mode="cluster" label="choisir" />
+           <KeyboardGuide mode="single" key-name="espace" label="valider" />
+        </div>
       </div>
     </template>
   </div>

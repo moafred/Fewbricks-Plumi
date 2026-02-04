@@ -1,5 +1,5 @@
-import type { Pronoun, VerbId } from './types.js';
-import { CONJUGATIONS } from './conjugations.js';
+import type { Pronoun, Tense, VerbId } from './types.js';
+import { getConjugationsForTense } from './conjugations.js';
 import { shuffle } from './utils.js';
 
 /** Un item QCM pour le mini-jeu Le Grimoire */
@@ -8,42 +8,60 @@ export interface GrimoireItem {
   pronoun: Pronoun;
   verbId: VerbId;
   infinitive: string;
+  tense: Tense;
   correctForm: string;
   choices: string[]; // 4 choix mélangés, dont la bonne réponse
 }
 
+export interface GrimoireOptions {
+  /** Filtrer par temps (défaut: 'present') */
+  tense?: Tense;
+  /** Filtrer par verbes (défaut: tous) */
+  verbs?: VerbId[];
+}
+
 /**
  * Génère une liste d'items QCM pour Le Grimoire.
- * Pioche `count` formes (moitié être, moitié avoir),
+ * Pioche `count` formes selon les options,
  * génère 3 distracteurs par item, mélange les choix.
  */
-export function generateGrimoireItems(count: number = 10): GrimoireItem[] {
-  const perVerb = Math.ceil(count / 2);
-  const items: GrimoireItem[] = [];
+export function generateGrimoireItems(
+  count: number = 10,
+  options?: GrimoireOptions
+): GrimoireItem[] {
+  const tense: Tense = options?.tense ?? 'present';
+  const verbFilter = options?.verbs;
 
-  // Collect all forms for distractor generation
-  const allFormsByVerb = new Map<VerbId, string[]>();
-  for (const verb of CONJUGATIONS) {
-    allFormsByVerb.set(verb.id, verb.forms.map((f) => f.form));
+  // Récupère les conjugaisons pour le temps demandé
+  let conjugations = getConjugationsForTense(tense);
+
+  // Filtre par verbes si demandé
+  if (verbFilter && verbFilter.length > 0) {
+    conjugations = conjugations.filter((v) => verbFilter.includes(v.id));
   }
 
-  for (const verb of CONJUGATIONS) {
+  if (conjugations.length === 0) {
+    return [];
+  }
+
+  const items: GrimoireItem[] = [];
+  const perVerb = Math.ceil(count / conjugations.length);
+
+  for (const verb of conjugations) {
     const forms = shuffle([...verb.forms]);
     const picked = forms.slice(0, perVerb);
 
-    // Get forms from the other verb for cross-verb distractors
-    const otherVerbForms = CONJUGATIONS
+    // Distracteurs : autres formes du même verbe + formes des autres verbes du même temps
+    const otherVerbForms = conjugations
       .filter((v) => v.id !== verb.id)
       .flatMap((v) => v.forms.map((f) => f.form));
 
     for (const f of picked) {
-      // Distractors: other forms of the same verb + forms of other verbs
       const sameVerbDistractors = verb.forms
         .map((vf) => vf.form)
         .filter((form) => form !== f.form);
 
       const allDistractors = shuffle([...sameVerbDistractors, ...otherVerbForms]);
-      // Pick 3 unique distractors
       const distractors: string[] = [];
       for (const d of allDistractors) {
         if (d !== f.form && !distractors.includes(d)) {
@@ -53,10 +71,11 @@ export function generateGrimoireItems(count: number = 10): GrimoireItem[] {
       }
 
       items.push({
-        id: `grimoire-${verb.id}-${f.pronoun}`,
+        id: `grimoire-${verb.id}-${tense}-${f.pronoun}`,
         pronoun: f.pronoun,
         verbId: verb.id,
         infinitive: verb.infinitive,
+        tense,
         correctForm: f.form,
         choices: shuffle([f.form, ...distractors]),
       });

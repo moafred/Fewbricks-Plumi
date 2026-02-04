@@ -1,5 +1,5 @@
-import type { Pronoun, VerbId } from './types.js';
-import { CONJUGATIONS } from './conjugations.js';
+import type { Pronoun, Tense, VerbId } from './types.js';
+import { getConjugationsForTense } from './conjugations.js';
 import { shuffle } from './utils.js';
 
 /** Un item à trier dans le mini-jeu Tri du Sorcier */
@@ -9,6 +9,12 @@ export interface SortingItem {
   form: string;
   verbId: VerbId;
   infinitive: string;
+  tense: Tense;
+}
+
+export interface SortingOptions {
+  /** Filtrer par temps (défaut: 'present') */
+  tense?: Tense;
 }
 
 /**
@@ -16,20 +22,28 @@ export interface SortingItem {
  * Pioche `count` formes équitablement réparties entre être et avoir,
  * puis mélange avec Fisher-Yates.
  */
-export function generateSortingItems(count: number = 10): SortingItem[] {
-  const perVerb = Math.ceil(count / 2);
+export function generateSortingItems(count: number = 10, options?: SortingOptions): SortingItem[] {
+  const tense: Tense = options?.tense ?? 'present';
+  const conjugations = getConjugationsForTense(tense);
+
+  if (conjugations.length === 0) {
+    return [];
+  }
+
+  const perVerb = Math.ceil(count / conjugations.length);
   const items: SortingItem[] = [];
 
-  for (const verb of CONJUGATIONS) {
+  for (const verb of conjugations) {
     const forms = shuffle([...verb.forms]);
     const picked = forms.slice(0, perVerb);
     for (const f of picked) {
       items.push({
-        id: `${verb.id}-${f.pronoun}`,
+        id: `${verb.id}-${tense}-${f.pronoun}`,
         pronoun: f.pronoun,
         form: f.form,
         verbId: verb.id,
         infinitive: verb.infinitive,
+        tense,
       });
     }
   }

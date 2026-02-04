@@ -1,5 +1,15 @@
 @import 'tailwindcss';
 
+/* Belle Allure GS — Écriture cursive scolaire française (CE1)
+   Source : jeanboyault.fr — Gratuite pour usage éducatif */
+@font-face {
+  font-family: 'Belle Allure GS';
+  src: url('./fonts/BelleAllureGS-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
   /* Couleurs — Thème Royaume des Mots (magique, chaleureux) */
 
@@ -68,10 +78,9 @@
   --color-night-900: #0f172a;
   --color-night-950: #020617;
 
-  /* Fonts */
-  --font-sans: 'Inter', 'system-ui', 'sans-serif';
-  --font-ui: 'Lexend', 'Verdana', 'sans-serif';
-  --font-learning: 'Belle Allure', 'OpenDyslexic', 'Arial', 'sans-serif';
+  /* Fonts — 2 typos max : Lexend (UI) + Belle Allure GS (pédago) */
+  --font-sans: 'Lexend', system-ui, sans-serif;
+  --font-learning: 'Belle Allure GS', 'Arial', cursive;
 
   /* Animations */
   --animate-float: float 3s ease-in-out infinite;

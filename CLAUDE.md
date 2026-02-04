@@ -335,11 +335,12 @@ GamePhase: 'discovery' | 'challenge' | 'response' | 'resolution'
 
 ### Typographie
 
-| Contexte         | Font                  | Classe Tailwind    |
-| ---------------- | --------------------- | ------------------ |
-| Interface parent | Lexend                | `font-ui`          |
-| Contenu enfant   | Belle Allure (écriture cursive scolaire FR) ou OpenDyslexic (accessibilité) | `font-learning` |
-| Default          | Inter                 | `font-sans`        |
+**Règle : 2 fonts max par page** pour éviter le bruit visuel.
+
+| Contexte                | Font                  | Classe Tailwind    |
+| ----------------------- | --------------------- | ------------------ |
+| UI + corps de texte     | Lexend                | `font-sans`        |
+| Contenu pédagogique     | Belle Allure GS       | `font-learning`    |
 
 ---
 

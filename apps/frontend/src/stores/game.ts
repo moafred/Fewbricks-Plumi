@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import type { GamePhase, AnswerResult, VerbId, SortingItem } from '@plumi/shared';
+import type { GamePhase, AnswerResult, VerbId, SortingItem, Tense } from '@plumi/shared';
 import { generateSortingItems } from '@plumi/shared';
 
 const DISCOVERY_DELAY = 1500;
@@ -16,6 +16,7 @@ export const useGameStore = defineStore('game', () => {
   const lastCorrectVerb = ref<VerbId | null>(null);
   /** Tracks per-item results for the progress stars */
   const results = ref<(AnswerResult | null)[]>([]);
+  const currentTense = ref<Tense>('present');
 
   let phaseTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -55,9 +56,10 @@ export const useGameStore = defineStore('game', () => {
   }
 
   // --- Actions ---
-  function startGame() {
+  function startGame(tense: Tense = 'present') {
     clearTimer();
-    items.value = generateSortingItems(10);
+    currentTense.value = tense;
+    items.value = generateSortingItems(10, { tense });
     currentIndex.value = 0;
     score.value = 0;
     lastResult.value = null;
@@ -110,6 +112,7 @@ export const useGameStore = defineStore('game', () => {
     lastResult.value = null;
     lastCorrectVerb.value = null;
     results.value = [];
+    currentTense.value = 'present';
     phase.value = 'discovery';
   }
 
@@ -122,6 +125,7 @@ export const useGameStore = defineStore('game', () => {
     lastResult,
     lastCorrectVerb,
     results,
+    currentTense,
     // Getters
     currentItem,
     isFinished,

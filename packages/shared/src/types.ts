@@ -5,17 +5,21 @@ export type Pronoun = (typeof PRONOUNS)[number];
 // Verbes supportés
 export type VerbId = 'etre' | 'avoir';
 
+// Temps de conjugaison
+export const TENSES = ['present', 'futur', 'imparfait', 'passe_compose'] as const;
+export type Tense = (typeof TENSES)[number];
+
 // Une forme conjuguée complète
 export interface ConjugatedForm {
   pronoun: Pronoun;
   form: string;
 }
 
-// Définition d'un verbe avec toutes ses formes au présent
+// Définition d'un verbe avec toutes ses formes pour un temps donné
 export interface VerbConjugation {
   id: VerbId;
   infinitive: string;
-  tense: 'present';
+  tense: Tense;
   forms: ConjugatedForm[];
 }
 
@@ -60,10 +64,24 @@ export interface Chapter {
   title: string;
   /** Verbes couverts dans ce chapitre */
   verbs: VerbId[];
+  /** Temps de conjugaison ciblé (ou 'mixed' pour multi-temps) */
+  tense: Tense | 'mixed';
   /** Nombre de leçons */
   lessonCount: number;
   /** A un boss de fin ? */
   hasBoss: boolean;
+}
+
+// Livre de sorts — regroupe plusieurs chapitres autour d'un temps
+export interface Book {
+  id: number;
+  title: string;
+  /** Temps couverts dans ce livre */
+  tenses: Tense[];
+  /** IDs des chapitres de ce livre */
+  chapters: number[];
+  /** Livre bonus (hors programme CE1 strict) */
+  isBonus?: boolean;
 }
 
 // --- Récompenses ---

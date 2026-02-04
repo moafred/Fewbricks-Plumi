@@ -20,7 +20,7 @@ defineEmits<{
       variant === 'primary'
         ? 'bg-magic-500 text-night-900 hover:bg-magic-400'
         : 'bg-white/10 text-white hover:bg-white/20',
-      size === 'lg' ? 'min-h-16 px-8 py-4 text-xl' : 'min-h-12 px-6 py-3 text-lg',
+      size === 'lg' ? 'h-20 px-10 py-4 text-2xl' : 'h-14 px-8 py-3 text-xl',
       { 'opacity-50 pointer-events-none': disabled },
     ]"
     :disabled="disabled"

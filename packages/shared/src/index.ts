@@ -2,6 +2,7 @@
 export type {
   Pronoun,
   VerbId,
+  Tense,
   ConjugatedForm,
   VerbConjugation,
   MiniGameType,
@@ -10,29 +11,42 @@ export type {
   Exercise,
   PlumiState,
   Chapter,
+  Book,
   RewardType,
   Reward,
 } from './types.js';
 
 // Constantes
-export { PRONOUNS } from './types.js';
+export { PRONOUNS, TENSES } from './types.js';
 
 // Conjugaisons (SSOT)
-export { CONJUGATIONS, getVerb, getConjugatedForm, getAllForms } from './conjugations.js';
+export {
+  CONJUGATIONS,
+  getVerb,
+  getConjugation,
+  getConjugatedForm,
+  getAllForms,
+  getAllFormsForTense,
+  getConjugationsForTense,
+} from './conjugations.js';
 
 // Français — élision
 export { elide } from './french.js';
 
-// Chapitres
-export { CHAPTERS } from './chapters.js';
+// Chapitres et Livres
+export { CHAPTERS, BOOKS } from './chapters.js';
 
 // Utilitaires
 export { shuffle } from './utils.js';
 
 // Tri du Sorcier
-export type { SortingItem } from './tri-sorcier.js';
+export type { SortingItem, SortingOptions } from './tri-sorcier.js';
 export { generateSortingItems } from './tri-sorcier.js';
 
 // Le Grimoire
-export type { GrimoireItem } from './grimoire.js';
+export type { GrimoireItem, GrimoireOptions } from './grimoire.js';
 export { generateGrimoireItems } from './grimoire.js';
+
+// La Potion Magique
+export type { PotionItem } from './potion.js';
+export { generatePotionItems } from './potion.js';

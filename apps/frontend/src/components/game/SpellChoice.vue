@@ -4,6 +4,7 @@ export type SpellState = 'idle' | 'waiting' | 'correct' | 'incorrect' | 'reveal'
 const props = defineProps<{
   label: string;
   state: SpellState;
+  focused?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -19,12 +20,14 @@ function handleTap() {
 
 <template>
   <button
-    class="spell-choice flex items-center justify-center rounded-2xl min-h-16 w-full text-xl md:text-2xl font-bold transition-all duration-200 select-none border-3"
+    class="spell-choice flex items-center justify-center rounded-2xl h-20 md:h-24 w-full text-xl md:text-2xl font-bold transition-all duration-200 select-none border-3"
     :class="[
       {
         'bg-royal-700/40 border-royal-500/30 text-royal-200 opacity-50 cursor-default': state === 'idle',
         'bg-royal-600 border-royal-400 text-white cursor-pointer animate-bounce-gentle shadow-lg shadow-royal-500/20 hover:scale-105 active:scale-95':
-          state === 'waiting',
+          state === 'waiting' && !focused,
+        'bg-royal-500 border-magic-300 text-white cursor-pointer shadow-lg shadow-magic-500/40 scale-110 ring-4 ring-magic-300':
+          state === 'waiting' && focused,
         'bg-enchant-600 border-enchant-300 text-white ring-4 ring-enchant-300 scale-105 animate-celebrate':
           state === 'correct',
         'bg-royal-800/30 border-royal-600/20 text-royal-400 opacity-50 scale-95':

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import type { GamePhase, AnswerResult, GrimoireItem } from '@plumi/shared';
+import type { GamePhase, AnswerResult, GrimoireItem, Tense } from '@plumi/shared';
 import { generateGrimoireItems } from '@plumi/shared';
 
 const DISCOVERY_DELAY = 1500;
@@ -15,6 +15,7 @@ export const useGrimoireStore = defineStore('grimoire', () => {
   const selectedChoice = ref<string | null>(null);
   const correctForm = ref<string | null>(null);
   const results = ref<(AnswerResult | null)[]>([]);
+  const currentTense = ref<Tense>('present');
 
   let phaseTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -53,9 +54,10 @@ export const useGrimoireStore = defineStore('grimoire', () => {
   }
 
   // --- Actions ---
-  function startGame() {
+  function startGame(tense: Tense = 'present') {
     clearTimer();
-    items.value = generateGrimoireItems(10);
+    currentTense.value = tense;
+    items.value = generateGrimoireItems(10, { tense });
     currentIndex.value = 0;
     score.value = 0;
     lastResult.value = null;
@@ -109,6 +111,7 @@ export const useGrimoireStore = defineStore('grimoire', () => {
     selectedChoice.value = null;
     correctForm.value = null;
     results.value = [];
+    currentTense.value = 'present';
     phase.value = 'discovery';
   }
 
@@ -122,6 +125,7 @@ export const useGrimoireStore = defineStore('grimoire', () => {
     selectedChoice,
     correctForm,
     results,
+    currentTense,
     // Getters
     currentItem,
     isFinished,

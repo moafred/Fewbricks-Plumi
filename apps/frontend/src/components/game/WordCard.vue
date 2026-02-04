@@ -18,11 +18,11 @@ const display = computed(() =>
 
 <template>
   <div
-    class="word-card flex items-center justify-center rounded-2xl bg-white/10 backdrop-blur px-8 py-6"
+    class="word-card flex items-center justify-center rounded-3xl bg-white/10 backdrop-blur px-10 md:px-14 py-8 md:py-10 border border-white/10 shadow-lg"
     :class="{
       'animate-celebrate': phase === 'discovery',
     }"
   >
-    <span class="text-3xl md:text-5xl font-bold text-amber-200 font-learning">{{ display }}</span>
+    <span class="text-4xl md:text-6xl font-bold text-amber-200 font-learning drop-shadow-md">{{ display }}</span>
   </div>
 </template>

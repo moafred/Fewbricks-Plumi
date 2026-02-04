@@ -8,6 +8,7 @@ const props = defineProps<{
   verbId: VerbId;
   label: string;
   state: HatState;
+  focused?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -33,7 +34,9 @@ function handleTap() {
       {
         'opacity-50 cursor-default': state === 'idle',
         'cursor-pointer animate-bounce-gentle shadow-lg shadow-white/20 hover:scale-105 active:scale-95':
-          state === 'waiting',
+          state === 'waiting' && !focused,
+        'cursor-pointer shadow-xl scale-115 ring-4 ring-white':
+          state === 'waiting' && focused,
         'ring-4 ring-enchant-300 scale-110 animate-celebrate': state === 'correct',
         'opacity-60 scale-95': state === 'incorrect',
         'ring-4 ring-white/60 animate-bounce-gentle': state === 'reveal',
