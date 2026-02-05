@@ -23,15 +23,63 @@ export interface VerbConjugation {
   forms: ConjugatedForm[];
 }
 
+// --- Groupe Nominal (GN) ---
+
+export type Gender = 'masculine' | 'feminine';
+export type GrammaticalNumber = 'singular' | 'plural';
+
+// Thèmes de vocabulaire CE1
+export type VocabularyTheme = 'ecole' | 'maison' | 'animaux' | 'jeux' | 'nature' | 'corps' | 'nourriture';
+
+export interface Noun {
+  id: string;
+  /** Forme canonique (singulier) */
+  singular: string;
+  plural: string;
+  gender: Gender;
+  theme: VocabularyTheme;
+}
+
+export interface Adjective {
+  id: string;
+  /** Adjectif antéposé (petit, grand, joli…) vs postposé (rouge, bleu…) */
+  preposed: boolean;
+  forms: {
+    ms: string; // masculin singulier
+    mp: string; // masculin pluriel
+    fs: string; // féminin singulier
+    fp: string; // féminin pluriel
+  };
+}
+
+export type DeterminerKind = 'definite' | 'indefinite' | 'possessive';
+
+export interface Determiner {
+  id: string;
+  kind: DeterminerKind;
+  forms: {
+    ms: string; // le, un, mon
+    fs: string; // la, une, ma
+    mp: string; // les, des, mes
+    fp: string; // les, des, mes
+  };
+  /** Forme élidée devant voyelle/h muet (l' pour le/la) */
+  elidedForm?: string;
+}
+
+// Cible du trou dans la Potion étendue
+export type GapTarget = 'verb' | 'determiner' | 'adjective' | 'noun';
+
 // --- Types de jeu ---
 
-// Les 5 types de mini-jeux
+// Les 6 types de mini-jeux
 export type MiniGameType =
   | 'attrape-mots' // Reconnaissance — taper sur les verbes conjugués
   | 'pont-magique' // Association — drag & drop pronom ↔ forme
   | 'potion-magique' // Complétion — glisser le bon mot dans la phrase
   | 'tri-sorcier' // Distinction être vs avoir — trier dans deux chapeaux
-  | 'grimoire'; // Production guidée — sélectionner la bonne forme
+  | 'grimoire' // Production guidée — sélectionner la bonne forme
+  | 'pont-accords'; // Accord sujet-verbe — tap séquentiel
 
 // Phase du core loop
 export type GamePhase = 'discovery' | 'challenge' | 'response' | 'resolution';

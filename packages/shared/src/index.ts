@@ -14,6 +14,15 @@ export type {
   Book,
   RewardType,
   Reward,
+  // GN
+  Gender,
+  GrammaticalNumber,
+  VocabularyTheme,
+  Noun,
+  Adjective,
+  Determiner,
+  DeterminerKind,
+  GapTarget,
 } from './types.js';
 
 // Constantes
@@ -39,6 +48,22 @@ export { CHAPTERS, BOOKS } from './chapters.js';
 // Utilitaires
 export { shuffle } from './utils.js';
 
+// Vocabulaire (GN)
+export {
+  NOUNS,
+  ADJECTIVES,
+  DETERMINERS,
+  getNoun,
+  getNounsByTheme,
+  getNounForm,
+  getAdjective,
+  getAdjectiveForm,
+  getDeterminer,
+  getDeterminerForm,
+  buildNounPhrase,
+  formatGenderNumber,
+} from './vocabulary.js';
+
 // Tri du Sorcier
 export type { SortingItem, SortingOptions } from './tri-sorcier.js';
 export { generateSortingItems } from './tri-sorcier.js';
@@ -48,5 +73,9 @@ export type { GrimoireItem, GrimoireOptions } from './grimoire.js';
 export { generateGrimoireItems } from './grimoire.js';
 
 // La Potion Magique
-export type { PotionItem } from './potion.js';
-export { generatePotionItems } from './potion.js';
+export type { PotionItem, VerbPotionItem, GnPotionItem, GnPotionOptions } from './potion.js';
+export { generatePotionItems, generateGnPotionItems } from './potion.js';
+
+// Le Pont des Accords
+export type { PontAccordsItem, PontAccordsSlot, PontAccordsOptions } from './pont-accords.js';
+export { generatePontAccordsItems } from './pont-accords.js';

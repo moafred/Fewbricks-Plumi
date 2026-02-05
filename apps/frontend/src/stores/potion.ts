@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import type { GamePhase, AnswerResult, PotionItem, Tense } from '@plumi/shared';
+import type { GamePhase, AnswerResult, VerbPotionItem, Tense } from '@plumi/shared';
 import { generatePotionItems } from '@plumi/shared';
 
 const DISCOVERY_DELAY = 1500;
@@ -13,7 +13,7 @@ const DELAY_AFTER_RESPONSE = 1000; // Resolution auto transition if needed or ma
 export const usePotionStore = defineStore('potion', () => {
     // --- State ---
     const phase = ref<GamePhase>('discovery');
-    const items = ref<PotionItem[]>([]);
+    const items = ref<VerbPotionItem[]>([]);
     const currentIndex = ref(0);
     const score = ref(0);
     const lastResult = ref<AnswerResult | null>(null);
