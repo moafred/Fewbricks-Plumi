@@ -94,9 +94,16 @@ function adjustElision(sentence: string, verbForm: string): string {
 // ═══════════════════════════════════════════════════════════════════════════
 
 /** Génère des items Potion conjugaison (trou = verbe). Rétro-compatible. */
-export function generatePotionItems(tenses: Tense[], count: number = 10): VerbPotionItem[] {
+export function generatePotionItems(
+  tenses: Tense[],
+  count: number = 10,
+  options?: { pronouns?: Pronoun[] },
+): VerbPotionItem[] {
   const items: VerbPotionItem[] = [];
-  const allTemplates = [...TEMPLATES];
+  const pronounFilter = options?.pronouns;
+  const allTemplates = pronounFilter
+    ? TEMPLATES.filter((t) => pronounFilter.includes(t.pronoun))
+    : [...TEMPLATES];
 
   let attempts = 0;
   while (items.length < count && attempts < count * 10) {
@@ -241,7 +248,7 @@ export function generateGnPotionItems(count: number = 10, options?: GnPotionOpti
     const finalSentence = handleGnElision(sentence, detForm);
 
     // Distracteurs
-    const distractors = generateGnDistractors(template.gapTarget, correctForm, noun, adj, det, number);
+    const distractors = generateGnDistractors(template.gapTarget, noun, adj, number);
     if (distractors.length < 3) continue;
 
     const choices = shuffle([correctForm, ...distractors.slice(0, 3)]);
@@ -275,47 +282,58 @@ function handleGnElision(sentence: string, detForm: string): string {
   return sentence;
 }
 
+/**
+ * Génère des distracteurs qui ont TOUJOURS un mauvais accord genre/nombre.
+ * Approche : on construit l'ensemble des formes valides pour l'accord cible,
+ * puis on prend toutes les formes possibles SAUF celles qui sont valides.
+ * Cela gère les cas où une même forme couvre plusieurs accords
+ * (ex: "des" = mp ET fp, "rouge" = ms ET fs).
+ */
 function generateGnDistractors(
   targetKind: Exclude<GapTarget, 'verb'>,
-  correctForm: string,
   noun: (typeof NOUNS)[number],
   adj: (typeof ADJECTIVES)[number],
-  det: (typeof DETERMINERS)[number],
   number: GrammaticalNumber,
 ): string[] {
+  const gender = noun.gender;
+
+  // 1. Formes valides pour l'accord cible — à exclure des distracteurs
+  const validForms = new Set<string>();
+
+  // 2. Pool de toutes les formes candidates
   const pool = new Set<string>();
 
   switch (targetKind) {
     case 'determiner': {
-      for (const form of Object.values(det.forms)) pool.add(form);
-      if (det.elidedForm) pool.add(det.elidedForm);
+      const nounForm = getNounForm(noun, number);
+      const adjForm = getAdjectiveForm(adj, gender, number);
+      const nextWord = adj.preposed ? adjForm : nounForm;
       for (const d of DETERMINERS) {
-        if (d.id === det.id) continue;
-        const key = `${noun.gender === 'masculine' ? 'm' : 'f'}${number === 'singular' ? 's' : 'p'}` as keyof typeof d.forms;
-        pool.add(d.forms[key]);
+        validForms.add(getDeterminerForm(d, gender, number, nextWord));
+        for (const form of Object.values(d.forms)) pool.add(form);
+        if (d.elidedForm) pool.add(d.elidedForm);
       }
       break;
     }
     case 'adjective': {
-      for (const form of Object.values(adj.forms)) pool.add(form);
       for (const a of ADJECTIVES) {
-        if (a.id === adj.id) continue;
-        const key = `${noun.gender === 'masculine' ? 'm' : 'f'}${number === 'singular' ? 's' : 'p'}` as keyof typeof a.forms;
-        pool.add(a.forms[key]);
+        validForms.add(getAdjectiveForm(a, gender, number));
+        for (const form of Object.values(a.forms)) pool.add(form);
       }
       break;
     }
     case 'noun': {
-      pool.add(noun.singular);
-      pool.add(noun.plural);
-      const themeNouns = NOUNS.filter((n) => n.theme === noun.theme && n.id !== noun.id);
-      for (const n of themeNouns) {
-        pool.add(getNounForm(n, number));
+      for (const n of NOUNS) {
+        if (n.gender === gender) validForms.add(getNounForm(n, number));
+        pool.add(n.singular);
+        pool.add(n.plural);
       }
       break;
     }
   }
 
-  pool.delete(correctForm);
+  // Retirer toutes les formes valides du pool
+  for (const v of validForms) pool.delete(v);
+
   return shuffle([...pool]);
 }

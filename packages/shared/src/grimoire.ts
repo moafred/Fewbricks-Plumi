@@ -18,6 +18,8 @@ export interface GrimoireOptions {
   tense?: Tense;
   /** Filtrer par verbes (défaut: tous) */
   verbs?: VerbId[];
+  /** Filtrer par pronoms (défaut: tous) */
+  pronouns?: Pronoun[];
 }
 
 /**
@@ -31,6 +33,7 @@ export function generateGrimoireItems(
 ): GrimoireItem[] {
   const tense: Tense = options?.tense ?? 'present';
   const verbFilter = options?.verbs;
+  const pronounFilter = options?.pronouns;
 
   // Récupère les conjugaisons pour le temps demandé
   let conjugations = getConjugationsForTense(tense);
@@ -48,8 +51,11 @@ export function generateGrimoireItems(
   const perVerb = Math.ceil(count / conjugations.length);
 
   for (const verb of conjugations) {
-    const forms = shuffle([...verb.forms]);
-    const picked = forms.slice(0, perVerb);
+    const allForms = shuffle([...verb.forms]);
+    const filteredForms = pronounFilter
+      ? allForms.filter((f) => pronounFilter.includes(f.pronoun))
+      : allForms;
+    const picked = filteredForms.slice(0, perVerb);
 
     // Distracteurs : autres formes du même verbe + formes des autres verbes du même temps
     const otherVerbForms = conjugations

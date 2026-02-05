@@ -15,6 +15,8 @@ export interface SortingItem {
 export interface SortingOptions {
   /** Filtrer par temps (défaut: 'present') */
   tense?: Tense;
+  /** Filtrer par pronoms (défaut: tous) */
+  pronouns?: Pronoun[];
 }
 
 /**
@@ -24,6 +26,7 @@ export interface SortingOptions {
  */
 export function generateSortingItems(count: number = 10, options?: SortingOptions): SortingItem[] {
   const tense: Tense = options?.tense ?? 'present';
+  const pronounFilter = options?.pronouns;
   const conjugations = getConjugationsForTense(tense);
 
   if (conjugations.length === 0) {
@@ -34,8 +37,11 @@ export function generateSortingItems(count: number = 10, options?: SortingOption
   const items: SortingItem[] = [];
 
   for (const verb of conjugations) {
-    const forms = shuffle([...verb.forms]);
-    const picked = forms.slice(0, perVerb);
+    const allForms = shuffle([...verb.forms]);
+    const filteredForms = pronounFilter
+      ? allForms.filter((f) => pronounFilter.includes(f.pronoun))
+      : allForms;
+    const picked = filteredForms.slice(0, perVerb);
     for (const f of picked) {
       items.push({
         id: `${verb.id}-${tense}-${f.pronoun}`,
