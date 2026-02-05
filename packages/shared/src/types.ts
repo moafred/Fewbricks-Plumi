@@ -107,27 +107,43 @@ export type PlumiState = 'idle' | 'challenge' | 'celebration' | 'encouragement';
 
 // --- Progression ---
 
+// Mecanique de mini-jeu utilisee dans une etape de chapitre
+export type StepMechanic = 'tri-sorcier' | 'grimoire' | 'potion' | 'pont-accords' | 'potion-gn';
+
+// Une etape dans la sequence d'un chapitre
+export interface ChapterStep {
+  mechanic: StepMechanic;
+  /** Pronoms cibles pour cette etape (ex: ['je', 'tu']) */
+  pronouns?: Pronoun[];
+  /** Verbes cibles (heritage du chapitre si absent) */
+  verbs?: VerbId[];
+  /** Nombre de questions (3-4) */
+  questionCount: number;
+  /** Etape boss ? */
+  isBoss?: boolean;
+}
+
 export interface Chapter {
   id: number;
   title: string;
-  /** Verbes couverts dans ce chapitre */
+  /** Phrase d'intro vocalisee par Plumi */
+  narrative: string;
   verbs: VerbId[];
-  /** Temps de conjugaison ciblé (ou 'mixed' pour multi-temps) */
   tense: Tense | 'mixed';
-  /** Nombre de leçons */
-  lessonCount: number;
-  /** A un boss de fin ? */
-  hasBoss: boolean;
+  /** Sequence pedagogique auto-pilotee */
+  steps: ChapterStep[];
 }
 
 // Livre de sorts — regroupe plusieurs chapitres autour d'un temps
 export interface Book {
   id: number;
   title: string;
+  subtitle: string;
   /** Temps couverts dans ce livre */
   tenses: Tense[];
   /** IDs des chapitres de ce livre */
   chapters: number[];
+  color: 'royal' | 'enchant' | 'magic' | 'gentle' | 'forest' | 'dawn';
   /** Livre bonus (hors programme CE1 strict) */
   isBonus?: boolean;
 }

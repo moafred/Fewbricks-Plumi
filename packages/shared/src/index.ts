@@ -10,6 +10,8 @@ export type {
   AnswerResult,
   Exercise,
   PlumiState,
+  StepMechanic,
+  ChapterStep,
   Chapter,
   Book,
   RewardType,
