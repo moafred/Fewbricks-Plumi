@@ -45,7 +45,7 @@ export {
 export { elide } from './french.js';
 
 // Chapitres et Livres
-export { CHAPTERS, BOOKS } from './chapters.js';
+export { CHAPTERS, BOOKS, getChaptersForBook, getChapter, getBookForChapter } from './chapters.js';
 
 // Utilitaires
 export { shuffle } from './utils.js';

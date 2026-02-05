@@ -353,3 +353,26 @@ export const CHAPTERS: Chapter[] = [
     ],
   },
 ];
+
+// ═══════════════════════════════════════════════════════════════════════════
+// FONCTIONS D'ACCÈS
+// ═══════════════════════════════════════════════════════════════════════════
+
+/** Récupère les chapitres d'un livre */
+export function getChaptersForBook(bookId: number): Chapter[] {
+  const book = BOOKS.find((b) => b.id === bookId);
+  if (!book) return [];
+  return book.chapters
+    .map((id) => CHAPTERS.find((c) => c.id === id))
+    .filter((ch): ch is Chapter => ch !== undefined);
+}
+
+/** Récupère un chapitre par ID */
+export function getChapter(chapterId: number): Chapter | undefined {
+  return CHAPTERS.find((c) => c.id === chapterId);
+}
+
+/** Récupère le livre qui contient un chapitre */
+export function getBookForChapter(chapterId: number): Book | undefined {
+  return BOOKS.find((b) => b.chapters.includes(chapterId));
+}
