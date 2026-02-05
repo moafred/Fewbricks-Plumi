@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
-import type { Tense } from '@plumi/shared';
-import type { MiniGame } from '@/components/game/BookCard.vue';
+import type { MiniGame, Adventure } from '@/components/game/BookCard.vue';
+import { ADVENTURES } from '@/data/adventures';
 import TriSorcierGame from '@/components/game/TriSorcierGame.vue';
 import GrimoireGame from '@/components/game/GrimoireGame.vue';
 import PotionGame from '@/components/game/PotionGame.vue';
@@ -13,12 +13,12 @@ import MagicButton from '@/components/ui/MagicButton.vue';
 type Screen = 'home' | 'bookshelf' | MiniGame;
 
 const screen = ref<Screen>('home');
-const selectedTense = ref<Tense>('present');
+const selectedAdventure = ref<Adventure>(ADVENTURES[0]);
 
-function goToGame(tense: Tense | undefined, game: MiniGame) {
-  if (tense) {
-    selectedTense.value = tense;
-  }
+function goToGame(adventureId: number, game: MiniGame) {
+  const adv = ADVENTURES.find(a => a.id === adventureId);
+  if (!adv) return;
+  selectedAdventure.value = adv;
   screen.value = game;
 }
 
@@ -41,9 +41,9 @@ onUnmounted(() => window.removeEventListener('keydown', handleGlobalKeydown));
     >
       <div class="flex flex-col items-center gap-4">
         <!-- Mascot Plumi -->
-        <img 
-          src="/plumi-landing.png" 
-          alt="Plumi Mascot" 
+        <img
+          src="/plumi-landing.png"
+          alt="Plumi Mascot"
           class="w-48 md:w-64 h-48 md:h-64 animate-float drop-shadow-[0_0_30px_rgba(251,191,36,0.5)] mb-2 mix-blend-screen"
           style="mask-image: radial-gradient(circle, black 40%, transparent 70%); -webkit-mask-image: radial-gradient(circle, black 40%, transparent 70%);"
         />
@@ -87,22 +87,24 @@ onUnmounted(() => window.removeEventListener('keydown', handleGlobalKeydown));
       @play="goToGame"
     />
 
-    <!-- Game screens -->
+    <!-- Game screens — Conjugaison -->
     <TriSorcierGame
       v-else-if="screen === 'tri-sorcier'"
-      :tense="selectedTense"
+      :tense="selectedAdventure.tenses[0]"
       @home="screen = 'bookshelf'"
     />
     <GrimoireGame
       v-else-if="screen === 'grimoire'"
-      :tense="selectedTense"
+      :tense="selectedAdventure.tenses[0]"
       @home="screen = 'bookshelf'"
     />
     <PotionGame
       v-else-if="screen === 'potion'"
-      :tense="selectedTense"
+      :tense="selectedAdventure.tenses"
       @home="screen = 'bookshelf'"
     />
+
+    <!-- Game screens — Grammaire GN -->
     <PontAccordsGame
       v-else-if="screen === 'pont-accords'"
       @home="screen = 'bookshelf'"

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Tense } from '@plumi/shared';
+import type { Tense, VocabularyTheme, GapTarget } from '@plumi/shared';
 import { type Component } from 'vue';
 import { BookIcon, HatIcon, GrimoireIcon, PotionIcon, BridgeIcon, StarFilledIcon } from '@/components/icons';
 
@@ -10,22 +10,25 @@ export interface GameButton {
   label: string;
 }
 
-export interface BookInfo {
+export interface Adventure {
   id: number;
   title: string;
   subtitle: string;
-  tense?: Tense;
+  tenses: Tense[];
+  schoolTerms: string[];
+  gnThemes?: VocabularyTheme[];
+  gnTargetKinds?: GapTarget[];
   color: 'royal' | 'enchant' | 'magic' | 'gentle' | 'forest';
   isBonus?: boolean;
   games: GameButton[];
 }
 
 const props = defineProps<{
-  book: BookInfo;
+  adventure: Adventure;
 }>();
 
 defineEmits<{
-  play: [tense: Tense | undefined, game: MiniGame];
+  play: [adventureId: number, game: MiniGame];
 }>();
 
 const colorClasses = {
@@ -69,7 +72,7 @@ const gameIcons: Record<MiniGame, { component: Component; colorClass: string }> 
   'potion-gn': { component: PotionIcon, colorClass: 'text-forest-300' },
 };
 
-const colors = colorClasses[props.book.color];
+const colors = colorClasses[props.adventure.color];
 </script>
 
 <template>
@@ -84,7 +87,7 @@ const colors = colorClasses[props.book.color];
         :class="colors.icon"
       />
       <StarFilledIcon
-        v-if="book.isBonus"
+        v-if="adventure.isBonus"
         :size="20"
         class="absolute -top-1 -right-2 text-magic-400"
         aria-label="Bonus"
@@ -96,23 +99,34 @@ const colors = colorClasses[props.book.color];
       class="text-lg font-bold text-center"
       :class="colors.icon"
     >
-      {{ book.title }}
+      {{ adventure.title }}
     </h3>
 
     <!-- Subtitle (tense) -->
     <p class="text-sm text-purple-200 text-center">
-      {{ book.subtitle }}
+      {{ adventure.subtitle }}
     </p>
 
-    <!-- Mini-game buttons — rendu dynamique à partir de book.games -->
+    <!-- Badge scolaire — lien avec l'ecole -->
+    <div class="flex flex-wrap justify-center gap-1">
+      <span
+        v-for="term in adventure.schoolTerms"
+        :key="term"
+        class="text-xs px-2 py-0.5 rounded-full bg-white/10 text-purple-300"
+      >
+        {{ term }}
+      </span>
+    </div>
+
+    <!-- Boutons mini-jeux — rendu dynamique a partir de adventure.games -->
     <div class="flex gap-3 mt-2">
       <button
-        v-for="gameBtn in book.games"
+        v-for="gameBtn in adventure.games"
         :key="gameBtn.game"
         class="mini-game-btn flex flex-col items-center gap-1.5 p-4 md:p-3 rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 transition-all min-h-20 md:min-h-0"
         :class="colors.hover"
-        :aria-label="`Jouer à ${gameBtn.label} - ${book.subtitle}`"
-        @click="$emit('play', book.tense, gameBtn.game)"
+        :aria-label="`Jouer à ${gameBtn.label} - ${adventure.subtitle}`"
+        @click="$emit('play', adventure.id, gameBtn.game)"
       >
         <component
           :is="gameIcons[gameBtn.game].component"
