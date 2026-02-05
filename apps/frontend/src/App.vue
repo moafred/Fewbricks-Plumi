@@ -1,19 +1,24 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
 import type { Tense } from '@plumi/shared';
+import type { MiniGame } from '@/components/game/BookCard.vue';
 import TriSorcierGame from '@/components/game/TriSorcierGame.vue';
 import GrimoireGame from '@/components/game/GrimoireGame.vue';
 import PotionGame from '@/components/game/PotionGame.vue';
+import PontAccordsGame from '@/components/game/PontAccordsGame.vue';
+import PotionGnGame from '@/components/game/PotionGnGame.vue';
 import BookShelf from '@/components/game/BookShelf.vue';
 import MagicButton from '@/components/ui/MagicButton.vue';
 
-type Screen = 'home' | 'bookshelf' | 'tri-sorcier' | 'grimoire' | 'potion';
+type Screen = 'home' | 'bookshelf' | MiniGame;
 
 const screen = ref<Screen>('home');
 const selectedTense = ref<Tense>('present');
 
-function goToGame(tense: Tense, game: 'tri-sorcier' | 'grimoire' | 'potion') {
-  selectedTense.value = tense;
+function goToGame(tense: Tense | undefined, game: MiniGame) {
+  if (tense) {
+    selectedTense.value = tense;
+  }
   screen.value = game;
 }
 
@@ -96,6 +101,14 @@ onUnmounted(() => window.removeEventListener('keydown', handleGlobalKeydown));
     <PotionGame
       v-else-if="screen === 'potion'"
       :tense="selectedTense"
+      @home="screen = 'bookshelf'"
+    />
+    <PontAccordsGame
+      v-else-if="screen === 'pont-accords'"
+      @home="screen = 'bookshelf'"
+    />
+    <PotionGnGame
+      v-else-if="screen === 'potion-gn'"
       @home="screen = 'bookshelf'"
     />
   </div>

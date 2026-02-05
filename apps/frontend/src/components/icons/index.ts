@@ -1,4 +1,5 @@
 export { default as BookIcon } from './BookIcon.vue';
+export { default as BridgeIcon } from './BridgeIcon.vue';
 export { default as CrossIcon } from './CrossIcon.vue';
 export { default as GrimoireIcon } from './GrimoireIcon.vue';
 export { default as HatIcon } from './HatIcon.vue';

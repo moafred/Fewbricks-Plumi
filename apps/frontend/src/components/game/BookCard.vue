@@ -1,14 +1,23 @@
 <script setup lang="ts">
 import type { Tense } from '@plumi/shared';
-import { BookIcon, HatIcon, GrimoireIcon, PotionIcon } from '@/components/icons';
+import { type Component } from 'vue';
+import { BookIcon, HatIcon, GrimoireIcon, PotionIcon, BridgeIcon, StarFilledIcon } from '@/components/icons';
+
+export type MiniGame = 'tri-sorcier' | 'grimoire' | 'potion' | 'pont-accords' | 'potion-gn';
+
+export interface GameButton {
+  game: MiniGame;
+  label: string;
+}
 
 export interface BookInfo {
   id: number;
   title: string;
   subtitle: string;
-  tense: Tense;
-  color: 'royal' | 'enchant' | 'magic' | 'gentle';
+  tense?: Tense;
+  color: 'royal' | 'enchant' | 'magic' | 'gentle' | 'forest';
   isBonus?: boolean;
+  games: GameButton[];
 }
 
 const props = defineProps<{
@@ -16,7 +25,7 @@ const props = defineProps<{
 }>();
 
 defineEmits<{
-  play: [tense: Tense, game: 'tri-sorcier' | 'grimoire' | 'potion'];
+  play: [tense: Tense | undefined, game: MiniGame];
 }>();
 
 const colorClasses = {
@@ -44,6 +53,20 @@ const colorClasses = {
     border: 'border-gentle-400/30',
     hover: 'hover:bg-gentle-500/30',
   },
+  forest: {
+    icon: 'text-forest-400',
+    bg: 'bg-forest-500/20',
+    border: 'border-forest-400/30',
+    hover: 'hover:bg-forest-500/30',
+  },
+};
+
+const gameIcons: Record<MiniGame, { component: Component; colorClass: string }> = {
+  'tri-sorcier': { component: HatIcon, colorClass: 'text-magic-300' },
+  'grimoire': { component: GrimoireIcon, colorClass: 'text-royal-300' },
+  'potion': { component: PotionIcon, colorClass: 'text-enchant-300' },
+  'pont-accords': { component: BridgeIcon, colorClass: 'text-forest-300' },
+  'potion-gn': { component: PotionIcon, colorClass: 'text-forest-300' },
 };
 
 const colors = colorClasses[props.book.color];
@@ -60,13 +83,12 @@ const colors = colorClasses[props.book.color];
         :size="56"
         :class="colors.icon"
       />
-      <span
+      <StarFilledIcon
         v-if="book.isBonus"
-        class="absolute -top-1 -right-2 text-lg"
+        :size="20"
+        class="absolute -top-1 -right-2 text-magic-400"
         aria-label="Bonus"
-      >
-        ⭐
-      </span>
+      />
     </div>
 
     <!-- Title -->
@@ -82,45 +104,22 @@ const colors = colorClasses[props.book.color];
       {{ book.subtitle }}
     </p>
 
-    <!-- Mini-game buttons -->
+    <!-- Mini-game buttons — rendu dynamique à partir de book.games -->
     <div class="flex gap-3 mt-2">
       <button
+        v-for="gameBtn in book.games"
+        :key="gameBtn.game"
         class="mini-game-btn flex flex-col items-center gap-1.5 p-4 md:p-3 rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 transition-all min-h-20 md:min-h-0"
         :class="colors.hover"
-        :aria-label="`Jouer au Tri du Sorcier - ${book.subtitle}`"
-        @click="$emit('play', book.tense, 'tri-sorcier')"
+        :aria-label="`Jouer à ${gameBtn.label} - ${book.subtitle}`"
+        @click="$emit('play', book.tense, gameBtn.game)"
       >
-        <HatIcon
+        <component
+          :is="gameIcons[gameBtn.game].component"
           :size="36"
-          class="text-magic-300"
+          :class="gameIcons[gameBtn.game].colorClass"
         />
-        <span class="text-xs font-bold text-purple-100">Tri</span>
-      </button>
-
-      <button
-        class="mini-game-btn flex flex-col items-center gap-1.5 p-4 md:p-3 rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 transition-all min-h-20 md:min-h-0"
-        :class="colors.hover"
-        :aria-label="`Jouer au Grimoire - ${book.subtitle}`"
-        @click="$emit('play', book.tense, 'grimoire')"
-      >
-        <GrimoireIcon
-          :size="36"
-          class="text-royal-300"
-        />
-        <span class="text-xs font-bold text-purple-100">Grimoire</span>
-      </button>
-
-      <button
-        class="mini-game-btn flex flex-col items-center gap-1.5 p-4 md:p-3 rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 transition-all min-h-20 md:min-h-0"
-        :class="colors.hover"
-        :aria-label="`Jouer à la Potion Magique - ${book.subtitle}`"
-        @click="$emit('play', book.tense, 'potion')"
-      >
-        <PotionIcon
-          :size="36"
-          class="text-enchant-300"
-        />
-        <span class="text-xs font-bold text-purple-100">Potion</span>
+        <span class="text-xs font-bold text-purple-100">{{ gameBtn.label }}</span>
       </button>
     </div>
   </div>

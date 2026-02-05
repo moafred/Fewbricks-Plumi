@@ -1,6 +1,6 @@
 # GN (Groupe Nominal) — Progression d'Implémentation
 
-## Statut : 6/7 taches terminées
+## Statut : 7/7 taches terminées
 
 | # | Tâche | Statut | Fichiers |
 |---|-------|--------|----------|
@@ -9,7 +9,7 @@
 | 3 | Mini-jeu Pont des Accords | Done | `packages/shared/src/pont-accords.ts` (nouveau) |
 | 4 | Potion étendue (union discriminée VerbPotionItem / GnPotionItem) | Done | `packages/shared/src/potion.ts` (réécrit) |
 | 5 | Exports dans index.ts | Done | `packages/shared/src/index.ts` |
-| 6 | **Tests unitaires** | **À faire** | — |
+| 6 | Tests unitaires | Done | `packages/shared/src/vocabulary.test.ts`, `pont-accords.test.ts`, `potion.test.ts` |
 | 7 | Typecheck monorepo | Done (0 erreurs) | — |
 
 ## Ce qui a été fait
@@ -46,25 +46,17 @@
 - Seul changement : `apps/frontend/src/stores/potion.ts` — import `VerbPotionItem` au lieu de `PotionItem`
 - Le composant `PotionGame.vue` fonctionne sans modification
 
-## Ce qui reste à faire
+### 6. Tests unitaires — Done
 
-### 6. Tests unitaires
-Créer dans `packages/shared/` :
-- `vocabulary.test.ts` : vérifier les données, `buildNounPhrase`, élision, `getDeterminerForm`
-- `pont-accords.test.ts` : vérifier la génération, les choix, les distracteurs
-- `potion-gn.test.ts` : vérifier `generateGnPotionItems`, union type
+**Setup** : `vitest ^4.0.18` ajouté en devDependency, script `test` ajouté au `package.json`, test files exclus du build (`tsconfig.json` `exclude`).
 
-**Prérequis** : installer `vitest` comme devDependency dans `@plumi/shared` et ajouter un script `test` dans le package.json.
+**128 tests, 3 fichiers** :
+- `vocabulary.test.ts` (57 tests) : intégrité des données, lookups, formes fléchies, élision, `buildNounPhrase`, `formatGenderNumber`
+- `pont-accords.test.ts` (27 tests) : génération, structure des slots, filtrage par options, distracteurs, edge cases
+- `potion.test.ts` (44 tests) : `generatePotionItems` (verbes, rétro-compat), `generateGnPotionItems` (GN), union discriminée, filtrage
 
-```bash
-pnpm -C packages/shared add -D vitest
-```
-
-Puis créer les fichiers de tests dans `packages/shared/src/__tests__/` ou à côté des fichiers source.
-
-## Points d'attention pour les tests
-
-- `buildNounPhrase('le', 'petit', 'chat', 'singular')` → `"le petit chat"`
-- `buildNounPhrase('le', 'petit', 'arbre', 'singular')` → `"l'petit arbre"` ... **attention** : il faut vérifier que l'élision fonctionne correctement quand l'adjectif antéposé commence par une voyelle. Actuellement `getDeterminerForm` reçoit le premier mot après le déterminant (l'adjectif si antéposé), donc "l'" sera utilisé devant "petit" seulement si "petit" commence par une voyelle — ce qui n'est pas le cas ici. C'est correct.
-- Cas intéressant : `buildNounPhrase('le', 'haut', 'arbre', 'singular')` → `"le haut arbre"` — "haut" commence par un h, `startsWithVowel` retourne true pour h, donc ça donnerait `"l'haut arbre"`. Pour le h aspiré de "haut", c'est incorrect en français strict (on dit "le haut arbre"). Cependant, en CE1 ce cas est marginal et acceptable.
-- Tester le cas possessif féminin + voyelle : `getDeterminerForm(mon, 'feminine', 'singular', 'étoile')` → `"mon"` (pas "ma")
+**Cas d'élision vérifiés** :
+- `le + arbre` → `l'arbre` (voyelle)
+- `le + étoile` → `l'étoile` (accent)
+- `mon + étoile (fém.)` → `mon étoile` (possessif fém. devant voyelle → forme masculine)
+- `le + haut + arbre` → `l'haut arbre` (h traité comme voyelle — acceptable en CE1)

@@ -1,43 +1,30 @@
 <script setup lang="ts">
 import type { Tense } from '@plumi/shared';
-import BookCard, { type BookInfo } from './BookCard.vue';
+import BookCard, { type BookInfo, type GameButton, type MiniGame } from './BookCard.vue';
 import { HomeIcon } from '@/components/icons';
 
 defineEmits<{
   home: [];
-  play: [tense: Tense, game: 'tri-sorcier' | 'grimoire' | 'potion'];
+  play: [tense: Tense | undefined, game: MiniGame];
 }>();
 
+const CONJUGATION_GAMES: GameButton[] = [
+  { game: 'tri-sorcier', label: 'Tri' },
+  { game: 'grimoire', label: 'Grimoire' },
+  { game: 'potion', label: 'Potion' },
+];
+
+const GRAMMAR_GAMES: GameButton[] = [
+  { game: 'pont-accords', label: 'Pont' },
+  { game: 'potion-gn', label: 'Potion' },
+];
+
 const books: BookInfo[] = [
-  {
-    id: 1,
-    title: 'Fondations',
-    subtitle: 'Présent',
-    tense: 'present',
-    color: 'royal',
-  },
-  {
-    id: 2,
-    title: 'Prophéties',
-    subtitle: 'Futur',
-    tense: 'futur',
-    color: 'enchant',
-  },
-  {
-    id: 3,
-    title: 'Souvenirs',
-    subtitle: 'Imparfait',
-    tense: 'imparfait',
-    color: 'magic',
-  },
-  {
-    id: 4,
-    title: 'Le Temps',
-    subtitle: 'Bonus',
-    tense: 'passe_compose',
-    color: 'gentle',
-    isBonus: true,
-  },
+  { id: 1, title: 'Fondations', subtitle: 'Présent', tense: 'present', color: 'royal', games: CONJUGATION_GAMES },
+  { id: 2, title: 'Prophéties', subtitle: 'Futur', tense: 'futur', color: 'enchant', games: CONJUGATION_GAMES },
+  { id: 3, title: 'Souvenirs', subtitle: 'Imparfait', tense: 'imparfait', color: 'magic', games: CONJUGATION_GAMES },
+  { id: 4, title: 'Le Temps', subtitle: 'Bonus', tense: 'passe_compose', color: 'gentle', isBonus: true, games: CONJUGATION_GAMES },
+  { id: 5, title: 'La Forêt', subtitle: 'Accords', color: 'forest', games: GRAMMAR_GAMES },
 ];
 </script>
 
