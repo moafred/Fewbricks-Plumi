@@ -4,11 +4,6 @@ import type { GamePhase, AnswerResult, VerbPotionItem, Tense, Pronoun } from '@p
 import { generatePotionItems } from '@plumi/shared';
 
 const DISCOVERY_DELAY = 1500;
-const DELAY_AFTER_RESPONSE = 1000; // Resolution auto transition if needed or manual? Potion plan says "Correction + next"
-// Grimoire has transitionTo 'resolution', 200.
-// Then wait user to click next?
-// If we look at Grimoire, "transitionTo('resolution', 200)"
-// "Resolution" might be where the user sees the result and clicks continue.
 
 export const usePotionStore = defineStore('potion', () => {
     // --- State ---
@@ -54,7 +49,6 @@ export const usePotionStore = defineStore('potion', () => {
 
     function onPhaseEnter(p: GamePhase) {
         if (p === 'discovery') {
-            // Show sentence, wait, then show choices
             transitionTo('challenge', DISCOVERY_DELAY);
         } else if (p === 'response') {
             // Just answered, briefly show result then go to resolution (correction)
