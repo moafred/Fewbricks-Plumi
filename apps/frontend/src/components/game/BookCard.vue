@@ -1,140 +1,98 @@
 <script setup lang="ts">
-import type { Tense, VocabularyTheme, GapTarget } from '@plumi/shared';
-import { type Component } from 'vue';
-import { BookIcon, HatIcon, GrimoireIcon, PotionIcon, BridgeIcon, StarFilledIcon } from '@/components/icons';
-
-export type MiniGame = 'tri-sorcier' | 'grimoire' | 'potion' | 'pont-accords' | 'potion-gn';
-
-export interface GameButton {
-  game: MiniGame;
-  label: string;
-}
-
-export interface Adventure {
-  id: number;
-  title: string;
-  subtitle: string;
-  tenses: Tense[];
-  schoolTerms: string[];
-  gnThemes?: VocabularyTheme[];
-  gnTargetKinds?: GapTarget[];
-  color: 'royal' | 'enchant' | 'magic' | 'gentle' | 'forest';
-  isBonus?: boolean;
-  games: GameButton[];
-}
+import type { Book } from '@plumi/shared';
+import { BookIcon, StarFilledIcon, StarEmptyIcon } from '@/components/icons';
 
 const props = defineProps<{
-  adventure: Adventure;
+  book: Book;
+  stars: number;
+  maxStars: number;
+  isRecommended: boolean;
+  isLocked: boolean;
 }>();
 
 defineEmits<{
-  play: [adventureId: number, game: MiniGame];
+  select: [bookId: number];
 }>();
 
-const colorClasses = {
-  royal: {
-    icon: 'text-royal-400',
-    bg: 'bg-royal-500/20',
-    border: 'border-royal-400/30',
-    hover: 'hover:bg-royal-500/30',
-  },
-  enchant: {
-    icon: 'text-enchant-400',
-    bg: 'bg-enchant-500/20',
-    border: 'border-enchant-400/30',
-    hover: 'hover:bg-enchant-500/30',
-  },
-  magic: {
-    icon: 'text-magic-400',
-    bg: 'bg-magic-500/20',
-    border: 'border-magic-400/30',
-    hover: 'hover:bg-magic-500/30',
-  },
-  gentle: {
-    icon: 'text-gentle-400',
-    bg: 'bg-gentle-500/20',
-    border: 'border-gentle-400/30',
-    hover: 'hover:bg-gentle-500/30',
-  },
-  forest: {
-    icon: 'text-forest-400',
-    bg: 'bg-forest-500/20',
-    border: 'border-forest-400/30',
-    hover: 'hover:bg-forest-500/30',
-  },
+const colorClasses: Record<string, { icon: string; bg: string; border: string; glow: string }> = {
+  royal: { icon: 'text-royal-400', bg: 'bg-royal-500/20', border: 'border-royal-400/30', glow: 'shadow-royal-400/40' },
+  enchant: { icon: 'text-enchant-400', bg: 'bg-enchant-500/20', border: 'border-enchant-400/30', glow: 'shadow-enchant-400/40' },
+  magic: { icon: 'text-magic-400', bg: 'bg-magic-500/20', border: 'border-magic-400/30', glow: 'shadow-magic-400/40' },
+  gentle: { icon: 'text-gentle-400', bg: 'bg-gentle-500/20', border: 'border-gentle-400/30', glow: 'shadow-gentle-400/40' },
+  forest: { icon: 'text-forest-400', bg: 'bg-forest-500/20', border: 'border-forest-400/30', glow: 'shadow-forest-400/40' },
+  dawn: { icon: 'text-magic-400', bg: 'bg-magic-500/20', border: 'border-magic-400/30', glow: 'shadow-magic-400/40' },
 };
 
-const gameIcons: Record<MiniGame, { component: Component; colorClass: string }> = {
-  'tri-sorcier': { component: HatIcon, colorClass: 'text-magic-300' },
-  'grimoire': { component: GrimoireIcon, colorClass: 'text-royal-300' },
-  'potion': { component: PotionIcon, colorClass: 'text-enchant-300' },
-  'pont-accords': { component: BridgeIcon, colorClass: 'text-forest-300' },
-  'potion-gn': { component: PotionIcon, colorClass: 'text-forest-300' },
-};
-
-const colors = colorClasses[props.adventure.color];
+const colors = colorClasses[props.book.color] ?? colorClasses.royal;
 </script>
 
 <template>
-  <div
-    class="book-card flex flex-col items-center gap-3 p-6 rounded-2xl border backdrop-blur transition-all"
-    :class="[colors.bg, colors.border]"
+  <button
+    class="book-card flex flex-col items-center gap-3 p-6 rounded-2xl border backdrop-blur transition-all active:scale-[0.98]"
+    :class="[
+      colors.bg,
+      colors.border,
+      isLocked ? 'opacity-50 grayscale' : 'cursor-pointer',
+      isRecommended ? `shadow-lg ${colors.glow} ring-2 ring-magic-400/50 animate-pulse-slow` : '',
+    ]"
+    :disabled="isLocked"
+    @click="$emit('select', book.id)"
   >
-    <!-- Book icon + badge bonus -->
+    <!-- Icône livre + badge bonus -->
     <div class="relative">
-      <BookIcon
-        :size="56"
-        :class="colors.icon"
-      />
+      <BookIcon :size="56" :class="colors.icon" />
       <StarFilledIcon
-        v-if="adventure.isBonus"
+        v-if="book.isBonus"
         :size="20"
         class="absolute -top-1 -right-2 text-magic-400"
         aria-label="Bonus"
       />
     </div>
 
-    <!-- Title -->
-    <h3
-      class="text-lg font-bold text-center"
-      :class="colors.icon"
-    >
-      {{ adventure.title }}
+    <!-- Titre -->
+    <h3 class="text-lg font-bold text-center" :class="colors.icon">
+      {{ book.title }}
     </h3>
 
-    <!-- Subtitle (tense) -->
+    <!-- Sous-titre -->
     <p class="text-sm text-purple-200 text-center">
-      {{ adventure.subtitle }}
+      {{ book.subtitle }}
     </p>
 
-    <!-- Badge scolaire — lien avec l'ecole -->
-    <div class="flex flex-wrap justify-center gap-1">
-      <span
-        v-for="term in adventure.schoolTerms"
-        :key="term"
-        class="text-xs px-2 py-0.5 rounded-full bg-white/10 text-purple-300"
-      >
-        {{ term }}
-      </span>
+    <!-- Étoiles de progression -->
+    <div class="flex items-center gap-0.5">
+      <template v-for="i in maxStars" :key="i">
+        <StarFilledIcon
+          v-if="i <= stars"
+          :size="16"
+          class="text-magic-400"
+        />
+        <StarEmptyIcon
+          v-else
+          :size="16"
+          class="text-purple-400/30"
+        />
+      </template>
     </div>
 
-    <!-- Boutons mini-jeux — rendu dynamique a partir de adventure.games -->
-    <div class="flex gap-3 mt-2">
-      <button
-        v-for="gameBtn in adventure.games"
-        :key="gameBtn.game"
-        class="mini-game-btn flex flex-col items-center gap-1.5 p-4 md:p-3 rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 transition-all min-h-20 md:min-h-0"
-        :class="colors.hover"
-        :aria-label="`Jouer à ${gameBtn.label} - ${adventure.subtitle}`"
-        @click="$emit('play', adventure.id, gameBtn.game)"
-      >
-        <component
-          :is="gameIcons[gameBtn.game].component"
-          :size="36"
-          :class="gameIcons[gameBtn.game].colorClass"
-        />
-        <span class="text-xs font-bold text-purple-100">{{ gameBtn.label }}</span>
-      </button>
-    </div>
-  </div>
+    <!-- Badge état -->
+    <span
+      v-if="stars >= maxStars"
+      class="text-xs px-2 py-0.5 rounded-full bg-enchant-500/30 text-enchant-300 font-bold"
+    >
+      Terminé
+    </span>
+    <span
+      v-else-if="stars > 0"
+      class="text-xs px-2 py-0.5 rounded-full bg-magic-500/30 text-magic-300 font-bold"
+    >
+      En cours
+    </span>
+    <span
+      v-else-if="isLocked"
+      class="text-xs px-2 py-0.5 rounded-full bg-white/10 text-purple-300"
+    >
+      Verrouillé
+    </span>
+  </button>
 </template>
