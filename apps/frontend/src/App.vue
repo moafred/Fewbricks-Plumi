@@ -1,25 +1,30 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
-import type { MiniGame, Adventure } from '@/components/game/BookCard.vue';
-import { ADVENTURES } from '@/data/adventures';
-import TriSorcierGame from '@/components/game/TriSorcierGame.vue';
-import GrimoireGame from '@/components/game/GrimoireGame.vue';
-import PotionGame from '@/components/game/PotionGame.vue';
-import PontAccordsGame from '@/components/game/PontAccordsGame.vue';
-import PotionGnGame from '@/components/game/PotionGnGame.vue';
 import BookShelf from '@/components/game/BookShelf.vue';
+import BookView from '@/components/game/BookView.vue';
+import ChapterRunner from '@/components/game/ChapterRunner.vue';
 import MagicButton from '@/components/ui/MagicButton.vue';
+import KeyboardGuide from '@/components/ui/KeyboardGuide.vue';
 
-type Screen = 'home' | 'bookshelf' | MiniGame;
+type Screen = 'home' | 'bookshelf' | 'book-view' | 'chapter-runner';
 
 const screen = ref<Screen>('home');
-const selectedAdventure = ref<Adventure>(ADVENTURES[0]);
+const selectedBookId = ref<number>(1);
+const selectedChapterId = ref<number>(1);
 
-function goToGame(adventureId: number, game: MiniGame) {
-  const adv = ADVENTURES.find(a => a.id === adventureId);
-  if (!adv) return;
-  selectedAdventure.value = adv;
-  screen.value = game;
+function onSelectBook(bookId: number) {
+  selectedBookId.value = bookId;
+  screen.value = 'book-view';
+}
+
+function onPlayChapter(chapterId: number) {
+  selectedChapterId.value = chapterId;
+  screen.value = 'chapter-runner';
+}
+
+function onChapterComplete() {
+  // Le ChapterRunner persiste déjà le score via chapter-progress store
+  screen.value = 'book-view';
 }
 
 // Global keyboard listener for home screen
@@ -62,7 +67,7 @@ onUnmounted(() => window.removeEventListener('keydown', handleGlobalKeydown));
           class="w-64 md:w-80 h-20 md:h-24 !text-3xl"
           @click="screen = 'bookshelf'"
         >
-          ✨ Jouer
+          Jouer
         </MagicButton>
 
         <!-- Keyboard Hint - Only on Desktop -->
@@ -84,34 +89,24 @@ onUnmounted(() => window.removeEventListener('keydown', handleGlobalKeydown));
     <BookShelf
       v-else-if="screen === 'bookshelf'"
       @home="screen = 'home'"
-      @play="goToGame"
+      @select-book="onSelectBook"
     />
 
-    <!-- Game screens — Conjugaison -->
-    <TriSorcierGame
-      v-else-if="screen === 'tri-sorcier'"
-      :tense="selectedAdventure.tenses[0]"
-      @home="screen = 'bookshelf'"
-    />
-    <GrimoireGame
-      v-else-if="screen === 'grimoire'"
-      :tense="selectedAdventure.tenses[0]"
-      @home="screen = 'bookshelf'"
-    />
-    <PotionGame
-      v-else-if="screen === 'potion'"
-      :tense="selectedAdventure.tenses"
-      @home="screen = 'bookshelf'"
+    <!-- Book view -->
+    <BookView
+      v-else-if="screen === 'book-view'"
+      :book-id="selectedBookId"
+      @back="screen = 'bookshelf'"
+      @play-chapter="onPlayChapter"
     />
 
-    <!-- Game screens — Grammaire GN -->
-    <PontAccordsGame
-      v-else-if="screen === 'pont-accords'"
-      @home="screen = 'bookshelf'"
-    />
-    <PotionGnGame
-      v-else-if="screen === 'potion-gn'"
-      @home="screen = 'bookshelf'"
+    <!-- Chapter runner -->
+    <ChapterRunner
+      v-else-if="screen === 'chapter-runner'"
+      :key="selectedChapterId"
+      :chapter-id="selectedChapterId"
+      @home="screen = 'book-view'"
+      @chapter-complete="onChapterComplete"
     />
   </div>
 </template>
