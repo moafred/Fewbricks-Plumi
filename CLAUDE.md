@@ -211,7 +211,7 @@ pnpm-workspace.yaml
 | ---------------- | ------------------------- | ----------------------------------------------------- |
 | **Icons**        | Glyphes SVG atomiques     | `components/icons/StarFilledIcon.vue`, `HatIcon.vue`  |
 | **Atoms**        | Éléments UI purs          | `components/ui/MagicButton.vue`, `KeyboardGuide.vue`  |
-| **Molecules**    | Composants métier simples | `components/game/SpellChoice.vue`, `SortingHat.vue`   |
+| **Molecules**    | Composants métier simples | `components/game/SpellChoice.vue`, `ChoiceButton.vue`, `ChallengeCard.vue` |
 | **Organisms**    | Mini-jeux complets        | `components/game/PotionGame.vue`, `GrimoireGame.vue`  |
 | **Orchestrateur**| Gestion d'un chapitre     | `components/game/ChapterRunner.vue`                   |
 | **Navigation**   | Écrans de parcours        | `components/game/BookShelf.vue`, `BookView.vue`       |
@@ -309,6 +309,22 @@ Les 5 mini-jeux supportent un mode `embedded` pour fonctionner comme étape dans
     - Pas de `|| valeurParDéfaut` qui masque une erreur de configuration.
     - Les valeurs d'environnement sont obligatoires : si elles manquent, l'app doit crasher au démarrage, pas fonctionner avec des valeurs fantômes.
     - Préférer `!` (non-null assertion) ou une validation explicite au démarrage plutôt qu'un fallback silencieux.
+
+13. **Zéro Classe Dupliquée** :
+    - Si un pattern de classes Tailwind (>3 utilitaires) est copié dans 2+ composants, extraire un composant Vue dédié.
+    - Les états visuels (idle/correct/incorrect...) doivent être un prop typé (`state: ChoiceState`), pas des classes conditionnelles dupliquées.
+    - Préférer les slots pour les contenus variables plutôt que des props de style.
+    - Composants existants à réutiliser : `ChoiceButton`, `ChallengeCard`, `GameHeader`, `GameFinished`.
+
+14. **Zéro Couleur Générique** :
+    - Utiliser exclusivement les tokens Plumi : `royal-*`, `magic-*`, `enchant-*`, `gentle-*`, `forest-*`, `night-*`.
+    - Interdit : `purple-*`, `indigo-*`, `amber-*`, `bg-white` (sauf `bg-white/opacity`).
+    - Fond des cartes de jeu : `bg-night-800/90 backdrop-blur-md border border-white/10` (jamais `bg-white`).
+
+15. **Keyboard = Desktop Only** :
+    - `KeyboardGuide` et raccourcis clavier sont réservés au desktop (`hidden lg:flex`).
+    - En mode embedded (`ChapterRunner`), les mini-jeux masquent leur `GameHeader` (`v-if="!embedded"`).
+    - Sur mobile/tablette : interaction tactile uniquement, pas d'indication clavier.
 
 ### Règles de Contribution
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch, onUnmounted } from 'vue';
+import { computed, watch, onUnmounted } from 'vue';
 import type { Tense, VerbId, Pronoun, AnswerResult } from '@plumi/shared';
 import { useGrimoireStore } from '@/stores/grimoire';
 import { useKeyboardNavigation, useBackNavigation } from '@/composables';
@@ -53,8 +53,8 @@ watch(
   () => resetFocus(),
 );
 
-// Navigation retour vers l'accueil
-const canGoBack = ref(true);
+// Navigation retour vers l'accueil (désactivée en mode embedded, ChapterRunner gère)
+const canGoBack = computed(() => !props.embedded);
 useBackNavigation(() => emit('home'), canGoBack);
 
 let resolutionTimer: ReturnType<typeof setTimeout> | null = null;
@@ -152,7 +152,7 @@ game.startGame(props.tense, props.count, {
       </div>
 
       <!-- Instruction -->
-      <p class="text-xl md:text-2xl font-bold text-purple-100 text-center drop-shadow-sm">
+      <p class="text-xl md:text-2xl font-bold text-royal-100 text-center drop-shadow-sm">
         <template v-if="game.phase === 'discovery'">La formule apparaît...</template>
         <template v-else-if="game.phase === 'challenge'">Quelle est la bonne formule ?</template>
         <template v-else-if="game.lastResult === 'correct'">Bien joué !</template>

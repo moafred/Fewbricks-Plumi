@@ -48,13 +48,13 @@ function isRecommended(chapterId: number): boolean {
         aria-label="Retour aux livres"
         @click="$emit('back')"
       >
-        <HomeIcon :size="28" class="text-purple-200" />
+        <HomeIcon :size="28" class="text-royal-200" />
       </button>
       <div>
         <h1 class="text-2xl md:text-3xl font-bold" :class="colors.accent">
           {{ book.title }}
         </h1>
-        <p class="text-sm text-purple-200">{{ book.subtitle }}</p>
+        <p class="text-sm text-royal-200">{{ book.subtitle }}</p>
       </div>
     </header>
 
@@ -86,7 +86,7 @@ function isRecommended(chapterId: number): boolean {
           <div class="flex items-center justify-between gap-4">
             <div class="flex-1 text-left">
               <h3 class="text-lg font-bold text-white">{{ chapter.title }}</h3>
-              <p class="text-sm text-purple-200 mt-1">{{ chapter.narrative }}</p>
+              <p class="text-sm text-royal-200 mt-1">{{ chapter.narrative }}</p>
             </div>
 
             <!-- Étoiles -->
@@ -100,7 +100,7 @@ function isRecommended(chapterId: number): boolean {
                 <StarEmptyIcon
                   v-else
                   :size="24"
-                  class="text-purple-400/30"
+                  class="text-royal-400/30"
                 />
               </template>
             </div>

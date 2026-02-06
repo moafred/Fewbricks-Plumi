@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+import { SparkleIcon } from '@/components/icons';
 
 const props = withDefaults(
   defineProps<{
@@ -27,7 +28,7 @@ const isIdle = computed(() => !props.filledWord && !props.showSolution);
 
 <template>
   <div
-    class="flex flex-wrap items-baseline justify-center gap-x-2 gap-y-4 text-3xl md:text-5xl font-learning text-night-900 leading-normal text-center select-none"
+    class="flex flex-wrap items-baseline justify-center gap-x-2 gap-y-4 text-3xl md:text-5xl font-learning text-white leading-normal text-center select-none"
   >
     <!-- Before Gap -->
     <span class="whitespace-pre-wrap">{{ parts[0] }}</span>
@@ -38,17 +39,17 @@ const isIdle = computed(() => !props.filledWord && !props.showSolution);
       :class="[
         // Idle state: Magic hole
         isIdle
-          ? 'border-b-4 border-magic-400 bg-magic-100/50 rounded-t-lg animate-sparkle'
+          ? 'border-b-4 border-magic-400 bg-magic-500/20 rounded-t-lg animate-sparkle'
           : '',
         
         // Correct state: Green and bold
         (isCorrect || showSolution) && !isWrong
-          ? 'text-enchant-600 font-bold scale-110 transform'
+          ? 'text-enchant-300 font-bold scale-110 transform'
           : '',
           
         // Wrong state: Red and crossed out (optional, depends on game flow)
         isWrong
-          ? 'text-gentle-600 line-through decoration-4 decoration-gentle-400'
+          ? 'text-gentle-300 line-through decoration-4 decoration-gentle-400'
           : ''
       ]"
     >
@@ -60,8 +61,8 @@ const isIdle = computed(() => !props.filledWord && !props.showSolution);
 
       <!-- Magic Particles (Idle) -->
       <template v-if="isIdle">
-        <span class="absolute -top-2 -right-2 text-xl animate-bounce-gentle">✨</span>
-        <span class="absolute -bottom-2 -left-2 text-xl animate-pulse">✨</span>
+        <SparkleIcon :size="16" class="absolute -top-2 -right-2 text-magic-300 animate-bounce-gentle" />
+        <SparkleIcon :size="16" class="absolute -bottom-2 -left-2 text-magic-300 animate-sparkle" />
       </template>
     </div>
 

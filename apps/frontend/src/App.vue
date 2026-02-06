@@ -1,15 +1,24 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import BookShelf from '@/components/game/BookShelf.vue';
 import BookView from '@/components/game/BookView.vue';
 import ChapterRunner from '@/components/game/ChapterRunner.vue';
 import MagicButton from '@/components/ui/MagicButton.vue';
 import KeyboardGuide from '@/components/ui/KeyboardGuide.vue';
+import { useBiome } from '@/composables';
 
 type Screen = 'home' | 'bookshelf' | 'book-view' | 'chapter-runner';
 
 const screen = ref<Screen>('home');
 const selectedBookId = ref<number>(1);
+
+// Biome actif selon l'écran : home/bookshelf = ambiance home, sinon le biome du livre sélectionné
+const activeBookId = computed(() =>
+  screen.value === 'book-view' || screen.value === 'chapter-runner'
+    ? selectedBookId.value
+    : null,
+);
+const { bgClass } = useBiome(activeBookId);
 const selectedChapterId = ref<number>(1);
 
 function onSelectBook(bookId: number) {
@@ -38,7 +47,7 @@ onUnmounted(() => window.removeEventListener('keydown', handleGlobalKeydown));
 </script>
 
 <template>
-  <div class="min-h-screen bg-gradient-to-b from-indigo-900 via-purple-900 to-indigo-950 text-white">
+  <div class="min-h-screen text-white transition-[background] duration-700" :class="bgClass">
     <!-- Home screen -->
     <div
       v-if="screen === 'home'"
@@ -52,10 +61,10 @@ onUnmounted(() => window.removeEventListener('keydown', handleGlobalKeydown));
           class="w-48 md:w-64 h-48 md:h-64 animate-float drop-shadow-[0_0_30px_rgba(251,191,36,0.5)] mb-2 mix-blend-screen"
           style="mask-image: radial-gradient(circle, black 40%, transparent 70%); -webkit-mask-image: radial-gradient(circle, black 40%, transparent 70%);"
         />
-        <h1 class="text-6xl md:text-8xl font-bold text-amber-300 drop-shadow-2xl">
+        <h1 class="text-6xl md:text-8xl font-bold text-magic-300 drop-shadow-2xl">
           Plumi
         </h1>
-        <p class="text-2xl md:text-3xl text-purple-200 font-medium">
+        <p class="text-2xl md:text-3xl text-royal-200 font-medium">
           La Plume Magique
         </p>
       </div>
@@ -79,7 +88,7 @@ onUnmounted(() => window.removeEventListener('keydown', handleGlobalKeydown));
         />
 
         <!-- Mobile Hint -->
-        <p class="lg:hidden text-purple-300 animate-pulse font-medium">
+        <p class="lg:hidden text-royal-200 animate-pulse-slow font-medium">
           Appuie sur le bouton pour commencer
         </p>
       </div>

@@ -36,12 +36,12 @@ const messages: Record<number, string> = {
         <StarEmptyIcon
           v-else
           :size="48"
-          class="text-purple-400/30"
+          class="text-royal-400/30"
         />
       </template>
     </div>
 
-    <p class="text-2xl md:text-3xl text-purple-200">
+    <p class="text-2xl md:text-3xl text-royal-200">
       {{ score }} / {{ total }}
     </p>
 

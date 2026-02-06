@@ -23,6 +23,6 @@ const display = computed(() =>
       'animate-celebrate': phase === 'discovery',
     }"
   >
-    <span class="text-4xl md:text-6xl font-bold text-amber-200 font-learning drop-shadow-md">{{ display }}</span>
+    <span class="text-4xl md:text-6xl font-bold text-magic-200 font-learning drop-shadow-md">{{ display }}</span>
   </div>
 </template>

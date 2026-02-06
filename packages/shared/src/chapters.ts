@@ -1,9 +1,5 @@
 import type { Book, Chapter } from './types.js';
 
-/**
- * Livres de Sorts — regroupement narratif des chapitres par temps.
- * 6 livres : 5 principaux + 1 bonus multi-temps.
- */
 export const BOOKS: Book[] = [
   {
     id: 1,
@@ -12,6 +8,7 @@ export const BOOKS: Book[] = [
     tenses: ['present'],
     chapters: [1, 2, 3],
     color: 'dawn',
+    biome: 'jardin',
   },
   {
     id: 2,
@@ -20,6 +17,7 @@ export const BOOKS: Book[] = [
     tenses: ['present'],
     chapters: [4, 5, 6],
     color: 'royal',
+    biome: 'fondations',
   },
   {
     id: 3,
@@ -28,6 +26,7 @@ export const BOOKS: Book[] = [
     tenses: ['present'],
     chapters: [7, 8, 9],
     color: 'forest',
+    biome: 'clairiere',
   },
   {
     id: 4,
@@ -36,6 +35,7 @@ export const BOOKS: Book[] = [
     tenses: ['futur'],
     chapters: [10, 11, 12],
     color: 'enchant',
+    biome: 'futur',
   },
   {
     id: 5,
@@ -44,6 +44,7 @@ export const BOOKS: Book[] = [
     tenses: ['imparfait'],
     chapters: [13, 14, 15],
     color: 'magic',
+    biome: 'brumes',
   },
   {
     id: 6,
@@ -52,6 +53,7 @@ export const BOOKS: Book[] = [
     tenses: ['present', 'futur', 'imparfait', 'passe_compose'],
     chapters: [16, 17, 18],
     color: 'gentle',
+    biome: 'flux',
     isBonus: true,
   },
 ];
@@ -68,10 +70,7 @@ export const BOOKS: Book[] = [
  *   Boss : tous les pronoms (pronouns = undefined)
  */
 export const CHAPTERS: Chapter[] = [
-  // ═══════════════════════════════════════════════════════════════════════════
-  // LIVRE 1 — Le Jardin des Mots (Présent, découverte)
-  // ═══════════════════════════════════════════════════════════════════════════
-  {
+{
     id: 1,
     title: 'Découvrir ÊTRE',
     narrative: 'Bienvenue dans le Jardin ! Découvrons le sort ÊTRE.',
@@ -116,10 +115,7 @@ export const CHAPTERS: Chapter[] = [
     ],
   },
 
-  // ═══════════════════════════════════════════════════════════════════════════
-  // LIVRE 2 — Le Livre des Fondations (Présent, consolidation)
-  // ═══════════════════════════════════════════════════════════════════════════
-  {
+{
     id: 4,
     title: 'Maîtriser ÊTRE',
     narrative: 'Tu connais ÊTRE ? Prouve-le, jeune magicien !',
@@ -162,10 +158,7 @@ export const CHAPTERS: Chapter[] = [
     ],
   },
 
-  // ═══════════════════════════════════════════════════════════════════════════
-  // LIVRE 3 — La Clairière Enchantée (Présent + Groupe Nominal)
-  // ═══════════════════════════════════════════════════════════════════════════
-  {
+{
     id: 7,
     title: 'ÊTRE + Accords',
     narrative: 'Dans la Clairière, les mots s\'accordent comme par magie !',
@@ -206,10 +199,7 @@ export const CHAPTERS: Chapter[] = [
     ],
   },
 
-  // ═══════════════════════════════════════════════════════════════════════════
-  // LIVRE 4 — Les Sentiers du Futur (Futur)
-  // ═══════════════════════════════════════════════════════════════════════════
-  {
+{
     id: 10,
     title: 'ÊTRE au futur',
     narrative: "Le futur t'attend ! Découvre ÊTRE au futur.",
@@ -258,10 +248,7 @@ export const CHAPTERS: Chapter[] = [
     ],
   },
 
-  // ═══════════════════════════════════════════════════════════════════════════
-  // LIVRE 5 — Les Brumes du Passé (Imparfait)
-  // ═══════════════════════════════════════════════════════════════════════════
-  {
+{
     id: 13,
     title: "ÊTRE à l'imparfait",
     narrative: "Voyageons dans le passé ! ÊTRE à l'imparfait.",
@@ -310,10 +297,7 @@ export const CHAPTERS: Chapter[] = [
     ],
   },
 
-  // ═══════════════════════════════════════════════════════════════════════════
-  // LIVRE 6 — Le Flux Temporel (Bonus, multi-temps)
-  // ═══════════════════════════════════════════════════════════════════════════
-  {
+{
     id: 16,
     title: 'Maître du Temps — ÊTRE',
     narrative: 'Tous les temps ! Es-tu un vrai maître ?',
@@ -354,11 +338,6 @@ export const CHAPTERS: Chapter[] = [
   },
 ];
 
-// ═══════════════════════════════════════════════════════════════════════════
-// FONCTIONS D'ACCÈS
-// ═══════════════════════════════════════════════════════════════════════════
-
-/** Récupère les chapitres d'un livre */
 export function getChaptersForBook(bookId: number): Chapter[] {
   const book = BOOKS.find((b) => b.id === bookId);
   if (!book) return [];
@@ -367,12 +346,10 @@ export function getChaptersForBook(bookId: number): Chapter[] {
     .filter((ch): ch is Chapter => ch !== undefined);
 }
 
-/** Récupère un chapitre par ID */
 export function getChapter(chapterId: number): Chapter | undefined {
   return CHAPTERS.find((c) => c.id === chapterId);
 }
 
-/** Récupère le livre qui contient un chapitre */
 export function getBookForChapter(chapterId: number): Book | undefined {
   return BOOKS.find((b) => b.chapters.includes(chapterId));
 }

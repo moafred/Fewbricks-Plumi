@@ -169,7 +169,7 @@ useBackNavigation(handleBack, computed(() => !showQuitConfirmation.value));
       <h2 class="text-2xl md:text-4xl font-bold text-magic-300 text-center">
         {{ chapter?.title }}
       </h2>
-      <p class="text-xl md:text-2xl text-purple-200 text-center font-learning max-w-lg">
+      <p class="text-xl md:text-2xl text-royal-200 text-center font-learning max-w-lg">
         {{ chapter?.narrative }}
       </p>
     </div>

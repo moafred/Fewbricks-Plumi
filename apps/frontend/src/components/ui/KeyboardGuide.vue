@@ -49,14 +49,14 @@ const themeClasses = computed(() => {
         bg: 'bg-magic-500/25',
         border: 'border-magic-400/60',
         text: 'text-magic-200',
-        glow: 'shadow-[0_0_12px_rgba(251,191,36,0.4)]', // amber-400
+        glow: 'shadow-[0_0_12px_rgba(251,191,36,0.4)]', // magic-400
       };
     case 'royal':
       return {
         bg: 'bg-royal-500/25',
         border: 'border-royal-400/60',
         text: 'text-royal-200',
-        glow: 'shadow-[0_0_12px_rgba(167,139,250,0.4)]', // violet-400
+        glow: 'shadow-[0_0_12px_rgba(139,92,246,0.3)]', // royal-500
       };
     default:
       return {

@@ -25,7 +25,7 @@ defineEmits<{
     >
       {{ title }}
     </h2>
-    <p class="text-base text-purple-200 text-center">
+    <p class="text-base text-royal-200 text-center">
       {{ description }}
     </p>
   </button>

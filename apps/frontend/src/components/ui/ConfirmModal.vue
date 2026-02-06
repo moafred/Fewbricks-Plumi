@@ -23,30 +23,29 @@ defineEmits<{
     />
 
     <!-- Modal Card -->
-    <div class="relative w-full max-w-md bg-white rounded-3xl p-8 shadow-2xl animate-bounce-gentle text-center">
-      <h2 class="text-2xl font-bold text-royal-800 mb-4 font-learning">
+    <div class="relative w-full max-w-md bg-night-800 border border-royal-700/30 rounded-3xl p-8 shadow-2xl animate-bounce-gentle text-center">
+      <h2 class="text-2xl font-bold text-white mb-4 font-learning">
         {{ title }}
       </h2>
-      
-      <p v-if="message" class="text-royal-600 mb-8 text-lg">
+
+      <p v-if="message" class="text-royal-200 mb-8 text-lg">
         {{ message }}
       </p>
 
       <div class="flex flex-col gap-3">
-        <MagicButton 
-          variant="primary" 
+        <MagicButton
+          variant="primary"
           @click="$emit('cancel')"
         >
           {{ cancelLabel || 'Non, continuer' }}
         </MagicButton>
-        
-        <MagicButton 
-          variant="secondary" 
-          class="!text-gentle-600 !bg-gentle-50 hover:!bg-gentle-100"
+
+        <button
+          class="h-14 px-8 py-3 text-xl rounded-2xl font-bold bg-gentle-900/40 text-gentle-300 hover:bg-gentle-900/60 active:scale-95 transition-all select-none"
           @click="$emit('confirm')"
         >
           {{ confirmLabel || 'Oui, quitter' }}
-        </MagicButton>
+        </button>
       </div>
     </div>
   </div>

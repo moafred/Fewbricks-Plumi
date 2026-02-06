@@ -55,7 +55,7 @@ const colors = colorClasses[props.book.color] ?? colorClasses.royal;
     </h3>
 
     <!-- Sous-titre -->
-    <p class="text-sm text-purple-200 text-center">
+    <p class="text-sm text-royal-200 text-center">
       {{ book.subtitle }}
     </p>
 
@@ -70,7 +70,7 @@ const colors = colorClasses[props.book.color] ?? colorClasses.royal;
         <StarEmptyIcon
           v-else
           :size="16"
-          class="text-purple-400/30"
+          class="text-royal-400/30"
         />
       </template>
     </div>
@@ -90,7 +90,7 @@ const colors = colorClasses[props.book.color] ?? colorClasses.royal;
     </span>
     <span
       v-else-if="isLocked"
-      class="text-xs px-2 py-0.5 rounded-full bg-white/10 text-purple-300"
+      class="text-xs px-2 py-0.5 rounded-full bg-white/10 text-royal-300"
     >
       Verrouillé
     </span>

@@ -44,7 +44,7 @@ const message = computed(() => {
       />
     </div>
 
-    <p class="text-2xl md:text-3xl text-purple-200">
+    <p class="text-2xl md:text-3xl text-royal-200">
       {{ score }} / {{ total }}
     </p>
 

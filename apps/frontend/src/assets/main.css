@@ -100,6 +100,11 @@
   --animate-sparkle: sparkle 1.5s ease-in-out infinite;
   --animate-bounce-gentle: bounce-gentle 2s ease-in-out infinite;
   --animate-celebrate: celebrate 0.6s ease-out forwards;
+  --animate-fade-in: fade-in 0.3s ease-out forwards;
+  --animate-shake: shake 0.4s ease-in-out;
+  --animate-pulse-slow: pulse-slow 3s ease-in-out infinite;
+  --animate-glow: glow 2s ease-in-out infinite;
+  --animate-wobble: oops-wobble 0.5s ease-out;
 
   @keyframes float {
     0%, 100% { transform: translateY(0px); }
@@ -121,9 +126,136 @@
     50% { transform: scale(1.1) rotate(3deg); }
     100% { transform: scale(1) rotate(0deg); opacity: 1; }
   }
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-4px); }
+    40%, 80% { transform: translateX(4px); }
+  }
+
+  @keyframes pulse-slow {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+  }
+
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 0 10px rgba(251,191,36,0.2); }
+    50% { box-shadow: 0 0 25px rgba(251,191,36,0.5); }
+  }
 }
 
 body {
   font-family: var(--font-sans);
   min-height: 100vh;
+}
+
+/* --- Biomes — Fonds atmosphériques par livre --- */
+
+.biome-home {
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(139,92,246,0.1) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(2,6,23,0.4) 100%),
+    linear-gradient(180deg, #020617 0%, #2e1065 40%, #1e1065 60%, #0f172a 100%);
+}
+
+.biome-jardin {
+  background:
+    radial-gradient(ellipse at 30% 70%, rgba(16,185,129,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 30%, rgba(52,211,153,0.08) 0%, transparent 40%),
+    radial-gradient(ellipse at 50% 100%, rgba(6,78,59,0.3) 0%, transparent 50%),
+    linear-gradient(180deg, #020617 0%, #042f2e 40%, #064e3b 70%, #0f172a 100%);
+}
+
+.biome-fondations {
+  background:
+    radial-gradient(ellipse at 40% 30%, rgba(139,92,246,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 80%, rgba(109,40,217,0.08) 0%, transparent 40%),
+    linear-gradient(180deg, #020617 0%, #2e1065 35%, #4c1d95 60%, #0f172a 100%);
+}
+
+.biome-clairiere {
+  background:
+    radial-gradient(ellipse at 25% 60%, rgba(45,212,191,0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 75% 40%, rgba(20,184,166,0.07) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 90%, rgba(4,47,46,0.4) 0%, transparent 50%),
+    linear-gradient(180deg, #020617 0%, #042f2e 30%, #134e4a 55%, #0f172a 100%);
+}
+
+.biome-futur {
+  background:
+    radial-gradient(ellipse at 50% 85%, rgba(251,191,36,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 30% 50%, rgba(245,158,11,0.06) 0%, transparent 50%),
+    linear-gradient(180deg, #020617 0%, #1e293b 30%, #451a03 65%, #78350f 90%, #0f172a 100%);
+}
+
+.biome-brumes {
+  background:
+    radial-gradient(ellipse at 40% 50%, rgba(196,181,253,0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 70%, rgba(167,139,250,0.06) 0%, transparent 45%),
+    linear-gradient(180deg, #0f172a 0%, rgba(76,29,149,0.3) 40%, rgba(46,16,101,0.5) 70%, #0f172a 100%);
+}
+
+.biome-flux {
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(251,191,36,0.08) 0%, transparent 40%),
+    radial-gradient(ellipse at 80% 70%, rgba(16,185,129,0.08) 0%, transparent 40%),
+    radial-gradient(ellipse at 50% 50%, rgba(139,92,246,0.1) 0%, transparent 50%),
+    linear-gradient(180deg, #020617 0%, #2e1065 30%, #042f2e 50%, #451a03 70%, #0f172a 100%);
+}
+
+/* --- Spell Burst — Célébration bonne réponse --- */
+
+@keyframes spell-ring {
+  from { transform: scale(0.5); opacity: 1; border-width: 3px; }
+  to { transform: scale(2.2); opacity: 0; border-width: 1px; }
+}
+
+@keyframes spell-particle {
+  from {
+    transform: translate(-50%, -50%) translate(0px, 0px) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translate(-50%, -50%) translate(var(--dx), var(--dy)) scale(0);
+    opacity: 0;
+  }
+}
+
+/* --- Wobble doux — Encouragement erreur --- */
+
+@keyframes oops-wobble {
+  0% { transform: rotate(0deg); }
+  15% { transform: rotate(-3deg) scale(1.02); }
+  30% { transform: rotate(2deg); }
+  45% { transform: rotate(-2deg); }
+  60% { transform: rotate(1deg); }
+  75% { transform: rotate(-0.5deg); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+/* --- Accessibilité — Désactivation animations continues --- */
+
+@media (prefers-reduced-motion: reduce) {
+  .biome-home,
+  .biome-jardin,
+  .biome-fondations,
+  .biome-clairiere,
+  .biome-futur,
+  .biome-brumes,
+  .biome-flux {
+    background: linear-gradient(180deg, #020617 0%, #2e1065 50%, #0f172a 100%);
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

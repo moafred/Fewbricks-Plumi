@@ -31,7 +31,7 @@ function bookMaxStars(bookId: number): number {
         aria-label="Retour à l'accueil"
         @click="$emit('home')"
       >
-        <HomeIcon :size="28" class="text-purple-200" />
+        <HomeIcon :size="28" class="text-royal-200" />
       </button>
       <h1 class="text-2xl md:text-3xl font-bold text-magic-300">
         Livres de Sorts

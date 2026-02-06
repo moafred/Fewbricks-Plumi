@@ -51,8 +51,8 @@ watch(
   () => resetFocus(),
 );
 
-// Navigation retour vers l'accueil
-const canGoBack = ref(true);
+// Navigation retour vers l'accueil (désactivée en mode embedded, ChapterRunner gère)
+const canGoBack = computed(() => !props.embedded);
 useBackNavigation(() => emit('home'), canGoBack);
 
 let resolutionTimer: ReturnType<typeof setTimeout> | null = null;
@@ -149,7 +149,7 @@ game.startGame(props.tense, props.count, {
       </div>
 
       <!-- Instruction -->
-      <p class="text-lg md:text-xl text-purple-200 text-center">
+      <p class="text-lg md:text-xl text-royal-200 text-center">
         <template v-if="game.phase === 'discovery'">Le mot apparaît...</template>
         <template v-else-if="game.phase === 'challenge'">Dans quel chapeau ?</template>
         <template v-else-if="game.lastResult === 'correct'">Bien joué !</template>
