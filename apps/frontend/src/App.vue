@@ -79,12 +79,13 @@ onUnmounted(() => window.removeEventListener('keydown', handleGlobalKeydown));
         </MagicButton>
 
         <!-- Keyboard Hint - Only on Desktop -->
-        <KeyboardGuide
-          key-name="espace"
-          mode="single"
-          label="commencer"
-          class="hidden lg:flex opacity-60 hover:opacity-100 transition-opacity"
-        />
+        <div class="hidden lg:flex opacity-60 hover:opacity-100 transition-opacity">
+          <KeyboardGuide
+            key-name="espace"
+            mode="single"
+            label="commencer"
+          />
+        </div>
 
         <!-- Mobile Hint -->
         <p class="lg:hidden text-sky-600 animate-pulse-slow font-medium">
