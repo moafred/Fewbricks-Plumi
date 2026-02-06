@@ -15,11 +15,11 @@ defineEmits<{
 </script>
 
 <template>
-  <div class="bg-white/10 backdrop-blur-md border border-white/10 text-center animate-fade-in p-12 w-full max-w-lg rounded-2xl">
-    <h2 class="text-4xl font-bold mb-4" :class="titleColor ?? 'text-magic-400'">
+  <div class="bg-white/90 backdrop-blur-md border border-sky-200 text-center animate-fade-in p-12 w-full max-w-lg rounded-2xl shadow-sm">
+    <h2 class="text-4xl font-bold mb-4" :class="titleColor ?? 'text-gold-500'">
       {{ title }}
     </h2>
-    <p class="text-2xl text-white mb-8">Score: {{ score }} / {{ total }}</p>
+    <p class="text-2xl text-stone-600 mb-8">Score: {{ score }} / {{ total }}</p>
 
     <div class="flex justify-center gap-4">
       <MagicButton variant="secondary" @click="$emit('home')">Retour</MagicButton>

@@ -47,7 +47,7 @@ onUnmounted(() => window.removeEventListener('keydown', handleGlobalKeydown));
 </script>
 
 <template>
-  <div class="min-h-screen text-white transition-[background] duration-700" :class="bgClass">
+  <div class="min-h-screen text-stone-800 transition-[background] duration-700" :class="bgClass">
     <!-- Home screen -->
     <div
       v-if="screen === 'home'"
@@ -58,13 +58,12 @@ onUnmounted(() => window.removeEventListener('keydown', handleGlobalKeydown));
         <img
           src="/plumi-landing.png"
           alt="Plumi Mascot"
-          class="w-48 md:w-64 h-48 md:h-64 animate-float drop-shadow-[0_0_30px_rgba(251,191,36,0.5)] mb-2 mix-blend-screen"
-          style="mask-image: radial-gradient(circle, black 40%, transparent 70%); -webkit-mask-image: radial-gradient(circle, black 40%, transparent 70%);"
+          class="w-48 md:w-64 h-48 md:h-64 animate-float drop-shadow-[0_0_30px_rgba(227,193,111,0.4)] mb-2"
         />
-        <h1 class="text-6xl md:text-8xl font-bold text-magic-300 drop-shadow-2xl">
+        <h1 class="text-6xl md:text-8xl font-bold text-gold-500 drop-shadow-2xl">
           Plumi
         </h1>
-        <p class="text-2xl md:text-3xl text-royal-200 font-medium">
+        <p class="text-2xl md:text-3xl text-sky-600 font-medium">
           La Plume Magique
         </p>
       </div>
@@ -88,7 +87,7 @@ onUnmounted(() => window.removeEventListener('keydown', handleGlobalKeydown));
         />
 
         <!-- Mobile Hint -->
-        <p class="lg:hidden text-royal-200 animate-pulse-slow font-medium">
+        <p class="lg:hidden text-sky-600 animate-pulse-slow font-medium">
           Appuie sur le bouton pour commencer
         </p>
       </div>

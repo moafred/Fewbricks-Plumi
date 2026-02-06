@@ -28,18 +28,18 @@ function handleTap() {
     :class="[
       // Base color per verb
       verbId === 'etre'
-        ? 'bg-enchant-600 border-enchant-400 text-white'
-        : 'bg-magic-500 border-magic-300 text-night-900',
+        ? 'bg-meadow-300 border-meadow-500 text-meadow-900'
+        : 'bg-gold-300 border-gold-500 text-gold-900',
       // State modifiers
       {
         'opacity-50 cursor-default': state === 'idle',
-        'cursor-pointer animate-bounce-gentle shadow-lg shadow-white/20 hover:scale-105 active:scale-95':
+        'cursor-pointer animate-bounce-gentle shadow-lg shadow-stone-300/30 hover:scale-105 active:scale-95':
           state === 'waiting' && !focused,
-        'cursor-pointer shadow-xl scale-115 ring-4 ring-white':
+        'cursor-pointer shadow-xl scale-115 ring-4 ring-gold-400':
           state === 'waiting' && focused,
-        'ring-4 ring-enchant-300 scale-110 animate-celebrate': state === 'correct',
+        'ring-4 ring-meadow-400 scale-110 animate-celebrate': state === 'correct',
         'opacity-60 scale-95': state === 'incorrect',
-        'ring-4 ring-white/60 animate-bounce-gentle': state === 'reveal',
+        'ring-4 ring-stone-400/60 animate-bounce-gentle': state === 'reveal',
       },
     ]"
     :disabled="state !== 'waiting'"

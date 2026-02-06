@@ -150,13 +150,13 @@ useBackNavigation(handleBack, computed(() => !showQuitConfirmation.value));
     <header class="fixed top-0 left-0 right-0 z-10 flex items-center justify-between px-4 py-3">
       <button
         @click="handleBack"
-        class="p-2 text-white/60 hover:text-white transition-colors"
+        class="p-2 text-stone-400 hover:text-stone-700 transition-colors"
       >
         <CrossIcon :size="32" />
       </button>
 
-      <div v-if="!showingNarrative && !showingResult" class="flex items-center gap-2 px-4 py-2 bg-black/20 rounded-full backdrop-blur-sm">
-        <span class="text-magic-300 font-bold">
+      <div v-if="!showingNarrative && !showingResult" class="flex items-center gap-2 px-4 py-2 bg-white/70 rounded-full backdrop-blur-sm shadow-sm">
+        <span class="text-gold-600 font-bold">
           Étape {{ currentStepIndex + 1 }} / {{ steps.length }}
         </span>
       </div>
@@ -166,27 +166,28 @@ useBackNavigation(handleBack, computed(() => !showQuitConfirmation.value));
 
     <!-- Écran narratif -->
     <div v-if="showingNarrative" class="flex flex-col items-center justify-center gap-6 animate-fade-in px-8">
-      <h2 class="text-2xl md:text-4xl font-bold text-magic-300 text-center">
+      <h2 class="text-2xl md:text-4xl font-bold text-gold-500 text-center">
         {{ chapter?.title }}
       </h2>
-      <p class="text-xl md:text-2xl text-royal-200 text-center font-learning max-w-lg">
+      <p class="text-xl md:text-2xl text-sky-600 text-center font-learning max-w-lg">
         {{ chapter?.narrative }}
       </p>
     </div>
 
     <!-- Mini-jeu en cours -->
-    <component
-      v-else-if="currentStep && currentComponent && !showingResult"
-      :is="currentComponent"
-      :key="stepKey"
-      :tense="stepTense"
-      :count="currentStep.questionCount"
-      :verbs="currentStep.verbs ?? chapter?.verbs"
-      :pronouns="currentStep.pronouns"
-      embedded
-      @step-complete="onStepComplete"
-      @home="handleBack"
-    />
+    <div v-else-if="currentStep && currentComponent && !showingResult" class="pt-16 w-full flex-1">
+      <component
+        :is="currentComponent"
+        :key="stepKey"
+        :tense="stepTense"
+        :count="currentStep.questionCount"
+        :verbs="currentStep.verbs ?? chapter?.verbs"
+        :pronouns="currentStep.pronouns"
+        embedded
+        @step-complete="onStepComplete"
+        @home="handleBack"
+      />
+    </div>
 
     <!-- Résultat du chapitre -->
     <div v-else-if="showingResult" class="flex-1 flex items-center justify-center w-full">

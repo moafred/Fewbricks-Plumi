@@ -20,15 +20,15 @@ const book = computed<Book | undefined>(() => BOOKS.find((b) => b.id === props.b
 const chapters = computed<Chapter[]>(() => getChaptersForBook(props.bookId));
 
 const colorClasses: Record<string, { accent: string; bg: string; border: string; glow: string }> = {
-  royal: { accent: 'text-royal-400', bg: 'bg-royal-500/20', border: 'border-royal-400/30', glow: 'shadow-royal-400/40' },
-  enchant: { accent: 'text-enchant-400', bg: 'bg-enchant-500/20', border: 'border-enchant-400/30', glow: 'shadow-enchant-400/40' },
-  magic: { accent: 'text-magic-400', bg: 'bg-magic-500/20', border: 'border-magic-400/30', glow: 'shadow-magic-400/40' },
-  gentle: { accent: 'text-gentle-400', bg: 'bg-gentle-500/20', border: 'border-gentle-400/30', glow: 'shadow-gentle-400/40' },
-  forest: { accent: 'text-forest-400', bg: 'bg-forest-500/20', border: 'border-forest-400/30', glow: 'shadow-forest-400/40' },
-  dawn: { accent: 'text-magic-400', bg: 'bg-magic-500/20', border: 'border-magic-400/30', glow: 'shadow-magic-400/40' },
+  sky: { accent: 'text-sky-600', bg: 'bg-sky-100/60', border: 'border-sky-300', glow: 'shadow-sky-400/40' },
+  meadow: { accent: 'text-meadow-600', bg: 'bg-meadow-100/60', border: 'border-meadow-300', glow: 'shadow-meadow-400/40' },
+  gold: { accent: 'text-gold-500', bg: 'bg-gold-100/60', border: 'border-gold-300', glow: 'shadow-gold-400/40' },
+  coral: { accent: 'text-coral-500', bg: 'bg-coral-100/60', border: 'border-coral-300', glow: 'shadow-coral-400/40' },
+  moss: { accent: 'text-moss-600', bg: 'bg-moss-100/60', border: 'border-moss-300', glow: 'shadow-moss-400/40' },
+  dawn: { accent: 'text-gold-500', bg: 'bg-gold-100/60', border: 'border-gold-300', glow: 'shadow-gold-400/40' },
 };
 
-const colors = computed(() => colorClasses[book.value?.color ?? 'royal']);
+const colors = computed(() => colorClasses[book.value?.color ?? 'sky']);
 
 function chapterStars(chapterId: number): number {
   return progressStore.getStars(chapterId);
@@ -44,17 +44,17 @@ function isRecommended(chapterId: number): boolean {
     <!-- Header -->
     <header class="flex items-center gap-4">
       <button
-        class="p-3 rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 transition-all"
+        class="p-3 rounded-xl bg-white/70 hover:bg-white/90 active:scale-95 transition-all shadow-sm"
         aria-label="Retour aux livres"
         @click="$emit('back')"
       >
-        <HomeIcon :size="28" class="text-royal-200" />
+        <HomeIcon :size="28" class="text-sky-600" />
       </button>
       <div>
         <h1 class="text-2xl md:text-3xl font-bold" :class="colors.accent">
           {{ book.title }}
         </h1>
-        <p class="text-sm text-royal-200">{{ book.subtitle }}</p>
+        <p class="text-sm text-stone-500">{{ book.subtitle }}</p>
       </div>
     </header>
 
@@ -69,24 +69,23 @@ function isRecommended(chapterId: number): boolean {
         <div
           v-if="index > 0"
           class="w-1 h-8 rounded-full"
-          :class="chapterStars(chapter.id) > 0 ? colors.accent : 'bg-white/10'"
-          :style="chapterStars(chapter.id) > 0 ? {} : {}"
+          :class="chapterStars(chapter.id) > 0 ? colors.accent : 'bg-stone-200'"
         ></div>
 
         <!-- Carte chapitre -->
         <button
-          class="w-full p-6 rounded-2xl border backdrop-blur transition-all active:scale-[0.98]"
+          class="w-full p-6 rounded-2xl border backdrop-blur bg-white/90 shadow-sm transition-all active:scale-[0.98]"
           :class="[
             colors.bg,
             colors.border,
-            isRecommended(chapter.id) ? `shadow-lg ${colors.glow} ring-2 ring-magic-400/50` : '',
+            isRecommended(chapter.id) ? `shadow-lg ${colors.glow} ring-2 ring-gold-400/50` : '',
           ]"
           @click="$emit('play-chapter', chapter.id)"
         >
           <div class="flex items-center justify-between gap-4">
             <div class="flex-1 text-left">
-              <h3 class="text-lg font-bold text-white">{{ chapter.title }}</h3>
-              <p class="text-sm text-royal-200 mt-1">{{ chapter.narrative }}</p>
+              <h3 class="text-lg font-bold text-stone-800">{{ chapter.title }}</h3>
+              <p class="text-sm text-stone-500 mt-1">{{ chapter.narrative }}</p>
             </div>
 
             <!-- Étoiles -->
@@ -95,12 +94,12 @@ function isRecommended(chapterId: number): boolean {
                 <StarFilledIcon
                   v-if="i <= chapterStars(chapter.id)"
                   :size="24"
-                  class="text-magic-400"
+                  class="text-gold-400"
                 />
                 <StarEmptyIcon
                   v-else
                   :size="24"
-                  class="text-royal-400/30"
+                  class="text-stone-300"
                 />
               </template>
             </div>
@@ -111,7 +110,7 @@ function isRecommended(chapterId: number): boolean {
             v-if="isRecommended(chapter.id)"
             class="mt-3 flex justify-center"
           >
-            <span class="inline-block px-6 py-2 rounded-full bg-magic-500 text-white font-bold text-sm shadow-lg shadow-magic-500/30">
+            <span class="inline-block px-6 py-2 rounded-full bg-gold-400 text-stone-900 font-bold text-sm shadow-lg shadow-gold-400/30">
               Jouer
             </span>
           </div>

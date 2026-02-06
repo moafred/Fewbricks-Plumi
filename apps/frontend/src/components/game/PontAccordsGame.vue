@@ -108,16 +108,16 @@ const filledWord = computed(() => {
   return undefined;
 });
 
-// Classes CSS du trou selon la phase et le résultat (fond sombre)
+// Classes CSS du trou selon la phase et le résultat (fond clair)
 const gapClasses = computed(() => {
   if (phase.value === 'response' || phase.value === 'resolution') {
     if (lastResult.value === 'correct') {
-      return 'text-enchant-300 font-bold scale-110 transform border-enchant-400';
+      return 'text-meadow-600 font-bold scale-110 transform border-meadow-400';
     }
-    return 'text-gentle-300 border-gentle-400';
+    return 'text-coral-500 border-coral-400';
   }
   // Phase discovery / challenge : état idle
-  return 'border-forest-400 bg-forest-500/20';
+  return 'border-moss-400 bg-moss-100/40';
 });
 </script>
 
@@ -129,7 +129,7 @@ const gapClasses = computed(() => {
       label="Pont"
       :current="progress.current + 1"
       :total="progress.total"
-      color-class="text-forest-300"
+      color-class="text-moss-600"
       @back="handleBack"
     />
 
@@ -139,7 +139,7 @@ const gapClasses = computed(() => {
       title="Pont Complété !"
       :score="score"
       :total="progress.total"
-      title-color="text-forest-400"
+      title-color="text-moss-600"
       @home="$emit('home')"
       @replay="store.startGame()"
     />
@@ -148,7 +148,7 @@ const gapClasses = computed(() => {
     <template v-else-if="currentItem">
 
       <ChallengeCard hint="Complète le groupe nominal !">
-        <div class="flex flex-wrap items-baseline justify-center gap-x-3 gap-y-4 text-3xl md:text-5xl font-learning text-white">
+        <div class="flex flex-wrap items-baseline justify-center gap-x-3 gap-y-4 text-3xl md:text-5xl font-learning text-stone-800">
           <template v-for="(slot, i) in currentItem.slots" :key="i">
             <span v-if="i !== currentItem.targetSlotIndex">{{ slot.label }}</span>
             <div
@@ -162,7 +162,7 @@ const gapClasses = computed(() => {
           </template>
         </div>
         <template #footer>
-          <div class="text-forest-300 font-sans text-sm">
+          <div class="text-moss-600 font-sans text-sm">
             ({{ currentItem.hint }})
           </div>
         </template>

@@ -139,7 +139,7 @@ game.startGame(props.tense, props.count, {
     <template v-else>
       <!-- Header: tense badge + progress stars -->
       <div class="w-full max-w-md flex flex-col gap-2">
-        <span class="self-center px-3 py-1 rounded-full bg-royal-500/30 text-royal-200 text-sm font-medium">
+        <span class="self-center px-3 py-1 rounded-full bg-sky-100 text-sky-700 text-sm font-medium">
           {{ tenseLabels[game.currentTense] }}
         </span>
         <ProgressStars
@@ -149,12 +149,12 @@ game.startGame(props.tense, props.count, {
       </div>
 
       <!-- Instruction -->
-      <p class="text-lg md:text-xl text-royal-200 text-center">
+      <p class="text-lg md:text-xl text-stone-600 text-center">
         <template v-if="game.phase === 'discovery'">Le mot apparaît...</template>
         <template v-else-if="game.phase === 'challenge'">Dans quel chapeau ?</template>
         <template v-else-if="game.lastResult === 'correct'">Bien joué !</template>
         <template v-else>
-          C'est <strong class="text-enchant-300">{{ game.currentItem?.infinitive }}</strong>
+          C'est <strong class="text-meadow-600">{{ game.currentItem?.infinitive }}</strong>
         </template>
       </p>
 

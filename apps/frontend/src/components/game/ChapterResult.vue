@@ -22,7 +22,7 @@ const messages: Record<number, string> = {
 
 <template>
   <div class="chapter-result flex flex-col items-center justify-center gap-6 animate-celebrate">
-    <h2 class="text-3xl md:text-5xl font-bold text-magic-300">
+    <h2 class="text-3xl md:text-5xl font-bold text-gold-500">
       {{ messages[stars] }}
     </h2>
 
@@ -31,17 +31,17 @@ const messages: Record<number, string> = {
         <StarFilledIcon
           v-if="i <= stars"
           :size="48"
-          class="text-magic-400"
+          class="text-gold-400"
         />
         <StarEmptyIcon
           v-else
           :size="48"
-          class="text-royal-400/30"
+          class="text-stone-300"
         />
       </template>
     </div>
 
-    <p class="text-2xl md:text-3xl text-royal-200">
+    <p class="text-2xl md:text-3xl text-stone-500">
       {{ score }} / {{ total }}
     </p>
 

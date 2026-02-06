@@ -120,7 +120,7 @@ export interface Book {
   subtitle: string;
   tenses: Tense[];
   chapters: number[];
-  color: 'royal' | 'enchant' | 'magic' | 'gentle' | 'forest' | 'dawn';
+  color: 'sky' | 'meadow' | 'gold' | 'coral' | 'moss' | 'dawn';
   biome: BiomeId;
   isBonus?: boolean;
 }

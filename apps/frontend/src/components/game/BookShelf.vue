@@ -27,13 +27,13 @@ function bookMaxStars(bookId: number): number {
     <!-- Header -->
     <header class="flex items-center gap-4">
       <button
-        class="p-3 rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 transition-all"
+        class="p-3 rounded-xl bg-white/70 hover:bg-white/90 active:scale-95 transition-all shadow-sm"
         aria-label="Retour à l'accueil"
         @click="$emit('home')"
       >
-        <HomeIcon :size="28" class="text-royal-200" />
+        <HomeIcon :size="28" class="text-sky-600" />
       </button>
-      <h1 class="text-2xl md:text-3xl font-bold text-magic-300">
+      <h1 class="text-2xl md:text-3xl font-bold text-gold-500">
         Livres de Sorts
       </h1>
     </header>

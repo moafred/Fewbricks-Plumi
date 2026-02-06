@@ -28,28 +28,28 @@ const isIdle = computed(() => !props.filledWord && !props.showSolution);
 
 <template>
   <div
-    class="flex flex-wrap items-baseline justify-center gap-x-2 gap-y-4 text-3xl md:text-5xl font-learning text-white leading-normal text-center select-none"
+    class="flex flex-wrap items-baseline justify-center gap-x-2 gap-y-4 text-3xl md:text-5xl font-learning text-stone-800 leading-normal text-center select-none"
   >
     <!-- Before Gap -->
     <span class="whitespace-pre-wrap">{{ parts[0] }}</span>
 
     <!-- The Gap -->
     <div
-      class="relative inline-flex items-center justify-center min-w-[120px] px-3 py-1 transition-all duration-500"
+      class="relative inline-flex items-center justify-center min-w-[80px] md:min-w-[120px] px-3 py-1 transition-all duration-500"
       :class="[
-        // Idle state: Magic hole
+        // Idle state: Gold hole
         isIdle
-          ? 'border-b-4 border-magic-400 bg-magic-500/20 rounded-t-lg animate-sparkle'
+          ? 'border-b-4 border-gold-400 bg-gold-100/40 rounded-t-lg animate-sparkle'
           : '',
-        
+
         // Correct state: Green and bold
         (isCorrect || showSolution) && !isWrong
-          ? 'text-enchant-300 font-bold scale-110 transform'
+          ? 'text-meadow-600 font-bold scale-110 transform'
           : '',
-          
-        // Wrong state: Red and crossed out (optional, depends on game flow)
+
+        // Wrong state: Red and crossed out
         isWrong
-          ? 'text-gentle-300 line-through decoration-4 decoration-gentle-400'
+          ? 'text-coral-500 line-through decoration-4 decoration-coral-400'
           : ''
       ]"
     >
@@ -61,8 +61,8 @@ const isIdle = computed(() => !props.filledWord && !props.showSolution);
 
       <!-- Magic Particles (Idle) -->
       <template v-if="isIdle">
-        <SparkleIcon :size="16" class="absolute -top-2 -right-2 text-magic-300 animate-bounce-gentle" />
-        <SparkleIcon :size="16" class="absolute -bottom-2 -left-2 text-magic-300 animate-sparkle" />
+        <SparkleIcon :size="16" class="absolute -top-2 -right-2 text-gold-300 animate-bounce-gentle" />
+        <SparkleIcon :size="16" class="absolute -bottom-2 -left-2 text-gold-300 animate-sparkle" />
       </template>
     </div>
 

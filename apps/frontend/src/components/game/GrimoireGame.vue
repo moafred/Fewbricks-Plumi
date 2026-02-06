@@ -142,7 +142,7 @@ game.startGame(props.tense, props.count, {
     <template v-else>
       <!-- Header: tense badge + progress stars -->
       <div class="w-full max-w-md flex flex-col gap-2">
-        <span class="self-center px-3 py-1 rounded-full bg-royal-500/30 text-royal-200 text-sm font-medium">
+        <span class="self-center px-3 py-1 rounded-full bg-sky-100 text-sky-700 text-sm font-medium">
           {{ tenseLabels[game.currentTense] }}
         </span>
         <ProgressStars
@@ -152,12 +152,12 @@ game.startGame(props.tense, props.count, {
       </div>
 
       <!-- Instruction -->
-      <p class="text-xl md:text-2xl font-bold text-royal-100 text-center drop-shadow-sm">
+      <p class="text-xl md:text-2xl font-bold text-stone-700 text-center drop-shadow-sm">
         <template v-if="game.phase === 'discovery'">La formule apparaît...</template>
         <template v-else-if="game.phase === 'challenge'">Quelle est la bonne formule ?</template>
         <template v-else-if="game.lastResult === 'correct'">Bien joué !</template>
         <template v-else>
-          C'était <strong class="text-enchant-300">{{ game.correctForm }}</strong>
+          C'était <strong class="text-meadow-600">{{ game.correctForm }}</strong>
         </template>
       </p>
 

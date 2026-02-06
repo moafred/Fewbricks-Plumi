@@ -31,12 +31,12 @@ const emit = defineEmits<{
 }>();
 
 const store = usePotionStore();
-const { 
-  currentItem, 
-  phase, 
-  score, 
-  progress, 
-  lastResult, 
+const {
+  currentItem,
+  phase,
+  score,
+  progress,
+  lastResult,
   selectedChoice,
   isFinished
 } = storeToRefs(store);
@@ -130,7 +130,7 @@ const isGapCorrect = computed(() => !!gapWord.value);
       label="Potion"
       :current="progress.current + 1"
       :total="progress.total"
-      color-class="text-magic-300"
+      color-class="text-gold-500"
       @back="handleBack"
     />
 
@@ -155,7 +155,7 @@ const isGapCorrect = computed(() => !!gapWord.value);
           :is-wrong="false"
         />
         <template #footer>
-          <div class="text-royal-300 font-sans text-sm">
+          <div class="text-sky-600 font-sans text-sm">
             ({{ currentItem.infinitive }})
           </div>
         </template>

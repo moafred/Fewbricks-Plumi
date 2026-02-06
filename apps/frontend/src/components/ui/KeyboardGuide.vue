@@ -7,7 +7,7 @@ interface Props {
   size?: 'small' | 'large';
   label?: string;
   labelPosition?: 'right' | 'bottom';
-  theme?: 'default' | 'royal' | 'magic' | 'enchant';
+  theme?: 'default' | 'sky' | 'gold' | 'meadow';
   glow?: boolean;
 }
 
@@ -31,39 +31,36 @@ const sizeClasses = computed(() => {
   return isWideKey.value ? 'px-3 h-7 text-xs min-w-[28px]' : 'w-7 h-7 text-sm';
 });
 
-// Couleurs thématiques adaptées à Plumi
-// moon (Teal) -> enchant (Green/Emerald)
-// sun (Gold) -> magic (Gold)
-// glow (Purple) -> royal (Purple)
+// Couleurs thématiques adaptées au thème clair
 const themeClasses = computed(() => {
   switch (props.theme) {
-    case 'enchant':
+    case 'meadow':
       return {
-        bg: 'bg-enchant-500/25',
-        border: 'border-enchant-400/60',
-        text: 'text-enchant-200',
-        glow: 'shadow-[0_0_12px_rgba(52,211,153,0.4)]', // green-400 equivalent approx
+        bg: 'bg-meadow-100',
+        border: 'border-meadow-400/60',
+        text: 'text-meadow-700',
+        glow: 'shadow-[0_0_12px_rgba(79,196,142,0.3)]',
       };
-    case 'magic':
+    case 'gold':
       return {
-        bg: 'bg-magic-500/25',
-        border: 'border-magic-400/60',
-        text: 'text-magic-200',
-        glow: 'shadow-[0_0_12px_rgba(251,191,36,0.4)]', // magic-400
+        bg: 'bg-gold-100',
+        border: 'border-gold-400/60',
+        text: 'text-gold-700',
+        glow: 'shadow-[0_0_12px_rgba(212,166,74,0.3)]',
       };
-    case 'royal':
+    case 'sky':
       return {
-        bg: 'bg-royal-500/25',
-        border: 'border-royal-400/60',
-        text: 'text-royal-200',
-        glow: 'shadow-[0_0_12px_rgba(139,92,246,0.3)]', // royal-500
+        bg: 'bg-sky-100',
+        border: 'border-sky-400/60',
+        text: 'text-sky-700',
+        glow: 'shadow-[0_0_12px_rgba(143,177,233,0.3)]',
       };
     default:
       return {
-        bg: 'bg-white/20',
-        border: 'border-white/50',
-        text: 'text-white/90',
-        glow: 'shadow-[0_0_10px_rgba(255,255,255,0.2)]',
+        bg: 'bg-stone-100',
+        border: 'border-stone-300',
+        text: 'text-stone-600',
+        glow: 'shadow-[0_0_10px_rgba(99,108,126,0.15)]',
       };
   }
 });

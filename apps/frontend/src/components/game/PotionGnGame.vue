@@ -120,7 +120,7 @@ const isGapCorrect = computed(() => !!gapWord.value);
       label="Potion GN"
       :current="progress.current + 1"
       :total="progress.total"
-      color-class="text-forest-300"
+      color-class="text-moss-600"
       @back="handleBack"
     />
 
@@ -130,7 +130,7 @@ const isGapCorrect = computed(() => !!gapWord.value);
       title="Potion GN Complétée !"
       :score="score"
       :total="progress.total"
-      title-color="text-forest-400"
+      title-color="text-moss-600"
       @home="$emit('home')"
       @replay="store.startGame()"
     />
@@ -146,7 +146,7 @@ const isGapCorrect = computed(() => !!gapWord.value);
           :is-wrong="false"
         />
         <template #footer>
-          <div class="text-forest-300 font-sans text-sm">
+          <div class="text-moss-600 font-sans text-sm">
             ({{ currentItem.hint }})
           </div>
         </template>

@@ -22,17 +22,17 @@ defineProps<{
       <StarFilledIcon
         v-if="result === 'correct'"
         :size="24"
-        class="text-magic-400"
+        class="text-gold-400"
       />
       <CrossIcon
         v-else-if="result === 'incorrect'"
         :size="24"
-        class="text-gentle-400"
+        class="text-coral-400"
       />
       <StarEmptyIcon
         v-else
         :size="24"
-        :class="i === current ? 'text-white/80' : 'text-white/30'"
+        :class="i === current ? 'text-stone-500' : 'text-stone-300'"
       />
     </span>
   </div>

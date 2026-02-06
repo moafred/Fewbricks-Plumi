@@ -317,9 +317,9 @@ Les 5 mini-jeux supportent un mode `embedded` pour fonctionner comme étape dans
     - Composants existants à réutiliser : `ChoiceButton`, `ChallengeCard`, `GameHeader`, `GameFinished`.
 
 14. **Zéro Couleur Générique** :
-    - Utiliser exclusivement les tokens Plumi : `royal-*`, `magic-*`, `enchant-*`, `gentle-*`, `forest-*`, `night-*`.
+    - Utiliser exclusivement les tokens Plumi : `sky-*`, `gold-*`, `meadow-*`, `coral-*`, `moss-*`, `stone-*`.
     - Interdit : `purple-*`, `indigo-*`, `amber-*`, `bg-white` (sauf `bg-white/opacity`).
-    - Fond des cartes de jeu : `bg-night-800/90 backdrop-blur-md border border-white/10` (jamais `bg-white`).
+    - Fond des cartes de jeu : `bg-white/90 backdrop-blur-md border border-sky-200 shadow-sm` (thème clair).
 
 15. **Keyboard = Desktop Only** :
     - `KeyboardGuide` et raccourcis clavier sont réservés au desktop (`hidden lg:flex`).

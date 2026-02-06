@@ -11,85 +11,85 @@
 }
 
 @theme {
-  /* Couleurs — Thème Royaume des Mots (magique, chaleureux) */
+  /* Couleurs — Palette Laputa (Château dans le Ciel) — thème clair */
 
-  /* Violet royal — couleur principale */
-  --color-royal-50: #f5f3ff;
-  --color-royal-100: #ede9fe;
-  --color-royal-200: #ddd6fe;
-  --color-royal-300: #c4b5fd;
-  --color-royal-400: #a78bfa;
-  --color-royal-500: #8b5cf6;
-  --color-royal-600: #7c3aed;
-  --color-royal-700: #6d28d9;
-  --color-royal-800: #5b21b6;
-  --color-royal-900: #4c1d95;
-  --color-royal-950: #2e1065;
+  /* Bleu ciel — marque, navigation, titres */
+  --color-sky-50: #f0f6fe;
+  --color-sky-100: #ddeafc;
+  --color-sky-200: #c3dbfa;
+  --color-sky-300: #9ac4f6;
+  --color-sky-400: #8fb1e9;
+  --color-sky-500: #5a8fd4;
+  --color-sky-600: #4573b8;
+  --color-sky-700: #3a5f9a;
+  --color-sky-800: #2e4d7d;
+  --color-sky-900: #283f66;
+  --color-sky-950: #1a2940;
 
-  /* Or magique — accents, récompenses, étoiles */
-  --color-magic-50: #fffbeb;
-  --color-magic-100: #fef3c7;
-  --color-magic-200: #fde68a;
-  --color-magic-300: #fcd34d;
-  --color-magic-400: #fbbf24;
-  --color-magic-500: #f59e0b;
-  --color-magic-600: #d97706;
-  --color-magic-700: #b45309;
-  --color-magic-800: #92400e;
-  --color-magic-900: #78350f;
-  --color-magic-950: #451a03;
+  /* Or chaud — récompenses, étoiles, CTA */
+  --color-gold-50: #fdf9ef;
+  --color-gold-100: #faf0d5;
+  --color-gold-200: #f4e0a8;
+  --color-gold-300: #e3c16f;
+  --color-gold-400: #d4a64a;
+  --color-gold-500: #c08d2f;
+  --color-gold-600: #a67224;
+  --color-gold-700: #8e5e0e;
+  --color-gold-800: #724b14;
+  --color-gold-900: #5e3d16;
+  --color-gold-950: #362009;
 
-  /* Émeraude — succès, nature, croissance */
-  --color-enchant-50: #ecfdf5;
-  --color-enchant-100: #d1fae5;
-  --color-enchant-200: #a7f3d0;
-  --color-enchant-300: #6ee7b7;
-  --color-enchant-400: #34d399;
-  --color-enchant-500: #10b981;
-  --color-enchant-600: #059669;
-  --color-enchant-700: #047857;
-  --color-enchant-800: #065f46;
-  --color-enchant-900: #064e3b;
-  --color-enchant-950: #022c22;
+  /* Vert sauge — succès, bonne réponse */
+  --color-meadow-50: #f0faf5;
+  --color-meadow-100: #d6f3e5;
+  --color-meadow-200: #afe7cc;
+  --color-meadow-300: #85deb2;
+  --color-meadow-400: #4fc48e;
+  --color-meadow-500: #2da872;
+  --color-meadow-600: #1f8a5c;
+  --color-meadow-700: #1a6e4b;
+  --color-meadow-800: #18583d;
+  --color-meadow-900: #154833;
+  --color-meadow-950: #0a281c;
 
-  /* Rose doux — encouragement, erreur douce */
-  --color-gentle-50: #fff1f2;
-  --color-gentle-100: #ffe4e6;
-  --color-gentle-200: #fecdd3;
-  --color-gentle-300: #fda4af;
-  --color-gentle-400: #fb7185;
-  --color-gentle-500: #f43f5e;
-  --color-gentle-600: #e11d48;
-  --color-gentle-700: #be123c;
-  --color-gentle-800: #9f1239;
-  --color-gentle-900: #881337;
-  --color-gentle-950: #4c0519;
+  /* Terracotta — erreur douce, encouragement */
+  --color-coral-50: #fef3f1;
+  --color-coral-100: #fee4df;
+  --color-coral-200: #fecdc5;
+  --color-coral-300: #f5a898;
+  --color-coral-400: #e07761;
+  --color-coral-500: #c95d45;
+  --color-coral-600: #b44934;
+  --color-coral-700: #963b2a;
+  --color-coral-800: #7c3326;
+  --color-coral-900: #672f25;
+  --color-coral-950: #38150f;
 
-  /* Forêt — grammaire, accords, teal mystique */
-  --color-forest-50: #f0fdfa;
-  --color-forest-100: #ccfbf1;
-  --color-forest-200: #99f6e4;
-  --color-forest-300: #5eead4;
-  --color-forest-400: #2dd4bf;
-  --color-forest-500: #14b8a6;
-  --color-forest-600: #0d9488;
-  --color-forest-700: #0f766e;
-  --color-forest-800: #115e59;
-  --color-forest-900: #134e4a;
-  --color-forest-950: #042f2e;
+  /* Vert forêt / mousse — grammaire, accords */
+  --color-moss-50: #f4f7ef;
+  --color-moss-100: #e5ecda;
+  --color-moss-200: #cddab9;
+  --color-moss-300: #aec28e;
+  --color-moss-400: #8daa68;
+  --color-moss-500: #6a8252;
+  --color-moss-600: #546a3f;
+  --color-moss-700: #425234;
+  --color-moss-800: #37432d;
+  --color-moss-900: #303a28;
+  --color-moss-950: #181f13;
 
-  /* Nuit — arrière-plans sombres */
-  --color-night-50: #f8fafc;
-  --color-night-100: #f1f5f9;
-  --color-night-200: #e2e8f0;
-  --color-night-300: #cbd5e1;
-  --color-night-400: #94a3b8;
-  --color-night-500: #64748b;
-  --color-night-600: #475569;
-  --color-night-700: #334155;
-  --color-night-800: #1e293b;
-  --color-night-900: #0f172a;
-  --color-night-950: #020617;
+  /* Gris-pierre — texte, structure, fond */
+  --color-stone-50: #f7f8f9;
+  --color-stone-100: #edeef1;
+  --color-stone-200: #d8dbe0;
+  --color-stone-300: #b6bbc5;
+  --color-stone-400: #8e95a4;
+  --color-stone-500: #636c7e;
+  --color-stone-600: #525968;
+  --color-stone-700: #444956;
+  --color-stone-800: #3b3f49;
+  --color-stone-900: #343740;
+  --color-stone-950: #22242a;
 
   /* Fonts — 2 typos max : Lexend (UI) + Belle Allure GS (pédago) */
   --font-sans: 'Lexend', system-ui, sans-serif;
@@ -144,8 +144,8 @@
   }
 
   @keyframes glow {
-    0%, 100% { box-shadow: 0 0 10px rgba(251,191,36,0.2); }
-    50% { box-shadow: 0 0 25px rgba(251,191,36,0.5); }
+    0%, 100% { box-shadow: 0 0 10px rgba(227,193,111,0.2); }
+    50% { box-shadow: 0 0 25px rgba(227,193,111,0.5); }
   }
 }
 
@@ -154,58 +154,56 @@ body {
   min-height: 100vh;
 }
 
-/* --- Biomes — Fonds atmosphériques par livre --- */
+/* --- Biomes — Fonds atmosphériques clairs par livre --- */
 
 .biome-home {
   background:
-    radial-gradient(ellipse at 50% 30%, rgba(139,92,246,0.1) 0%, transparent 60%),
-    radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(2,6,23,0.4) 100%),
-    linear-gradient(180deg, #020617 0%, #2e1065 40%, #1e1065 60%, #0f172a 100%);
+    radial-gradient(ellipse at 50% 30%, rgba(143,177,233,0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 80%, rgba(227,193,111,0.1) 0%, transparent 50%),
+    linear-gradient(180deg, #f0f6fe 0%, #edeef1 50%, #f7f8f9 100%);
 }
 
 .biome-jardin {
   background:
-    radial-gradient(ellipse at 30% 70%, rgba(16,185,129,0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 70% 30%, rgba(52,211,153,0.08) 0%, transparent 40%),
-    radial-gradient(ellipse at 50% 100%, rgba(6,78,59,0.3) 0%, transparent 50%),
-    linear-gradient(180deg, #020617 0%, #042f2e 40%, #064e3b 70%, #0f172a 100%);
+    radial-gradient(ellipse at 30% 70%, rgba(133,222,178,0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 30%, rgba(79,196,142,0.12) 0%, transparent 40%),
+    linear-gradient(180deg, #f0faf5 0%, #d6f3e5 40%, #f0faf5 100%);
 }
 
 .biome-fondations {
   background:
-    radial-gradient(ellipse at 40% 30%, rgba(139,92,246,0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 60% 80%, rgba(109,40,217,0.08) 0%, transparent 40%),
-    linear-gradient(180deg, #020617 0%, #2e1065 35%, #4c1d95 60%, #0f172a 100%);
+    radial-gradient(ellipse at 40% 30%, rgba(143,177,233,0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 80%, rgba(99,108,126,0.08) 0%, transparent 40%),
+    linear-gradient(180deg, #f0f6fe 0%, #ddeafc 35%, #f7f8f9 100%);
 }
 
 .biome-clairiere {
   background:
-    radial-gradient(ellipse at 25% 60%, rgba(45,212,191,0.1) 0%, transparent 50%),
-    radial-gradient(ellipse at 75% 40%, rgba(20,184,166,0.07) 0%, transparent 45%),
-    radial-gradient(ellipse at 50% 90%, rgba(4,47,46,0.4) 0%, transparent 50%),
-    linear-gradient(180deg, #020617 0%, #042f2e 30%, #134e4a 55%, #0f172a 100%);
+    radial-gradient(ellipse at 25% 60%, rgba(106,130,82,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 75% 40%, rgba(133,222,178,0.1) 0%, transparent 45%),
+    linear-gradient(180deg, #f4f7ef 0%, #e5ecda 40%, #f7f8f9 100%);
 }
 
 .biome-futur {
   background:
-    radial-gradient(ellipse at 50% 85%, rgba(251,191,36,0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 30% 50%, rgba(245,158,11,0.06) 0%, transparent 50%),
-    linear-gradient(180deg, #020617 0%, #1e293b 30%, #451a03 65%, #78350f 90%, #0f172a 100%);
+    radial-gradient(ellipse at 50% 85%, rgba(227,193,111,0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 30% 50%, rgba(212,166,74,0.1) 0%, transparent 50%),
+    linear-gradient(180deg, #fdf9ef 0%, #faf0d5 40%, #f7f8f9 100%);
 }
 
 .biome-brumes {
   background:
-    radial-gradient(ellipse at 40% 50%, rgba(196,181,253,0.1) 0%, transparent 50%),
-    radial-gradient(ellipse at 60% 70%, rgba(167,139,250,0.06) 0%, transparent 45%),
-    linear-gradient(180deg, #0f172a 0%, rgba(76,29,149,0.3) 40%, rgba(46,16,101,0.5) 70%, #0f172a 100%);
+    radial-gradient(ellipse at 40% 50%, rgba(143,177,233,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 70%, rgba(182,187,197,0.1) 0%, transparent 45%),
+    linear-gradient(180deg, #f0f6fe 0%, #edeef1 40%, #d8dbe0 70%, #f7f8f9 100%);
 }
 
 .biome-flux {
   background:
-    radial-gradient(ellipse at 20% 30%, rgba(251,191,36,0.08) 0%, transparent 40%),
-    radial-gradient(ellipse at 80% 70%, rgba(16,185,129,0.08) 0%, transparent 40%),
-    radial-gradient(ellipse at 50% 50%, rgba(139,92,246,0.1) 0%, transparent 50%),
-    linear-gradient(180deg, #020617 0%, #2e1065 30%, #042f2e 50%, #451a03 70%, #0f172a 100%);
+    radial-gradient(ellipse at 20% 30%, rgba(227,193,111,0.12) 0%, transparent 40%),
+    radial-gradient(ellipse at 80% 70%, rgba(133,222,178,0.1) 0%, transparent 40%),
+    radial-gradient(ellipse at 50% 50%, rgba(143,177,233,0.12) 0%, transparent 50%),
+    linear-gradient(180deg, #f0f6fe 0%, #fdf9ef 30%, #f0faf5 55%, #f7f8f9 100%);
 }
 
 /* --- Spell Burst — Célébration bonne réponse --- */
@@ -248,7 +246,7 @@ body {
   .biome-futur,
   .biome-brumes,
   .biome-flux {
-    background: linear-gradient(180deg, #020617 0%, #2e1065 50%, #0f172a 100%);
+    background: linear-gradient(180deg, #f0f6fe 0%, #edeef1 50%, #f7f8f9 100%);
   }
 
   *,

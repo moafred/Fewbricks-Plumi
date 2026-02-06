@@ -16,7 +16,7 @@ export const BOOKS: Book[] = [
     subtitle: 'Les sorts fondamentaux',
     tenses: ['present'],
     chapters: [4, 5, 6],
-    color: 'royal',
+    color: 'sky',
     biome: 'fondations',
   },
   {
@@ -25,7 +25,7 @@ export const BOOKS: Book[] = [
     subtitle: 'La Forêt murmure',
     tenses: ['present'],
     chapters: [7, 8, 9],
-    color: 'forest',
+    color: 'moss',
     biome: 'clairiere',
   },
   {
@@ -34,7 +34,7 @@ export const BOOKS: Book[] = [
     subtitle: "L'horizon s'ouvre",
     tenses: ['futur'],
     chapters: [10, 11, 12],
-    color: 'enchant',
+    color: 'gold',
     biome: 'futur',
   },
   {
@@ -43,7 +43,7 @@ export const BOOKS: Book[] = [
     subtitle: 'Les souvenirs dansent',
     tenses: ['imparfait'],
     chapters: [13, 14, 15],
-    color: 'magic',
+    color: 'coral',
     biome: 'brumes',
   },
   {
@@ -52,7 +52,7 @@ export const BOOKS: Book[] = [
     subtitle: 'Bonus',
     tenses: ['present', 'futur', 'imparfait', 'passe_compose'],
     chapters: [16, 17, 18],
-    color: 'gentle',
+    color: 'coral',
     biome: 'flux',
     isBonus: true,
   },

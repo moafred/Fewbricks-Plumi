@@ -5,7 +5,7 @@ withDefaults(
     description: string;
     accentColor?: string;
   }>(),
-  { accentColor: 'text-magic-300' }
+  { accentColor: 'text-gold-500' }
 );
 
 defineEmits<{
@@ -15,7 +15,7 @@ defineEmits<{
 
 <template>
   <button
-    class="game-card flex flex-col items-center gap-4 p-8 rounded-2xl bg-white/10 backdrop-blur border border-white/10 hover:bg-white/15 active:scale-95 transition-all text-left"
+    class="game-card flex flex-col items-center gap-4 p-8 rounded-2xl bg-white/80 backdrop-blur border border-sky-200 hover:bg-white/90 active:scale-95 transition-all text-left shadow-sm"
     @click="$emit('click')"
   >
     <slot name="icon" />
@@ -25,7 +25,7 @@ defineEmits<{
     >
       {{ title }}
     </h2>
-    <p class="text-base text-royal-200 text-center">
+    <p class="text-base text-stone-500 text-center">
       {{ description }}
     </p>
   </button>
