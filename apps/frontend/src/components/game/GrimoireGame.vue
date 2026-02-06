@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch, onUnmounted } from 'vue';
-import type { Tense } from '@plumi/shared';
+import type { Tense, VerbId, Pronoun, AnswerResult } from '@plumi/shared';
 import { useGrimoireStore } from '@/stores/grimoire';
 import { useKeyboardNavigation, useBackNavigation } from '@/composables';
 import SpellChoice from './SpellChoice.vue';
@@ -10,10 +10,21 @@ import WordCard from './WordCard.vue';
 import ProgressStars from './ProgressStars.vue';
 import GameResult from './GameResult.vue';
 
-const props = withDefaults(defineProps<{ tense?: Tense }>(), { tense: 'present' });
+const props = withDefaults(defineProps<{
+  tense?: Tense;
+  embedded?: boolean;
+  count?: number;
+  verbs?: VerbId[];
+  pronouns?: Pronoun[];
+}>(), {
+  tense: 'present',
+  embedded: false,
+  count: 10,
+});
 
 const emit = defineEmits<{
   home: [];
+  'step-complete': [payload: { score: number; total: number; results: (AnswerResult | null)[] }];
 }>();
 
 const game = useGrimoireStore();
@@ -91,13 +102,32 @@ function choiceState(choice: string): SpellState {
   return 'idle';
 }
 
-game.startGame(props.tense);
+// Emettre step-complete en mode embedded
+if (props.embedded) {
+  watch(
+    () => game.isFinished,
+    (finished) => {
+      if (finished) {
+        emit('step-complete', {
+          score: game.score,
+          total: game.items.length,
+          results: [...game.results],
+        });
+      }
+    },
+  );
+}
+
+game.startGame(props.tense, props.count, {
+  verbs: props.verbs,
+  pronouns: props.pronouns,
+});
 </script>
 
 <template>
   <div class="grimoire-game flex flex-col items-center justify-between min-h-screen px-4 py-6 gap-4">
     <!-- Finished: show results -->
-    <template v-if="game.isFinished">
+    <template v-if="game.isFinished && !embedded">
       <div class="flex-1 flex items-center justify-center w-full">
         <GameResult
           :score="game.score"

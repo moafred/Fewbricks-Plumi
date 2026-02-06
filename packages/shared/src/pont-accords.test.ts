@@ -1,6 +1,15 @@
 import { describe, it, expect } from 'vitest';
 import { generatePontAccordsItems } from './pont-accords.js';
 import type { PontAccordsItem } from './pont-accords.js';
+import type { Gender, GrammaticalNumber } from './types.js';
+import {
+  ADJECTIVES,
+  DETERMINERS,
+  NOUNS,
+  getAdjectiveForm,
+  getNounForm,
+  getDeterminerForm,
+} from './vocabulary.js';
 
 describe('generatePontAccordsItems', () => {
   describe('basic generation', () => {
@@ -238,6 +247,81 @@ describe('generatePontAccordsItems', () => {
       items.forEach((item) => {
         expect(item.id).toMatch(/^pont-(arbre|fleur|soleil|lune|etoile|riviere|montagne|foret)-/);
         expect(item.targetKind).toBe('noun');
+      });
+    });
+  });
+
+  describe('distractors must break gender/number agreement', () => {
+    function parseHint(hint: string): { gender: Gender; number: GrammaticalNumber } {
+      const [g, n] = hint.split(' ');
+      return {
+        gender: g === 'masculin' ? 'masculine' : 'feminine',
+        number: n === 'singulier' ? 'singular' : 'plural',
+      };
+    }
+
+    it('adjective choices: only correctAnswer has valid agreement', () => {
+      const items = generatePontAccordsItems(50, { targetKinds: ['adjective'] });
+      expect(items.length).toBeGreaterThan(0);
+
+      items.forEach((item) => {
+        const { gender, number } = parseHint(item.hint);
+
+        // Toutes les formes d'adjectifs valides à ce genre/nombre
+        const validForms = new Set(ADJECTIVES.map((a) => getAdjectiveForm(a, gender, number)));
+
+        const distractors = item.choices.filter((c) => c !== item.correctAnswer);
+        distractors.forEach((d) => {
+          expect(
+            validForms.has(d),
+            `"${d}" est un adjectif ${item.hint} valide — ne devrait pas être un distracteur pour "${item.nounPhrase}"`,
+          ).toBe(false);
+        });
+      });
+    });
+
+    it('determiner choices: only correctAnswer has valid agreement', () => {
+      const items = generatePontAccordsItems(50, { targetKinds: ['determiner'] });
+      expect(items.length).toBeGreaterThan(0);
+
+      items.forEach((item) => {
+        const { gender, number } = parseHint(item.hint);
+        const nextWord = item.slots[1].label;
+
+        // Toutes les formes de déterminants valides dans ce contexte
+        const validForms = new Set(
+          DETERMINERS.map((d) => getDeterminerForm(d, gender, number, nextWord)),
+        );
+
+        const distractors = item.choices.filter((c) => c !== item.correctAnswer);
+        distractors.forEach((d) => {
+          expect(
+            validForms.has(d),
+            `"${d}" est un déterminant ${item.hint} valide — ne devrait pas être un distracteur`,
+          ).toBe(false);
+        });
+      });
+    });
+
+    it('noun choices: only correctAnswer has valid agreement', () => {
+      const items = generatePontAccordsItems(50, { targetKinds: ['noun'] });
+      expect(items.length).toBeGreaterThan(0);
+
+      items.forEach((item) => {
+        const { gender, number } = parseHint(item.hint);
+
+        // Tous les noms du même genre au même nombre
+        const validForms = new Set(
+          NOUNS.filter((n) => n.gender === gender).map((n) => getNounForm(n, number)),
+        );
+
+        const distractors = item.choices.filter((c) => c !== item.correctAnswer);
+        distractors.forEach((d) => {
+          expect(
+            validForms.has(d),
+            `"${d}" est un nom ${item.hint} valide — ne devrait pas être un distracteur pour "${item.nounPhrase}"`,
+          ).toBe(false);
+        });
       });
     });
   });

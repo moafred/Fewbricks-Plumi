@@ -6,7 +6,14 @@ import {
   type VerbPotionItem,
   type GnPotionItem,
 } from './potion.js';
-import { NOUNS } from './vocabulary.js';
+import {
+  NOUNS,
+  ADJECTIVES,
+  DETERMINERS,
+  getAdjectiveForm,
+  getNounForm,
+  getDeterminerForm,
+} from './vocabulary.js';
 import { PRONOUNS, TENSES } from './types.js';
 
 describe('generatePotionItems — Verb Conjugation', () => {
@@ -423,5 +430,70 @@ describe('Edge cases and robustness', () => {
   it('VerbPotionItem sentence handles Je contraction correctly', () => {
     const items = generatePotionItems(['present'], 20);
     expect(items.length).toBeGreaterThan(0);
+  });
+});
+
+describe('generateGnPotionItems — distractors must break agreement', () => {
+  it('adjective choices: only correctForm has valid agreement', () => {
+    const items = generateGnPotionItems(50, { targetKinds: ['adjective'] });
+    expect(items.length).toBeGreaterThan(0);
+
+    items.forEach((item) => {
+      const validForms = new Set(ADJECTIVES.map((a) => getAdjectiveForm(a, item.gender, item.number)));
+
+      const distractors = item.choices.filter((c) => c !== item.correctForm);
+      distractors.forEach((d) => {
+        expect(
+          validForms.has(d),
+          `"${d}" est un adjectif ${item.hint} valide — ne devrait pas être un distracteur dans "${item.sentence}"`,
+        ).toBe(false);
+      });
+    });
+  });
+
+  it('determiner choices: only correctForm has valid agreement', () => {
+    const items = generateGnPotionItems(50, { targetKinds: ['determiner'] });
+    expect(items.length).toBeGreaterThan(0);
+
+    items.forEach((item) => {
+      const noun = NOUNS.find((n) => n.id === item.nounId);
+      const adj = ADJECTIVES.find((a) => a.id === item.adjectiveId);
+      if (!noun || !adj) throw new Error(`Unknown noun "${item.nounId}" or adjective "${item.adjectiveId}"`);
+
+      const nounForm = getNounForm(noun, item.number);
+      const adjForm = getAdjectiveForm(adj, noun.gender, item.number);
+      const nextWord = adj.preposed ? adjForm : nounForm;
+
+      const validForms = new Set(
+        DETERMINERS.map((d) => getDeterminerForm(d, item.gender, item.number, nextWord)),
+      );
+
+      const distractors = item.choices.filter((c) => c !== item.correctForm);
+      distractors.forEach((d) => {
+        expect(
+          validForms.has(d),
+          `"${d}" est un déterminant ${item.hint} valide — ne devrait pas être un distracteur`,
+        ).toBe(false);
+      });
+    });
+  });
+
+  it('noun choices: only correctForm has valid agreement', () => {
+    const items = generateGnPotionItems(50, { targetKinds: ['noun'] });
+    expect(items.length).toBeGreaterThan(0);
+
+    items.forEach((item) => {
+      const validForms = new Set(
+        NOUNS.filter((n) => n.gender === item.gender).map((n) => getNounForm(n, item.number)),
+      );
+
+      const distractors = item.choices.filter((c) => c !== item.correctForm);
+      distractors.forEach((d) => {
+        expect(
+          validForms.has(d),
+          `"${d}" est un nom ${item.hint} valide — ne devrait pas être un distracteur dans "${item.sentence}"`,
+        ).toBe(false);
+      });
+    });
   });
 });

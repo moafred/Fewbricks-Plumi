@@ -112,7 +112,7 @@ export function generatePontAccordsItems(
     const nounPhrase = slots.map((s) => s.label).join(detForm.endsWith("'") ? '' : ' ').replace("' ", "'");
 
     // Génération de distracteurs selon le type de cible
-    const distractors = generateDistractors(targetKind, correctAnswer, noun.gender, number, det, adj, noun);
+    const distractors = generateDistractors(targetKind, noun.gender, number, adj, noun);
     if (distractors.length < 3) continue;
 
     const choices = shuffle([correctAnswer, ...distractors.slice(0, 3)]);
@@ -136,58 +136,57 @@ export function generatePontAccordsItems(
 // DISTRACTEURS
 // ═══════════════════════════════════════════════════════════════════════════
 
+/**
+ * Génère des distracteurs qui ont TOUJOURS un mauvais accord genre/nombre.
+ * Approche : on construit l'ensemble des formes valides pour l'accord cible,
+ * puis on prend toutes les formes possibles SAUF celles qui sont valides.
+ * Cela gère les cas où une même forme couvre plusieurs accords
+ * (ex: "des" = mp ET fp, "rouge" = ms ET fs).
+ */
 function generateDistractors(
   targetKind: Exclude<GapTarget, 'verb'>,
-  correctAnswer: string,
   gender: Gender,
   number: GrammaticalNumber,
-  det: (typeof DETERMINERS)[number],
   adj: (typeof ADJECTIVES)[number],
   noun: (typeof NOUNS)[number],
 ): string[] {
+  // 1. Formes valides pour l'accord cible — à exclure des distracteurs
+  const validForms = new Set<string>();
+
+  // 2. Pool de toutes les formes candidates
   const pool = new Set<string>();
 
   switch (targetKind) {
     case 'determiner': {
-      // Autres formes du même déterminant (mauvais genre/nombre)
-      for (const form of Object.values(det.forms)) {
-        pool.add(form);
-      }
-      if (det.elidedForm) pool.add(det.elidedForm);
-      // Formes d'autres déterminants au même genre/nombre
+      const nounForm = getNounForm(noun, number);
+      const adjForm = getAdjectiveForm(adj, gender, number);
+      const nextWord = adj.preposed ? adjForm : nounForm;
       for (const d of DETERMINERS) {
-        if (d.id === det.id) continue;
-        const key = `${gender === 'masculine' ? 'm' : 'f'}${number === 'singular' ? 's' : 'p'}` as keyof typeof d.forms;
-        pool.add(d.forms[key]);
+        validForms.add(getDeterminerForm(d, gender, number, nextWord));
+        for (const form of Object.values(d.forms)) pool.add(form);
+        if (d.elidedForm) pool.add(d.elidedForm);
       }
       break;
     }
     case 'adjective': {
-      // Autres formes du même adjectif (mauvais accord)
-      for (const form of Object.values(adj.forms)) {
-        pool.add(form);
-      }
-      // Formes d'adjectifs différents au même genre/nombre
       for (const a of ADJECTIVES) {
-        if (a.id === adj.id) continue;
-        const key = `${gender === 'masculine' ? 'm' : 'f'}${number === 'singular' ? 's' : 'p'}` as keyof typeof a.forms;
-        pool.add(a.forms[key]);
+        validForms.add(getAdjectiveForm(a, gender, number));
+        for (const form of Object.values(a.forms)) pool.add(form);
       }
       break;
     }
     case 'noun': {
-      // Mauvais nombre du même nom
-      pool.add(noun.singular);
-      pool.add(noun.plural);
-      // Noms du même thème
-      const themeNouns = NOUNS.filter((n) => n.theme === noun.theme && n.id !== noun.id);
-      for (const n of themeNouns) {
-        pool.add(getNounForm(n, number));
+      for (const n of NOUNS) {
+        if (n.gender === gender) validForms.add(getNounForm(n, number));
+        pool.add(n.singular);
+        pool.add(n.plural);
       }
       break;
     }
   }
 
-  pool.delete(correctAnswer);
+  // Retirer toutes les formes valides du pool
+  for (const v of validForms) pool.delete(v);
+
   return shuffle([...pool]);
 }

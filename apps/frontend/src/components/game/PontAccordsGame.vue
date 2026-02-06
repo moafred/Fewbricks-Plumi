@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, computed, watch, ref } from 'vue';
 import { usePontAccordsStore } from '@/stores/pont-accords';
+import type { AnswerResult } from '@plumi/shared';
 import { useKeyboardNavigation, useBackNavigation } from '@/composables';
 import MagicButton from '@/components/ui/MagicButton.vue';
 import KeyboardGuide from '@/components/ui/KeyboardGuide.vue';
@@ -8,7 +9,18 @@ import ConfirmModal from '@/components/ui/ConfirmModal.vue';
 import CrossIcon from '@/components/icons/CrossIcon.vue';
 import { storeToRefs } from 'pinia';
 
-const emit = defineEmits(['home']);
+const props = withDefaults(defineProps<{
+  embedded?: boolean;
+  count?: number;
+}>(), {
+  embedded: false,
+  count: 10,
+});
+
+const emit = defineEmits<{
+  home: [];
+  'step-complete': [payload: { score: number; total: number; results: (AnswerResult | null)[] }];
+}>();
 
 const store = usePontAccordsStore();
 const {
@@ -51,8 +63,24 @@ function handleBack() {
 
 useBackNavigation(handleBack, computed(() => !showQuitConfirmation.value));
 
+// Emettre step-complete en mode embedded
+if (props.embedded) {
+  watch(
+    () => store.isFinished,
+    (finished) => {
+      if (finished) {
+        emit('step-complete', {
+          score: store.score,
+          total: store.items.length,
+          results: [...store.results],
+        });
+      }
+    },
+  );
+}
+
 onMounted(() => {
-  store.startGame();
+  store.startGame(props.count);
 });
 
 onUnmounted(() => {
@@ -105,7 +133,7 @@ const gapClasses = computed(() => {
     </header>
 
     <!-- Finished State -->
-    <div v-if="isFinished" class="bg-white/10 backdrop-blur-md border border-white/10 text-center animate-fade-in p-12 w-full max-w-lg rounded-2xl">
+    <div v-if="isFinished && !embedded" class="bg-white/10 backdrop-blur-md border border-white/10 text-center animate-fade-in p-12 w-full max-w-lg rounded-2xl">
       <h2 class="text-4xl font-bold text-forest-400 mb-4">Pont Complet&#233; !</h2>
       <p class="text-2xl text-white mb-8">Score: {{ score }} / {{ progress.total }}</p>
 

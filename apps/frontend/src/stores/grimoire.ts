@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import type { GamePhase, AnswerResult, GrimoireItem, Tense } from '@plumi/shared';
+import type { GamePhase, AnswerResult, GrimoireItem, Tense, VerbId, Pronoun } from '@plumi/shared';
 import { generateGrimoireItems } from '@plumi/shared';
 
 const DISCOVERY_DELAY = 1500;
@@ -54,10 +54,14 @@ export const useGrimoireStore = defineStore('grimoire', () => {
   }
 
   // --- Actions ---
-  function startGame(tense: Tense = 'present') {
+  function startGame(
+    tense: Tense = 'present',
+    count: number = 10,
+    options?: { verbs?: VerbId[]; pronouns?: Pronoun[] },
+  ) {
     clearTimer();
     currentTense.value = tense;
-    items.value = generateGrimoireItems(10, { tense });
+    items.value = generateGrimoireItems(count, { tense, verbs: options?.verbs, pronouns: options?.pronouns });
     currentIndex.value = 0;
     score.value = 0;
     lastResult.value = null;

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch, onUnmounted } from 'vue';
-import type { VerbId, Tense } from '@plumi/shared';
+import type { VerbId, Tense, Pronoun, AnswerResult } from '@plumi/shared';
 import { useGameStore } from '@/stores/game';
 import { useKeyboardNavigation, useBackNavigation } from '@/composables';
 import SortingHat from './SortingHat.vue';
@@ -10,10 +10,20 @@ import GameResult from './GameResult.vue';
 import KeyboardGuide from '@/components/ui/KeyboardGuide.vue';
 import type { HatState } from './SortingHat.vue';
 
-const props = withDefaults(defineProps<{ tense?: Tense }>(), { tense: 'present' });
+const props = withDefaults(defineProps<{
+  tense?: Tense;
+  embedded?: boolean;
+  count?: number;
+  pronouns?: Pronoun[];
+}>(), {
+  tense: 'present',
+  embedded: false,
+  count: 10,
+});
 
 const emit = defineEmits<{
   home: [];
+  'step-complete': [payload: { score: number; total: number; results: (AnswerResult | null)[] }];
 }>();
 
 const game = useGameStore();
@@ -90,14 +100,31 @@ function hatState(verbId: VerbId): HatState {
   return 'incorrect';
 }
 
-// Start the game on mount with the provided tense
-game.startGame(props.tense);
+// Emettre step-complete en mode embedded
+if (props.embedded) {
+  watch(
+    () => game.isFinished,
+    (finished) => {
+      if (finished) {
+        emit('step-complete', {
+          score: game.score,
+          total: game.items.length,
+          results: [...game.results],
+        });
+      }
+    },
+  );
+}
+
+game.startGame(props.tense, props.count, {
+  pronouns: props.pronouns,
+});
 </script>
 
 <template>
   <div class="tri-sorcier-game flex flex-col items-center justify-between min-h-screen px-4 py-6 gap-4">
     <!-- Finished: show results -->
-    <template v-if="game.isFinished">
+    <template v-if="game.isFinished && !embedded">
       <div class="flex-1 flex items-center justify-center w-full">
         <GameResult
           :score="game.score"
