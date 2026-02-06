@@ -21,6 +21,7 @@ Nous sommes en 2026.
 | **Game Design**    | [docs/game-design.md](./docs/game-design.md) — Mécaniques, mini-jeux, monde |
 | **Pédagogie**      | [docs/pedagogie.md](./docs/pedagogie.md) — Programme CE1, répétition espacée |
 | **Storybook**      | `apps/frontend/src/components/**/*.stories.ts` — Composants, variantes       |
+| **Design & UX**    | Skill `plumi-design-ux` — Typo, couleurs, animations, UX pédagogique        |
 
 **Pour accéder aux specs d'un composant UI**, lire le fichier `.stories.ts` correspondant. Les stories contiennent : JSDoc (règles), argTypes (props), render (exemples).
 
@@ -146,15 +147,7 @@ Alignés sur le programme Éducation Nationale CE1 :
 
 ## Patterns de Gamification [GAME] [UI]
 
-### Ce qu'on fait
-
-- Feedback immédiat (< 200ms après interaction)
-- Micro-activités (30-120 secondes par exercice)
-- Sessions courtes (5-10 minutes)
-- Célébration constante (animations, sons, particules)
-- Navigation plate (gros boutons, 1-2 taps max pour accéder au jeu)
-- Variété de mécaniques (5 mini-jeux pour éviter la monotonie)
-- Storytelling (univers narratif cohérent, progression visible dans le monde)
+> **Détails d'implémentation UI** (typo, couleurs, animations, touch targets) → Skill `plumi-design-ux`
 
 ### Anti-Patterns Explicites — Ce qu'on ne fait JAMAIS
 
@@ -303,6 +296,8 @@ GamePhase: 'discovery' | 'challenge' | 'response' | 'resolution'
 
 ## Responsive et Performance [ARCHI] [UI]
 
+> **Typographie, touch targets, animations** → Skill `plumi-design-ux`
+
 ### Cibles d'Affichage
 
 | Device                     | Breakpoint   | Priorité                   |
@@ -312,12 +307,6 @@ GamePhase: 'discovery' | 'challenge' | 'response' | 'resolution'
 | Laptop (1024-1440px)       | `lg:`        | Supporté                   |
 
 **Détection d'input** : Utiliser `pointer-fine:` / `pointer-coarse:` (Tailwind v4) pour adapter au type d'interaction, pas seulement à la taille du viewport.
-
-### Touch Targets
-
-- Minimum absolu : **48x48px**
-- Confort enfant (recommandé) : **80x80px**
-- Boutons de jeu principaux : **100px+**
 
 ### Performance
 
@@ -332,15 +321,6 @@ GamePhase: 'discovery' | 'challenge' | 'response' | 'resolution'
 - **Offline-first** via Service Worker : les exercices déjà chargés fonctionnent sans connexion
 - **Pre-fetch audio** : téléchargement à l'init, zéro latence réseau pendant le jeu
 - **Preload assets critiques** avant le début de chaque mini-jeu
-
-### Typographie
-
-**Règle : 2 fonts max par page** pour éviter le bruit visuel.
-
-| Contexte                | Font                  | Classe Tailwind    |
-| ----------------------- | --------------------- | ------------------ |
-| UI + corps de texte     | Lexend                | `font-sans`        |
-| Contenu pédagogique     | Belle Allure GS       | `font-learning`    |
 
 ---
 
