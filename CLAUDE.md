@@ -1,7 +1,7 @@
 # Plumi — La Plume Magique
 
 Application éducative gamifiée d'apprentissage du français pour enfants CE1 (6-7 ans).
-Conjugaison d'abord (présent être/avoir), extensible à toute la grammaire et l'orthographe.
+Conjugaison (présent, futur, imparfait — être/avoir), extensible à toute la grammaire et l'orthographe.
 
 Nous sommes en 2026.
 
@@ -16,12 +16,11 @@ Nous sommes en 2026.
 
 | Ressource          | Lien                                                                         |
 | ------------------ | ---------------------------------------------------------------------------- |
-| **Architecture**   | [docs/architecture.md](./docs/architecture.md)                               |
-| **System Design**  | [docs/SYSTEM_DESIGN.md](./docs/SYSTEM_DESIGN.md) — Tokens, typo, responsive |
-| **Game Design**    | [docs/game-design.md](./docs/game-design.md) — Mécaniques, mini-jeux, monde |
+| **Architecture**   | [docs/architecture.md](./docs/architecture.md) — Stratégie IA, principes    |
+| **Game Design**    | [docs/game-design.md](./docs/game-design.md) — Biomes, esthétique, sessions |
 | **Pédagogie**      | [docs/pedagogie.md](./docs/pedagogie.md) — Programme CE1, répétition espacée |
 | **Storybook**      | `apps/frontend/src/components/**/*.stories.ts` — Composants, variantes       |
-| **Design & UX**    | Skill `plumi-design-ux` — Typo, couleurs, animations, UX pédagogique        |
+| **Design & UX**    | Skill `plumi-design-ux` — Typo, couleurs, animations, responsive, UX        |
 
 **Pour accéder aux specs d'un composant UI**, lire le fichier `.stories.ts` correspondant. Les stories contiennent : JSDoc (règles), argTypes (props), render (exemples).
 
@@ -97,27 +96,32 @@ PlumiState: 'idle' | 'challenge' | 'celebration' | 'encouragement'
 | **RÉPONSE**    | L'enfant interagit — feedback immédiat (< 200ms)       | < 200ms     |
 | **RÉSOLUTION** | Célébration ou encouragement doux (jamais de punition)  | 2-4s        |
 
-### 5 Types de Mini-Jeux [GAME] [PEDA]
+### Mini-Jeux [GAME] [PEDA]
 
-Alignés sur le programme Éducation Nationale CE1 :
+5 mécaniques implémentées (`StepMechanic` dans `@plumi/shared`) :
 
-| Mini-jeu               | Mécanique            | Compétence visée                              |
-| ---------------------- | -------------------- | --------------------------------------------- |
-| **Attrape-Mots**       | Reconnaissance       | Taper sur les verbes conjugués                |
-| **Le Pont Magique**    | Association          | Drag & drop pronom ↔ forme conjuguée         |
-| **La Potion Magique**  | Complétion           | Glisser le bon mot dans la phrase             |
-| **Le Tri du Sorcier**  | Distinction          | Trier être vs avoir dans deux chapeaux        |
-| **Le Grimoire**        | Production guidée    | Sélectionner la bonne forme conjuguée         |
+| Mécanique          | Composant            | Compétence visée                              |
+| ------------------ | -------------------- | --------------------------------------------- |
+| **tri-sorcier**    | `TriSorcierGame`     | Distinction être vs avoir (choix binaire)     |
+| **grimoire**       | `GrimoireGame`       | Sélection de la bonne forme conjuguée (2×2)  |
+| **potion**         | `PotionGame`         | Complétion de phrase à trou (conjugaison)     |
+| **pont-accords**   | `PontAccordsGame`    | Accord dans le GN (genre/nombre)              |
+| **potion-gn**      | `PotionGnGame`       | Complétion de phrase à trou (vocabulaire GN)  |
 
-### Progression — 3 Chapitres Initiaux [PEDA]
+### Progression — 6 Livres / 18 Chapitres [PEDA]
 
-| Chapitre | Contenu                      | Structure              |
-| -------- | ---------------------------- | ---------------------- |
-| 1        | Le Sort ÊTRE                 | 6 leçons + boss        |
-| 2        | Le Sort AVOIR                | 6 leçons + boss        |
-| 3        | Le Duel ÊTRE vs AVOIR        | 3 leçons + boss final  |
+Définis dans `packages/shared/src/chapters.ts` (`BOOKS`, `CHAPTERS`) :
 
-**Extensible** : ALLER, FAIRE, verbes en -ER, puis grammaire, pluriels, accords...
+| Livre | Thème | Temps | Chapitres |
+| ----- | ----- | ----- | --------- |
+| 1. Le Jardin des Mots | Découverte | Présent | 1-3 |
+| 2. Le Livre des Fondations | Consolidation | Présent | 4-6 |
+| 3. La Clairière Enchantée | Accords GN | Présent + GN | 7-9 |
+| 4. Les Sentiers du Futur | Futur | Futur | 10-12 |
+| 5. Les Brumes du Passé | Imparfait | Imparfait | 13-15 |
+| 6. Le Flux Temporel (bonus) | Mélange | Tous temps | 16-18 |
+
+Chaque chapitre contient 4-5 étapes (`ChapterStep`) avec progression en spirale sur les pronoms (je/tu → il/elle/on/nous → tous → boss). Le livre bonus se déverrouille quand les 5 livres principaux sont complétés.
 
 ### Système de Récompenses [GAME]
 
@@ -185,31 +189,34 @@ Alignés sur le programme Éducation Nationale CE1 :
 
 ```
 apps/
-  frontend/         # Vue 3 PWA
-  backend/          # Fastify API
+  frontend/                    # Vue 3 PWA
+    src/
+      components/game/         # Mini-jeux + navigation (BookShelf, ChapterRunner...)
+      components/ui/           # Atoms : MagicButton, GameCard, ConfirmModal...
+      components/icons/        # Icônes SVG (StarFilledIcon, HatIcon...)
+      composables/             # useKeyboardNavigation, useBackNavigation
+      stores/                  # Pinia : chapter-progress, game, grimoire, potion...
+  backend/                     # Fastify API
 packages/
-  shared/           # Types TS + constantes (SSOT)
+  shared/                      # Types TS + constantes + générateurs (SSOT)
 docs/
-  architecture.md
-  game-design.md
-  pedagogie.md
-  SYSTEM_DESIGN.md
-docker-compose.yml  # PostgreSQL
+docker-compose.yml             # PostgreSQL
 Makefile
 pnpm-workspace.yaml
 ```
 
 ### Architecture Frontend [ARCHI]
 
-**L'UI suit une approche Atomic Design stricte :**
-
-| Couche        | Rôle                      | Emplacement                                 |
-| ------------- | ------------------------- | ------------------------------------------- |
-| **Icons**     | Glyphes SVG atomiques     | `components/icons/`                         |
-| **Atoms**     | Éléments UI purs          | `components/ui/MagicButton.vue`, etc.       |
-| **Layouts**   | Wrappers de structure     | `components/ui/ParentPageLayout.vue`        |
-| **Molecules** | Composants métier simples | `components/game/ExerciseCard.vue`          |
-| **Organisms** | Composants complexes      | `components/game/MiniGameArena.vue`         |
+| Couche           | Rôle                      | Exemples                                              |
+| ---------------- | ------------------------- | ----------------------------------------------------- |
+| **Icons**        | Glyphes SVG atomiques     | `components/icons/StarFilledIcon.vue`, `HatIcon.vue`  |
+| **Atoms**        | Éléments UI purs          | `components/ui/MagicButton.vue`, `KeyboardGuide.vue`  |
+| **Molecules**    | Composants métier simples | `components/game/SpellChoice.vue`, `SortingHat.vue`   |
+| **Organisms**    | Mini-jeux complets        | `components/game/PotionGame.vue`, `GrimoireGame.vue`  |
+| **Orchestrateur**| Gestion d'un chapitre     | `components/game/ChapterRunner.vue`                   |
+| **Navigation**   | Écrans de parcours        | `components/game/BookShelf.vue`, `BookView.vue`       |
+| **Composables**  | Logique réutilisable      | `composables/useKeyboardNavigation.ts`                |
+| **Stores**       | État Pinia                | `stores/chapter-progress.ts`, `stores/game.ts`        |
 
 ### Machine à États du Jeu [ARCHI]
 
@@ -224,6 +231,24 @@ GamePhase: 'discovery' | 'challenge' | 'response' | 'resolution'
       └─────────────────────│ resolution │◀────────────────────┘
                             └────────────┘
 ```
+
+### Navigation Frontend [ARCHI]
+
+```
+Screen: 'home' → 'bookshelf' → 'book-view' → 'chapter-runner'
+```
+
+- **Home** : Landing avec mascotte Plumi, bouton "Jouer"
+- **BookShelf** : Grille de 6 livres (`BookCard`), progression étoiles, livre bonus verrouillé
+- **BookView** : Chapitres d'un livre en chemin vertical, chapitre recommandé mis en avant
+- **ChapterRunner** : Orchestrateur — intro narrative → étapes séquentielles (mini-jeux) → `ChapterResult`
+
+### Mode Embarqué (Embedded) [ARCHI]
+
+Les 5 mini-jeux supportent un mode `embedded` pour fonctionner comme étape dans `ChapterRunner` :
+- Props : `embedded`, `count`, `tense`, `pronouns`, `verbs`
+- Emit `step-complete` avec `{ score, total, results }` en fin d'étape
+- En mode standalone : affichent leur propre écran de résultat
 
 ---
 
@@ -294,21 +319,9 @@ GamePhase: 'discovery' | 'challenge' | 'response' | 'resolution'
 
 ---
 
-## Responsive et Performance [ARCHI] [UI]
+## Performance [ARCHI]
 
-> **Typographie, touch targets, animations** → Skill `plumi-design-ux`
-
-### Cibles d'Affichage
-
-| Device                     | Breakpoint   | Priorité                   |
-| -------------------------- | ------------ | -------------------------- |
-| Tablette (768-1024px)      | `md:`        | Optimal (cible principale) |
-| Mobile portrait (<768px)   | default      | Supporté                   |
-| Laptop (1024-1440px)       | `lg:`        | Supporté                   |
-
-**Détection d'input** : Utiliser `pointer-fine:` / `pointer-coarse:` (Tailwind v4) pour adapter au type d'interaction, pas seulement à la taille du viewport.
-
-### Performance
+> **Responsive, typographie, touch targets, animations** → Skill `plumi-design-ux`
 
 | Métrique               | Objectif     |
 | ---------------------- | ------------ |
