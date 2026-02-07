@@ -27,6 +27,6 @@ const display = computed(() =>
       'animate-celebrate': phase === 'discovery',
     }"
   >
-    <span class="text-4xl md:text-6xl font-bold text-gold-300 font-learning drop-shadow-md">{{ display }}</span>
+    <span class="text-4xl md:text-6xl font-bold text-stone-800 font-learning">{{ display }}</span>
   </NotebookCard>
 </template>

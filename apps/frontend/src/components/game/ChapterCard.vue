@@ -36,13 +36,13 @@ defineEmits<{
   click: [];
 }>();
 
-const colorClasses: Record<string, { bg: string; border: string; glow: string }> = {
-  sky: { bg: 'bg-sky-100/95', border: 'border-sky-400/40', glow: 'shadow-sky-400/40' },
-  meadow: { bg: 'bg-meadow-100/95', border: 'border-meadow-400/40', glow: 'shadow-meadow-400/40' },
-  gold: { bg: 'bg-gold-100/95', border: 'border-gold-400/40', glow: 'shadow-gold-400/40' },
-  coral: { bg: 'bg-coral-100/95', border: 'border-coral-400/40', glow: 'shadow-coral-400/40' },
-  moss: { bg: 'bg-moss-100/95', border: 'border-moss-400/40', glow: 'shadow-moss-400/40' },
-  dawn: { bg: 'bg-gold-100/95', border: 'border-gold-400/40', glow: 'shadow-gold-400/40' },
+const colorClasses: Record<string, { border: string; glow: string; title: string; narrative: string }> = {
+  sky: { border: 'border-sky-400/40', glow: 'shadow-sky-400/40', title: 'text-sky-700', narrative: 'text-sky-600/80' },
+  meadow: { border: 'border-meadow-400/40', glow: 'shadow-meadow-400/40', title: 'text-meadow-700', narrative: 'text-meadow-600/80' },
+  gold: { border: 'border-gold-400/40', glow: 'shadow-gold-400/40', title: 'text-gold-600', narrative: 'text-gold-500/80' },
+  coral: { border: 'border-coral-400/40', glow: 'shadow-coral-400/40', title: 'text-coral-700', narrative: 'text-coral-600/80' },
+  moss: { border: 'border-moss-400/40', glow: 'shadow-moss-400/40', title: 'text-moss-700', narrative: 'text-moss-600/80' },
+  dawn: { border: 'border-gold-400/40', glow: 'shadow-gold-400/40', title: 'text-gold-600', narrative: 'text-gold-500/80' },
 };
 
 const colors = colorClasses[props.colorVariant] ?? colorClasses.sky;
@@ -52,7 +52,7 @@ const colors = colorClasses[props.colorVariant] ?? colorClasses.sky;
   <button
     class="chapter-card w-full p-6 rounded-2xl border-2 shadow-[0_8px_16px_rgba(0,0,0,0.3)] transition-all active:scale-[0.98] texture-notebook"
     :class="[
-      colors.bg,
+      'bg-white/95',
       colors.border,
       isRecommended ? `shadow-lg ${colors.glow} ring-2 ring-gold-400/50` : '',
     ]"
@@ -60,8 +60,8 @@ const colors = colorClasses[props.colorVariant] ?? colorClasses.sky;
   >
     <div class="flex items-center justify-between gap-4">
       <div class="flex-1 text-left">
-        <h3 class="text-lg font-bold text-gold-200 drop-shadow-md">{{ title }}</h3>
-        <p class="text-sm text-gold-100 mt-1 drop-shadow-md">{{ narrative }}</p>
+        <h3 class="text-lg font-bold" :class="colors.title">{{ title }}</h3>
+        <p class="text-sm mt-1" :class="colors.narrative">{{ narrative }}</p>
       </div>
 
       <!-- Étoiles -->

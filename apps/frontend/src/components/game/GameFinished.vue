@@ -17,10 +17,10 @@ defineEmits<{
 
 <template>
   <NotebookCard variant="light" padding="lg" rounded="md" class="text-center animate-fade-in w-full max-w-lg">
-    <h2 class="text-4xl font-bold mb-4 drop-shadow-md" :class="titleColor ?? 'text-gold-300'">
+    <h2 class="text-4xl font-bold mb-4" :class="titleColor ?? 'text-sky-600'">
       {{ title }}
     </h2>
-    <p class="text-2xl text-gold-200 mb-8 drop-shadow-md">Score: {{ score }} / {{ total }}</p>
+    <p class="text-2xl text-stone-600 mb-8">Score: {{ score }} / {{ total }}</p>
 
     <template #footer>
       <div class="flex justify-center gap-4">

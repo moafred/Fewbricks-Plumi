@@ -24,7 +24,7 @@ function handleTap() {
     :class="[
       {
         'bg-stone-100 border-stone-200 text-stone-400 opacity-50 cursor-default': state === 'idle',
-        'bg-sky-500 border-sky-400 text-white cursor-pointer animate-bounce-gentle shadow-lg shadow-sky-500/20 hover:scale-105 active:scale-95':
+        'bg-sky-500 border-sky-400 text-white cursor-pointer shadow-lg shadow-sky-500/20 hover:scale-105 active:scale-95':
           state === 'waiting' && !focused,
         'bg-sky-400 border-gold-300 text-white cursor-pointer shadow-lg shadow-gold-400/40 scale-110 ring-4 ring-gold-300':
           state === 'waiting' && focused,
@@ -32,7 +32,7 @@ function handleTap() {
           state === 'correct',
         'bg-stone-200 border-stone-300 text-stone-400 opacity-50 scale-95':
           state === 'incorrect',
-        'bg-meadow-500/80 border-meadow-400 text-white ring-4 ring-white/60 animate-bounce-gentle':
+        'bg-meadow-500/80 border-meadow-400 text-white ring-4 ring-white/60':
           state === 'reveal',
       },
     ]"

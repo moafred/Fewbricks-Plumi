@@ -61,7 +61,7 @@ const isIdle = computed(() => !props.filledWord && !props.showSolution);
 
       <!-- Magic Particles (Idle) -->
       <template v-if="isIdle">
-        <SparkleIcon :size="16" class="absolute -top-2 -right-2 text-gold-300 animate-bounce-gentle" />
+        <SparkleIcon :size="16" class="absolute -top-2 -right-2 text-gold-300 animate-sparkle" />
         <SparkleIcon :size="16" class="absolute -bottom-2 -left-2 text-gold-300 animate-sparkle" />
       </template>
     </div>

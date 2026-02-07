@@ -24,12 +24,12 @@ defineEmits<{
     />
 
     <!-- Modal Card -->
-    <NotebookCard variant="light" padding="md" rounded="lg" class="relative w-full max-w-md shadow-2xl animate-bounce-gentle text-center">
-      <h2 class="text-2xl font-bold text-gold-200 mb-4 font-learning drop-shadow-md">
+    <NotebookCard variant="light" padding="md" rounded="lg" class="relative w-full max-w-md shadow-2xl text-center">
+      <h2 class="text-2xl font-bold text-sky-600 mb-4 font-learning">
         {{ title }}
       </h2>
 
-      <p v-if="message" class="text-gold-100 mb-8 text-lg drop-shadow-md">
+      <p v-if="message" class="text-stone-600 mb-8 text-lg">
         {{ message }}
       </p>
 

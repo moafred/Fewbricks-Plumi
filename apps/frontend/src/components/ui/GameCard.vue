@@ -7,7 +7,7 @@ withDefaults(
     description: string;
     accentColor?: string;
   }>(),
-  { accentColor: 'text-gold-300' }
+  { accentColor: 'text-sky-600' }
 );
 
 defineEmits<{
@@ -28,7 +28,7 @@ defineEmits<{
       >
         {{ title }}
       </h2>
-      <p class="text-base text-gold-200 text-center drop-shadow-md">
+      <p class="text-base text-stone-600 text-center">
         {{ description }}
       </p>
     </NotebookCard>

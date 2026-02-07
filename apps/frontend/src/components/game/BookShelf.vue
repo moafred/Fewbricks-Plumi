@@ -34,7 +34,7 @@ function bookMaxStars(bookId: number): number {
       >
         <HomeIcon :size="28" class="text-sky-200" />
       </NotebookButton>
-      <h1 class="text-2xl md:text-3xl font-bold text-gold-400 drop-shadow-lg">
+      <h1 class="text-2xl md:text-3xl font-bold text-sky-600">
         Mes Cahiers de Français
       </h1>
     </header>

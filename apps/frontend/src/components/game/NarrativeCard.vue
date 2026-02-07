@@ -30,10 +30,10 @@ defineProps<{
     rounded="lg"
     class="narrative-card animate-slide-down max-w-2xl mx-auto"
   >
-    <h2 class="text-3xl md:text-4xl font-bold text-gold-300 mb-6 text-center drop-shadow-lg font-learning">
+    <h2 class="text-3xl md:text-4xl font-bold text-sky-600 mb-6 text-center font-learning">
       {{ title }}
     </h2>
-    <p class="text-lg md:text-xl text-gold-200 leading-relaxed text-center drop-shadow-md">
+    <p class="text-lg md:text-xl text-stone-700 leading-relaxed text-center">
       {{ text }}
     </p>
   </NotebookCard>

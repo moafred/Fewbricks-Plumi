@@ -33,13 +33,13 @@ function handleTap() {
       // State modifiers
       {
         'opacity-50 cursor-default': state === 'idle',
-        'cursor-pointer animate-bounce-gentle shadow-lg shadow-stone-300/30 hover:scale-105 active:scale-95':
+        'cursor-pointer shadow-lg shadow-stone-300/30 hover:scale-105 active:scale-95':
           state === 'waiting' && !focused,
         'cursor-pointer shadow-xl scale-115 ring-4 ring-gold-400':
           state === 'waiting' && focused,
         'ring-4 ring-meadow-400 scale-110 animate-celebrate': state === 'correct',
         'opacity-60 scale-95': state === 'incorrect',
-        'ring-4 ring-stone-400/60 animate-bounce-gentle': state === 'reveal',
+        'ring-4 ring-stone-400/60': state === 'reveal',
       },
     ]"
     :disabled="state !== 'waiting'"

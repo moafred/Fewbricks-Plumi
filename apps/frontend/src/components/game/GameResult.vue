@@ -24,7 +24,7 @@ const message = computed(() => {
 
 <template>
   <div class="game-result flex flex-col items-center justify-center gap-6 animate-celebrate">
-    <h2 class="text-3xl md:text-5xl font-bold text-gold-500">
+    <h2 class="text-3xl md:text-5xl font-bold text-sky-600">
       {{ message }}
     </h2>
 

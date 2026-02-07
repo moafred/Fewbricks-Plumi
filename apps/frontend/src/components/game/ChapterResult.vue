@@ -22,7 +22,7 @@ const messages: Record<number, string> = {
 
 <template>
   <div class="chapter-result flex flex-col items-center justify-center gap-6 animate-celebrate">
-    <h2 class="text-3xl md:text-5xl font-bold text-gold-500">
+    <h2 class="text-3xl md:text-5xl font-bold text-sky-600">
       {{ messages[stars] }}
     </h2>
 

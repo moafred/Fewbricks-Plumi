@@ -157,7 +157,7 @@ useBackNavigation(handleBack, computed(() => !showQuitConfirmation.value));
       </button>
 
       <NotebookBadge v-if="!showingNarrative && !showingResult">
-        <span class="text-gold-300 font-bold drop-shadow-md">
+        <span class="text-sky-600 font-bold">
           Étape {{ currentStepIndex + 1 }} / {{ steps.length }}
         </span>
       </NotebookBadge>
@@ -167,10 +167,10 @@ useBackNavigation(handleBack, computed(() => !showQuitConfirmation.value));
 
     <!-- Écran narratif -->
     <div v-if="showingNarrative" class="flex flex-col items-center justify-center gap-6 animate-fade-in px-8">
-      <h2 class="text-2xl md:text-4xl font-bold text-gold-400 text-center drop-shadow-lg">
+      <h2 class="text-2xl md:text-4xl font-bold text-sky-600 text-center">
         {{ chapter?.title }}
       </h2>
-      <p class="text-xl md:text-2xl text-sky-400 text-center font-learning max-w-lg drop-shadow-md">
+      <p class="text-xl md:text-2xl text-stone-800 text-center font-learning max-w-lg">
         {{ chapter?.narrative }}
       </p>
     </div>

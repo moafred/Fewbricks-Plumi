@@ -24,7 +24,7 @@ defineEmits<{
     </button>
 
     <NotebookBadge>
-      <span :class="colorClass ?? 'text-gold-300'" class="font-bold drop-shadow-md">
+      <span :class="colorClass ?? 'text-sky-600'" class="font-bold">
         {{ label }}: {{ current }} / {{ total }}
       </span>
     </NotebookBadge>

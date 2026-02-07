@@ -13,9 +13,9 @@ type Screen = 'home' | 'bookshelf' | 'book-view' | 'chapter-runner';
 const screen = ref<Screen>('home');
 const selectedBookId = ref<number>(1);
 
-// Biome actif selon l'écran : home/bookshelf = ambiance home, sinon le biome du livre sélectionné
+// Biome actif uniquement sur home/bookshelf — en jeu, fond neutre pour la lisibilité
 const activeBookId = computed(() =>
-  screen.value === 'book-view' || screen.value === 'chapter-runner'
+  screen.value === 'book-view'
     ? selectedBookId.value
     : null,
 );
