@@ -164,6 +164,43 @@ export interface Book {
   isBonus?: boolean;
 }
 
+// ═══════════════════════════════════════════════════════════════════════════
+// LEÇONS DE LIVRE
+// ═══════════════════════════════════════════════════════════════════════════
+
+export interface BookLessonExample {
+  /** Phrase complète — vocabulaire CE1, 5-8 mots */
+  sentence: string;
+  /** Mot mis en valeur dans la phrase */
+  highlight: string;
+}
+
+export interface BookLessonTip {
+  /** Astuce mnémonique */
+  text: string;
+}
+
+export interface BookLessonSection {
+  title: string;
+  /** Pour générer le tableau de conjugaison dynamiquement */
+  verbId?: VerbId;
+  /** Temps du tableau */
+  tense?: Tense;
+  /** Phrases d'exemple */
+  examples: BookLessonExample[];
+  /** Astuce optionnelle */
+  tip?: BookLessonTip;
+}
+
+export interface BookLesson {
+  bookId: number;
+  /** Titre affiché en haut de l'écran leçon */
+  title: string;
+  /** Texte d'intro Plumi — 2-3 phrases courtes, vocabulaire CE1 */
+  introduction: string;
+  sections: BookLessonSection[];
+}
+
 export type RewardType = 'star' | 'badge' | 'world-element' | 'companion' | 'cosmetic';
 
 export interface Reward {

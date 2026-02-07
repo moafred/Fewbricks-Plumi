@@ -5,6 +5,7 @@ import { BOOKS, getChaptersForBook } from '@plumi/shared';
 import { useChapterProgressStore } from '@/stores/chapter-progress';
 import NotebookButton from '@/components/ui/NotebookButton.vue';
 import ChapterCard from '@/components/game/ChapterCard.vue';
+import LessonCard from '@/components/game/LessonCard.vue';
 import { HomeIcon } from '@/components/icons';
 
 const props = defineProps<{
@@ -14,6 +15,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   back: [];
   'play-chapter': [chapterId: number];
+  'open-lesson': [bookId: number];
 }>();
 
 const progressStore = useChapterProgressStore();
@@ -77,6 +79,19 @@ function getConnectionLineColor(chapterId: number): string {
 
     <!-- Chemin des chapitres -->
     <main class="flex-1 flex flex-col items-center gap-6 py-4">
+      <!-- Carte leçon en haut du chemin -->
+      <div class="flex flex-col items-center gap-3 w-full max-w-md">
+        <LessonCard
+          :color-variant="(book?.color ?? 'sky') as 'sky' | 'meadow' | 'gold' | 'coral' | 'moss' | 'dawn'"
+          @click="$emit('open-lesson', book!.id)"
+        />
+
+        <!-- Ligne de connexion vers le premier chapitre -->
+        <div
+          class="w-1 h-8 rounded-full bg-stone-200"
+        />
+      </div>
+
       <div
         v-for="(chapter, index) in chapters"
         :key="chapter.id"

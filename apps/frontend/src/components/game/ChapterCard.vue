@@ -50,7 +50,7 @@ const colors = colorClasses[props.colorVariant] ?? colorClasses.sky;
 
 <template>
   <button
-    class="chapter-card w-full p-6 rounded-2xl border-2 shadow-[0_8px_16px_rgba(0,0,0,0.3)] transition-all active:scale-[0.98] texture-notebook"
+    class="chapter-card w-full p-6 rounded-2xl border-2 shadow-md transition-all texture-notebook"
     :class="[
       'bg-white/95',
       colors.border,

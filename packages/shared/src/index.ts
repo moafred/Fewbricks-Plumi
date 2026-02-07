@@ -24,6 +24,10 @@ export type {
   Determiner,
   DeterminerKind,
   GapTarget,
+  BookLessonExample,
+  BookLessonTip,
+  BookLessonSection,
+  BookLesson,
 } from './types.js';
 
 export { PRONOUNS, TENSES } from './types.js';
@@ -44,6 +48,8 @@ export { elide } from './french.js';
 export { CHAPTERS, BOOKS, getChaptersForBook, getChapter, getBookForChapter } from './chapters.js';
 
 export { shuffle } from './utils.js';
+
+export { BOOK_LESSONS, getBookLesson } from './book-lessons.js';
 
 export {
   NOUNS,
