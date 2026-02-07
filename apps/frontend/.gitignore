@@ -7,3 +7,8 @@ android/app/build
 android/build
 android/.idea
 android/local.properties
+
+# Android signing
+android/key.properties
+android/*.keystore
+android/*.jks
