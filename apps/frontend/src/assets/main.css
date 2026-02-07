@@ -165,6 +165,12 @@ body {
 
 /* --- Biomes — Fonds atmosphériques clairs par livre --- */
 
+.biome-parchment {
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(250,240,213,0.3) 0%, transparent 60%),
+    linear-gradient(180deg, #f5f0e3 0%, #ede7d9 50%, #f5f0e3 100%);
+}
+
 .biome-home {
   background:
     radial-gradient(ellipse at 50% 30%, rgba(143,177,233,0.15) 0%, transparent 60%),
@@ -286,6 +292,7 @@ body {
 /* --- Accessibilité — Désactivation animations continues --- */
 
 @media (prefers-reduced-motion: reduce) {
+  .biome-parchment,
   .biome-home,
   .biome-jardin,
   .biome-fondations,
