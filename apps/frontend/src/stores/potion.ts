@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import type { GamePhase, AnswerResult, VerbPotionItem, Tense, Pronoun } from '@plumi/shared';
+import type { GamePhase, AnswerResult, VerbPotionItem, Tense, Pronoun, VerbId } from '@plumi/shared';
 import { generatePotionItems } from '@plumi/shared';
 
 const DISCOVERY_DELAY = 1500;
@@ -60,7 +60,7 @@ export const usePotionStore = defineStore('potion', () => {
     function startGame(
         tenses: Tense[] = ['present'],
         count: number = 10,
-        options?: { pronouns?: Pronoun[] },
+        options?: { pronouns?: Pronoun[]; verbs?: VerbId[] },
     ) {
         clearTimer();
         currentTenses.value = tenses;

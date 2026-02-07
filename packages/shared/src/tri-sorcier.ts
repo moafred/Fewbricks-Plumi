@@ -17,6 +17,8 @@ export interface SortingOptions {
   tense?: Tense;
   /** Filtrer par pronoms (défaut: tous) */
   pronouns?: Pronoun[];
+  /** Limiter aux verbes spécifiés (défaut: tous les verbes du temps) */
+  verbs?: VerbId[];
 }
 
 /**
@@ -27,7 +29,12 @@ export interface SortingOptions {
 export function generateSortingItems(count: number = 10, options?: SortingOptions): SortingItem[] {
   const tense: Tense = options?.tense ?? 'present';
   const pronounFilter = options?.pronouns;
-  const conjugations = getConjugationsForTense(tense);
+  const verbFilter = options?.verbs;
+  let conjugations = getConjugationsForTense(tense);
+
+  if (verbFilter && verbFilter.length > 0) {
+    conjugations = conjugations.filter((v) => verbFilter.includes(v.id));
+  }
 
   if (conjugations.length === 0) {
     return [];

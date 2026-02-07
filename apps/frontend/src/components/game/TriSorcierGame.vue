@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, watch, onUnmounted } from 'vue';
 import type { VerbId, Tense, Pronoun, AnswerResult } from '@plumi/shared';
+import { getInfinitive } from '@plumi/shared';
 import { useGameStore } from '@/stores/game';
 import { useKeyboardNavigation, useBackNavigation } from '@/composables';
 import SortingHat from './SortingHat.vue';
@@ -15,6 +16,7 @@ const props = withDefaults(defineProps<{
   embedded?: boolean;
   count?: number;
   pronouns?: Pronoun[];
+  verbs?: VerbId[];
 }>(), {
   tense: 'present',
   embedded: false,
@@ -35,8 +37,10 @@ const tenseLabels: Record<Tense, string> = {
   passe_compose: 'Passé composé',
 };
 
-// Les deux choix possibles (être à gauche, avoir à droite)
-const hatChoices = ref<VerbId[]>(['etre', 'avoir']);
+// Les deux choix possibles — dynamiques selon les verbes du chapitre
+const hatChoices = ref<VerbId[]>(
+  props.verbs && props.verbs.length === 2 ? [...props.verbs] : ['etre', 'avoir'],
+);
 const isChallenge = computed(() => game.phase === 'challenge');
 
 const { focusedIndex, resetFocus } = useKeyboardNavigation(
@@ -118,6 +122,7 @@ if (props.embedded) {
 
 game.startGame(props.tense, props.count, {
   pronouns: props.pronouns,
+  verbs: props.verbs,
 });
 </script>
 
@@ -172,17 +177,12 @@ game.startGame(props.tense, props.count, {
       <div class="flex flex-col items-center gap-6 pb-8">
         <div class="flex items-center justify-center gap-10 md:gap-16">
           <SortingHat
-            verb-id="etre"
-            label="être"
-            :state="hatState('etre')"
-            :focused="focusedIndex === 0 && game.phase === 'challenge'"
-            @tap="onTap"
-          />
-          <SortingHat
-            verb-id="avoir"
-            label="avoir"
-            :state="hatState('avoir')"
-            :focused="focusedIndex === 1 && game.phase === 'challenge'"
+            v-for="(verbId, idx) in hatChoices"
+            :key="verbId"
+            :verb-id="verbId"
+            :label="getInfinitive(verbId)"
+            :state="hatState(verbId)"
+            :focused="focusedIndex === idx && game.phase === 'challenge'"
             @tap="onTap"
           />
         </div>

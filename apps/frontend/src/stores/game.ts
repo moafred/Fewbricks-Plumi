@@ -59,11 +59,11 @@ export const useGameStore = defineStore('game', () => {
   function startGame(
     tense: Tense = 'present',
     count: number = 10,
-    options?: { pronouns?: Pronoun[] },
+    options?: { pronouns?: Pronoun[]; verbs?: VerbId[] },
   ) {
     clearTimer();
     currentTense.value = tense;
-    items.value = generateSortingItems(count, { tense, pronouns: options?.pronouns });
+    items.value = generateSortingItems(count, { tense, pronouns: options?.pronouns, verbs: options?.verbs });
     currentIndex.value = 0;
     score.value = 0;
     lastResult.value = null;

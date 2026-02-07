@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import MagicButton from '@/components/ui/MagicButton.vue';
+import ActionButton from '@/components/ui/ActionButton.vue';
+import NotebookCard from '@/components/ui/NotebookCard.vue';
 
 defineProps<{
   title: string;
@@ -15,15 +16,17 @@ defineEmits<{
 </script>
 
 <template>
-  <div class="bg-white/90 backdrop-blur-md border border-sky-200 text-center animate-fade-in p-12 w-full max-w-lg rounded-2xl shadow-sm">
-    <h2 class="text-4xl font-bold mb-4" :class="titleColor ?? 'text-gold-500'">
+  <NotebookCard variant="light" padding="lg" rounded="md" class="text-center animate-fade-in w-full max-w-lg">
+    <h2 class="text-4xl font-bold mb-4 drop-shadow-md" :class="titleColor ?? 'text-gold-300'">
       {{ title }}
     </h2>
-    <p class="text-2xl text-stone-600 mb-8">Score: {{ score }} / {{ total }}</p>
+    <p class="text-2xl text-gold-200 mb-8 drop-shadow-md">Score: {{ score }} / {{ total }}</p>
 
-    <div class="flex justify-center gap-4">
-      <MagicButton variant="secondary" @click="$emit('home')">Retour</MagicButton>
-      <MagicButton variant="primary" @click="$emit('replay')">Rejouer</MagicButton>
-    </div>
-  </div>
+    <template #footer>
+      <div class="flex justify-center gap-4">
+        <ActionButton variant="secondary" @click="$emit('home')">Retour</ActionButton>
+        <ActionButton variant="primary" @click="$emit('replay')">Rejouer</ActionButton>
+      </div>
+    </template>
+  </NotebookCard>
 </template>

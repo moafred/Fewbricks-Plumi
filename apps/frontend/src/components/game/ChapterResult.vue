@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { StarFilledIcon, StarEmptyIcon } from '@/components/icons';
-import MagicButton from '@/components/ui/MagicButton.vue';
+import ActionButton from '@/components/ui/ActionButton.vue';
 
 const props = defineProps<{
   score: number;
@@ -14,9 +14,9 @@ defineEmits<{
 }>();
 
 const messages: Record<number, string> = {
-  1: "Tu as fini l'aventure !",
-  2: 'Bravo, tu maîtrises le sort !',
-  3: 'Incroyable, tu es un vrai magicien !',
+  1: "Bien joué, continue comme ça !",
+  2: 'Bravo, tu progresses très bien !',
+  3: 'Parfait, tu maîtrises parfaitement !',
 };
 </script>
 
@@ -46,18 +46,18 @@ const messages: Record<number, string> = {
     </p>
 
     <div class="flex gap-4 mt-4">
-      <MagicButton
+      <ActionButton
         variant="secondary"
         @click="$emit('replay')"
       >
         Rejouer
-      </MagicButton>
-      <MagicButton
+      </ActionButton>
+      <ActionButton
         variant="primary"
         @click="$emit('continue')"
       >
         Continuer
-      </MagicButton>
+      </ActionButton>
     </div>
   </div>
 </template>

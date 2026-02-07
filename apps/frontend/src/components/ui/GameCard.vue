@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import NotebookCard from './NotebookCard.vue';
+
 withDefaults(
   defineProps<{
     title: string;
     description: string;
     accentColor?: string;
   }>(),
-  { accentColor: 'text-gold-500' }
+  { accentColor: 'text-gold-300' }
 );
 
 defineEmits<{
@@ -15,18 +17,20 @@ defineEmits<{
 
 <template>
   <button
-    class="game-card flex flex-col items-center gap-4 p-8 rounded-2xl bg-white/80 backdrop-blur border border-sky-200 hover:bg-white/90 active:scale-95 transition-all text-left shadow-sm"
+    class="game-card flex flex-col items-center gap-4 hover:bg-sky-700/95 active:scale-95 transition-all text-left"
     @click="$emit('click')"
   >
-    <slot name="icon" />
-    <h2
-      class="text-2xl font-bold"
-      :class="accentColor"
-    >
-      {{ title }}
-    </h2>
-    <p class="text-base text-stone-500 text-center">
-      {{ description }}
-    </p>
+    <NotebookCard variant="light" padding="md" rounded="md" class="w-full">
+      <slot name="icon" />
+      <h2
+        class="text-2xl font-bold drop-shadow-md"
+        :class="accentColor"
+      >
+        {{ title }}
+      </h2>
+      <p class="text-base text-gold-200 text-center drop-shadow-md">
+        {{ description }}
+      </p>
+    </NotebookCard>
   </button>
 </template>

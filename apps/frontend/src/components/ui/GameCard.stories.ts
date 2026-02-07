@@ -17,10 +17,10 @@ export const TriSorcier: Story = {
       <GameCard
         title="Le Tri du Sorcier"
         description="Trie les formes conjuguées dans le bon chapeau : être ou avoir ?"
-        accent-color="text-magic-300"
+        accent-color="text-gold-300"
       >
         <template #icon>
-          <HatIcon :size="48" class="text-magic-300" />
+          <HatIcon :size="48" class="text-gold-300" />
         </template>
       </GameCard>
     `,
@@ -34,10 +34,10 @@ export const Grimoire: Story = {
       <GameCard
         title="Le Grimoire"
         description="Trouve la bonne formule magique pour chaque pronom et verbe !"
-        accent-color="text-royal-300"
+        accent-color="text-sky-300"
       >
         <template #icon>
-          <GrimoireIcon :size="48" class="text-royal-300" />
+          <GrimoireIcon :size="48" class="text-sky-300" />
         </template>
       </GameCard>
     `,

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, computed, watch, ref } from 'vue';
 import { usePotionStore } from '@/stores/potion';
-import type { Tense, Pronoun, AnswerResult } from '@plumi/shared';
+import type { Tense, Pronoun, AnswerResult, VerbId } from '@plumi/shared';
 import { useKeyboardNavigation, useBackNavigation } from '@/composables';
 import SentenceGap from '@/components/game/SentenceGap.vue';
 import GameHeader from '@/components/game/GameHeader.vue';
@@ -9,7 +9,7 @@ import ChallengeCard from '@/components/game/ChallengeCard.vue';
 import ChoiceButton from '@/components/game/ChoiceButton.vue';
 import type { ChoiceState } from '@/components/game/ChoiceButton.vue';
 import GameFinished from '@/components/game/GameFinished.vue';
-import MagicButton from '@/components/ui/MagicButton.vue';
+import ActionButton from '@/components/ui/ActionButton.vue';
 import KeyboardGuide from '@/components/ui/KeyboardGuide.vue';
 import ConfirmModal from '@/components/ui/ConfirmModal.vue';
 import { storeToRefs } from 'pinia';
@@ -20,6 +20,7 @@ const props = withDefaults(defineProps<{
   embedded?: boolean;
   count?: number;
   pronouns?: Pronoun[];
+  verbs?: VerbId[];
 }>(), {
   embedded: false,
   count: 10,
@@ -92,7 +93,7 @@ if (props.embedded) {
 }
 
 onMounted(() => {
-  store.startGame(tenses.value, props.count, { pronouns: props.pronouns });
+  store.startGame(tenses.value, props.count, { pronouns: props.pronouns, verbs: props.verbs });
 });
 
 onUnmounted(() => {
@@ -130,7 +131,7 @@ const isGapCorrect = computed(() => !!gapWord.value);
       label="Potion"
       :current="progress.current + 1"
       :total="progress.total"
-      color-class="text-gold-500"
+      color-class="text-gold-400"
       @back="handleBack"
     />
 
@@ -155,7 +156,7 @@ const isGapCorrect = computed(() => !!gapWord.value);
           :is-wrong="false"
         />
         <template #footer>
-          <div class="text-sky-600 font-sans text-sm">
+          <div class="text-sky-400 font-sans text-sm">
             ({{ currentItem.infinitive }})
           </div>
         </template>
@@ -182,9 +183,9 @@ const isGapCorrect = computed(() => !!gapWord.value);
 
       <div class="h-16 flex items-center justify-center w-full">
         <div v-if="phase === 'resolution'" class="animate-fade-in">
-          <MagicButton variant="primary" @click="store.nextItem()">
+          <ActionButton variant="primary" @click="store.nextItem()">
             Continuer →
-          </MagicButton>
+          </ActionButton>
         </div>
       </div>
 

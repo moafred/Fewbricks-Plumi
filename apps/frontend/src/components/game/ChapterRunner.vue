@@ -12,6 +12,7 @@ import PontAccordsGame from './PontAccordsGame.vue';
 import PotionGnGame from './PotionGnGame.vue';
 import ConfirmModal from '@/components/ui/ConfirmModal.vue';
 import CrossIcon from '@/components/icons/CrossIcon.vue';
+import NotebookBadge from '@/components/ui/NotebookBadge.vue';
 
 const props = defineProps<{
   chapterId: number;
@@ -155,21 +156,21 @@ useBackNavigation(handleBack, computed(() => !showQuitConfirmation.value));
         <CrossIcon :size="32" />
       </button>
 
-      <div v-if="!showingNarrative && !showingResult" class="flex items-center gap-2 px-4 py-2 bg-white/70 rounded-full backdrop-blur-sm shadow-sm">
-        <span class="text-gold-600 font-bold">
+      <NotebookBadge v-if="!showingNarrative && !showingResult">
+        <span class="text-gold-300 font-bold drop-shadow-md">
           Étape {{ currentStepIndex + 1 }} / {{ steps.length }}
         </span>
-      </div>
+      </NotebookBadge>
 
       <div class="w-10"></div>
     </header>
 
     <!-- Écran narratif -->
     <div v-if="showingNarrative" class="flex flex-col items-center justify-center gap-6 animate-fade-in px-8">
-      <h2 class="text-2xl md:text-4xl font-bold text-gold-500 text-center">
+      <h2 class="text-2xl md:text-4xl font-bold text-gold-400 text-center drop-shadow-lg">
         {{ chapter?.title }}
       </h2>
-      <p class="text-xl md:text-2xl text-sky-600 text-center font-learning max-w-lg">
+      <p class="text-xl md:text-2xl text-sky-400 text-center font-learning max-w-lg drop-shadow-md">
         {{ chapter?.narrative }}
       </p>
     </div>

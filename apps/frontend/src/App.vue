@@ -3,7 +3,8 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 import BookShelf from '@/components/game/BookShelf.vue';
 import BookView from '@/components/game/BookView.vue';
 import ChapterRunner from '@/components/game/ChapterRunner.vue';
-import MagicButton from '@/components/ui/MagicButton.vue';
+import PlumiMascot from '@/components/game/PlumiMascot.vue';
+import ActionButton from '@/components/ui/ActionButton.vue';
 import KeyboardGuide from '@/components/ui/KeyboardGuide.vue';
 import { useBiome } from '@/composables';
 
@@ -55,28 +56,27 @@ onUnmounted(() => window.removeEventListener('keydown', handleGlobalKeydown));
     >
       <div class="flex flex-col items-center gap-4">
         <!-- Mascot Plumi -->
-        <img
-          src="/plumi-landing.png"
-          alt="Plumi Mascot"
-          class="w-48 md:w-64 h-48 md:h-64 animate-float drop-shadow-[0_0_30px_rgba(227,193,111,0.4)] mb-2"
-        />
-        <h1 class="text-6xl md:text-8xl font-bold text-gold-500 drop-shadow-2xl">
+        <PlumiMascot state="idle" size="md" />
+        <h1 class="text-6xl md:text-8xl font-bold text-sky-600 drop-shadow-lg">
           Plumi
         </h1>
-        <p class="text-2xl md:text-3xl text-sky-600 font-medium">
-          La Plume Magique
+        <p class="text-2xl md:text-3xl text-stone-700 font-medium drop-shadow-sm">
+          Apprendre le Français — CE1
+        </p>
+        <p class="text-lg md:text-xl text-stone-500 font-normal">
+          Conjugaison • Grammaire • Orthographe
         </p>
       </div>
 
       <div class="flex flex-col items-center gap-6">
-        <MagicButton
+        <ActionButton
           variant="primary"
           size="lg"
           class="w-64 md:w-80 h-20 md:h-24 !text-3xl"
           @click="screen = 'bookshelf'"
         >
           Jouer
-        </MagicButton>
+        </ActionButton>
 
         <!-- Keyboard Hint - Only on Desktop -->
         <div class="hidden lg:flex opacity-60 hover:opacity-100 transition-opacity">

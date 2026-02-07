@@ -36,6 +36,7 @@ export {
   getAllForms,
   getAllFormsForTense,
   getConjugationsForTense,
+  getInfinitive,
 } from './conjugations.js';
 
 export { elide } from './french.js';

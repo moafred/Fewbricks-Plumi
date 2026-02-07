@@ -3,8 +3,8 @@ import type { Book, Chapter } from './types.js';
 export const BOOKS: Book[] = [
   {
     id: 1,
-    title: 'Le Jardin des Mots',
-    subtitle: "Le Jardin s'éveille",
+    title: 'Cahier 1 : Le Présent',
+    subtitle: 'Découvrir ÊTRE et AVOIR',
     tenses: ['present'],
     chapters: [1, 2, 3],
     color: 'dawn',
@@ -12,8 +12,8 @@ export const BOOKS: Book[] = [
   },
   {
     id: 2,
-    title: 'Le Livre des Fondations',
-    subtitle: 'Les sorts fondamentaux',
+    title: 'Cahier 2 : Les Fondations',
+    subtitle: 'Consolider les bases',
     tenses: ['present'],
     chapters: [4, 5, 6],
     color: 'sky',
@@ -21,8 +21,8 @@ export const BOOKS: Book[] = [
   },
   {
     id: 3,
-    title: 'La Clairière Enchantée',
-    subtitle: 'La Forêt murmure',
+    title: 'Cahier 3 : Les Accords',
+    subtitle: 'Accords dans le groupe nominal',
     tenses: ['present'],
     chapters: [7, 8, 9],
     color: 'moss',
@@ -30,8 +30,8 @@ export const BOOKS: Book[] = [
   },
   {
     id: 4,
-    title: 'Les Sentiers du Futur',
-    subtitle: "L'horizon s'ouvre",
+    title: 'Cahier 4 : Le Futur',
+    subtitle: 'Conjuguer au futur',
     tenses: ['futur'],
     chapters: [10, 11, 12],
     color: 'gold',
@@ -39,8 +39,8 @@ export const BOOKS: Book[] = [
   },
   {
     id: 5,
-    title: 'Les Brumes du Passé',
-    subtitle: 'Les souvenirs dansent',
+    title: "Cahier 5 : L'Imparfait",
+    subtitle: "Conjuguer à l'imparfait",
     tenses: ['imparfait'],
     chapters: [13, 14, 15],
     color: 'coral',
@@ -48,13 +48,50 @@ export const BOOKS: Book[] = [
   },
   {
     id: 6,
-    title: 'Le Flux Temporel',
-    subtitle: 'Bonus',
+    title: 'Cahier 6 : Révision',
+    subtitle: 'Tous les temps mélangés',
     tenses: ['present', 'futur', 'imparfait', 'passe_compose'],
     chapters: [16, 17, 18],
     color: 'coral',
     biome: 'flux',
     isBonus: true,
+  },
+  // ─── Nouveaux cahiers — extension programme CE1 ────────────────────────────
+  {
+    id: 7,
+    title: 'Cahier 7 : Verbes -ER',
+    subtitle: 'Les verbes du 1er groupe',
+    tenses: ['present'],
+    chapters: [19, 20, 21],
+    color: 'meadow',
+    biome: 'atelier',
+  },
+  {
+    id: 8,
+    title: 'Cahier 8 : Verbes Irréguliers',
+    subtitle: 'Les verbes irréguliers',
+    tenses: ['present'],
+    chapters: [22, 23, 24],
+    color: 'sky',
+    biome: 'bibliotheque',
+  },
+  {
+    id: 9,
+    title: 'Cahier 9 : Verbes Fréquents',
+    subtitle: 'Les verbes essentiels',
+    tenses: ['present'],
+    chapters: [25, 26, 27],
+    color: 'gold',
+    biome: 'arcanes',
+  },
+  {
+    id: 10,
+    title: 'Cahier 10 : Révision Générale',
+    subtitle: 'Tous les verbes, tous les temps',
+    tenses: ['present', 'futur', 'imparfait'],
+    chapters: [28, 29, 30],
+    color: 'dawn',
+    biome: 'symphonie',
   },
 ];
 
@@ -73,7 +110,7 @@ export const CHAPTERS: Chapter[] = [
 {
     id: 1,
     title: 'Découvrir ÊTRE',
-    narrative: 'Bienvenue dans le Jardin ! Découvrons le sort ÊTRE.',
+    narrative: 'Bienvenue dans ton premier cahier ! Découvrons le verbe ÊTRE.',
     verbs: ['etre'],
     tense: 'present',
     steps: [
@@ -86,7 +123,7 @@ export const CHAPTERS: Chapter[] = [
   {
     id: 2,
     title: 'Découvrir AVOIR',
-    narrative: 'Le Jardin grandit ! Apprenons le sort AVOIR.',
+    narrative: 'Continuons à apprendre ! Apprenons le verbe AVOIR.',
     verbs: ['avoir'],
     tense: 'present',
     steps: [
@@ -118,7 +155,7 @@ export const CHAPTERS: Chapter[] = [
 {
     id: 4,
     title: 'Maîtriser ÊTRE',
-    narrative: 'Tu connais ÊTRE ? Prouve-le, jeune magicien !',
+    narrative: 'Tu connais ÊTRE ? Prouve-le, jeune champion !',
     verbs: ['etre'],
     tense: 'present',
     steps: [
@@ -132,7 +169,7 @@ export const CHAPTERS: Chapter[] = [
   {
     id: 5,
     title: 'Maîtriser AVOIR',
-    narrative: "Le sort AVOIR n'a plus de secret pour toi !",
+    narrative: "Le verbe AVOIR n'a plus de secret pour toi !",
     verbs: ['avoir'],
     tense: 'present',
     steps: [
@@ -333,6 +370,182 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'tri-sorcier', questionCount: 4 },
       { mechanic: 'grimoire', questionCount: 4 },
       { mechanic: 'potion', questionCount: 4 },
+      { mechanic: 'potion', questionCount: 4, isBoss: true },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // LIVRE 7 — Cahier 7 : Verbes -ER (1er groupe, présent)
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: 19,
+    title: 'Découvrir JOUER et MANGER',
+    narrative: "Bienvenue à l'Atelier ! Découvrons les verbes jouer et manger.",
+    verbs: ['jouer', 'manger'],
+    tense: 'present',
+    steps: [
+      { mechanic: 'grimoire', pronouns: ['je', 'tu'], verbs: ['jouer'], questionCount: 3 },
+      { mechanic: 'grimoire', pronouns: ['je', 'tu'], verbs: ['manger'], questionCount: 3 },
+      { mechanic: 'potion', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
+      { mechanic: 'tri-sorcier', verbs: ['jouer', 'manger'], questionCount: 4, isBoss: true },
+    ],
+  },
+  {
+    id: 20,
+    title: 'Découvrir CHANTER et REGARDER',
+    narrative: 'Deux nouveaux verbes ! Chanter et regarder.',
+    verbs: ['chanter', 'regarder'],
+    tense: 'present',
+    steps: [
+      { mechanic: 'grimoire', pronouns: ['je', 'tu'], verbs: ['chanter'], questionCount: 3 },
+      { mechanic: 'grimoire', pronouns: ['je', 'tu'], verbs: ['regarder'], questionCount: 3 },
+      { mechanic: 'potion', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
+      { mechanic: 'tri-sorcier', verbs: ['chanter', 'regarder'], questionCount: 4, isBoss: true },
+    ],
+  },
+  {
+    id: 21,
+    title: 'Maître du 1er groupe',
+    narrative: 'Les quatre verbes en -er réunis ! Es-tu prêt ?',
+    verbs: ['jouer', 'manger', 'chanter', 'regarder'],
+    tense: 'present',
+    steps: [
+      { mechanic: 'grimoire', pronouns: ['il/elle/on', 'nous', 'vous', 'ils/elles'], questionCount: 4 },
+      { mechanic: 'potion', questionCount: 4 },
+      { mechanic: 'tri-sorcier', verbs: ['jouer', 'chanter'], questionCount: 3 },
+      { mechanic: 'tri-sorcier', verbs: ['manger', 'regarder'], questionCount: 3 },
+      { mechanic: 'potion', questionCount: 4, isBoss: true },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // LIVRE 8 — La Grande Bibliothèque (irréguliers, présent)
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: 22,
+    title: 'Découvrir ALLER et VENIR',
+    narrative: 'La Bibliothèque t\'ouvre ses portes ! Aller et venir.',
+    verbs: ['aller', 'venir'],
+    tense: 'present',
+    steps: [
+      { mechanic: 'grimoire', pronouns: ['je', 'tu'], verbs: ['aller'], questionCount: 3 },
+      { mechanic: 'grimoire', pronouns: ['je', 'tu'], verbs: ['venir'], questionCount: 3 },
+      { mechanic: 'potion', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
+      { mechanic: 'tri-sorcier', verbs: ['aller', 'venir'], questionCount: 4, isBoss: true },
+    ],
+  },
+  {
+    id: 23,
+    title: 'Découvrir FAIRE et DIRE',
+    narrative: 'Faire et dire, deux verbes très puissants !',
+    verbs: ['faire', 'dire'],
+    tense: 'present',
+    steps: [
+      { mechanic: 'grimoire', pronouns: ['je', 'tu'], verbs: ['faire'], questionCount: 3 },
+      { mechanic: 'grimoire', pronouns: ['je', 'tu'], verbs: ['dire'], questionCount: 3 },
+      { mechanic: 'potion', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
+      { mechanic: 'tri-sorcier', verbs: ['faire', 'dire'], questionCount: 4, isBoss: true },
+    ],
+  },
+  {
+    id: 24,
+    title: 'Maître des irréguliers',
+    narrative: 'Aller, venir, faire, dire... Tu les connais tous ?',
+    verbs: ['aller', 'venir', 'faire', 'dire'],
+    tense: 'present',
+    steps: [
+      { mechanic: 'grimoire', pronouns: ['il/elle/on', 'nous', 'vous', 'ils/elles'], questionCount: 4 },
+      { mechanic: 'potion', questionCount: 4 },
+      { mechanic: 'tri-sorcier', verbs: ['aller', 'faire'], questionCount: 3 },
+      { mechanic: 'tri-sorcier', verbs: ['venir', 'dire'], questionCount: 3 },
+      { mechanic: 'potion', questionCount: 4, isBoss: true },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // LIVRE 9 — Le Cercle des Arcanes (modaux / fréquents, présent)
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: 25,
+    title: 'Découvrir POUVOIR et VOULOIR',
+    narrative: 'Le Cercle des Arcanes ! Pouvoir et vouloir.',
+    verbs: ['pouvoir', 'vouloir'],
+    tense: 'present',
+    steps: [
+      { mechanic: 'grimoire', pronouns: ['je', 'tu'], verbs: ['pouvoir'], questionCount: 3 },
+      { mechanic: 'grimoire', pronouns: ['je', 'tu'], verbs: ['vouloir'], questionCount: 3 },
+      { mechanic: 'potion', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
+      { mechanic: 'tri-sorcier', verbs: ['pouvoir', 'vouloir'], questionCount: 4, isBoss: true },
+    ],
+  },
+  {
+    id: 26,
+    title: 'Découvrir VOIR et PRENDRE',
+    narrative: 'Voir et prendre, des verbes précieux !',
+    verbs: ['voir', 'prendre'],
+    tense: 'present',
+    steps: [
+      { mechanic: 'grimoire', pronouns: ['je', 'tu'], verbs: ['voir'], questionCount: 3 },
+      { mechanic: 'grimoire', pronouns: ['je', 'tu'], verbs: ['prendre'], questionCount: 3 },
+      { mechanic: 'potion', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
+      { mechanic: 'tri-sorcier', verbs: ['voir', 'prendre'], questionCount: 4, isBoss: true },
+    ],
+  },
+  {
+    id: 27,
+    title: 'Maître des Arcanes',
+    narrative: 'Pouvoir, vouloir, voir, prendre... Le cercle est complet !',
+    verbs: ['pouvoir', 'vouloir', 'voir', 'prendre'],
+    tense: 'present',
+    steps: [
+      { mechanic: 'grimoire', pronouns: ['il/elle/on', 'nous', 'vous', 'ils/elles'], questionCount: 4 },
+      { mechanic: 'potion', questionCount: 4 },
+      { mechanic: 'tri-sorcier', verbs: ['pouvoir', 'voir'], questionCount: 3 },
+      { mechanic: 'tri-sorcier', verbs: ['vouloir', 'prendre'], questionCount: 3 },
+      { mechanic: 'potion', questionCount: 4, isBoss: true },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // LIVRE 10 — La Symphonie des Temps (tous verbes, futur + imparfait)
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: 28,
+    title: 'Verbes du 1er groupe au futur',
+    narrative: 'Jouer, manger, chanter, regarder... Au futur !',
+    verbs: ['jouer', 'manger', 'chanter', 'regarder'],
+    tense: 'futur',
+    steps: [
+      { mechanic: 'grimoire', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 4 },
+      { mechanic: 'grimoire', pronouns: ['nous', 'vous', 'ils/elles'], questionCount: 4 },
+      { mechanic: 'potion', questionCount: 4 },
+      { mechanic: 'potion', questionCount: 4, isBoss: true },
+    ],
+  },
+  {
+    id: 29,
+    title: "Irréguliers et modaux à l'imparfait",
+    narrative: "Aller, faire, pouvoir, voir... À l'imparfait !",
+    verbs: ['aller', 'faire', 'pouvoir', 'voir'],
+    tense: 'imparfait',
+    steps: [
+      { mechanic: 'grimoire', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 4 },
+      { mechanic: 'grimoire', pronouns: ['nous', 'vous', 'ils/elles'], questionCount: 4 },
+      { mechanic: 'potion', questionCount: 4 },
+      { mechanic: 'potion', questionCount: 4, isBoss: true },
+    ],
+  },
+  {
+    id: 30,
+    title: 'Boss Final — La Symphonie',
+    narrative: 'Tous les verbes, tous les temps ! Le grand final !',
+    verbs: ['etre', 'avoir', 'jouer', 'manger', 'aller', 'faire', 'pouvoir', 'voir', 'vouloir', 'prendre'],
+    tense: 'mixed',
+    steps: [
+      { mechanic: 'grimoire', questionCount: 4 },
+      { mechanic: 'potion', questionCount: 4 },
+      { mechanic: 'tri-sorcier', verbs: ['etre', 'aller'], questionCount: 3 },
+      { mechanic: 'tri-sorcier', verbs: ['avoir', 'faire'], questionCount: 3 },
       { mechanic: 'potion', questionCount: 4, isBoss: true },
     ],
   },

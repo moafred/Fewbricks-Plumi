@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { elide, type GamePhase } from '@plumi/shared';
+import NotebookCard from '@/components/ui/NotebookCard.vue';
 
 const props = defineProps<{
   pronoun: string;
@@ -17,12 +18,15 @@ const display = computed(() =>
 </script>
 
 <template>
-  <div
-    class="word-card flex items-center justify-center rounded-3xl bg-white/80 backdrop-blur px-10 md:px-14 py-8 md:py-10 border border-sky-200 shadow-sm"
+  <NotebookCard
+    variant="light"
+    padding="lg"
+    rounded="lg"
+    class="word-card flex items-center justify-center px-10 md:px-14 py-8 md:py-10"
     :class="{
       'animate-celebrate': phase === 'discovery',
     }"
   >
-    <span class="text-4xl md:text-6xl font-bold text-gold-600 font-learning drop-shadow-md">{{ display }}</span>
-  </div>
+    <span class="text-4xl md:text-6xl font-bold text-gold-300 font-learning drop-shadow-md">{{ display }}</span>
+  </NotebookCard>
 </template>

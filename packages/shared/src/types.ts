@@ -1,7 +1,24 @@
 export const PRONOUNS = ['je', 'tu', 'il/elle/on', 'nous', 'vous', 'ils/elles'] as const;
 export type Pronoun = (typeof PRONOUNS)[number];
 
-export type VerbId = 'etre' | 'avoir';
+export type VerbId =
+  | 'etre'
+  | 'avoir'
+  // 1er groupe (-er)
+  | 'jouer'
+  | 'manger'
+  | 'chanter'
+  | 'regarder'
+  // 3ème groupe — irréguliers fréquents
+  | 'aller'
+  | 'faire'
+  | 'dire'
+  | 'venir'
+  // 3ème groupe — modaux / fréquents
+  | 'pouvoir'
+  | 'voir'
+  | 'vouloir'
+  | 'prendre';
 
 export const TENSES = ['present', 'futur', 'imparfait', 'passe_compose'] as const;
 export type Tense = (typeof TENSES)[number];
@@ -94,6 +111,17 @@ export type PlumiState = 'idle' | 'challenge' | 'celebration' | 'encouragement';
 
 export type StepMechanic = 'tri-sorcier' | 'grimoire' | 'potion' | 'pont-accords' | 'potion-gn';
 
+/**
+ * Display names for mini-game mechanics (educational terminology)
+ */
+export const MECHANIC_DISPLAY_NAMES: Record<StepMechanic, string> = {
+  'tri-sorcier': 'Trier les Verbes',
+  'grimoire': 'Choisir la Bonne Forme',
+  'potion': 'Compléter la Phrase',
+  'pont-accords': 'Le Pont des Accords',
+  'potion-gn': 'Les Groupes Nominaux',
+};
+
 export interface ChapterStep {
   mechanic: StepMechanic;
   pronouns?: Pronoun[];
@@ -112,7 +140,18 @@ export interface Chapter {
   steps: ChapterStep[];
 }
 
-export type BiomeId = 'home' | 'jardin' | 'fondations' | 'clairiere' | 'futur' | 'brumes' | 'flux';
+export type BiomeId =
+  | 'home'
+  | 'jardin'
+  | 'fondations'
+  | 'clairiere'
+  | 'futur'
+  | 'brumes'
+  | 'flux'
+  | 'atelier'
+  | 'bibliotheque'
+  | 'arcanes'
+  | 'symphonie';
 
 export interface Book {
   id: number;

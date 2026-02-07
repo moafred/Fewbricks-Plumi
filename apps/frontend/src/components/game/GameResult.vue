@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { StarFilledIcon, SparkleIcon } from '@/components/icons';
-import MagicButton from '@/components/ui/MagicButton.vue';
+import ActionButton from '@/components/ui/ActionButton.vue';
 
 const props = defineProps<{
   score: number;
@@ -49,18 +49,18 @@ const message = computed(() => {
     </p>
 
     <div class="flex gap-4 mt-4">
-      <MagicButton
+      <ActionButton
         variant="primary"
         @click="emit('replay')"
       >
         Rejouer
-      </MagicButton>
-      <MagicButton
+      </ActionButton>
+      <ActionButton
         variant="secondary"
         @click="emit('home')"
       >
         Accueil
-      </MagicButton>
+      </ActionButton>
     </div>
   </div>
 </template>

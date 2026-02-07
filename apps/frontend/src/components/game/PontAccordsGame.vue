@@ -8,7 +8,7 @@ import ChallengeCard from '@/components/game/ChallengeCard.vue';
 import ChoiceButton from '@/components/game/ChoiceButton.vue';
 import type { ChoiceState } from '@/components/game/ChoiceButton.vue';
 import GameFinished from '@/components/game/GameFinished.vue';
-import MagicButton from '@/components/ui/MagicButton.vue';
+import ActionButton from '@/components/ui/ActionButton.vue';
 import KeyboardGuide from '@/components/ui/KeyboardGuide.vue';
 import ConfirmModal from '@/components/ui/ConfirmModal.vue';
 import { storeToRefs } from 'pinia';
@@ -189,9 +189,9 @@ const gapClasses = computed(() => {
 
       <div class="h-16 flex items-center justify-center w-full">
         <div v-if="phase === 'resolution'" class="animate-fade-in">
-          <MagicButton variant="primary" @click="store.nextItem()">
+          <ActionButton variant="primary" @click="store.nextItem()">
             Continuer →
-          </MagicButton>
+          </ActionButton>
         </div>
       </div>
 

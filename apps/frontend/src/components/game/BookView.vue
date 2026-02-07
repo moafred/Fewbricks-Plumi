@@ -3,7 +3,9 @@ import { computed } from 'vue';
 import type { Book, Chapter } from '@plumi/shared';
 import { BOOKS, getChaptersForBook } from '@plumi/shared';
 import { useChapterProgressStore } from '@/stores/chapter-progress';
-import { StarFilledIcon, StarEmptyIcon, HomeIcon } from '@/components/icons';
+import NotebookButton from '@/components/ui/NotebookButton.vue';
+import ChapterCard from '@/components/game/ChapterCard.vue';
+import { HomeIcon } from '@/components/icons';
 
 const props = defineProps<{
   bookId: number;
@@ -19,16 +21,16 @@ const progressStore = useChapterProgressStore();
 const book = computed<Book | undefined>(() => BOOKS.find((b) => b.id === props.bookId));
 const chapters = computed<Chapter[]>(() => getChaptersForBook(props.bookId));
 
-const colorClasses: Record<string, { accent: string; bg: string; border: string; glow: string }> = {
-  sky: { accent: 'text-sky-600', bg: 'bg-sky-100/60', border: 'border-sky-300', glow: 'shadow-sky-400/40' },
-  meadow: { accent: 'text-meadow-600', bg: 'bg-meadow-100/60', border: 'border-meadow-300', glow: 'shadow-meadow-400/40' },
-  gold: { accent: 'text-gold-500', bg: 'bg-gold-100/60', border: 'border-gold-300', glow: 'shadow-gold-400/40' },
-  coral: { accent: 'text-coral-500', bg: 'bg-coral-100/60', border: 'border-coral-300', glow: 'shadow-coral-400/40' },
-  moss: { accent: 'text-moss-600', bg: 'bg-moss-100/60', border: 'border-moss-300', glow: 'shadow-moss-400/40' },
-  dawn: { accent: 'text-gold-500', bg: 'bg-gold-100/60', border: 'border-gold-300', glow: 'shadow-gold-400/40' },
+const colorAccentClasses: Record<string, string> = {
+  sky: 'text-sky-600',
+  meadow: 'text-meadow-600',
+  gold: 'text-gold-500',
+  coral: 'text-coral-500',
+  moss: 'text-moss-600',
+  dawn: 'text-gold-500',
 };
 
-const colors = computed(() => colorClasses[book.value?.color ?? 'sky']);
+const accentColor = computed(() => colorAccentClasses[book.value?.color ?? 'sky']);
 
 function chapterStars(chapterId: number): number {
   return progressStore.getStars(chapterId);
@@ -37,24 +39,39 @@ function chapterStars(chapterId: number): number {
 function isRecommended(chapterId: number): boolean {
   return progressStore.recommendedChapterId === chapterId;
 }
+
+function getConnectionLineColor(chapterId: number): string {
+  if (chapterStars(chapterId) > 0) {
+    const colorMap: Record<string, string> = {
+      sky: 'bg-sky-400',
+      meadow: 'bg-meadow-400',
+      gold: 'bg-gold-400',
+      coral: 'bg-coral-400',
+      moss: 'bg-moss-400',
+      dawn: 'bg-gold-400',
+    };
+    return colorMap[book.value?.color ?? 'sky'] ?? 'bg-sky-400';
+  }
+  return 'bg-stone-200';
+}
 </script>
 
 <template>
   <div v-if="book" class="book-view flex flex-col min-h-screen p-6 gap-8">
     <!-- Header -->
     <header class="flex items-center gap-4">
-      <button
-        class="p-3 rounded-xl bg-white/70 hover:bg-white/90 active:scale-95 transition-all shadow-sm"
+      <NotebookButton
+        variant="icon"
         aria-label="Retour aux livres"
         @click="$emit('back')"
       >
-        <HomeIcon :size="28" class="text-sky-600" />
-      </button>
+        <HomeIcon :size="28" class="text-sky-200" />
+      </NotebookButton>
       <div>
-        <h1 class="text-2xl md:text-3xl font-bold" :class="colors.accent">
+        <h1 class="text-2xl md:text-3xl font-bold drop-shadow-lg" :class="accentColor">
           {{ book.title }}
         </h1>
-        <p class="text-sm text-stone-500">{{ book.subtitle }}</p>
+        <p class="text-sm text-stone-500 drop-shadow-md">{{ book.subtitle }}</p>
       </div>
     </header>
 
@@ -68,53 +85,20 @@ function isRecommended(chapterId: number): boolean {
         <!-- Ligne de connexion -->
         <div
           v-if="index > 0"
-          class="w-1 h-8 rounded-full"
-          :class="chapterStars(chapter.id) > 0 ? colors.accent : 'bg-stone-200'"
-        ></div>
+          class="w-1 h-8 rounded-full transition-all"
+          :class="getConnectionLineColor(chapter.id)"
+        />
 
         <!-- Carte chapitre -->
-        <button
-          class="w-full p-6 rounded-2xl border backdrop-blur bg-white/90 shadow-sm transition-all active:scale-[0.98]"
-          :class="[
-            colors.bg,
-            colors.border,
-            isRecommended(chapter.id) ? `shadow-lg ${colors.glow} ring-2 ring-gold-400/50` : '',
-          ]"
+        <ChapterCard
+          :title="chapter.title"
+          :narrative="chapter.narrative"
+          :stars="chapterStars(chapter.id)"
+          :max-stars="3"
+          :is-recommended="isRecommended(chapter.id)"
+          :color-variant="(book?.color ?? 'sky') as 'sky' | 'meadow' | 'gold' | 'coral' | 'moss' | 'dawn'"
           @click="$emit('play-chapter', chapter.id)"
-        >
-          <div class="flex items-center justify-between gap-4">
-            <div class="flex-1 text-left">
-              <h3 class="text-lg font-bold text-stone-800">{{ chapter.title }}</h3>
-              <p class="text-sm text-stone-500 mt-1">{{ chapter.narrative }}</p>
-            </div>
-
-            <!-- Étoiles -->
-            <div class="flex items-center gap-0.5 shrink-0">
-              <template v-for="i in 3" :key="i">
-                <StarFilledIcon
-                  v-if="i <= chapterStars(chapter.id)"
-                  :size="24"
-                  class="text-gold-400"
-                />
-                <StarEmptyIcon
-                  v-else
-                  :size="24"
-                  class="text-stone-300"
-                />
-              </template>
-            </div>
-          </div>
-
-          <!-- Badge recommandé -->
-          <div
-            v-if="isRecommended(chapter.id)"
-            class="mt-3 flex justify-center"
-          >
-            <span class="inline-block px-6 py-2 rounded-full bg-gold-400 text-stone-900 font-bold text-sm shadow-lg shadow-gold-400/30">
-              Jouer
-            </span>
-          </div>
-        </button>
+        />
       </div>
     </main>
   </div>

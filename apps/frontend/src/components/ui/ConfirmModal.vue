@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import MagicButton from './MagicButton.vue';
+import ActionButton from './ActionButton.vue';
+import NotebookCard from './NotebookCard.vue';
 
 defineProps<{
   title: string;
@@ -18,36 +19,38 @@ defineEmits<{
   <div class="fixed inset-0 z-50 flex items-center justify-center p-4">
     <!-- Backdrop -->
     <div
-      class="absolute inset-0 bg-stone-900/60 backdrop-blur-sm transition-opacity"
+      class="absolute inset-0 bg-stone-900/80 transition-opacity"
       @click="$emit('cancel')"
     />
 
     <!-- Modal Card -->
-    <div class="relative w-full max-w-md bg-white border border-sky-200 rounded-3xl p-8 shadow-2xl animate-bounce-gentle text-center">
-      <h2 class="text-2xl font-bold text-stone-800 mb-4 font-learning">
+    <NotebookCard variant="light" padding="md" rounded="lg" class="relative w-full max-w-md shadow-2xl animate-bounce-gentle text-center">
+      <h2 class="text-2xl font-bold text-gold-200 mb-4 font-learning drop-shadow-md">
         {{ title }}
       </h2>
 
-      <p v-if="message" class="text-stone-500 mb-8 text-lg">
+      <p v-if="message" class="text-gold-100 mb-8 text-lg drop-shadow-md">
         {{ message }}
       </p>
 
-      <div class="flex flex-col gap-3">
-        <MagicButton
-          variant="primary"
-          @click="$emit('cancel')"
-        >
-          {{ cancelLabel || 'Non, continuer' }}
-        </MagicButton>
+      <template #footer>
+        <div class="flex flex-col gap-3">
+          <ActionButton
+            variant="primary"
+            @click="$emit('cancel')"
+          >
+            {{ cancelLabel || 'Non, continuer' }}
+          </ActionButton>
 
-        <MagicButton
-          variant="secondary"
-          size="md"
-          @click="$emit('confirm')"
-        >
-          {{ confirmLabel || 'Oui, quitter' }}
-        </MagicButton>
-      </div>
-    </div>
+          <ActionButton
+            variant="secondary"
+            size="md"
+            @click="$emit('confirm')"
+          >
+            {{ confirmLabel || 'Oui, quitter' }}
+          </ActionButton>
+        </div>
+      </template>
+    </NotebookCard>
   </div>
 </template>

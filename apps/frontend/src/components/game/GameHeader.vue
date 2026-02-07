@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import CrossIcon from '@/components/icons/CrossIcon.vue';
+import NotebookBadge from '@/components/ui/NotebookBadge.vue';
 
 defineProps<{
   label: string;
@@ -22,11 +23,11 @@ defineEmits<{
       <CrossIcon :size="32" />
     </button>
 
-    <div class="flex items-center gap-2 px-4 py-2 bg-white/70 rounded-full backdrop-blur-sm shadow-sm">
-      <span :class="colorClass ?? 'text-gold-500'" class="font-bold">
+    <NotebookBadge>
+      <span :class="colorClass ?? 'text-gold-300'" class="font-bold drop-shadow-md">
         {{ label }}: {{ current }} / {{ total }}
       </span>
-    </div>
+    </NotebookBadge>
 
     <div class="w-10" />
   </header>

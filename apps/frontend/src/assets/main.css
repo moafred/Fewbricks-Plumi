@@ -147,6 +147,19 @@
     0%, 100% { box-shadow: 0 0 10px rgba(227,193,111,0.2); }
     50% { box-shadow: 0 0 25px rgba(227,193,111,0.5); }
   }
+
+  @keyframes slide-down {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  --animate-slide-down: slide-down 0.5s ease-out forwards;
 }
 
 body {
@@ -206,14 +219,19 @@ body {
     linear-gradient(180deg, #f0f6fe 0%, #fdf9ef 30%, #f0faf5 55%, #f7f8f9 100%);
 }
 
-/* --- Spell Burst — Célébration bonne réponse --- */
+/* --- Célébration bonne réponse --- */
 
-@keyframes spell-ring {
+@keyframes celebration-ring {
   from { transform: scale(0.5); opacity: 1; border-width: 3px; }
   to { transform: scale(2.2); opacity: 0; border-width: 1px; }
 }
 
-@keyframes spell-particle {
+@keyframes success-ring {
+  from { transform: scale(0.5); opacity: 1; border-width: 3px; }
+  to { transform: scale(2.2); opacity: 0; border-width: 1px; }
+}
+
+@keyframes celebration-particle {
   from {
     transform: translate(-50%, -50%) translate(0px, 0px) scale(1);
     opacity: 1;
@@ -234,6 +252,39 @@ body {
   60% { transform: rotate(1deg); }
   75% { transform: rotate(-0.5deg); }
   100% { transform: rotate(0deg) scale(1); }
+}
+
+/* --- Texture cahier d'école — Lignes Seyes --- */
+.texture-notebook {
+  position: relative;
+}
+
+.texture-notebook::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 7px,
+      rgba(90, 143, 212, 0.15) 7px,
+      rgba(90, 143, 212, 0.15) 8px,
+      transparent 8px,
+      transparent 15px,
+      rgba(90, 143, 212, 0.08) 15px,
+      rgba(90, 143, 212, 0.08) 16px,
+      transparent 16px,
+      transparent 23px,
+      rgba(90, 143, 212, 0.08) 23px,
+      rgba(90, 143, 212, 0.08) 24px,
+      transparent 24px,
+      transparent 31px,
+      rgba(90, 143, 212, 0.2) 31px,
+      rgba(90, 143, 212, 0.2) 32px
+    );
+  pointer-events: none;
+  border-radius: inherit;
 }
 
 /* --- Accessibilité — Désactivation animations continues --- */

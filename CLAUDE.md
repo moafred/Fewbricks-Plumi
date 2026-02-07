@@ -1,4 +1,4 @@
-# Plumi — La Plume Magique
+# Plumi — Apprendre le Français CE1
 
 Application éducative gamifiée d'apprentissage du français pour enfants CE1 (6-7 ans).
 Conjugaison (présent, futur, imparfait — être/avoir), extensible à toute la grammaire et l'orthographe.
@@ -39,7 +39,7 @@ Chaque membre possède un profil et des compétences spécifiques pour éviter l
 | **[GAME]**   | Game Designer Enfants          | Gamification 6-7 ans. Boucle de jeu, récompenses, micro-activités 30-120s. Garant du fun                                |
 | **[ARCHI]**  | Tech Lead Senior               | Vue 3, Pinia, Fastify, Prisma, PWA, machine à états, perf < 16ms                                                        |
 | **[UI]**     | Designer UI/UX Enfants         | Couleurs vives, formes rondes, animations engageantes, touch targets 80px+, accessibilité                                |
-| **[AUDIO]**  | Sound Designer                 | Musiques, feedbacks sonores, voix d'encouragement. Ambiance immersive du Royaume des Mots                                |
+| **[AUDIO]**  | Sound Designer                 | Musiques, feedbacks sonores, voix d'encouragement. Ambiance immersive du parcours d'apprentissage                                |
 | **[KID]**    | Testeur de 6 ans (CE1)         | Évalue simplicité et plaisir. Feedback brutal. Droit de veto sur l'ennui                                                |
 | **[PARENT]** | Parent Engagé                  | App sans supervision, sans pub, sécurisée. Gestion du temps d'écran                                                     |
 | **[DOC]**    | Gardien de la Continuité       | Knowledge Management, cohérence des versions, journal des décisions (ADR)                                                |
@@ -62,15 +62,15 @@ Chaque membre possède un profil et des compétences spécifiques pour éviter l
 
 ---
 
-## Vision du Jeu — Le Royaume des Mots [GAME]
+## Vision du Jeu — Le parcours d'apprentissage [GAME]
 
 ### Concept Narratif
 
-L'enfant est un apprenti magicien dans le **Royaume des Mots**. Sa plume magique (**Plumi**) est son compagnon. Chaque conjugaison correcte = un sort qui fait vivre le monde (arbres, animaux, bâtiments). Les verbes **être** et **avoir** sont les deux premiers sorts fondamentaux.
+L'enfant est un élève de CE1 dans le **parcours d'apprentissage**. Sa plume d'écriture (**Plumi**) est son compagnon. Chaque conjugaison correcte = un sort qui fait vivre le monde (arbres, animaux, bâtiments). Les verbes **être** et **avoir** sont les deux premiers sorts fondamentaux.
 
 ### Mascotte — Plumi
 
-Plumi est une **plume enchantée lumineuse** (comme Lumi est une luciole dans le projet frère). Plumi a des états visuels :
+Plumi est une **plume d'écriture lumineuse** (comme Lumi est une luciole dans le projet frère). Plumi a des états visuels :
 
 ```
 PlumiState: 'idle' | 'challenge' | 'celebration' | 'encouragement'
@@ -108,29 +108,29 @@ PlumiState: 'idle' | 'challenge' | 'celebration' | 'encouragement'
 | **pont-accords**   | `PontAccordsGame`    | Accord dans le GN (genre/nombre)              |
 | **potion-gn**      | `PotionGnGame`       | Complétion de phrase à trou (vocabulaire GN)  |
 
-### Progression — 6 Livres / 18 Chapitres [PEDA]
+### Progression — 6 Cahiers / 18 Chapitres [PEDA]
 
 Définis dans `packages/shared/src/chapters.ts` (`BOOKS`, `CHAPTERS`) :
 
 | Livre | Thème | Temps | Chapitres |
 | ----- | ----- | ----- | --------- |
-| 1. Le Jardin des Mots | Découverte | Présent | 1-3 |
-| 2. Le Livre des Fondations | Consolidation | Présent | 4-6 |
-| 3. La Clairière Enchantée | Accords GN | Présent + GN | 7-9 |
-| 4. Les Sentiers du Futur | Futur | Futur | 10-12 |
-| 5. Les Brumes du Passé | Imparfait | Imparfait | 13-15 |
-| 6. Le Flux Temporel (bonus) | Mélange | Tous temps | 16-18 |
+| 1. Cahier 1 : Le Présent | Découverte | Présent | 1-3 |
+| 2. Cahier 2 : Les Fondations | Consolidation | Présent | 4-6 |
+| 3. Cahier 3 : Les Accords | Accords GN | Présent + GN | 7-9 |
+| 4. Cahier 4 : Le Futur | Futur | Futur | 10-12 |
+| 5. Cahier 5 : L'Imparfait | Imparfait | Imparfait | 13-15 |
+| 6. Cahier 6 : Révision (bonus) | Mélange | Tous temps | 16-18 |
 
-Chaque chapitre contient 4-5 étapes (`ChapterStep`) avec progression en spirale sur les pronoms (je/tu → il/elle/on/nous → tous → boss). Le livre bonus se déverrouille quand les 5 livres principaux sont complétés.
+Chaque chapitre contient 4-5 étapes (`ChapterStep`) avec progression en spirale sur les pronoms (je/tu → il/elle/on/nous → tous → boss). Le cahier bonus se déverrouille quand les 5 livres principaux sont complétés.
 
 ### Système de Récompenses [GAME]
 
 | Récompense              | Déclencheur                        | Granularité      |
 | ----------------------- | ---------------------------------- | ---------------- |
-| Étoiles magiques        | +1 par bonne réponse, +bonus série | Micro (immédiat) |
+| Étoiles de progression        | +1 par bonne réponse, +bonus série | Micro (immédiat) |
 | Badges                  | Mini-jeu terminé                   | Leçon            |
 | Éléments du monde       | Arbres, animaux, bâtiments         | Chapitre         |
-| Compagnons magiques     | Milestone chapitres                | Arc narratif     |
+| Indicateurs progrès     | Milestone chapitres                | Arc narratif     |
 | Cosmétiques avatar      | Retour quotidien                   | Rétention        |
 
 **Principe** : Micro-récompenses fréquentes (1 étoile par action correcte). Pas de gros nombres gonflés.
@@ -192,7 +192,7 @@ apps/
   frontend/                    # Vue 3 PWA
     src/
       components/game/         # Mini-jeux + navigation (BookShelf, ChapterRunner...)
-      components/ui/           # Atoms : MagicButton, GameCard, ConfirmModal...
+      components/ui/           # Atoms : ActionButton (deprecated: MagicButton), GameCard, ConfirmModal...
       components/icons/        # Icônes SVG (StarFilledIcon, HatIcon...)
       composables/             # useKeyboardNavigation, useBackNavigation
       stores/                  # Pinia : chapter-progress, game, grimoire, potion...
@@ -210,7 +210,7 @@ pnpm-workspace.yaml
 | Couche           | Rôle                      | Exemples                                              |
 | ---------------- | ------------------------- | ----------------------------------------------------- |
 | **Icons**        | Glyphes SVG atomiques     | `components/icons/StarFilledIcon.vue`, `HatIcon.vue`  |
-| **Atoms**        | Éléments UI purs          | `components/ui/MagicButton.vue`, `KeyboardGuide.vue`  |
+| **Atoms**        | Éléments UI purs          | `components/ui/ActionButton (deprecated: MagicButton).vue`, `KeyboardGuide.vue`  |
 | **Molecules**    | Composants métier simples | `components/game/SpellChoice.vue`, `ChoiceButton.vue`, `ChallengeCard.vue` |
 | **Organisms**    | Mini-jeux complets        | `components/game/PotionGame.vue`, `GrimoireGame.vue`  |
 | **Orchestrateur**| Gestion d'un chapitre     | `components/game/ChapterRunner.vue`                   |
@@ -239,7 +239,7 @@ Screen: 'home' → 'bookshelf' → 'book-view' → 'chapter-runner'
 ```
 
 - **Home** : Landing avec mascotte Plumi, bouton "Jouer"
-- **BookShelf** : Grille de 6 livres (`BookCard`), progression étoiles, livre bonus verrouillé
+- **BookShelf** : Grille de 6 livres (`BookCard`), progression étoiles, cahier bonus verrouillé
 - **BookView** : Chapitres d'un livre en chemin vertical, chapitre recommandé mis en avant
 - **ChapterRunner** : Orchestrateur — intro narrative → étapes séquentielles (mini-jeux) → `ChapterResult`
 
@@ -289,7 +289,7 @@ Les 5 mini-jeux supportent un mode `embedded` pour fonctionner comme étape dans
    - Commentaires expliquant des règles pédagogiques ou métier : français.
 
 8. **Pas de Boutons Natifs** :
-   - Utiliser `MagicButton` pour toutes les actions interactives.
+   - Utiliser `ActionButton (deprecated: MagicButton)` pour toutes les actions interactives.
    - Ne pas bypasser le Design System (tokens, composants UI).
 
 9. **Respect des Règles de Domaine** :
@@ -310,11 +310,13 @@ Les 5 mini-jeux supportent un mode `embedded` pour fonctionner comme étape dans
     - Les valeurs d'environnement sont obligatoires : si elles manquent, l'app doit crasher au démarrage, pas fonctionner avec des valeurs fantômes.
     - Préférer `!` (non-null assertion) ou une validation explicite au démarrage plutôt qu'un fallback silencieux.
 
-13. **Zéro Classe Dupliquée** :
-    - Si un pattern de classes Tailwind (>3 utilitaires) est copié dans 2+ composants, extraire un composant Vue dédié.
-    - Les états visuels (idle/correct/incorrect...) doivent être un prop typé (`state: ChoiceState`), pas des classes conditionnelles dupliquées.
-    - Préférer les slots pour les contenus variables plutôt que des props de style.
-    - Composants existants à réutiliser : `ChoiceButton`, `ChallengeCard`, `GameHeader`, `GameFinished`.
+13. **Zéro Classe Dupliquée — Composants Réutilisables** :
+   - Si un pattern de classes Tailwind (>3 utilitaires) est copié dans 2+ composants, extraire un composant Vue dédié.
+   - Si une div avec des classes spécifiques apparaît dans 2+ endroits, créer un composant réutilisable.
+   - Les états visuels (idle/correct/incorrect...) doivent être un prop typé (`state: ChoiceState`), pas des classes conditionnelles dupliquées.
+   - Préférer les slots pour les contenus variables plutôt que des props de style.
+   - **Composants UI disponibles** : `ParchmentCard`, `ParchmentButton`, `ParchmentBadge`, `ActionButton (deprecated: MagicButton)`, `ChoiceButton`, `ChallengeCard`, `GameHeader`, `GameFinished`, `PlumiMascot`, `CelebrationParticles`, `NarrativeCard`, `ProgressPath`.
+   - **Processus** : Avant d'écrire une div avec >3 classes Tailwind, vérifier si un composant existe déjà dans `@/components/ui` ou `@/components/game`.
 
 14. **Zéro Couleur Générique** :
     - Utiliser exclusivement les tokens Plumi : `sky-*`, `gold-*`, `meadow-*`, `coral-*`, `moss-*`, `stone-*`.
@@ -322,16 +324,28 @@ Les 5 mini-jeux supportent un mode `embedded` pour fonctionner comme étape dans
     - Fond des cartes de jeu : `bg-white/90 backdrop-blur-md border border-sky-200 shadow-sm` (thème clair).
 
 15. **Keyboard = Desktop Only** :
-    - `KeyboardGuide` et raccourcis clavier sont réservés au desktop (`hidden lg:flex`).
-    - En mode embedded (`ChapterRunner`), les mini-jeux masquent leur `GameHeader` (`v-if="!embedded"`).
-    - Sur mobile/tablette : interaction tactile uniquement, pas d'indication clavier.
+   - `KeyboardGuide` et raccourcis clavier sont réservés au desktop (`hidden lg:flex`).
+   - En mode embedded (`ChapterRunner`), les mini-jeux masquent leur `GameHeader` (`v-if="!embedded"`).
+   - Sur mobile/tablette : interaction tactile uniquement, pas d'indication clavier.
+
+16. **Composants Avant Divs** :
+   - Toujours vérifier l'existant AVANT d'écrire une nouvelle div avec des classes Tailwind.
+   - Si un pattern de div apparaît dans 2+ endroits, créer immédiatement un composant réutilisable.
+   - Les composants UI (`@/components/ui`) sont prioritaires sur les divs inline.
+   - Exemples interdits :
+     * `<div class="bg-royal-800/95 border-2 border-royal-400/40 texture-parchment">` → Utiliser `ParchmentCard`
+     * `<button class="bg-royal-800/95 hover:bg-royal-700/95 texture-parchment">` → Utiliser `ParchmentButton`
+     * `<div class="bg-royal-800/95 rounded-full border-2">` → Utiliser `ParchmentBadge`
+   - Checklist avant commit : "Ai-je créé une div avec >3 classes Tailwind qui pourrait être un composant ?"
 
 ### Règles de Contribution
 
 - **Vérifier l'existant AVANT de coder** : Explorer le codebase pour identifier patterns, composants réutilisables, types partagés. Ne pas réinventer ce qui existe.
+- **Composants réutilisables** : Avant d'écrire une div avec >3 classes Tailwind, vérifier si un composant existe dans `@/components/ui` ou `@/components/game`. Si un pattern apparaît 2+ fois, créer un composant. Voir `docs/checklist-components.md`.
 - **Partage de code** : Ne JAMAIS dupliquer de constantes ou de types entre frontend et backend. Utiliser `@plumi/shared`.
 - **Standards Qualité** : 0 erreurs/warnings, pas de `any`, pas de `console.log` en production.
 - **Pas de marqueurs temporels** dans les commentaires (pas de NEW, OLD, TODO avec dates).
+- **Code Review** : Vérifier l'utilisation de composants réutilisables. Rejeter les PRs avec des divs répétitives non justifiées. Exiger la création de composants si pattern répété.
 
 ---
 
