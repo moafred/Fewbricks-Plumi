@@ -4,11 +4,17 @@ import helmet from '@fastify/helmet';
 import { CONJUGATIONS } from '@plumi/shared';
 
 const PORT = Number(process.env.PORT);
-const CORS_ORIGIN = process.env.CORS_ORIGIN!;
+// Origines CORS autorisées : web dev, Capacitor iOS/Android, production
+const CORS_ORIGINS = [
+  'http://localhost:5184',
+  'capacitor://localhost',
+  'https://localhost',
+  process.env.CORS_ORIGIN,
+].filter((origin): origin is string => Boolean(origin));
 
 const fastify = Fastify({ logger: true });
 
-await fastify.register(cors, { origin: CORS_ORIGIN });
+await fastify.register(cors, { origin: CORS_ORIGINS, credentials: true });
 await fastify.register(helmet);
 
 // Health check
