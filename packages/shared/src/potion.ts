@@ -145,7 +145,7 @@ const TEMPLATE_INDEX: TemplateIndex = {
     'je': ['Je %GAP% bonjour.', 'Je %GAP% merci.', 'Je %GAP% la vérité.'],
     'tu': ['Tu %GAP% un mot gentil.', 'Tu %GAP% au revoir.', 'Tu %GAP% oui.'],
     'il/elle/on': ['Elle %GAP% son nom.', 'Il %GAP% un secret.', 'On %GAP% bravo.'],
-    'nous': ['Nous %GAP% une histoire.', 'Nous %GAP% les mots magiques.'],
+    'nous': ['Nous %GAP% une histoire.', 'Nous %GAP% les mots importants.'],
     'vous': ['Vous %GAP% la réponse.', 'Vous %GAP% bonjour.'],
     'ils/elles': ['Ils %GAP% merci.', 'Elles %GAP% au revoir.'],
   },

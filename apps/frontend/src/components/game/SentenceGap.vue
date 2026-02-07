@@ -59,7 +59,7 @@ const isIdle = computed(() => !props.filledWord && !props.showSolution);
       </span>
       <span v-else class="opacity-0">mot</span>
 
-      <!-- Magic Particles (Idle) -->
+      <!-- Particules lumineuses (Idle) -->
       <template v-if="isIdle">
         <SparkleIcon :size="16" class="absolute -top-2 -right-2 text-gold-300 animate-sparkle" />
         <SparkleIcon :size="16" class="absolute -bottom-2 -left-2 text-gold-300 animate-sparkle" />

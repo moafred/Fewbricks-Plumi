@@ -78,6 +78,7 @@ const colors = colorClasses[props.book.color] ?? colorClasses.sky;
 
     <!-- Badge état -->
     <StatusBadge v-if="stars >= maxStars" status="completed" />
+    <StatusBadge v-else-if="isRecommended" status="recommended" />
     <StatusBadge v-else-if="stars > 0" status="in-progress" />
     <StatusBadge v-else-if="isLocked" status="locked" />
   </button>

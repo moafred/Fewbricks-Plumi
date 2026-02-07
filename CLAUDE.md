@@ -102,7 +102,7 @@ PlumiState: 'idle' | 'challenge' | 'celebration' | 'encouragement'
 
 | Mécanique          | Composant            | Compétence visée                              |
 | ------------------ | -------------------- | --------------------------------------------- |
-| **tri-sorcier**    | `TriSorcierGame`     | Distinction être vs avoir (choix binaire)     |
+| **tri-verbes**     | `TriVerbesGame`      | Distinction être vs avoir (choix binaire)     |
 | **grimoire**       | `GrimoireGame`       | Sélection de la bonne forme conjuguée (2×2)  |
 | **potion**         | `PotionGame`         | Complétion de phrase à trou (conjugaison)     |
 | **pont-accords**   | `PontAccordsGame`    | Accord dans le GN (genre/nombre)              |

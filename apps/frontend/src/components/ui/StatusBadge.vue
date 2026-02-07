@@ -7,7 +7,7 @@
  */
 
 defineProps<{
-  status: 'completed' | 'in-progress' | 'locked';
+  status: 'completed' | 'in-progress' | 'locked' | 'recommended';
 }>();
 
 const statusConfig: Record<string, { classes: string; label: string }> = {
@@ -22,6 +22,10 @@ const statusConfig: Record<string, { classes: string; label: string }> = {
   locked: {
     classes: 'bg-stone-100 text-stone-500',
     label: 'Verrouillé',
+  },
+  recommended: {
+    classes: 'bg-sky-100 text-sky-700 font-bold',
+    label: 'Conseillé',
   },
 };
 </script>

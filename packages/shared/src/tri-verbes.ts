@@ -2,7 +2,7 @@ import type { Pronoun, Tense, VerbId } from './types.js';
 import { getConjugationsForTense } from './conjugations.js';
 import { shuffle } from './utils.js';
 
-/** Un item à trier dans le mini-jeu Tri du Sorcier */
+/** Un item à trier dans le mini-jeu Tri des Verbes */
 export interface SortingItem {
   id: string;
   pronoun: Pronoun;
@@ -22,7 +22,7 @@ export interface SortingOptions {
 }
 
 /**
- * Génère une liste d'items à trier pour le Tri du Sorcier.
+ * Génère une liste d'items à trier pour le Tri des Verbes.
  * Pioche `count` formes équitablement réparties entre être et avoir,
  * puis mélange avec Fisher-Yates.
  */

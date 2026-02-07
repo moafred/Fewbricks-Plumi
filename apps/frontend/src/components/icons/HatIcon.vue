@@ -10,7 +10,7 @@ withDefaults(defineProps<{ size?: number }>(), { size: 24 });
     fill="none"
     aria-hidden="true"
   >
-    <!-- Wizard hat: pointed top with wide brim -->
+    <!-- Chapeau de tri : pointe et large bord -->
     <path
       d="M12 2L8 14H4L3 18C3 18 7 20 12 20C17 20 21 18 21 18L20 14H16L12 2Z"
       fill="currentColor"

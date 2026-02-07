@@ -15,7 +15,7 @@ export const BOOK_LESSONS: BookLesson[] = [
     bookId: 1,
     title: 'La Leçon du Présent',
     introduction:
-      'Bienvenue ! Ici tu vas apprendre deux verbes très importants : ÊTRE et AVOIR. Ce sont les premiers sorts de ton cahier !',
+      'Bienvenue ! Ici tu vas apprendre deux verbes très importants : ÊTRE et AVOIR. Ce sont les premières leçons de ton cahier !',
     sections: [
       {
         title: 'Le verbe ÊTRE',

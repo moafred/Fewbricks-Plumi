@@ -2,7 +2,7 @@
 /**
  * ChoiceGrid — Grille 2×2 pour les choix de mini-jeux
  *
- * @description Conteneur réutilisable pour les grilles de ChoiceButton / SpellChoice.
+ * @description Conteneur réutilisable pour les grilles de ChoiceButton / FormChoice.
  * Remplace le pattern dupliqué : `grid grid-cols-2 gap-6 w-full max-w-Xxl px-6`
  */
 withDefaults(

@@ -87,9 +87,9 @@ export type GapTarget = 'verb' | 'determiner' | 'adjective' | 'noun';
 
 export type MiniGameType =
   | 'attrape-mots'
-  | 'pont-magique'
-  | 'potion-magique'
-  | 'tri-sorcier'
+  | 'pont-accents'
+  | 'potion-verbes'
+  | 'tri-verbes'
   | 'grimoire'
   | 'pont-accords';
 
@@ -109,13 +109,13 @@ export interface Exercise {
 
 export type PlumiState = 'idle' | 'challenge' | 'celebration' | 'encouragement';
 
-export type StepMechanic = 'tri-sorcier' | 'grimoire' | 'potion' | 'pont-accords' | 'potion-gn';
+export type StepMechanic = 'tri-verbes' | 'grimoire' | 'potion' | 'pont-accords' | 'potion-gn';
 
 /**
  * Display names for mini-game mechanics (educational terminology)
  */
 export const MECHANIC_DISPLAY_NAMES: Record<StepMechanic, string> = {
-  'tri-sorcier': 'Trier les Verbes',
+  'tri-verbes': 'Trier les Verbes',
   'grimoire': 'Choisir la Bonne Forme',
   'potion': 'Compléter la Phrase',
   'pont-accords': 'Le Pont des Accords',

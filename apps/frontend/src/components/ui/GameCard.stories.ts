@@ -10,12 +10,12 @@ const meta: Meta<typeof GameCard> = {
 export default meta;
 type Story = StoryObj<typeof GameCard>;
 
-export const TriSorcier: Story = {
+export const TriVerbes: Story = {
   render: () => ({
     components: { GameCard, HatIcon },
     template: `
       <GameCard
-        title="Le Tri du Sorcier"
+        title="Le Tri des Verbes"
         description="Trie les formes conjuguées dans le bon chapeau : être ou avoir ?"
         accent-color="text-gold-300"
       >
@@ -33,7 +33,7 @@ export const Grimoire: Story = {
     template: `
       <GameCard
         title="Le Grimoire"
-        description="Trouve la bonne formule magique pour chaque pronom et verbe !"
+        description="Trouve la bonne forme conjuguée pour chaque pronom et verbe !"
         accent-color="text-sky-300"
       >
         <template #icon>

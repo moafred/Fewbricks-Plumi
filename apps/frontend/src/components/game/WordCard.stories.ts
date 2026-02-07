@@ -9,7 +9,7 @@ const meta: Meta<typeof WordCard> = {
 export default meta;
 type Story = StoryObj<typeof WordCard>;
 
-export const TriSorcier: Story = {
+export const TriVerbes: Story = {
   args: {
     pronoun: 'je',
     form: 'suis',

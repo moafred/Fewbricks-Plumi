@@ -69,7 +69,7 @@ const glowClass = computed(() => {
 
 <template>
   <div class="relative inline-block" :class="sizeClasses">
-    <!-- Plume magique SVG -->
+    <!-- Plume Plumi SVG -->
     <svg
       viewBox="0 0 200 200"
       class="w-full h-full"
@@ -112,7 +112,7 @@ const glowClass = computed(() => {
         stroke-width="1.5"
         fill="none"
       />
-      <!-- Particules magiques (pour états challenge/celebration) -->
+      <!-- Particules lumineuses (pour états challenge/celebration) -->
       <template v-if="state === 'challenge' || state === 'celebration'">
         <circle cx="80" cy="50" r="3" fill="#e3c16f" opacity="0.8">
           <animate

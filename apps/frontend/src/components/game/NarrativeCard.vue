@@ -4,7 +4,7 @@ import NotebookCard from '@/components/ui/NotebookCard.vue';
 /**
  * NarrativeCard — Carte narrative pour intros de chapitres
  *
- * @description Composant pour les introductions narratives avec style "livre enchanté".
+ * @description Composant pour les introductions narratives avec style narratif.
  * Utilise NotebookCard en interne avec animation de déroulement.
  *
  * @usage

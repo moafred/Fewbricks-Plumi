@@ -122,7 +122,7 @@ game.startGame(props.tense, props.count, {
 </script>
 
 <template>
-  <div class="tri-sorcier-game flex flex-col items-center justify-between min-h-screen px-4 py-6 gap-4">
+  <div class="tri-verbes-game flex flex-col items-center justify-between min-h-screen px-4 py-6 gap-4">
     <!-- Finished: show results -->
     <template v-if="game.isFinished && !embedded">
       <div class="flex-1 flex items-center justify-center w-full">

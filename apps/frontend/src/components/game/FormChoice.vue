@@ -1,9 +1,9 @@
 <script setup lang="ts">
-export type SpellState = 'idle' | 'waiting' | 'correct' | 'incorrect' | 'reveal';
+export type FormChoiceState = 'idle' | 'waiting' | 'correct' | 'incorrect' | 'reveal';
 
 const props = defineProps<{
   label: string;
-  state: SpellState;
+  state: FormChoiceState;
   focused?: boolean;
 }>();
 
@@ -20,7 +20,7 @@ function handleTap() {
 
 <template>
   <button
-    class="spell-choice flex items-center justify-center rounded-2xl h-20 md:h-24 w-full text-xl md:text-2xl font-bold transition-all duration-200 select-none border-3"
+    class="form-choice flex items-center justify-center rounded-2xl h-20 md:h-24 w-full text-xl md:text-2xl font-bold transition-all duration-200 select-none border-3"
     :class="[
       {
         'bg-stone-100 border-stone-200 text-stone-400 opacity-50 cursor-default': state === 'idle',

@@ -24,8 +24,8 @@ export const Default: Story = {
 
 export const LongText: Story = {
   args: {
-    title: 'La Clairière Enchantée',
-    text: 'Dans cette clairière magique, tu vas découvrir les secrets des accords dans le groupe nominal. Chaque mot doit s\'accorder avec les autres pour créer une phrase harmonieuse.',
+    title: 'La Clairière des Accords',
+    text: 'Dans cette clairière, tu vas découvrir les secrets des accords dans le groupe nominal. Chaque mot doit s\'accorder avec les autres pour créer une phrase harmonieuse.',
     biome: 'clairiere',
   },
 };

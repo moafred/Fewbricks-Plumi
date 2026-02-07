@@ -3,8 +3,8 @@ import { computed, watch, onUnmounted } from 'vue';
 import type { Tense, VerbId, Pronoun, AnswerResult } from '@plumi/shared';
 import { useGrimoireStore } from '@/stores/grimoire';
 import { useKeyboardNavigation, useBackNavigation } from '@/composables';
-import SpellChoice from './SpellChoice.vue';
-import type { SpellState } from './SpellChoice.vue';
+import FormChoice from './FormChoice.vue';
+import type { FormChoiceState } from './FormChoice.vue';
 import KeyboardGuide from '@/components/ui/KeyboardGuide.vue';
 import KeyboardHintsBar from '@/components/ui/KeyboardHintsBar.vue';
 import TenseBadge from '@/components/ui/TenseBadge.vue';
@@ -82,7 +82,7 @@ function onTap(choice: string) {
   game.submitAnswer(choice);
 }
 
-function choiceState(choice: string): SpellState {
+function choiceState(choice: string): FormChoiceState {
   const { phase, lastResult, selectedChoice, correctForm } = game;
 
   if (phase === 'discovery') return 'idle';
@@ -171,7 +171,7 @@ game.startGame(props.tense, props.count, {
       <!-- 2×2 grid of choices -->
       <div class="flex flex-col items-center gap-8 pb-12 w-full">
         <ChoiceGrid max-width="2xl">
-          <SpellChoice
+          <FormChoice
             v-for="(choice, index) in game.currentItem?.choices"
             :key="choice"
             :label="choice"
@@ -184,7 +184,7 @@ game.startGame(props.tense, props.count, {
         <!-- Keyboard Hints -->
         <KeyboardHintsBar v-if="game.phase === 'challenge'">
            <KeyboardGuide mode="cluster" label="choisir" />
-           <KeyboardGuide mode="single" key-name="espace" label="lancer le sort" />
+           <KeyboardGuide mode="single" key-name="espace" label="valider" />
         </KeyboardHintsBar>
       </div>
     </template>

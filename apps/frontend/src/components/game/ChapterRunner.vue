@@ -5,7 +5,7 @@ import { getChapter } from '@plumi/shared';
 import { useChapterProgressStore } from '@/stores/chapter-progress';
 import { useBackNavigation } from '@/composables';
 import ChapterResult from './ChapterResult.vue';
-import TriSorcierGame from './TriSorcierGame.vue';
+import TriVerbesGame from './TriVerbesGame.vue';
 import GrimoireGame from './GrimoireGame.vue';
 import PotionGame from './PotionGame.vue';
 import PontAccordsGame from './PontAccordsGame.vue';
@@ -29,7 +29,7 @@ const progressStore = useChapterProgressStore();
 
 // Mapping mécanique -> composant
 const mechanicComponents: Record<StepMechanic, Component> = {
-  'tri-sorcier': TriSorcierGame,
+  'tri-verbes': TriVerbesGame,
   'grimoire': GrimoireGame,
   'potion': PotionGame,
   'pont-accords': PontAccordsGame,

@@ -44,7 +44,7 @@ function getParticleStyle(index: number, total: number): Record<string, string> 
   return {
     '--dx': `${dx}px`,
     '--dy': `${dy}px`,
-    animation: `spell-particle ${props.duration}ms ease-out forwards`,
+    animation: `celebration-particle ${props.duration}ms ease-out forwards`,
     animationDelay: `${index * 25}ms`,
   };
 }

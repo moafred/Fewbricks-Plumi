@@ -3,7 +3,7 @@
  * PencilIcon — Icône de crayon/stylo
  *
  * @description Icône représentant un crayon d'école pour le thème scolaire.
- * Utilisé pour remplacer les références magiques (baguette, plume enchantée).
+ * Utilisé pour les actions d'écriture et d'édition.
  *
  * @usage
  * - Taille par défaut : 24px

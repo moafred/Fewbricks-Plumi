@@ -43,19 +43,19 @@ describe('CHAPTERS', () => {
     }
   });
 
-  it('duel chapters include tri-sorcier mechanic', () => {
+  it('duel chapters include tri-verbes mechanic', () => {
     const duels = CHAPTERS.filter((c) => c.verbs.length > 1 && c.tense !== 'mixed');
     for (const ch of duels) {
       const mechanics = ch.steps.map((s) => s.mechanic);
-      expect(mechanics).toContain('tri-sorcier');
+      expect(mechanics).toContain('tri-verbes');
     }
   });
 
-  it('single-verb chapters do not use tri-sorcier', () => {
+  it('single-verb chapters do not use tri-verbes', () => {
     const singles = CHAPTERS.filter((c) => c.verbs.length === 1);
     for (const ch of singles) {
       const mechanics = ch.steps.map((s) => s.mechanic);
-      expect(mechanics).not.toContain('tri-sorcier');
+      expect(mechanics).not.toContain('tri-verbes');
     }
   });
 

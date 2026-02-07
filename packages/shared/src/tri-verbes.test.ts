@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { generateSortingItems } from './tri-sorcier.js';
+import { generateSortingItems } from './tri-verbes.js';
 
 describe('generateSortingItems', () => {
   it('generates items for all pronouns by default', () => {

@@ -10,7 +10,7 @@ withDefaults(defineProps<{ size?: number }>(), { size: 24 });
     fill="none"
     aria-hidden="true"
   >
-    <!-- Closed book / spell tome -->
+    <!-- Livre fermé -->
     <path
       d="M4 19.5C4 18.1193 5.11929 17 6.5 17H20"
       stroke="currentColor"
@@ -30,7 +30,7 @@ withDefaults(defineProps<{ size?: number }>(), { size: 24 });
       stroke-linecap="round"
       stroke-linejoin="round"
     />
-    <!-- Magic sparkle on cover -->
+    <!-- Décoration sur la couverture -->
     <path
       d="M12 8L12.5 9.5L14 10L12.5 10.5L12 12L11.5 10.5L10 10L11.5 9.5L12 8Z"
       fill="currentColor"

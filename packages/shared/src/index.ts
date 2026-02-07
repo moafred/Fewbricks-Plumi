@@ -66,8 +66,8 @@ export {
   formatGenderNumber,
 } from './vocabulary.js';
 
-export type { SortingItem, SortingOptions } from './tri-sorcier.js';
-export { generateSortingItems } from './tri-sorcier.js';
+export type { SortingItem, SortingOptions } from './tri-verbes.js';
+export { generateSortingItems } from './tri-verbes.js';
 
 export type { GrimoireItem, GrimoireOptions } from './grimoire.js';
 export { generateGrimoireItems } from './grimoire.js';

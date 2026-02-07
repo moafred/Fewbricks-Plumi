@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
-import SpellChoice from './SpellChoice.vue';
+import FormChoice from './FormChoice.vue';
 
-const meta: Meta<typeof SpellChoice> = {
-  title: 'Game/SpellChoice',
-  component: SpellChoice,
+const meta: Meta<typeof FormChoice> = {
+  title: 'Game/FormChoice',
+  component: FormChoice,
   argTypes: {
     state: {
       control: 'select',
@@ -16,7 +16,7 @@ const meta: Meta<typeof SpellChoice> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof SpellChoice>;
+type Story = StoryObj<typeof FormChoice>;
 
 export const Idle: Story = {
   args: { label: 'suis', state: 'idle' },
@@ -40,13 +40,13 @@ export const Reveal: Story = {
 
 export const Grid: Story = {
   render: () => ({
-    components: { SpellChoice },
+    components: { FormChoice },
     template: `
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 400px;">
-        <SpellChoice label="suis" state="correct" />
-        <SpellChoice label="ai" state="incorrect" />
-        <SpellChoice label="es" state="idle" />
-        <SpellChoice label="as" state="idle" />
+        <FormChoice label="suis" state="correct" />
+        <FormChoice label="ai" state="incorrect" />
+        <FormChoice label="es" state="idle" />
+        <FormChoice label="as" state="idle" />
       </div>
     `,
   }),

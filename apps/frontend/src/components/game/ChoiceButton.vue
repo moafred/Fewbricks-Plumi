@@ -13,7 +13,7 @@ defineEmits<{
   select: [label: string];
 }>();
 
-// Spell Burst : anneau + particules sur bonne réponse
+// Célébration : anneau + particules sur bonne réponse
 const showBurst = ref(false);
 // Wobble : secousse douce sur mauvaise réponse
 const showWobble = ref(false);
@@ -55,11 +55,11 @@ watch(
   >
     {{ label }}
 
-    <!-- Spell Burst — anneau expansif + 8 particules -->
+    <!-- Célébration — anneau expansif + 8 particules -->
     <template v-if="showBurst">
       <span
         class="pointer-events-none absolute inset-0 rounded-2xl border-2 border-meadow-400"
-        style="animation: spell-ring 0.6s ease-out forwards"
+        style="animation: celebration-ring 0.6s ease-out forwards"
       />
       <span
         v-for="i in 8"
@@ -68,7 +68,7 @@ watch(
         :style="{
           '--dx': `${Math.cos((i * Math.PI) / 4) * 48}px`,
           '--dy': `${Math.sin((i * Math.PI) / 4) * 48}px`,
-          animation: 'spell-particle 0.5s ease-out forwards',
+          animation: 'celebration-particle 0.5s ease-out forwards',
           animationDelay: `${i * 25}ms`,
         }"
       />
