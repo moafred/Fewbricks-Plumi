@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Plumi</string>
+    <string name="title_activity_main">Plumi</string>
+    <string name="package_name">com.plumi.app</string>
+    <string name="custom_url_scheme">com.plumi.app</string>
+</resources>

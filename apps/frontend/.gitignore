@@ -1,0 +1,9 @@
+# Capacitor
+ios/App/Pods
+ios/App/public
+ios/App/Podfile.lock
+android/.gradle
+android/app/build
+android/build
+android/.idea
+android/local.properties
