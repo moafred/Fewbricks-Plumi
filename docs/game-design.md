@@ -1,36 +1,45 @@
-# Plumi : Game Design — Le Royaume des Mots [GAME]
+# Plumi : Game Design — Le Parcours d'Apprentissage [GAME]
 
-> Vision du jeu, core loop, mini-jeux, progression, récompenses → voir [CLAUDE.md](../CLAUDE.md)
-> Ce document complète CLAUDE.md avec les détails de narration, biomes et esthétique.
+> Vision du jeu, core loop, mini-jeux, progression, recompenses → voir [CLAUDE.md](../CLAUDE.md)
+> Ce document complete CLAUDE.md avec les details de narration, biomes et esthetique.
 
-## Narration Étendue
+## Narration Etendue
 
-L'enfant incarne un Apprenti Magicien dont la plume (**Plumi**) est le catalyseur de la création. Le Royaume est initialement plongé dans le "Brouillard de l'Oubli". Chaque règle de français apprise et automatisée devient un sortilège qui restaure la vie et la clarté dans le monde.
+L'enfant est un eleve de CE1 dans le **parcours d'apprentissage**. Sa plume d'ecriture (**Plumi**) est son compagnon. Chaque conjugaison correcte fait vivre le monde : arbres, animaux, batiments apparaissent. Les verbes **etre** et **avoir** sont les deux premiers defis fondamentaux.
 
-### Mapping Narratif → Machine à États
+### Mapping Narratif → Machine a Etats
 
-| Phase technique (CLAUDE.md) | Narration joueur                                      |
-| --------------------------- | ----------------------------------------------------- |
-| **Discovery**               | Plumi repère une zone du royaume en détresse          |
-| **Challenge**               | Un défi magique (exercice pédagogique) apparaît       |
-| **Response**                | L'enfant manipule les mots, la magie opère            |
-| **Resolution**              | Étoiles magiques + transformation visuelle du décor   |
+| Phase technique (CLAUDE.md) | Narration joueur                                    |
+| --------------------------- | --------------------------------------------------- |
+| **Discovery**               | Plumi presente le contexte (phrase, scene illustree) |
+| **Challenge**               | Un defi (exercice pedagogique) apparait             |
+| **Response**                | L'enfant manipule les mots, la forme verbale opere  |
+| **Resolution**              | Etoiles + transformation visuelle du decor          |
 
-## Les Biomes (Zones du Royaume)
-- **Le Jardin des Verbes** (Zone Initiale) : Apprentissage des auxiliaires et actions de base.
-- **La Forêt de Grammaire** : Structure des phrases et accords.
-- **Le Lagon du Lexique** : Richesse du vocabulaire et synonymes.
-- **Le Sommet de la Phonologie** : Maîtrise des sons complexes.
+## Les Biomes (Fonds Atmospheriques)
+
+Chaque cahier a un biome visuel propre. Les biomes sont des gradients CSS legers, pas des illustrations lourdes.
+
+| Cahier | Biome | Classe CSS | Ambiance |
+| ------ | ----- | ---------- | -------- |
+| 1 | Jardin | `biome-jardin` | Vert doux, nature |
+| 2 | Fondations | `biome-fondations` | Bleu ciel, serein |
+| 3 | Clairiere | `biome-clairiere` | Vert sauge, calme |
+| 4 | Futur | `biome-futur` | Or chaud, lumiere |
+| 5 | Brumes | `biome-brumes` | Gris bleu, mystere |
+| 6 | Flux | `biome-flux` | Melange des trois couleurs |
+| Accueil | Parchemin | `biome-parchment` | Beige chaud, cahier |
 
 ## Rythme de Jeu
 
-- **Micro-activité** (1 exercice) : 30-120 secondes
-- **Session** (séquence de micro-activités) : 3 à 5 minutes
-- **Impact Permanent** : Une fois un bâtiment construit, il reste dans le monde de l'enfant.
+- **Micro-activite** (1 exercice) : 30-120 secondes
+- **Session** (sequence de micro-activites) : 3 a 5 minutes
+- **Impact Permanent** : Une fois un element debloque, il reste dans le monde de l'enfant.
 
-## Esthétique : "Livre Enchanté" [UI]
+## Esthetique : Theme Scolaire [UI]
 
-> Détails d'implémentation (couleurs, animations, glass morphism) → Skill `plumi-design-ux`
+> Details d'implementation (couleurs, animations, responsive) → Skill `plumi-design-ux`
 
-- Style **Aquarelle Animée** : Couleurs douces, textures organiques (papier, bois, lumière).
-- **Audio Immersif** : Orchestrations douces, feedback sonore mélodique (chaque bonne réponse compose une partition).
+- Style **Cahier d'Ecole** : Fond clair, texture lignes Seyes (`.texture-notebook`), couleurs douces
+- Palette : `sky-*` (navigation), `gold-*` (recompenses), `meadow-*` (succes), `coral-*` (encouragement), `moss-*` (grammaire), `stone-*` (texte)
+- **Audio Immersif** : Orchestrations douces, feedback sonore melodique (chaque bonne reponse = encouragement)

@@ -1,94 +1,77 @@
-# Checklist : Composants Réutilisables
+# Checklist : Composants Reutilisables
 
-Cette checklist doit être suivie **avant chaque commit** contenant du code avec des divs ou des éléments HTML stylisés.
+Cette checklist doit etre suivie **avant chaque commit** contenant du code avec des divs ou des elements HTML stylises.
 
 ## Checklist Avant Commit
 
-### Vérification de l'Existant
+### Verification de l'Existant
 
-- [ ] J'ai vérifié si un composant existe déjà dans `@/components/ui`
-- [ ] J'ai vérifié si un composant existe déjà dans `@/components/game`
-- [ ] J'ai consulté `docs/component-patterns.md` pour référence
-- [ ] J'ai vérifié Storybook pour voir les composants disponibles
+- [ ] J'ai verifie si un composant existe deja dans `@/components/ui`
+- [ ] J'ai verifie si un composant existe deja dans `@/components/game`
+- [ ] J'ai verifie Storybook pour voir les composants disponibles
 
-### Détection de Patterns Répétitifs
+### Detection de Patterns Repetitifs
 
-- [ ] Si j'ai créé une div avec >3 classes Tailwind, j'ai vérifié si ce pattern existe ailleurs dans le codebase
-- [ ] Si le pattern existe dans 2+ endroits, j'ai créé un composant réutilisable
-- [ ] J'ai utilisé `grep` ou la recherche dans l'IDE pour trouver les patterns similaires
+- [ ] Si j'ai cree une div avec >3 classes Tailwind, j'ai verifie si ce pattern existe ailleurs
+- [ ] Si le pattern existe dans 2+ endroits, j'ai cree un composant reutilisable
 
-### Création de Composants (si nécessaire)
+### Creation de Composants (si necessaire)
 
-- [ ] J'ai créé le composant dans le bon dossier (`@/components/ui` pour générique, `@/components/game` pour spécifique)
-- [ ] J'ai utilisé des props typées pour la variabilité (pas de classes conditionnelles dupliquées)
-- [ ] J'ai utilisé des slots plutôt que des props de style quand possible
-- [ ] J'ai créé une story Storybook pour le nouveau composant avec tous les états
-- [ ] J'ai documenté le composant dans `docs/component-patterns.md`
-
-### Migration des Usages
-
-- [ ] J'ai remplacé toutes les divs répétitives par le nouveau composant
-- [ ] J'ai testé chaque usage pour vérifier que le comportement est identique
-- [ ] J'ai vérifié que les styles sont cohérents
+- [ ] Composant dans le bon dossier (`@/components/ui` pour generique, `@/components/game` pour specifique)
+- [ ] Props typees pour la variabilite (pas de classes conditionnelles dupliquees)
+- [ ] Slots plutot que props de style quand possible
+- [ ] Story Storybook avec tous les etats
 
 ### Code Review
 
-- [ ] Mon code respecte la règle #13 "Zéro Classe Dupliquée"
-- [ ] Mon code respecte la règle #16 "Composants Avant Divs"
-- [ ] Je n'ai pas créé de divs avec des patterns qui existent déjà comme composants
+- [ ] Mon code respecte la regle #13 "Zero Classe Dupliquee"
+- [ ] Mon code respecte la regle #16 "Composants Avant Divs"
+- [ ] Je n'ai pas cree de divs avec des patterns qui existent deja comme composants
 
-## Questions à se Poser
+## Composants UI Disponibles (`@/components/ui`)
 
-1. **"Ai-je créé une div avec >3 classes Tailwind qui pourrait être un composant ?"**
-   - Si oui → Vérifier si un composant existe
-   - Si non → Continuer
+| Composant | Usage |
+|-----------|-------|
+| `NotebookCard` | Carte avec texture lignes Seyes |
+| `NotebookButton` | Bouton navigation avec texture cahier |
+| `NotebookBadge` | Badge/info avec texture cahier |
+| `ActionButton` | Bouton d'action principal (CTA) |
+| `StatusBadge` | Badge d'etat (Termine, En cours, Verrouille) |
+| `GameCard` | Carte de jeu generique |
+| `ConfirmModal` | Modal de confirmation |
+| `KeyboardGuide` | Indicateur de touche clavier (desktop only) |
+| `KeyboardHintsBar` | Barre de raccourcis clavier |
+| `TenseBadge` | Badge de temps verbal |
+| `CelebrationParticles` | Particules de celebration |
 
-2. **"Ce pattern apparaît-il ailleurs dans le codebase ?"**
-   - Si oui → Créer un composant réutilisable
-   - Si non → Vérifier quand même s'il existe déjà
+## Composants Game Disponibles (`@/components/game`)
 
-3. **"Puis-je utiliser un slot plutôt qu'une prop de style ?"**
-   - Si oui → Utiliser un slot pour plus de flexibilité
-   - Si non → Props typées
+| Composant | Usage |
+|-----------|-------|
+| `PlumiMascot` | Mascotte animee (idle/challenge/celebration/encouragement) |
+| `ChallengeCard` | Carte de defi (wrapper) |
+| `ChoiceButton` | Bouton de choix dans les mini-jeux |
+| `NarrativeCard` | Carte narrative pour intros |
+| `ProgressPath` | Chemin de progression |
+| `GameHeader` | Header de mini-jeu |
+| `GameFinished` | Ecran de fin de jeu |
+| `SubjectCard` | Carte de matiere (ecran d'accueil) |
+| `BookCard` | Carte de cahier (bookshelf) |
 
-## Exemples de Patterns à Détecter
+## Exemples de Patterns a Detecter
 
-### Pattern 1 : Cartes avec Texture
 ```vue
-<!-- Si cette div apparaît 2+ fois → Créer ParchmentCard -->
-<div class="bg-royal-800/95 border-2 border-royal-400/40 texture-parchment">
+<!-- Si cette div apparait 2+ fois → Utiliser NotebookCard -->
+<div class="bg-white/90 backdrop-blur-md border-2 border-sky-200 texture-notebook">
+
+<!-- Si ce bouton apparait 2+ fois → Utiliser NotebookButton -->
+<button class="bg-white/90 hover:bg-white/95 texture-notebook rounded-xl">
+
+<!-- Si ce badge apparait 2+ fois → Utiliser NotebookBadge -->
+<div class="bg-white/90 rounded-full border-2 border-sky-200 texture-notebook">
 ```
 
-### Pattern 2 : Boutons de Navigation
-```vue
-<!-- Si ce bouton apparaît 2+ fois → Créer ParchmentButton -->
-<button class="bg-royal-800/95 hover:bg-royal-700/95 texture-parchment">
-```
+## References
 
-### Pattern 3 : Badges
-```vue
-<!-- Si cette div apparaît 2+ fois → Créer ParchmentBadge -->
-<div class="bg-royal-800/95 rounded-full border-2 texture-parchment">
-```
-
-## Processus Rapide
-
-1. **Avant d'écrire** : Vérifier l'existant (30 secondes)
-2. **Pendant l'écriture** : Détecter les patterns répétitifs
-3. **Avant commit** : Passer cette checklist (2 minutes)
-4. **Si doute** : Consulter `docs/component-patterns.md` ou Storybook
-
-## Références
-
-- `CLAUDE.md` : Règles #13 et #16
-- `docs/component-patterns.md` : Guide complet des composants
-- `docs/migration-ui-refactor.md` : Exemples de migration
+- `CLAUDE.md` : Regles #13 et #16
 - Storybook : Composants interactifs avec exemples
-
-## En Cas de Non-Respect
-
-Si cette checklist n'est pas respectée lors d'un code review :
-1. Le code sera rejeté avec demande de refactoring
-2. Créer les composants manquants
-3. Migrer les divs répétitives
-4. Resoumettre avec checklist complétée

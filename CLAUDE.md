@@ -192,7 +192,7 @@ apps/
   frontend/                    # Vue 3 PWA
     src/
       components/game/         # Mini-jeux + navigation (BookShelf, ChapterRunner...)
-      components/ui/           # Atoms : ActionButton (deprecated: MagicButton), GameCard, ConfirmModal...
+      components/ui/           # Atoms : ActionButton, NotebookCard, GameCard, ConfirmModal...
       components/icons/        # Icônes SVG (StarFilledIcon, HatIcon...)
       composables/             # useKeyboardNavigation, useBackNavigation
       stores/                  # Pinia : chapter-progress, game, grimoire, potion...
@@ -210,7 +210,7 @@ pnpm-workspace.yaml
 | Couche           | Rôle                      | Exemples                                              |
 | ---------------- | ------------------------- | ----------------------------------------------------- |
 | **Icons**        | Glyphes SVG atomiques     | `components/icons/StarFilledIcon.vue`, `HatIcon.vue`  |
-| **Atoms**        | Éléments UI purs          | `components/ui/ActionButton (deprecated: MagicButton).vue`, `KeyboardGuide.vue`  |
+| **Atoms**        | Éléments UI purs          | `components/ui/ActionButton.vue`, `KeyboardGuide.vue`  |
 | **Molecules**    | Composants métier simples | `components/game/SpellChoice.vue`, `ChoiceButton.vue`, `ChallengeCard.vue` |
 | **Organisms**    | Mini-jeux complets        | `components/game/PotionGame.vue`, `GrimoireGame.vue`  |
 | **Orchestrateur**| Gestion d'un chapitre     | `components/game/ChapterRunner.vue`                   |
@@ -238,8 +238,8 @@ GamePhase: 'discovery' | 'challenge' | 'response' | 'resolution'
 Screen: 'home' → 'bookshelf' → 'book-view' → 'chapter-runner'
 ```
 
-- **Home** : Landing avec mascotte Plumi, bouton "Jouer"
-- **BookShelf** : Grille de 6 livres (`BookCard`), progression étoiles, cahier bonus verrouillé
+- **Home** : Hub matières avec mascotte Plumi — carte Français (active) + Maths (verrouillé)
+- **BookShelf** : Grille de 6 cahiers (`BookCard`), progression étoiles, cahier bonus verrouillé
 - **BookView** : Chapitres d'un livre en chemin vertical, chapitre recommandé mis en avant
 - **ChapterRunner** : Orchestrateur — intro narrative → étapes séquentielles (mini-jeux) → `ChapterResult`
 
@@ -289,7 +289,7 @@ Les 5 mini-jeux supportent un mode `embedded` pour fonctionner comme étape dans
    - Commentaires expliquant des règles pédagogiques ou métier : français.
 
 8. **Pas de Boutons Natifs** :
-   - Utiliser `ActionButton (deprecated: MagicButton)` pour toutes les actions interactives.
+   - Utiliser `ActionButton` pour toutes les actions interactives.
    - Ne pas bypasser le Design System (tokens, composants UI).
 
 9. **Respect des Règles de Domaine** :
@@ -315,7 +315,7 @@ Les 5 mini-jeux supportent un mode `embedded` pour fonctionner comme étape dans
    - Si une div avec des classes spécifiques apparaît dans 2+ endroits, créer un composant réutilisable.
    - Les états visuels (idle/correct/incorrect...) doivent être un prop typé (`state: ChoiceState`), pas des classes conditionnelles dupliquées.
    - Préférer les slots pour les contenus variables plutôt que des props de style.
-   - **Composants UI disponibles** : `ParchmentCard`, `ParchmentButton`, `ParchmentBadge`, `ActionButton (deprecated: MagicButton)`, `ChoiceButton`, `ChallengeCard`, `GameHeader`, `GameFinished`, `PlumiMascot`, `CelebrationParticles`, `NarrativeCard`, `ProgressPath`.
+   - **Composants UI disponibles** : `NotebookCard`, `NotebookButton`, `NotebookBadge`, `ActionButton`, `StatusBadge`, `ChoiceButton`, `ChallengeCard`, `GameHeader`, `GameFinished`, `PlumiMascot`, `CelebrationParticles`, `NarrativeCard`, `ProgressPath`, `SubjectCard`, `BookCard`.
    - **Processus** : Avant d'écrire une div avec >3 classes Tailwind, vérifier si un composant existe déjà dans `@/components/ui` ou `@/components/game`.
 
 14. **Zéro Couleur Générique** :
@@ -333,9 +333,9 @@ Les 5 mini-jeux supportent un mode `embedded` pour fonctionner comme étape dans
    - Si un pattern de div apparaît dans 2+ endroits, créer immédiatement un composant réutilisable.
    - Les composants UI (`@/components/ui`) sont prioritaires sur les divs inline.
    - Exemples interdits :
-     * `<div class="bg-royal-800/95 border-2 border-royal-400/40 texture-parchment">` → Utiliser `ParchmentCard`
-     * `<button class="bg-royal-800/95 hover:bg-royal-700/95 texture-parchment">` → Utiliser `ParchmentButton`
-     * `<div class="bg-royal-800/95 rounded-full border-2">` → Utiliser `ParchmentBadge`
+     * `<div class="bg-white/90 border-2 border-sky-200 texture-notebook">` → Utiliser `NotebookCard`
+     * `<button class="bg-white/90 hover:bg-white/95 texture-notebook">` → Utiliser `NotebookButton`
+     * `<div class="bg-white/90 rounded-full border-2 border-sky-200">` → Utiliser `NotebookBadge`
    - Checklist avant commit : "Ai-je créé une div avec >3 classes Tailwind qui pourrait être un composant ?"
 
 ### Règles de Contribution
