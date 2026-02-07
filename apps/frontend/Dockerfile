@@ -5,6 +5,7 @@ RUN corepack enable
 
 FROM base AS deps
 WORKDIR /app
+ENV CI=true
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/frontend/package.json ./apps/frontend/
 COPY packages/shared/package.json ./packages/shared/

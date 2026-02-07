@@ -1,0 +1,43 @@
+# Dependencies (reinstalled inside the container)
+node_modules
+**/node_modules
+
+# Build outputs
+apps/frontend/dist
+apps/backend/dist
+
+# Native mobile projects (not needed for Docker builds)
+apps/frontend/ios
+apps/frontend/android
+apps/frontend/resources
+
+# Storybook
+apps/frontend/storybook-static
+
+# Git & IDE
+.git
+.gitignore
+**/.idea
+**/.vscode
+**/.DS_Store
+
+# Environment files
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Docs & plans (not needed in image)
+docs
+*.md
+!packages/shared/README.md
+
+# Tests & coverage
+coverage
+**/coverage
+
+# Docker (avoid recursive copy)
+docker-compose*.yml
+
+# Logs
+*.log
