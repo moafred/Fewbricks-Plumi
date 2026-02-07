@@ -9,6 +9,8 @@ import WordCard from './WordCard.vue';
 import ProgressStars from './ProgressStars.vue';
 import GameResult from './GameResult.vue';
 import KeyboardGuide from '@/components/ui/KeyboardGuide.vue';
+import KeyboardHintsBar from '@/components/ui/KeyboardHintsBar.vue';
+import TenseBadge from '@/components/ui/TenseBadge.vue';
 import type { HatState } from './SortingHat.vue';
 
 const props = withDefaults(defineProps<{
@@ -29,13 +31,6 @@ const emit = defineEmits<{
 }>();
 
 const game = useGameStore();
-
-const tenseLabels: Record<Tense, string> = {
-  present: 'Présent',
-  futur: 'Futur',
-  imparfait: 'Imparfait',
-  passe_compose: 'Passé composé',
-};
 
 // Les deux choix possibles — dynamiques selon les verbes du chapitre
 const hatChoices = ref<VerbId[]>(
@@ -144,9 +139,7 @@ game.startGame(props.tense, props.count, {
     <template v-else>
       <!-- Header: tense badge + progress stars -->
       <div class="w-full max-w-md flex flex-col gap-2">
-        <span class="self-center px-3 py-1 rounded-full bg-sky-100 text-sky-700 text-sm font-medium">
-          {{ tenseLabels[game.currentTense] }}
-        </span>
+        <TenseBadge :tense="game.currentTense" />
         <ProgressStars
           :results="game.results"
           :current="game.currentIndex"
@@ -188,10 +181,10 @@ game.startGame(props.tense, props.count, {
         </div>
 
         <!-- Keyboard Hints -->
-        <div v-if="game.phase === 'challenge'" class="hidden lg:flex gap-8 opacity-60">
+        <KeyboardHintsBar v-if="game.phase === 'challenge'">
            <KeyboardGuide mode="cluster" label="choisir" />
            <KeyboardGuide mode="single" key-name="espace" label="valider" />
-        </div>
+        </KeyboardHintsBar>
       </div>
     </template>
   </div>

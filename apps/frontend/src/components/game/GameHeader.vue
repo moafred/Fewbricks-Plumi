@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import CrossIcon from '@/components/icons/CrossIcon.vue';
 import NotebookBadge from '@/components/ui/NotebookBadge.vue';
+import NotebookButton from '@/components/ui/NotebookButton.vue';
 
 defineProps<{
   label: string;
@@ -16,12 +17,9 @@ defineEmits<{
 
 <template>
   <header class="flex items-center justify-between w-full">
-    <button
-      class="p-2 text-stone-400 hover:text-stone-700 transition-colors"
-      @click="$emit('back')"
-    >
-      <CrossIcon :size="32" />
-    </button>
+    <NotebookButton variant="icon" size="sm" @click="$emit('back')">
+      <CrossIcon :size="32" class="text-stone-400" />
+    </NotebookButton>
 
     <NotebookBadge>
       <span :class="colorClass ?? 'text-sky-600'" class="font-bold">

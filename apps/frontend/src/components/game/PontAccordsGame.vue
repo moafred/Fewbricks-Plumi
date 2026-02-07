@@ -7,9 +7,11 @@ import GameHeader from '@/components/game/GameHeader.vue';
 import ChallengeCard from '@/components/game/ChallengeCard.vue';
 import ChoiceButton from '@/components/game/ChoiceButton.vue';
 import type { ChoiceState } from '@/components/game/ChoiceButton.vue';
+import ChoiceGrid from '@/components/game/ChoiceGrid.vue';
+import ResolutionContinueButton from '@/components/game/ResolutionContinueButton.vue';
 import GameFinished from '@/components/game/GameFinished.vue';
-import ActionButton from '@/components/ui/ActionButton.vue';
 import KeyboardGuide from '@/components/ui/KeyboardGuide.vue';
+import KeyboardHintsBar from '@/components/ui/KeyboardHintsBar.vue';
 import ConfirmModal from '@/components/ui/ConfirmModal.vue';
 import { storeToRefs } from 'pinia';
 
@@ -170,7 +172,7 @@ const gapClasses = computed(() => {
 
       <!-- Choices -->
       <div class="flex flex-col items-center gap-10 pb-12 w-full">
-        <div class="grid grid-cols-2 gap-6 w-full max-w-3xl px-6">
+        <ChoiceGrid>
           <ChoiceButton
             v-for="(choice, index) in currentItem.choices"
             :key="choice"
@@ -179,21 +181,18 @@ const gapClasses = computed(() => {
             :disabled="phase !== 'challenge'"
             @select="store.submitAnswer(choice)"
           />
-        </div>
+        </ChoiceGrid>
 
-        <div v-if="phase === 'challenge'" class="hidden lg:flex gap-8 opacity-60">
+        <KeyboardHintsBar v-if="phase === 'challenge'">
           <KeyboardGuide mode="cluster" label="choisir" />
           <KeyboardGuide mode="single" key-name="espace" label="traverser" />
-        </div>
+        </KeyboardHintsBar>
       </div>
 
-      <div class="h-16 flex items-center justify-center w-full">
-        <div v-if="phase === 'resolution'" class="animate-fade-in">
-          <ActionButton variant="primary" @click="store.nextItem()">
-            Continuer →
-          </ActionButton>
-        </div>
-      </div>
+      <ResolutionContinueButton
+        :visible="phase === 'resolution'"
+        @continue="store.nextItem()"
+      />
 
     </template>
 

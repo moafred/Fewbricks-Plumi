@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Book } from '@plumi/shared';
 import { BookIcon, StarFilledIcon, StarEmptyIcon } from '@/components/icons';
+import StatusBadge from '@/components/ui/StatusBadge.vue';
 
 const props = defineProps<{
   book: Book;
@@ -77,23 +78,8 @@ const colors = colorClasses[props.book.color] ?? colorClasses.sky;
     </div>
 
     <!-- Badge état -->
-    <span
-      v-if="stars >= maxStars"
-      class="text-xs px-2 py-0.5 rounded-full bg-meadow-100 text-meadow-700 font-bold"
-    >
-      Terminé
-    </span>
-    <span
-      v-else-if="stars > 0"
-      class="text-xs px-2 py-0.5 rounded-full bg-gold-100 text-gold-600 font-bold"
-    >
-      En cours
-    </span>
-    <span
-      v-else-if="isLocked"
-      class="text-xs px-2 py-0.5 rounded-full bg-stone-100 text-stone-500"
-    >
-      Verrouillé
-    </span>
+    <StatusBadge v-if="stars >= maxStars" status="completed" />
+    <StatusBadge v-else-if="stars > 0" status="in-progress" />
+    <StatusBadge v-else-if="isLocked" status="locked" />
   </button>
 </template>

@@ -6,6 +6,9 @@ import { useKeyboardNavigation, useBackNavigation } from '@/composables';
 import SpellChoice from './SpellChoice.vue';
 import type { SpellState } from './SpellChoice.vue';
 import KeyboardGuide from '@/components/ui/KeyboardGuide.vue';
+import KeyboardHintsBar from '@/components/ui/KeyboardHintsBar.vue';
+import TenseBadge from '@/components/ui/TenseBadge.vue';
+import ChoiceGrid from './ChoiceGrid.vue';
 import WordCard from './WordCard.vue';
 import ProgressStars from './ProgressStars.vue';
 import GameResult from './GameResult.vue';
@@ -28,13 +31,6 @@ const emit = defineEmits<{
 }>();
 
 const game = useGrimoireStore();
-
-const tenseLabels: Record<Tense, string> = {
-  present: 'Présent',
-  futur: 'Futur',
-  imparfait: 'Imparfait',
-  passe_compose: 'Passé composé',
-};
 
 // Navigation clavier (grille 2x2)
 const choices = computed(() => game.currentItem?.choices ?? []);
@@ -142,9 +138,7 @@ game.startGame(props.tense, props.count, {
     <template v-else>
       <!-- Header: tense badge + progress stars -->
       <div class="w-full max-w-md flex flex-col gap-2">
-        <span class="self-center px-3 py-1 rounded-full bg-sky-100 text-sky-700 text-sm font-medium">
-          {{ tenseLabels[game.currentTense] }}
-        </span>
+        <TenseBadge :tense="game.currentTense" />
         <ProgressStars
           :results="game.results"
           :current="game.currentIndex"
@@ -176,7 +170,7 @@ game.startGame(props.tense, props.count, {
 
       <!-- 2×2 grid of choices -->
       <div class="flex flex-col items-center gap-8 pb-12 w-full">
-        <div class="grid grid-cols-2 gap-6 w-full max-w-2xl px-6">
+        <ChoiceGrid max-width="2xl">
           <SpellChoice
             v-for="(choice, index) in game.currentItem?.choices"
             :key="choice"
@@ -185,13 +179,13 @@ game.startGame(props.tense, props.count, {
             :focused="focusedIndex === index && game.phase === 'challenge'"
             @tap="onTap"
           />
-        </div>
+        </ChoiceGrid>
 
         <!-- Keyboard Hints -->
-        <div v-if="game.phase === 'challenge'" class="hidden lg:flex gap-8 opacity-60">
+        <KeyboardHintsBar v-if="game.phase === 'challenge'">
            <KeyboardGuide mode="cluster" label="choisir" />
            <KeyboardGuide mode="single" key-name="espace" label="lancer le sort" />
-        </div>
+        </KeyboardHintsBar>
       </div>
     </template>
   </div>

@@ -13,6 +13,7 @@ import PotionGnGame from './PotionGnGame.vue';
 import ConfirmModal from '@/components/ui/ConfirmModal.vue';
 import CrossIcon from '@/components/icons/CrossIcon.vue';
 import NotebookBadge from '@/components/ui/NotebookBadge.vue';
+import NotebookButton from '@/components/ui/NotebookButton.vue';
 
 const props = defineProps<{
   chapterId: number;
@@ -149,12 +150,9 @@ useBackNavigation(handleBack, computed(() => !showQuitConfirmation.value));
 
     <!-- Header -->
     <header class="fixed top-0 left-0 right-0 z-10 flex items-center justify-between px-4 py-3">
-      <button
-        @click="handleBack"
-        class="p-2 text-stone-400 hover:text-stone-700 transition-colors"
-      >
-        <CrossIcon :size="32" />
-      </button>
+      <NotebookButton variant="icon" size="sm" @click="handleBack">
+        <CrossIcon :size="32" class="text-stone-400" />
+      </NotebookButton>
 
       <NotebookBadge v-if="!showingNarrative && !showingResult">
         <span class="text-sky-600 font-bold">

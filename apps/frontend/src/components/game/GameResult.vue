@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 import { StarFilledIcon, SparkleIcon } from '@/components/icons';
 import ActionButton from '@/components/ui/ActionButton.vue';
+import ResultActions from './ResultActions.vue';
 
 const props = defineProps<{
   score: number;
@@ -48,7 +49,7 @@ const message = computed(() => {
       {{ score }} / {{ total }}
     </p>
 
-    <div class="flex gap-4 mt-4">
+    <ResultActions>
       <ActionButton
         variant="primary"
         @click="emit('replay')"
@@ -61,6 +62,6 @@ const message = computed(() => {
       >
         Accueil
       </ActionButton>
-    </div>
+    </ResultActions>
   </div>
 </template>

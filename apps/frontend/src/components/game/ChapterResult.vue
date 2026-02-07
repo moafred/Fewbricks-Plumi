@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { StarFilledIcon, StarEmptyIcon } from '@/components/icons';
 import ActionButton from '@/components/ui/ActionButton.vue';
+import ResultActions from './ResultActions.vue';
 
 const props = defineProps<{
   score: number;
@@ -45,7 +46,7 @@ const messages: Record<number, string> = {
       {{ score }} / {{ total }}
     </p>
 
-    <div class="flex gap-4 mt-4">
+    <ResultActions>
       <ActionButton
         variant="secondary"
         @click="$emit('replay')"
@@ -58,6 +59,6 @@ const messages: Record<number, string> = {
       >
         Continuer
       </ActionButton>
-    </div>
+    </ResultActions>
   </div>
 </template>
