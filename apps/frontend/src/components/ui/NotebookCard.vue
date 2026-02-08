@@ -36,7 +36,6 @@ withDefaults(
         : 'bg-sky-50/95 backdrop-blur-md border-2 border-sky-300',
       padding === 'sm' ? 'p-4' : padding === 'lg' ? 'p-12' : 'p-8',
       rounded === 'sm' ? 'rounded-xl' : rounded === 'lg' ? 'rounded-3xl' : 'rounded-2xl',
-      padding === 'md' ? 'min-h-[300px]' : '',
     ]"
   >
     <div
@@ -47,7 +46,7 @@ withDefaults(
       {{ hint }}
     </div>
 
-    <div class="mt-8 mb-8 w-full">
+    <div class="mt-4 mb-4 w-full">
       <slot />
     </div>
 

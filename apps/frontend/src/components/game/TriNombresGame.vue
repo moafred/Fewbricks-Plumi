@@ -109,7 +109,10 @@ game.startGame(props.count, {
 </script>
 
 <template>
-  <div class="tri-nombres-game flex flex-col items-center justify-between min-h-screen px-4 py-6 gap-4">
+  <div
+    class="tri-nombres-game flex flex-col items-center justify-between px-4"
+    :class="embedded ? 'h-full min-h-0 py-2 gap-2' : 'min-h-screen py-6 gap-4'"
+  >
     <!-- Finished: show results -->
     <template v-if="game.isFinished && !embedded">
       <div class="flex-1 flex items-center justify-center w-full">
@@ -144,15 +147,15 @@ game.startGame(props.count, {
 
       <!-- Number card -->
       <div class="flex-1 flex items-center justify-center w-full">
-        <NotebookCard v-if="game.currentItem" class="px-12 py-8">
-          <span class="text-4xl md:text-6xl font-bold text-sky-600">
+        <NotebookCard v-if="game.currentItem" :class="embedded ? 'px-6 py-3' : 'px-12 py-8'" :padding="embedded ? 'sm' : 'md'">
+          <span :class="embedded ? 'text-2xl md:text-4xl' : 'text-4xl md:text-6xl'" class="font-bold text-sky-600">
             {{ game.currentItem.number }}
           </span>
         </NotebookCard>
       </div>
 
       <!-- Sorting hats (catégories) -->
-      <div class="flex flex-col items-center gap-6 pb-8">
+      <div class="flex flex-col items-center" :class="embedded ? 'gap-2 pb-2' : 'gap-6 pb-8'">
         <div class="flex items-center justify-center gap-10 md:gap-16">
           <CategoryButton
             v-for="(category, idx) in categoryChoices"

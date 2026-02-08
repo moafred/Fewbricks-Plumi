@@ -124,7 +124,10 @@ const gapClasses = computed(() => {
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center min-h-[80vh] w-full max-w-4xl mx-auto p-4 gap-8">
+  <div
+    class="flex flex-col items-center w-full max-w-4xl mx-auto"
+    :class="embedded ? 'h-full min-h-0 justify-between p-3 gap-3' : 'justify-center min-h-[80vh] p-4 gap-8'"
+  >
 
     <GameHeader
       v-if="!embedded"
@@ -149,7 +152,7 @@ const gapClasses = computed(() => {
     <!-- Game Area -->
     <template v-else-if="currentItem">
 
-      <ChallengeCard hint="Complète le groupe nominal !">
+      <ChallengeCard hint="Complète le groupe nominal !" :compact="embedded">
         <div class="flex flex-wrap items-baseline justify-center gap-x-3 gap-y-4 text-3xl md:text-5xl font-learning text-stone-800">
           <template v-for="(slot, i) in currentItem.slots" :key="i">
             <span v-if="i !== currentItem.targetSlotIndex">{{ slot.label }}</span>
@@ -171,7 +174,7 @@ const gapClasses = computed(() => {
       </ChallengeCard>
 
       <!-- Choices -->
-      <div class="flex flex-col items-center gap-10 pb-12 w-full">
+      <div class="flex flex-col items-center w-full" :class="embedded ? 'gap-2 pb-2' : 'gap-10 pb-12'">
         <ChoiceGrid>
           <ChoiceButton
             v-for="(choice, index) in currentItem.choices"
@@ -191,6 +194,7 @@ const gapClasses = computed(() => {
 
       <ResolutionContinueButton
         :visible="phase === 'resolution'"
+        :compact="embedded"
         @continue="store.nextItem()"
       />
 

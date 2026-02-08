@@ -126,7 +126,10 @@ game.startGame(props.count);
 </script>
 
 <template>
-  <div class="horloge-game flex flex-col items-center justify-between min-h-screen px-4 py-6 gap-4">
+  <div
+    class="horloge-game flex flex-col items-center justify-between px-4"
+    :class="embedded ? 'h-full min-h-0 py-2 gap-2' : 'min-h-screen py-6 gap-4'"
+  >
     <!-- Finished: show results -->
     <template v-if="game.isFinished && !embedded">
       <div class="flex-1 flex items-center justify-center w-full">
@@ -160,12 +163,12 @@ game.startGame(props.count);
       </p>
 
       <!-- Clock display -->
-      <div class="flex-1 flex items-center justify-center w-full py-12">
+      <div class="flex-1 flex items-center justify-center w-full" :class="embedded ? 'py-2' : 'py-12'">
         <div class="w-full max-w-2xl px-4 flex justify-center">
-          <NotebookCard v-if="game.currentItem" class="px-12 py-8">
+          <NotebookCard v-if="game.currentItem" :class="embedded ? 'px-6 py-3' : 'px-12 py-8'" :padding="embedded ? 'sm' : 'md'">
             <div class="flex items-center justify-center">
               <!-- Horloge analogique SVG — visualisation dynamique -->
-              <svg viewBox="0 0 200 200" class="w-48 h-48 md:w-56 md:h-56">
+              <svg viewBox="0 0 200 200" :class="embedded ? 'w-32 h-32 md:w-40 md:h-40' : 'w-48 h-48 md:w-56 md:h-56'">
                 <!-- Cadran -->
                 <circle cx="100" cy="100" r="90" fill="none" stroke-width="3" class="stroke-stone-300 fill-white" />
                 <circle cx="100" cy="100" r="88" fill="none" stroke-width="1" class="stroke-stone-200" />
@@ -228,7 +231,7 @@ game.startGame(props.count);
       </div>
 
       <!-- 2x2 grid of choices -->
-      <div class="flex flex-col items-center gap-8 pb-12 w-full">
+      <div class="flex flex-col items-center w-full" :class="embedded ? 'gap-2 pb-2' : 'gap-8 pb-12'">
         <ChoiceGrid max-width="2xl">
           <FormChoice
             v-for="(choice, index) in game.currentItem?.choices"

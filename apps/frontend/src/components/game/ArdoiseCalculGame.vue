@@ -112,7 +112,10 @@ game.startGame(props.count, {
 </script>
 
 <template>
-  <div class="ardoise-calcul-game flex flex-col items-center justify-between min-h-screen px-4 py-6 gap-4">
+  <div
+    class="ardoise-calcul-game flex flex-col items-center justify-between px-4"
+    :class="embedded ? 'h-full min-h-0 py-2 gap-2' : 'min-h-screen py-6 gap-4'"
+  >
     <!-- Finished: show results -->
     <template v-if="game.isFinished && !embedded">
       <div class="flex-1 flex items-center justify-center w-full">
@@ -146,9 +149,9 @@ game.startGame(props.count, {
       </p>
 
       <!-- Expression card -->
-      <div class="flex-1 flex items-center justify-center w-full py-12">
+      <div class="flex-1 flex items-center justify-center w-full" :class="embedded ? 'py-2' : 'py-12'">
         <div class="w-full max-w-2xl px-4 flex justify-center">
-          <NotebookCard v-if="game.currentItem" class="px-12 py-8">
+          <NotebookCard v-if="game.currentItem" :class="embedded ? 'px-6 py-3' : 'px-12 py-8'" :padding="embedded ? 'sm' : 'md'">
             <span class="text-3xl md:text-5xl font-bold text-sky-600 font-learning">
               {{ game.currentItem.expression }} = ?
             </span>
@@ -157,7 +160,7 @@ game.startGame(props.count, {
       </div>
 
       <!-- 2×2 grid of choices -->
-      <div class="flex flex-col items-center gap-8 pb-12 w-full">
+      <div class="flex flex-col items-center w-full" :class="embedded ? 'gap-2 pb-2' : 'gap-8 pb-12'">
         <ChoiceGrid max-width="2xl">
           <FormChoice
             v-for="(choice, index) in game.currentItem?.choices"

@@ -121,7 +121,10 @@ game.startGame(props.tense, props.count, {
 </script>
 
 <template>
-  <div class="ardoise-game flex flex-col items-center justify-between min-h-screen px-4 py-6 gap-4">
+  <div
+    class="ardoise-game flex flex-col items-center justify-between px-4"
+    :class="embedded ? 'h-full min-h-0 py-2 gap-2' : 'min-h-screen py-6 gap-4'"
+  >
     <!-- Finished: show results -->
     <template v-if="game.isFinished && !embedded">
       <div class="flex-1 flex items-center justify-center w-full">
@@ -156,7 +159,7 @@ game.startGame(props.tense, props.count, {
       </p>
 
       <!-- Prompt: pronoun → infinitive -->
-      <div class="flex-1 flex items-center justify-center w-full py-12">
+      <div class="flex-1 flex items-center justify-center w-full" :class="embedded ? 'py-2' : 'py-12'">
         <div class="w-full max-w-2xl px-4 flex justify-center">
           <WordCard
             v-if="game.currentItem"
@@ -164,12 +167,13 @@ game.startGame(props.tense, props.count, {
             :form="game.currentItem.infinitive"
             :phase="game.phase"
             separator="→"
+            :compact="embedded"
           />
         </div>
       </div>
 
       <!-- 2×2 grid of choices -->
-      <div class="flex flex-col items-center gap-8 pb-12 w-full">
+      <div class="flex flex-col items-center w-full" :class="embedded ? 'gap-2 pb-2' : 'gap-8 pb-12'">
         <ChoiceGrid max-width="2xl">
           <FormChoice
             v-for="(choice, index) in game.currentItem?.choices"

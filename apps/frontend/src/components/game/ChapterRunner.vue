@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch, onUnmounted, type Component } from 'vue';
+import { ref, computed, type Component } from 'vue';
 import type { StepMechanic, AnswerResult, Tense } from '@plumi/shared';
 import { getChapter } from '@plumi/shared';
 import { useChapterProgressStore } from '@/stores/chapter-progress';
@@ -60,7 +60,6 @@ const mechanicComponents: Partial<Record<StepMechanic, Component>> = {
 // --- State ---
 const currentStepIndex = ref(0);
 const stepScores = ref<{ score: number; total: number }[]>([]);
-const showingNarrative = ref(true);
 const showingResult = ref(false);
 // Clé pour forcer le re-mount du composant mini-jeu entre les étapes
 const stepKey = ref(0);
@@ -94,31 +93,6 @@ function computeStars(score: number, total: number): number {
 
 const stars = computed(() => computeStars(totalScore.value, totalQuestions.value));
 
-// --- Narrative timer ---
-let narrativeTimer: ReturnType<typeof setTimeout> | null = null;
-
-function clearNarrativeTimer() {
-  if (narrativeTimer !== null) {
-    clearTimeout(narrativeTimer);
-    narrativeTimer = null;
-  }
-}
-
-function startNarrative() {
-  showingNarrative.value = true;
-  clearNarrativeTimer();
-  narrativeTimer = setTimeout(() => {
-    showingNarrative.value = false;
-  }, 3000);
-}
-
-onUnmounted(() => {
-  clearNarrativeTimer();
-});
-
-// --- Démarrage ---
-startNarrative();
-
 // --- Events ---
 function onStepComplete(payload: { score: number; total: number; results: (AnswerResult | null)[] }) {
   stepScores.value.push({ score: payload.score, total: payload.total });
@@ -140,7 +114,6 @@ function replay() {
   stepScores.value = [];
   showingResult.value = false;
   stepKey.value++;
-  startNarrative();
 }
 
 function onContinue() {
@@ -167,15 +140,15 @@ useBackNavigation(handleBack, computed(() => !showQuitConfirmation.value));
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center min-h-screen w-full">
+  <div class="h-dvh flex flex-col w-full overflow-hidden">
 
-    <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-10 flex items-center justify-between px-4 py-3">
+    <!-- Header (in-flow, pas fixed) -->
+    <header class="shrink-0 flex items-center justify-between px-4 py-3">
       <NotebookButton variant="icon" size="sm" @click="handleBack">
         <CrossIcon :size="32" class="text-stone-400" />
       </NotebookButton>
 
-      <NotebookBadge v-if="!showingNarrative && !showingResult">
+      <NotebookBadge v-if="!showingResult">
         <span class="text-sky-600 font-bold">
           Étape {{ currentStepIndex + 1 }} / {{ steps.length }}
         </span>
@@ -184,18 +157,8 @@ useBackNavigation(handleBack, computed(() => !showQuitConfirmation.value));
       <div class="w-10"></div>
     </header>
 
-    <!-- Écran narratif -->
-    <div v-if="showingNarrative" class="flex flex-col items-center justify-center gap-6 animate-fade-in px-8">
-      <h2 class="text-2xl md:text-4xl font-bold text-sky-600 text-center">
-        {{ chapter?.title }}
-      </h2>
-      <p class="text-xl md:text-2xl text-stone-800 text-center font-learning max-w-lg">
-        {{ chapter?.narrative }}
-      </p>
-    </div>
-
     <!-- Mini-jeu en cours -->
-    <div v-else-if="currentStep && currentComponent && !showingResult" class="pt-16 w-full flex-1">
+    <div v-if="currentStep && currentComponent && !showingResult" class="flex-1 min-h-0 w-full flex flex-col">
       <component
         :is="currentComponent"
         :key="stepKey"
@@ -214,7 +177,7 @@ useBackNavigation(handleBack, computed(() => !showQuitConfirmation.value));
     </div>
 
     <!-- Résultat du chapitre -->
-    <div v-else-if="showingResult" class="flex-1 flex items-center justify-center w-full">
+    <div v-else-if="showingResult" class="flex-1 min-h-0 flex items-center justify-center w-full">
       <ChapterResult
         :score="totalScore"
         :total="totalQuestions"

@@ -126,7 +126,10 @@ const isGapCorrect = computed(() => !!gapWord.value);
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center min-h-[80vh] w-full max-w-4xl mx-auto p-4 gap-8">
+  <div
+    class="flex flex-col items-center w-full max-w-4xl mx-auto"
+    :class="embedded ? 'h-full min-h-0 justify-between p-3 gap-3' : 'justify-center min-h-[80vh] p-4 gap-8'"
+  >
 
     <GameHeader
       v-if="!embedded"
@@ -150,7 +153,7 @@ const isGapCorrect = computed(() => !!gapWord.value);
     <!-- Game Area -->
     <template v-else-if="currentItem">
 
-      <ChallengeCard hint="Complète la phrase !">
+      <ChallengeCard hint="Complète la phrase !" :compact="embedded">
         <SentenceGap
           :sentence="currentItem.sentence"
           :filled-word="gapWord"
@@ -165,7 +168,7 @@ const isGapCorrect = computed(() => !!gapWord.value);
       </ChallengeCard>
 
       <!-- Choices -->
-      <div class="flex flex-col items-center gap-10 pb-12 w-full">
+      <div class="flex flex-col items-center w-full" :class="embedded ? 'gap-2 pb-2' : 'gap-10 pb-12'">
         <ChoiceGrid>
           <ChoiceButton
             v-for="(choice, index) in currentItem.choices"
@@ -185,6 +188,7 @@ const isGapCorrect = computed(() => !!gapWord.value);
 
       <ResolutionContinueButton
         :visible="phase === 'resolution'"
+        :compact="embedded"
         @continue="store.nextItem()"
       />
 

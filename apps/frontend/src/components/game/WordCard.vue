@@ -8,6 +8,7 @@ const props = defineProps<{
   form: string;
   phase: GamePhase;
   separator?: string;
+  compact?: boolean;
 }>();
 
 const display = computed(() =>
@@ -20,13 +21,18 @@ const display = computed(() =>
 <template>
   <NotebookCard
     variant="light"
-    padding="lg"
+    :padding="compact ? 'sm' : 'lg'"
     rounded="lg"
-    class="word-card flex items-center justify-center px-10 md:px-14 py-8 md:py-10"
-    :class="{
-      'animate-celebrate': phase === 'discovery',
-    }"
+    class="word-card flex items-center justify-center"
+    :class="[
+      compact ? 'px-6 py-3' : 'px-10 md:px-14 py-8 md:py-10',
+      { 'animate-celebrate': phase === 'discovery' },
+    ]"
   >
-    <span class="text-4xl md:text-6xl font-bold text-stone-800 font-learning">{{ display }}</span>
+    <span
+      class="font-bold text-stone-800 font-learning"
+      :class="compact ? 'text-2xl md:text-4xl' : 'text-4xl md:text-6xl'"
+      :data-animate="phase === 'discovery'"
+    >{{ display }}</span>
   </NotebookCard>
 </template>

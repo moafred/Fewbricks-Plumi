@@ -10,6 +10,7 @@ import ActionButton from '@/components/ui/ActionButton.vue';
 
 defineProps<{
   visible: boolean;
+  compact?: boolean;
 }>();
 
 defineEmits<{
@@ -18,7 +19,7 @@ defineEmits<{
 </script>
 
 <template>
-  <div class="h-16 flex items-center justify-center w-full">
+  <div :class="[compact ? 'h-10' : 'h-16', 'flex items-center justify-center w-full']">
     <div v-if="visible" class="animate-fade-in">
       <ActionButton variant="primary" @click="$emit('continue')">
         Continuer →
