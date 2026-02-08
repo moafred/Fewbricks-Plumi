@@ -1,9 +1,17 @@
 <script setup lang="ts">
-import { BOOKS, getChaptersForBook } from '@plumi/shared';
+import { computed } from 'vue';
+import type { Subject } from '@plumi/shared';
+import { getBooksForSubject, getChaptersForBook } from '@plumi/shared';
 import { useChapterProgressStore } from '@/stores/chapter-progress';
 import BookCard from './BookCard.vue';
 import NotebookButton from '@/components/ui/NotebookButton.vue';
 import { HomeIcon } from '@/components/icons';
+
+const props = withDefaults(defineProps<{
+  subject?: Subject;
+}>(), {
+  subject: 'francais',
+});
 
 defineEmits<{
   home: [];
@@ -11,6 +19,12 @@ defineEmits<{
 }>();
 
 const progress = useChapterProgressStore();
+
+const books = computed(() => getBooksForSubject(props.subject));
+
+const shelfTitle = computed(() =>
+  props.subject === 'maths' ? 'Mes Cahiers de Maths' : 'Mes Cahiers de Français',
+);
 
 function bookStars(bookId: number): number {
   const chapters = getChaptersForBook(bookId);
@@ -35,7 +49,7 @@ function bookMaxStars(bookId: number): number {
         <HomeIcon :size="28" class="text-sky-200" />
       </NotebookButton>
       <h1 class="text-2xl md:text-3xl font-bold text-sky-600">
-        Mes Cahiers de Français
+        {{ shelfTitle }}
       </h1>
     </header>
 
@@ -43,13 +57,13 @@ function bookMaxStars(bookId: number): number {
     <main class="flex-1 flex items-center justify-center p-2">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 w-full max-w-5xl">
         <BookCard
-          v-for="book in BOOKS"
+          v-for="book in books"
           :key="book.id"
           :book="book"
           :stars="bookStars(book.id)"
           :max-stars="bookMaxStars(book.id)"
-          :is-recommended="progress.recommendedBookId === book.id"
-          :is-locked="!!book.isBonus && !progress.isBonusUnlocked"
+          :is-recommended="progress.getRecommendedBookIdForSubject(subject) === book.id"
+          :is-locked="!!book.isBonus && !progress.isBonusUnlockedForSubject(subject)"
           @select="(bookId) => $emit('select-book', bookId)"
         />
       </div>

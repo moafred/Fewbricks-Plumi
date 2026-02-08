@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
-import SortingHat from './SortingHat.vue';
+import CategoryButton from './CategoryButton.vue';
 
-const meta: Meta<typeof SortingHat> = {
-  title: 'Game/SortingHat',
-  component: SortingHat,
+const meta: Meta<typeof CategoryButton> = {
+  title: 'Game/CategoryButton',
+  component: CategoryButton,
   argTypes: {
     state: {
       control: 'select',
@@ -13,7 +13,7 @@ const meta: Meta<typeof SortingHat> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof SortingHat>;
+type Story = StoryObj<typeof CategoryButton>;
 
 export const EtreIdle: Story = {
   args: { verbId: 'etre', label: 'être', state: 'idle' },
@@ -41,11 +41,11 @@ export const AvoirReveal: Story = {
 
 export const BothWaiting: Story = {
   render: () => ({
-    components: { SortingHat },
+    components: { CategoryButton },
     template: `
       <div style="display: flex; gap: 24px;">
-        <SortingHat verb-id="etre" label="être" state="waiting" />
-        <SortingHat verb-id="avoir" label="avoir" state="waiting" />
+        <CategoryButton verb-id="etre" label="être" state="waiting" />
+        <CategoryButton verb-id="avoir" label="avoir" state="waiting" />
       </div>
     `,
   }),

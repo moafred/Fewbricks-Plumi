@@ -1,29 +1,26 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import type { Subject } from '@plumi/shared';
 import HomeScreen from '@/components/game/HomeScreen.vue';
 import BookShelf from '@/components/game/BookShelf.vue';
 import BookView from '@/components/game/BookView.vue';
 import BookLessonScreen from '@/components/game/BookLessonScreen.vue';
 import ChapterRunner from '@/components/game/ChapterRunner.vue';
-import { useBiome } from '@/composables';
+import { useBookTheme } from '@/composables';
 
 type Screen = 'home' | 'bookshelf' | 'book-view' | 'book-lesson' | 'chapter-runner';
 
 const screen = ref<Screen>('home');
+const selectedSubject = ref<Subject>('francais');
 const selectedBookId = ref<number>(1);
 
-// Biome actif selon l'ecran : parchment pour home, biome du livre pour book-view/book-lesson
+// Thème visuel du livre actif (book-view / book-lesson), blanc sinon
 const activeBookId = computed(() =>
   screen.value === 'book-view' || screen.value === 'book-lesson'
     ? selectedBookId.value
     : null,
 );
-const { bgClass } = useBiome(activeBookId);
-
-// Fond parchment pour home, biome du livre sinon
-const screenBgClass = computed(() =>
-  screen.value === 'home' ? 'biome-parchment' : bgClass.value,
-);
+const { bgClass } = useBookTheme(activeBookId);
 
 const selectedChapterId = ref<number>(1);
 
@@ -48,16 +45,17 @@ function onChapterComplete() {
 </script>
 
 <template>
-  <div class="min-h-screen text-stone-800 transition-[background] duration-700" :class="screenBgClass">
+  <div class="min-h-screen text-stone-800 transition-[background] duration-700" :class="bgClass">
     <!-- Home screen — matieres -->
     <HomeScreen
       v-if="screen === 'home'"
-      @select-subject="screen = 'bookshelf'"
+      @select-subject="(subject: string) => { selectedSubject = subject as Subject; screen = 'bookshelf'; }"
     />
 
     <!-- Bookshelf screen — cahiers -->
     <BookShelf
       v-else-if="screen === 'bookshelf'"
+      :subject="selectedSubject"
       @home="screen = 'home'"
       @select-book="onSelectBook"
     />

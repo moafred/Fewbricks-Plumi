@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import { BOOKS, getChaptersForBook } from '@plumi/shared';
+import type { Subject } from '@plumi/shared';
+import { BOOKS, getBooksForSubject, getChaptersForBook } from '@plumi/shared';
 
 export interface ChapterScore {
   chapterId: number;
@@ -55,35 +56,43 @@ export const useChapterProgressStore = defineStore('chapter-progress', () => {
     return chapters.every((ch) => isChapterCompleted(ch.id));
   }
 
-  /** Prochain chapitre recommande (premier non-complete, en ordre) */
-  const recommendedChapterId = computed<number | null>(() => {
-    for (const book of BOOKS) {
+  /** Prochain chapitre recommande pour une matière */
+  function getRecommendedChapterIdForSubject(subject: Subject): number | null {
+    const books = getBooksForSubject(subject);
+    for (const book of books) {
       if (book.isBonus) continue;
       for (const chId of book.chapters) {
         if (!completedChapters.value.has(chId)) return chId;
       }
     }
-    // Tous les livres principaux finis ? Recommander le bonus
-    const bonus = BOOKS.find((b) => b.isBonus);
+    const bonus = books.find((b) => b.isBonus);
     if (bonus) {
       for (const chId of bonus.chapters) {
         if (!completedChapters.value.has(chId)) return chId;
       }
     }
     return null;
-  });
+  }
 
-  /** Livre recommande (celui qui contient le chapitre recommande) */
-  const recommendedBookId = computed<number | null>(() => {
-    if (!recommendedChapterId.value) return null;
-    const book = BOOKS.find((b) => b.chapters.includes(recommendedChapterId.value!));
+  /** Livre recommande pour une matière */
+  function getRecommendedBookIdForSubject(subject: Subject): number | null {
+    const chId = getRecommendedChapterIdForSubject(subject);
+    if (!chId) return null;
+    const books = getBooksForSubject(subject);
+    const book = books.find((b) => b.chapters.includes(chId));
     return book?.id ?? null;
-  });
+  }
 
-  /** Le bonus est-il debloque ? (5 livres principaux completes) */
-  const isBonusUnlocked = computed(() => {
-    return BOOKS.filter((b) => !b.isBonus).every((b) => isBookCompleted(b.id));
-  });
+  /** Le bonus est-il débloqué pour une matière ? */
+  function isBonusUnlockedForSubject(subject: Subject): boolean {
+    const books = getBooksForSubject(subject);
+    return books.filter((b) => !b.isBonus).every((b) => isBookCompleted(b.id));
+  }
+
+  // Rétrocompatibilité — français par défaut
+  const recommendedChapterId = computed<number | null>(() => getRecommendedChapterIdForSubject('francais'));
+  const recommendedBookId = computed<number | null>(() => getRecommendedBookIdForSubject('francais'));
+  const isBonusUnlocked = computed(() => isBonusUnlockedForSubject('francais'));
 
   // --- Actions ---
 
@@ -114,6 +123,9 @@ export const useChapterProgressStore = defineStore('chapter-progress', () => {
     recommendedChapterId,
     recommendedBookId,
     isBonusUnlocked,
+    getRecommendedChapterIdForSubject,
+    getRecommendedBookIdForSubject,
+    isBonusUnlockedForSubject,
     completeChapter,
     resetProgress,
   };

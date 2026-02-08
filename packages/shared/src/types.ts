@@ -88,9 +88,9 @@ export type GapTarget = 'verb' | 'determiner' | 'adjective' | 'noun';
 export type MiniGameType =
   | 'attrape-mots'
   | 'pont-accents'
-  | 'potion-verbes'
+  | 'encrier-verbes'
   | 'tri-verbes'
-  | 'grimoire'
+  | 'ardoise'
   | 'pont-accords';
 
 export type GamePhase = 'discovery' | 'challenge' | 'response' | 'resolution';
@@ -109,39 +109,68 @@ export interface Exercise {
 
 export type PlumiState = 'idle' | 'challenge' | 'celebration' | 'encouragement';
 
-export type StepMechanic = 'tri-verbes' | 'grimoire' | 'potion' | 'pont-accords' | 'potion-gn';
+export type Subject = 'francais' | 'maths';
+
+export type MathOperation = 'addition' | 'subtraction' | 'multiplication';
+
+export type StepMechanic =
+  // Français
+  | 'tri-verbes' | 'ardoise' | 'encrier' | 'pont-accords' | 'encrier-gn'
+  // Maths — réutilisées
+  | 'tri-nombres' | 'ardoise-calcul' | 'encrier-calcul'
+  // Maths — spécifiques
+  | 'droite-numerique' | 'tour-de-blocs' | 'partage' | 'horloge' | 'marche';
 
 /**
  * Display names for mini-game mechanics (educational terminology)
  */
 export const MECHANIC_DISPLAY_NAMES: Record<StepMechanic, string> = {
+  // Français
   'tri-verbes': 'Trier les Verbes',
-  'grimoire': 'Choisir la Bonne Forme',
-  'potion': 'Compléter la Phrase',
+  'ardoise': 'Choisir la Bonne Forme',
+  'encrier': 'Compléter la Phrase',
   'pont-accords': 'Le Pont des Accords',
-  'potion-gn': 'Les Groupes Nominaux',
+  'encrier-gn': 'Les Groupes Nominaux',
+  // Maths — réutilisées
+  'tri-nombres': 'Trier les Nombres',
+  'ardoise-calcul': 'Le Bon Résultat',
+  'encrier-calcul': 'Compléter le Calcul',
+  // Maths — spécifiques
+  'droite-numerique': 'La Droite des Nombres',
+  'tour-de-blocs': 'La Tour de Blocs',
+  'partage': 'Le Partage',
+  'horloge': "L'Horloge",
+  'marche': 'Le Marché',
 };
 
 export interface ChapterStep {
   mechanic: StepMechanic;
-  pronouns?: Pronoun[];
-  verbs?: VerbId[];
   questionCount: number;
   isBoss?: boolean;
+  // Français
+  pronouns?: Pronoun[];
+  verbs?: VerbId[];
+  // Maths
+  numberRange?: [number, number];
+  operations?: MathOperation[];
+  /** Catégories pour tri-nombres (ex: ['pair', 'impair']) */
+  categories?: string[];
+  fractionDenominators?: number[];
 }
 
 export interface Chapter {
   id: number;
+  subject?: Subject;
   title: string;
   /** Phrase d'intro vocalisée par Plumi */
   narrative: string;
-  verbs: VerbId[];
-  tense: Tense | 'mixed';
+  verbs?: VerbId[];
+  tense?: Tense | 'mixed';
   steps: ChapterStep[];
 }
 
-export type BiomeId =
-  | 'home'
+export type ThemeId =
+  // Français
   | 'jardin'
   | 'fondations'
   | 'clairiere'
@@ -151,16 +180,26 @@ export type BiomeId =
   | 'atelier'
   | 'bibliotheque'
   | 'arcanes'
-  | 'symphonie';
+  | 'symphonie'
+  // Maths
+  | 'nombres'
+  | 'additions'
+  | 'soustractions'
+  | 'multiplications'
+  | 'mesures'
+  | 'fractions'
+  | 'geometrie'
+  | 'revision-maths';
 
 export interface Book {
   id: number;
+  subject?: Subject;
   title: string;
   subtitle: string;
-  tenses: Tense[];
+  tenses?: Tense[];
   chapters: number[];
   color: 'sky' | 'meadow' | 'gold' | 'coral' | 'moss' | 'dawn';
-  biome: BiomeId;
+  theme: ThemeId;
   isBonus?: boolean;
 }
 

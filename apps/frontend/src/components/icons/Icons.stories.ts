@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
-import { HatIcon, GrimoireIcon, StarFilledIcon, StarEmptyIcon, CrossIcon, SparkleIcon } from '.';
+import { ArdoiseIcon, CategoryIcon, EncrierIcon, StarFilledIcon, StarEmptyIcon, CrossIcon, SparkleIcon } from '.';
 
 const icons = [
-  { name: 'HatIcon', component: HatIcon },
-  { name: 'GrimoireIcon', component: GrimoireIcon },
+  { name: 'CategoryIcon', component: CategoryIcon },
+  { name: 'ArdoiseIcon', component: ArdoiseIcon },
+  { name: 'EncrierIcon', component: EncrierIcon },
   { name: 'StarFilledIcon', component: StarFilledIcon },
   { name: 'StarEmptyIcon', component: StarEmptyIcon },
   { name: 'CrossIcon', component: CrossIcon },
@@ -18,7 +19,7 @@ export default meta;
 
 export const Gallery: StoryObj = {
   render: () => ({
-    components: { HatIcon, GrimoireIcon, StarFilledIcon, StarEmptyIcon, CrossIcon, SparkleIcon },
+    components: { ArdoiseIcon, CategoryIcon, EncrierIcon, StarFilledIcon, StarEmptyIcon, CrossIcon, SparkleIcon },
     setup() {
       return { icons, sizes: [24, 32, 48] };
     },

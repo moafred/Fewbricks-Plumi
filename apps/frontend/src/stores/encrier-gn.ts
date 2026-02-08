@@ -1,21 +1,20 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import type { GamePhase, AnswerResult, VerbPotionItem, Tense, Pronoun, VerbId } from '@plumi/shared';
-import { generatePotionItems } from '@plumi/shared';
+import type { GamePhase, AnswerResult, GnEncrierItem } from '@plumi/shared';
+import { generateGnEncrierItems } from '@plumi/shared';
 
 const DISCOVERY_DELAY = 1500;
 
-export const usePotionStore = defineStore('potion', () => {
+export const useEncrierGnStore = defineStore('encrier-gn', () => {
     // --- State ---
     const phase = ref<GamePhase>('discovery');
-    const items = ref<VerbPotionItem[]>([]);
+    const items = ref<GnEncrierItem[]>([]);
     const currentIndex = ref(0);
     const score = ref(0);
     const lastResult = ref<AnswerResult | null>(null);
     const selectedChoice = ref<string | null>(null);
     const correctForm = ref<string | null>(null);
     const results = ref<(AnswerResult | null)[]>([]);
-    const currentTenses = ref<Tense[]>(['present']);
 
     let phaseTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -51,20 +50,14 @@ export const usePotionStore = defineStore('potion', () => {
         if (p === 'discovery') {
             transitionTo('challenge', DISCOVERY_DELAY);
         } else if (p === 'response') {
-            // Just answered, briefly show result then go to resolution (correction)
             transitionTo('resolution', 500);
         }
     }
 
     // --- Actions ---
-    function startGame(
-        tenses: Tense[] = ['present'],
-        count: number = 10,
-        options?: { pronouns?: Pronoun[]; verbs?: VerbId[] },
-    ) {
+    function startGame(count: number = 10) {
         clearTimer();
-        currentTenses.value = tenses;
-        items.value = generatePotionItems(tenses, count, options);
+        items.value = generateGnEncrierItems(count);
         currentIndex.value = 0;
         score.value = 0;
         lastResult.value = null;
@@ -131,7 +124,6 @@ export const usePotionStore = defineStore('potion', () => {
         selectedChoice,
         correctForm,
         results,
-        currentTenses,
         // Getters
         currentItem,
         isFinished,

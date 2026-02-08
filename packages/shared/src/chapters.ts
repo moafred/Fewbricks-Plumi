@@ -1,4 +1,5 @@
-import type { Book, Chapter } from './types.js';
+import type { Book, Chapter, Subject } from './types.js';
+import { MATH_BOOKS, MATH_CHAPTERS } from './math-chapters.js';
 
 export const BOOKS: Book[] = [
   {
@@ -8,7 +9,7 @@ export const BOOKS: Book[] = [
     tenses: ['present'],
     chapters: [1, 2, 3],
     color: 'dawn',
-    biome: 'jardin',
+    theme: 'jardin',
   },
   {
     id: 2,
@@ -17,7 +18,7 @@ export const BOOKS: Book[] = [
     tenses: ['present'],
     chapters: [4, 5, 6],
     color: 'sky',
-    biome: 'fondations',
+    theme: 'fondations',
   },
   {
     id: 3,
@@ -26,7 +27,7 @@ export const BOOKS: Book[] = [
     tenses: ['present'],
     chapters: [7, 8, 9],
     color: 'moss',
-    biome: 'clairiere',
+    theme: 'clairiere',
   },
   {
     id: 4,
@@ -35,7 +36,7 @@ export const BOOKS: Book[] = [
     tenses: ['futur'],
     chapters: [10, 11, 12],
     color: 'gold',
-    biome: 'futur',
+    theme: 'futur',
   },
   {
     id: 5,
@@ -44,7 +45,7 @@ export const BOOKS: Book[] = [
     tenses: ['imparfait'],
     chapters: [13, 14, 15],
     color: 'coral',
-    biome: 'brumes',
+    theme: 'brumes',
   },
   {
     id: 6,
@@ -53,7 +54,7 @@ export const BOOKS: Book[] = [
     tenses: ['present', 'futur', 'imparfait', 'passe_compose'],
     chapters: [16, 17, 18],
     color: 'coral',
-    biome: 'flux',
+    theme: 'flux',
     isBonus: true,
   },
   // ─── Nouveaux cahiers — extension programme CE1 ────────────────────────────
@@ -64,7 +65,7 @@ export const BOOKS: Book[] = [
     tenses: ['present'],
     chapters: [19, 20, 21],
     color: 'meadow',
-    biome: 'atelier',
+    theme: 'atelier',
   },
   {
     id: 8,
@@ -73,7 +74,7 @@ export const BOOKS: Book[] = [
     tenses: ['present'],
     chapters: [22, 23, 24],
     color: 'sky',
-    biome: 'bibliotheque',
+    theme: 'bibliotheque',
   },
   {
     id: 9,
@@ -82,7 +83,7 @@ export const BOOKS: Book[] = [
     tenses: ['present'],
     chapters: [25, 26, 27],
     color: 'gold',
-    biome: 'arcanes',
+    theme: 'arcanes',
   },
   {
     id: 10,
@@ -91,7 +92,7 @@ export const BOOKS: Book[] = [
     tenses: ['present', 'futur', 'imparfait'],
     chapters: [28, 29, 30],
     color: 'dawn',
-    biome: 'symphonie',
+    theme: 'symphonie',
   },
 ];
 
@@ -114,10 +115,10 @@ export const CHAPTERS: Chapter[] = [
     verbs: ['etre'],
     tense: 'present',
     steps: [
-      { mechanic: 'grimoire', pronouns: ['je', 'tu'], questionCount: 3 },
-      { mechanic: 'grimoire', pronouns: ['il/elle/on', 'nous'], questionCount: 3 },
-      { mechanic: 'potion', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
-      { mechanic: 'potion', questionCount: 4, isBoss: true },
+      { mechanic: 'ardoise', pronouns: ['je', 'tu'], questionCount: 3 },
+      { mechanic: 'ardoise', pronouns: ['il/elle/on', 'nous'], questionCount: 3 },
+      { mechanic: 'encrier', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
+      { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
   },
   {
@@ -127,10 +128,10 @@ export const CHAPTERS: Chapter[] = [
     verbs: ['avoir'],
     tense: 'present',
     steps: [
-      { mechanic: 'grimoire', pronouns: ['je', 'tu'], questionCount: 3 },
-      { mechanic: 'grimoire', pronouns: ['il/elle/on', 'nous'], questionCount: 3 },
-      { mechanic: 'potion', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
-      { mechanic: 'potion', questionCount: 4, isBoss: true },
+      { mechanic: 'ardoise', pronouns: ['je', 'tu'], questionCount: 3 },
+      { mechanic: 'ardoise', pronouns: ['il/elle/on', 'nous'], questionCount: 3 },
+      { mechanic: 'encrier', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
+      { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
   },
   {
@@ -146,9 +147,9 @@ export const CHAPTERS: Chapter[] = [
         pronouns: ['il/elle/on', 'nous', 'vous', 'ils/elles'],
         questionCount: 3,
       },
-      { mechanic: 'grimoire', questionCount: 4 },
-      { mechanic: 'potion', questionCount: 4 },
-      { mechanic: 'potion', questionCount: 4, isBoss: true },
+      { mechanic: 'ardoise', questionCount: 4 },
+      { mechanic: 'encrier', questionCount: 4 },
+      { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
   },
 
@@ -159,11 +160,11 @@ export const CHAPTERS: Chapter[] = [
     verbs: ['etre'],
     tense: 'present',
     steps: [
-      { mechanic: 'grimoire', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
-      { mechanic: 'grimoire', pronouns: ['nous', 'vous', 'ils/elles'], questionCount: 3 },
-      { mechanic: 'potion', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
-      { mechanic: 'potion', pronouns: ['nous', 'vous', 'ils/elles'], questionCount: 3 },
-      { mechanic: 'potion', questionCount: 4, isBoss: true },
+      { mechanic: 'ardoise', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
+      { mechanic: 'ardoise', pronouns: ['nous', 'vous', 'ils/elles'], questionCount: 3 },
+      { mechanic: 'encrier', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
+      { mechanic: 'encrier', pronouns: ['nous', 'vous', 'ils/elles'], questionCount: 3 },
+      { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
   },
   {
@@ -173,11 +174,11 @@ export const CHAPTERS: Chapter[] = [
     verbs: ['avoir'],
     tense: 'present',
     steps: [
-      { mechanic: 'grimoire', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
-      { mechanic: 'grimoire', pronouns: ['nous', 'vous', 'ils/elles'], questionCount: 3 },
-      { mechanic: 'potion', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
-      { mechanic: 'potion', pronouns: ['nous', 'vous', 'ils/elles'], questionCount: 3 },
-      { mechanic: 'potion', questionCount: 4, isBoss: true },
+      { mechanic: 'ardoise', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
+      { mechanic: 'ardoise', pronouns: ['nous', 'vous', 'ils/elles'], questionCount: 3 },
+      { mechanic: 'encrier', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
+      { mechanic: 'encrier', pronouns: ['nous', 'vous', 'ils/elles'], questionCount: 3 },
+      { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
   },
   {
@@ -189,9 +190,9 @@ export const CHAPTERS: Chapter[] = [
     steps: [
       { mechanic: 'tri-verbes', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 4 },
       { mechanic: 'tri-verbes', pronouns: ['nous', 'vous', 'ils/elles'], questionCount: 4 },
-      { mechanic: 'grimoire', questionCount: 4 },
-      { mechanic: 'potion', questionCount: 4 },
-      { mechanic: 'potion', questionCount: 4, isBoss: true },
+      { mechanic: 'ardoise', questionCount: 4 },
+      { mechanic: 'encrier', questionCount: 4 },
+      { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
   },
 
@@ -202,10 +203,10 @@ export const CHAPTERS: Chapter[] = [
     verbs: ['etre'],
     tense: 'present',
     steps: [
-      { mechanic: 'grimoire', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
-      { mechanic: 'potion', questionCount: 3 },
+      { mechanic: 'ardoise', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
+      { mechanic: 'encrier', questionCount: 3 },
       { mechanic: 'pont-accords', questionCount: 4 },
-      { mechanic: 'potion-gn', questionCount: 4 },
+      { mechanic: 'encrier-gn', questionCount: 4 },
     ],
   },
   {
@@ -215,10 +216,10 @@ export const CHAPTERS: Chapter[] = [
     verbs: ['avoir'],
     tense: 'present',
     steps: [
-      { mechanic: 'grimoire', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
-      { mechanic: 'potion', questionCount: 3 },
+      { mechanic: 'ardoise', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
+      { mechanic: 'encrier', questionCount: 3 },
       { mechanic: 'pont-accords', questionCount: 4 },
-      { mechanic: 'potion-gn', questionCount: 4 },
+      { mechanic: 'encrier-gn', questionCount: 4 },
     ],
   },
   {
@@ -229,10 +230,10 @@ export const CHAPTERS: Chapter[] = [
     tense: 'present',
     steps: [
       { mechanic: 'tri-verbes', questionCount: 4 },
-      { mechanic: 'grimoire', questionCount: 3 },
-      { mechanic: 'potion', questionCount: 3 },
+      { mechanic: 'ardoise', questionCount: 3 },
+      { mechanic: 'encrier', questionCount: 3 },
       { mechanic: 'pont-accords', questionCount: 4 },
-      { mechanic: 'potion', questionCount: 4, isBoss: true },
+      { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
   },
 
@@ -243,14 +244,14 @@ export const CHAPTERS: Chapter[] = [
     verbs: ['etre'],
     tense: 'futur',
     steps: [
-      { mechanic: 'grimoire', pronouns: ['je', 'tu'], questionCount: 3 },
+      { mechanic: 'ardoise', pronouns: ['je', 'tu'], questionCount: 3 },
       {
-        mechanic: 'grimoire',
+        mechanic: 'ardoise',
         pronouns: ['il/elle/on', 'nous', 'vous', 'ils/elles'],
         questionCount: 3,
       },
-      { mechanic: 'potion', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
-      { mechanic: 'potion', questionCount: 4, isBoss: true },
+      { mechanic: 'encrier', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
+      { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
   },
   {
@@ -260,14 +261,14 @@ export const CHAPTERS: Chapter[] = [
     verbs: ['avoir'],
     tense: 'futur',
     steps: [
-      { mechanic: 'grimoire', pronouns: ['je', 'tu'], questionCount: 3 },
+      { mechanic: 'ardoise', pronouns: ['je', 'tu'], questionCount: 3 },
       {
-        mechanic: 'grimoire',
+        mechanic: 'ardoise',
         pronouns: ['il/elle/on', 'nous', 'vous', 'ils/elles'],
         questionCount: 3,
       },
-      { mechanic: 'potion', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
-      { mechanic: 'potion', questionCount: 4, isBoss: true },
+      { mechanic: 'encrier', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
+      { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
   },
   {
@@ -279,9 +280,9 @@ export const CHAPTERS: Chapter[] = [
     steps: [
       { mechanic: 'tri-verbes', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 4 },
       { mechanic: 'tri-verbes', pronouns: ['nous', 'vous', 'ils/elles'], questionCount: 4 },
-      { mechanic: 'grimoire', questionCount: 4 },
-      { mechanic: 'potion', questionCount: 4 },
-      { mechanic: 'potion', questionCount: 4, isBoss: true },
+      { mechanic: 'ardoise', questionCount: 4 },
+      { mechanic: 'encrier', questionCount: 4 },
+      { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
   },
 
@@ -292,14 +293,14 @@ export const CHAPTERS: Chapter[] = [
     verbs: ['etre'],
     tense: 'imparfait',
     steps: [
-      { mechanic: 'grimoire', pronouns: ['je', 'tu'], questionCount: 3 },
+      { mechanic: 'ardoise', pronouns: ['je', 'tu'], questionCount: 3 },
       {
-        mechanic: 'grimoire',
+        mechanic: 'ardoise',
         pronouns: ['il/elle/on', 'nous', 'vous', 'ils/elles'],
         questionCount: 3,
       },
-      { mechanic: 'potion', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
-      { mechanic: 'potion', questionCount: 4, isBoss: true },
+      { mechanic: 'encrier', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
+      { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
   },
   {
@@ -309,14 +310,14 @@ export const CHAPTERS: Chapter[] = [
     verbs: ['avoir'],
     tense: 'imparfait',
     steps: [
-      { mechanic: 'grimoire', pronouns: ['je', 'tu'], questionCount: 3 },
+      { mechanic: 'ardoise', pronouns: ['je', 'tu'], questionCount: 3 },
       {
-        mechanic: 'grimoire',
+        mechanic: 'ardoise',
         pronouns: ['il/elle/on', 'nous', 'vous', 'ils/elles'],
         questionCount: 3,
       },
-      { mechanic: 'potion', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
-      { mechanic: 'potion', questionCount: 4, isBoss: true },
+      { mechanic: 'encrier', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
+      { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
   },
   {
@@ -328,9 +329,9 @@ export const CHAPTERS: Chapter[] = [
     steps: [
       { mechanic: 'tri-verbes', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 4 },
       { mechanic: 'tri-verbes', pronouns: ['nous', 'vous', 'ils/elles'], questionCount: 4 },
-      { mechanic: 'grimoire', questionCount: 4 },
-      { mechanic: 'potion', questionCount: 4 },
-      { mechanic: 'potion', questionCount: 4, isBoss: true },
+      { mechanic: 'ardoise', questionCount: 4 },
+      { mechanic: 'encrier', questionCount: 4 },
+      { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
   },
 
@@ -341,10 +342,10 @@ export const CHAPTERS: Chapter[] = [
     verbs: ['etre'],
     tense: 'mixed',
     steps: [
-      { mechanic: 'grimoire', questionCount: 4 },
-      { mechanic: 'potion', questionCount: 4 },
-      { mechanic: 'grimoire', questionCount: 4 },
-      { mechanic: 'potion', questionCount: 4, isBoss: true },
+      { mechanic: 'ardoise', questionCount: 4 },
+      { mechanic: 'encrier', questionCount: 4 },
+      { mechanic: 'ardoise', questionCount: 4 },
+      { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
   },
   {
@@ -354,10 +355,10 @@ export const CHAPTERS: Chapter[] = [
     verbs: ['avoir'],
     tense: 'mixed',
     steps: [
-      { mechanic: 'grimoire', questionCount: 4 },
-      { mechanic: 'potion', questionCount: 4 },
-      { mechanic: 'grimoire', questionCount: 4 },
-      { mechanic: 'potion', questionCount: 4, isBoss: true },
+      { mechanic: 'ardoise', questionCount: 4 },
+      { mechanic: 'encrier', questionCount: 4 },
+      { mechanic: 'ardoise', questionCount: 4 },
+      { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
   },
   {
@@ -368,9 +369,9 @@ export const CHAPTERS: Chapter[] = [
     tense: 'mixed',
     steps: [
       { mechanic: 'tri-verbes', questionCount: 4 },
-      { mechanic: 'grimoire', questionCount: 4 },
-      { mechanic: 'potion', questionCount: 4 },
-      { mechanic: 'potion', questionCount: 4, isBoss: true },
+      { mechanic: 'ardoise', questionCount: 4 },
+      { mechanic: 'encrier', questionCount: 4 },
+      { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
   },
 
@@ -384,9 +385,9 @@ export const CHAPTERS: Chapter[] = [
     verbs: ['jouer', 'manger'],
     tense: 'present',
     steps: [
-      { mechanic: 'grimoire', pronouns: ['je', 'tu'], verbs: ['jouer'], questionCount: 3 },
-      { mechanic: 'grimoire', pronouns: ['je', 'tu'], verbs: ['manger'], questionCount: 3 },
-      { mechanic: 'potion', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
+      { mechanic: 'ardoise', pronouns: ['je', 'tu'], verbs: ['jouer'], questionCount: 3 },
+      { mechanic: 'ardoise', pronouns: ['je', 'tu'], verbs: ['manger'], questionCount: 3 },
+      { mechanic: 'encrier', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
       { mechanic: 'tri-verbes', verbs: ['jouer', 'manger'], questionCount: 4, isBoss: true },
     ],
   },
@@ -397,9 +398,9 @@ export const CHAPTERS: Chapter[] = [
     verbs: ['chanter', 'regarder'],
     tense: 'present',
     steps: [
-      { mechanic: 'grimoire', pronouns: ['je', 'tu'], verbs: ['chanter'], questionCount: 3 },
-      { mechanic: 'grimoire', pronouns: ['je', 'tu'], verbs: ['regarder'], questionCount: 3 },
-      { mechanic: 'potion', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
+      { mechanic: 'ardoise', pronouns: ['je', 'tu'], verbs: ['chanter'], questionCount: 3 },
+      { mechanic: 'ardoise', pronouns: ['je', 'tu'], verbs: ['regarder'], questionCount: 3 },
+      { mechanic: 'encrier', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
       { mechanic: 'tri-verbes', verbs: ['chanter', 'regarder'], questionCount: 4, isBoss: true },
     ],
   },
@@ -410,11 +411,11 @@ export const CHAPTERS: Chapter[] = [
     verbs: ['jouer', 'manger', 'chanter', 'regarder'],
     tense: 'present',
     steps: [
-      { mechanic: 'grimoire', pronouns: ['il/elle/on', 'nous', 'vous', 'ils/elles'], questionCount: 4 },
-      { mechanic: 'potion', questionCount: 4 },
+      { mechanic: 'ardoise', pronouns: ['il/elle/on', 'nous', 'vous', 'ils/elles'], questionCount: 4 },
+      { mechanic: 'encrier', questionCount: 4 },
       { mechanic: 'tri-verbes', verbs: ['jouer', 'chanter'], questionCount: 3 },
       { mechanic: 'tri-verbes', verbs: ['manger', 'regarder'], questionCount: 3 },
-      { mechanic: 'potion', questionCount: 4, isBoss: true },
+      { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
   },
 
@@ -428,9 +429,9 @@ export const CHAPTERS: Chapter[] = [
     verbs: ['aller', 'venir'],
     tense: 'present',
     steps: [
-      { mechanic: 'grimoire', pronouns: ['je', 'tu'], verbs: ['aller'], questionCount: 3 },
-      { mechanic: 'grimoire', pronouns: ['je', 'tu'], verbs: ['venir'], questionCount: 3 },
-      { mechanic: 'potion', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
+      { mechanic: 'ardoise', pronouns: ['je', 'tu'], verbs: ['aller'], questionCount: 3 },
+      { mechanic: 'ardoise', pronouns: ['je', 'tu'], verbs: ['venir'], questionCount: 3 },
+      { mechanic: 'encrier', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
       { mechanic: 'tri-verbes', verbs: ['aller', 'venir'], questionCount: 4, isBoss: true },
     ],
   },
@@ -441,9 +442,9 @@ export const CHAPTERS: Chapter[] = [
     verbs: ['faire', 'dire'],
     tense: 'present',
     steps: [
-      { mechanic: 'grimoire', pronouns: ['je', 'tu'], verbs: ['faire'], questionCount: 3 },
-      { mechanic: 'grimoire', pronouns: ['je', 'tu'], verbs: ['dire'], questionCount: 3 },
-      { mechanic: 'potion', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
+      { mechanic: 'ardoise', pronouns: ['je', 'tu'], verbs: ['faire'], questionCount: 3 },
+      { mechanic: 'ardoise', pronouns: ['je', 'tu'], verbs: ['dire'], questionCount: 3 },
+      { mechanic: 'encrier', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
       { mechanic: 'tri-verbes', verbs: ['faire', 'dire'], questionCount: 4, isBoss: true },
     ],
   },
@@ -454,11 +455,11 @@ export const CHAPTERS: Chapter[] = [
     verbs: ['aller', 'venir', 'faire', 'dire'],
     tense: 'present',
     steps: [
-      { mechanic: 'grimoire', pronouns: ['il/elle/on', 'nous', 'vous', 'ils/elles'], questionCount: 4 },
-      { mechanic: 'potion', questionCount: 4 },
+      { mechanic: 'ardoise', pronouns: ['il/elle/on', 'nous', 'vous', 'ils/elles'], questionCount: 4 },
+      { mechanic: 'encrier', questionCount: 4 },
       { mechanic: 'tri-verbes', verbs: ['aller', 'faire'], questionCount: 3 },
       { mechanic: 'tri-verbes', verbs: ['venir', 'dire'], questionCount: 3 },
-      { mechanic: 'potion', questionCount: 4, isBoss: true },
+      { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
   },
 
@@ -472,9 +473,9 @@ export const CHAPTERS: Chapter[] = [
     verbs: ['pouvoir', 'vouloir'],
     tense: 'present',
     steps: [
-      { mechanic: 'grimoire', pronouns: ['je', 'tu'], verbs: ['pouvoir'], questionCount: 3 },
-      { mechanic: 'grimoire', pronouns: ['je', 'tu'], verbs: ['vouloir'], questionCount: 3 },
-      { mechanic: 'potion', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
+      { mechanic: 'ardoise', pronouns: ['je', 'tu'], verbs: ['pouvoir'], questionCount: 3 },
+      { mechanic: 'ardoise', pronouns: ['je', 'tu'], verbs: ['vouloir'], questionCount: 3 },
+      { mechanic: 'encrier', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
       { mechanic: 'tri-verbes', verbs: ['pouvoir', 'vouloir'], questionCount: 4, isBoss: true },
     ],
   },
@@ -485,9 +486,9 @@ export const CHAPTERS: Chapter[] = [
     verbs: ['voir', 'prendre'],
     tense: 'present',
     steps: [
-      { mechanic: 'grimoire', pronouns: ['je', 'tu'], verbs: ['voir'], questionCount: 3 },
-      { mechanic: 'grimoire', pronouns: ['je', 'tu'], verbs: ['prendre'], questionCount: 3 },
-      { mechanic: 'potion', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
+      { mechanic: 'ardoise', pronouns: ['je', 'tu'], verbs: ['voir'], questionCount: 3 },
+      { mechanic: 'ardoise', pronouns: ['je', 'tu'], verbs: ['prendre'], questionCount: 3 },
+      { mechanic: 'encrier', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
       { mechanic: 'tri-verbes', verbs: ['voir', 'prendre'], questionCount: 4, isBoss: true },
     ],
   },
@@ -498,11 +499,11 @@ export const CHAPTERS: Chapter[] = [
     verbs: ['pouvoir', 'vouloir', 'voir', 'prendre'],
     tense: 'present',
     steps: [
-      { mechanic: 'grimoire', pronouns: ['il/elle/on', 'nous', 'vous', 'ils/elles'], questionCount: 4 },
-      { mechanic: 'potion', questionCount: 4 },
+      { mechanic: 'ardoise', pronouns: ['il/elle/on', 'nous', 'vous', 'ils/elles'], questionCount: 4 },
+      { mechanic: 'encrier', questionCount: 4 },
       { mechanic: 'tri-verbes', verbs: ['pouvoir', 'voir'], questionCount: 3 },
       { mechanic: 'tri-verbes', verbs: ['vouloir', 'prendre'], questionCount: 3 },
-      { mechanic: 'potion', questionCount: 4, isBoss: true },
+      { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
   },
 
@@ -516,10 +517,10 @@ export const CHAPTERS: Chapter[] = [
     verbs: ['jouer', 'manger', 'chanter', 'regarder'],
     tense: 'futur',
     steps: [
-      { mechanic: 'grimoire', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 4 },
-      { mechanic: 'grimoire', pronouns: ['nous', 'vous', 'ils/elles'], questionCount: 4 },
-      { mechanic: 'potion', questionCount: 4 },
-      { mechanic: 'potion', questionCount: 4, isBoss: true },
+      { mechanic: 'ardoise', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 4 },
+      { mechanic: 'ardoise', pronouns: ['nous', 'vous', 'ils/elles'], questionCount: 4 },
+      { mechanic: 'encrier', questionCount: 4 },
+      { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
   },
   {
@@ -529,10 +530,10 @@ export const CHAPTERS: Chapter[] = [
     verbs: ['aller', 'faire', 'pouvoir', 'voir'],
     tense: 'imparfait',
     steps: [
-      { mechanic: 'grimoire', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 4 },
-      { mechanic: 'grimoire', pronouns: ['nous', 'vous', 'ils/elles'], questionCount: 4 },
-      { mechanic: 'potion', questionCount: 4 },
-      { mechanic: 'potion', questionCount: 4, isBoss: true },
+      { mechanic: 'ardoise', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 4 },
+      { mechanic: 'ardoise', pronouns: ['nous', 'vous', 'ils/elles'], questionCount: 4 },
+      { mechanic: 'encrier', questionCount: 4 },
+      { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
   },
   {
@@ -542,27 +543,42 @@ export const CHAPTERS: Chapter[] = [
     verbs: ['etre', 'avoir', 'jouer', 'manger', 'aller', 'faire', 'pouvoir', 'voir', 'vouloir', 'prendre'],
     tense: 'mixed',
     steps: [
-      { mechanic: 'grimoire', questionCount: 4 },
-      { mechanic: 'potion', questionCount: 4 },
+      { mechanic: 'ardoise', questionCount: 4 },
+      { mechanic: 'encrier', questionCount: 4 },
       { mechanic: 'tri-verbes', verbs: ['etre', 'aller'], questionCount: 3 },
       { mechanic: 'tri-verbes', verbs: ['avoir', 'faire'], questionCount: 3 },
-      { mechanic: 'potion', questionCount: 4, isBoss: true },
+      { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
   },
 ];
 
+// ═══════════════════════════════════════════════════════════════════════════
+// COLLECTIONS MULTI-MATIÈRES
+// ═══════════════════════════════════════════════════════════════════════════
+
+export const ALL_BOOKS: Book[] = [...BOOKS, ...MATH_BOOKS];
+export const ALL_CHAPTERS: Chapter[] = [...CHAPTERS, ...MATH_CHAPTERS];
+
+// ═══════════════════════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════════════════════
+
 export function getChaptersForBook(bookId: number): Chapter[] {
-  const book = BOOKS.find((b) => b.id === bookId);
+  const book = ALL_BOOKS.find((b) => b.id === bookId);
   if (!book) return [];
   return book.chapters
-    .map((id) => CHAPTERS.find((c) => c.id === id))
+    .map((id) => ALL_CHAPTERS.find((c) => c.id === id))
     .filter((ch): ch is Chapter => ch !== undefined);
 }
 
 export function getChapter(chapterId: number): Chapter | undefined {
-  return CHAPTERS.find((c) => c.id === chapterId);
+  return ALL_CHAPTERS.find((c) => c.id === chapterId);
 }
 
 export function getBookForChapter(chapterId: number): Book | undefined {
-  return BOOKS.find((b) => b.chapters.includes(chapterId));
+  return ALL_BOOKS.find((b) => b.chapters.includes(chapterId));
+}
+
+export function getBooksForSubject(subject: Subject): Book[] {
+  return ALL_BOOKS.filter((b) => (b.subject ?? 'francais') === subject);
 }

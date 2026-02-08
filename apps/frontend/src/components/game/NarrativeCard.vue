@@ -14,12 +14,11 @@ import NotebookCard from '@/components/ui/NotebookCard.vue';
  * - Voir docs/component-patterns.md pour plus d'exemples
  *
  * @example
- * <NarrativeCard title="Le Jardin des Mots" text="Bienvenue..." biome="jardin" />
+ * <NarrativeCard title="Le Jardin des Mots" text="Bienvenue..." />
  */
 defineProps<{
   title: string;
   text: string;
-  biome?: string;
 }>();
 </script>
 

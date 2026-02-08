@@ -1,4 +1,5 @@
 import type { BookLesson } from './types.js';
+import { MATH_BOOK_LESSONS } from './math-book-lessons.js';
 
 /**
  * Leçons de référence par livre — contenu pédagogique CE1.
@@ -415,7 +416,10 @@ export const BOOK_LESSONS: BookLesson[] = [
   },
 ];
 
+/** Toutes les leçons (français + maths) */
+export const ALL_BOOK_LESSONS: BookLesson[] = [...BOOK_LESSONS, ...MATH_BOOK_LESSONS];
+
 /** Récupère la leçon d'un livre par son ID */
 export function getBookLesson(bookId: number): BookLesson | undefined {
-  return BOOK_LESSONS.find((l) => l.bookId === bookId);
+  return ALL_BOOK_LESSONS.find((l) => l.bookId === bookId);
 }

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import GameCard from './GameCard.vue';
-import { HatIcon, GrimoireIcon } from '../icons';
+import { CategoryIcon, ArdoiseIcon } from '../icons';
 
 const meta: Meta<typeof GameCard> = {
   title: 'UI/GameCard',
@@ -12,32 +12,32 @@ type Story = StoryObj<typeof GameCard>;
 
 export const TriVerbes: Story = {
   render: () => ({
-    components: { GameCard, HatIcon },
+    components: { GameCard, CategoryIcon },
     template: `
       <GameCard
         title="Le Tri des Verbes"
-        description="Trie les formes conjuguées dans le bon chapeau : être ou avoir ?"
+        description="Trie les formes conjuguées dans la bonne catégorie : être ou avoir ?"
         accent-color="text-gold-300"
       >
         <template #icon>
-          <HatIcon :size="48" class="text-gold-300" />
+          <CategoryIcon :size="48" class="text-gold-300" />
         </template>
       </GameCard>
     `,
   }),
 };
 
-export const Grimoire: Story = {
+export const Ardoise: Story = {
   render: () => ({
-    components: { GameCard, GrimoireIcon },
+    components: { GameCard, ArdoiseIcon },
     template: `
       <GameCard
-        title="Le Grimoire"
+        title="L'Ardoise"
         description="Trouve la bonne forme conjuguée pour chaque pronom et verbe !"
         accent-color="text-sky-300"
       >
         <template #icon>
-          <GrimoireIcon :size="48" class="text-sky-300" />
+          <ArdoiseIcon :size="48" class="text-sky-300" />
         </template>
       </GameCard>
     `,

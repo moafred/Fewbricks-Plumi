@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import type { VerbId } from '@plumi/shared';
-import { HatIcon } from '@/components/icons';
+import { CategoryIcon } from '@/components/icons';
 
-export type HatState = 'idle' | 'waiting' | 'correct' | 'incorrect' | 'reveal';
+export type CategoryButtonState = 'idle' | 'waiting' | 'correct' | 'incorrect' | 'reveal';
 
 const props = defineProps<{
   verbId: VerbId;
   label: string;
-  state: HatState;
+  state: CategoryButtonState;
   focused?: boolean;
 }>();
 
@@ -24,7 +24,7 @@ function handleTap() {
 
 <template>
   <button
-    class="sorting-hat flex flex-col items-center justify-center rounded-full w-32 h-32 md:w-36 md:h-36 text-xl md:text-2xl font-bold transition-all duration-200 select-none border-4"
+    class="category-button flex flex-col items-center justify-center rounded-full w-32 h-32 md:w-36 md:h-36 text-xl md:text-2xl font-bold transition-all duration-200 select-none border-4"
     :class="[
       // Base color per verb
       verbId === 'etre'
@@ -45,7 +45,7 @@ function handleTap() {
     :disabled="state !== 'waiting'"
     @click="handleTap"
   >
-    <HatIcon :size="40" class="mb-1" />
+    <CategoryIcon :size="40" class="mb-1" />
     <span>{{ label }}</span>
   </button>
 </template>

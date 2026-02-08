@@ -2,8 +2,8 @@ import type { Pronoun, Tense, VerbId } from './types.js';
 import { getConjugationsForTense } from './conjugations.js';
 import { shuffle } from './utils.js';
 
-/** Un item QCM pour le mini-jeu Le Grimoire */
-export interface GrimoireItem {
+/** Un item QCM pour le mini-jeu Ardoise */
+export interface ArdoiseItem {
   id: string;
   pronoun: Pronoun;
   verbId: VerbId;
@@ -13,7 +13,7 @@ export interface GrimoireItem {
   choices: string[]; // 4 choix mélangés, dont la bonne réponse
 }
 
-export interface GrimoireOptions {
+export interface ArdoiseOptions {
   /** Filtrer par temps (défaut: 'present') */
   tense?: Tense;
   /** Filtrer par verbes (défaut: tous) */
@@ -23,14 +23,14 @@ export interface GrimoireOptions {
 }
 
 /**
- * Génère une liste d'items QCM pour Le Grimoire.
+ * Génère une liste d'items QCM pour l'Ardoise.
  * Pioche `count` formes selon les options,
  * génère 3 distracteurs par item, mélange les choix.
  */
-export function generateGrimoireItems(
+export function generateArdoiseItems(
   count: number = 10,
-  options?: GrimoireOptions
-): GrimoireItem[] {
+  options?: ArdoiseOptions
+): ArdoiseItem[] {
   const tense: Tense = options?.tense ?? 'present';
   const verbFilter = options?.verbs;
   const pronounFilter = options?.pronouns;
@@ -47,7 +47,7 @@ export function generateGrimoireItems(
     return [];
   }
 
-  const items: GrimoireItem[] = [];
+  const items: ArdoiseItem[] = [];
   const perVerb = Math.ceil(count / conjugations.length);
 
   for (const verb of conjugations) {
@@ -77,7 +77,7 @@ export function generateGrimoireItems(
       }
 
       items.push({
-        id: `grimoire-${verb.id}-${tense}-${f.pronoun}`,
+        id: `ardoise-${verb.id}-${tense}-${f.pronoun}`,
         pronoun: f.pronoun,
         verbId: verb.id,
         infinitive: verb.infinitive,

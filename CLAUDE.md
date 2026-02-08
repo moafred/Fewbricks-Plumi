@@ -1,7 +1,8 @@
-# Plumi — Apprendre le Français CE1
+# Plumi — Apprendre le Français et les Mathématiques CE1
 
-Application éducative gamifiée d'apprentissage du français pour enfants CE1 (6-7 ans).
-Conjugaison (présent, futur, imparfait — être/avoir), extensible à toute la grammaire et l'orthographe.
+Application éducative gamifiée d'apprentissage du français et des mathématiques pour enfants CE1 (6-7 ans).
+Français : conjugaison (présent, futur, imparfait — être/avoir), extensible à toute la grammaire et l'orthographe.
+Mathématiques : nombres & calcul, grandeurs & mesures, espace & géométrie, données (programme 2024).
 
 Nous sommes en 2026.
 
@@ -14,13 +15,15 @@ Nous sommes en 2026.
 
 ## Ressources de Référence
 
-| Ressource          | Lien                                                                         |
-| ------------------ | ---------------------------------------------------------------------------- |
-| **Architecture**   | [docs/architecture.md](./docs/architecture.md) — Stratégie IA, principes    |
-| **Game Design**    | [docs/game-design.md](./docs/game-design.md) — Biomes, esthétique, sessions |
-| **Pédagogie**      | [docs/pedagogie.md](./docs/pedagogie.md) — Programme CE1, répétition espacée |
-| **Storybook**      | `apps/frontend/src/components/**/*.stories.ts` — Composants, variantes       |
-| **Design & UX**    | Skill `plumi-design-ux` — Typo, couleurs, animations, responsive, UX        |
+| Ressource              | Lien                                                                                    |
+| ---------------------- | --------------------------------------------------------------------------------------- |
+| **Architecture**       | [docs/architecture.md](./docs/architecture.md) — Stratégie IA, principes               |
+| **Game Design FR**     | [docs/francais/game-design.md](./docs/francais/game-design.md) — Biomes, sessions FR   |
+| **Pédagogie FR**       | [docs/francais/pedagogie.md](./docs/francais/pedagogie.md) — Programme CE1 français     |
+| **Game Design Maths**  | [docs/mathematiques/game-design.md](./docs/mathematiques/game-design.md) — Mécaniques maths |
+| **Pédagogie Maths**    | [docs/mathematiques/pedagogie.md](./docs/mathematiques/pedagogie.md) — Programme CE1 maths |
+| **Storybook**          | `apps/frontend/src/components/**/*.stories.ts` — Composants, variantes                  |
+| **Design & UX**        | Skill `plumi-design-ux` — Typo, couleurs, animations, responsive, UX                   |
 
 **Pour accéder aux specs d'un composant UI**, lire le fichier `.stories.ts` correspondant. Les stories contiennent : JSDoc (règles), argTypes (props), render (exemples).
 
@@ -103,10 +106,10 @@ PlumiState: 'idle' | 'challenge' | 'celebration' | 'encouragement'
 | Mécanique          | Composant            | Compétence visée                              |
 | ------------------ | -------------------- | --------------------------------------------- |
 | **tri-verbes**     | `TriVerbesGame`      | Distinction être vs avoir (choix binaire)     |
-| **grimoire**       | `GrimoireGame`       | Sélection de la bonne forme conjuguée (2×2)  |
-| **potion**         | `PotionGame`         | Complétion de phrase à trou (conjugaison)     |
+| **ardoise**        | `ArdoiseGame`        | Sélection de la bonne forme conjuguée (2×2)  |
+| **encrier**        | `EncrierGame`        | Complétion de phrase à trou (conjugaison)     |
 | **pont-accords**   | `PontAccordsGame`    | Accord dans le GN (genre/nombre)              |
-| **potion-gn**      | `PotionGnGame`       | Complétion de phrase à trou (vocabulaire GN)  |
+| **encrier-gn**     | `EncrierGnGame`      | Complétion de phrase à trou (vocabulaire GN)  |
 
 ### Progression — 6 Cahiers / 18 Chapitres [PEDA]
 
@@ -193,9 +196,9 @@ apps/
     src/
       components/game/         # Mini-jeux + navigation (BookShelf, ChapterRunner...)
       components/ui/           # Atoms : ActionButton, NotebookCard, GameCard, ConfirmModal...
-      components/icons/        # Icônes SVG (StarFilledIcon, HatIcon...)
+      components/icons/        # Icônes SVG (StarFilledIcon, CategoryIcon...)
       composables/             # useKeyboardNavigation, useBackNavigation
-      stores/                  # Pinia : chapter-progress, game, grimoire, potion...
+      stores/                  # Pinia : chapter-progress, game, ardoise, encrier...
   backend/                     # Fastify API
 packages/
   shared/                      # Types TS + constantes + générateurs (SSOT)
@@ -209,10 +212,10 @@ pnpm-workspace.yaml
 
 | Couche           | Rôle                      | Exemples                                              |
 | ---------------- | ------------------------- | ----------------------------------------------------- |
-| **Icons**        | Glyphes SVG atomiques     | `components/icons/StarFilledIcon.vue`, `HatIcon.vue`  |
+| **Icons**        | Glyphes SVG atomiques     | `components/icons/StarFilledIcon.vue`, `CategoryIcon.vue`  |
 | **Atoms**        | Éléments UI purs          | `components/ui/ActionButton.vue`, `KeyboardGuide.vue`  |
 | **Molecules**    | Composants métier simples | `components/game/SpellChoice.vue`, `ChoiceButton.vue`, `ChallengeCard.vue` |
-| **Organisms**    | Mini-jeux complets        | `components/game/PotionGame.vue`, `GrimoireGame.vue`  |
+| **Organisms**    | Mini-jeux complets        | `components/game/EncrierGame.vue`, `ArdoiseGame.vue`  |
 | **Orchestrateur**| Gestion d'un chapitre     | `components/game/ChapterRunner.vue`                   |
 | **Navigation**   | Écrans de parcours        | `components/game/BookShelf.vue`, `BookView.vue`       |
 | **Composables**  | Logique réutilisable      | `composables/useKeyboardNavigation.ts`                |

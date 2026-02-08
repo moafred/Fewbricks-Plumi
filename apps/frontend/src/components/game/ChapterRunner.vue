@@ -6,10 +6,20 @@ import { useChapterProgressStore } from '@/stores/chapter-progress';
 import { useBackNavigation } from '@/composables';
 import ChapterResult from './ChapterResult.vue';
 import TriVerbesGame from './TriVerbesGame.vue';
-import GrimoireGame from './GrimoireGame.vue';
-import PotionGame from './PotionGame.vue';
+import ArdoiseGame from './ArdoiseGame.vue';
+import EncrierGame from './EncrierGame.vue';
 import PontAccordsGame from './PontAccordsGame.vue';
-import PotionGnGame from './PotionGnGame.vue';
+import EncrierGnGame from './EncrierGnGame.vue';
+// Maths — réutilisées
+import TriNombresGame from './TriNombresGame.vue';
+import ArdoiseCalculGame from './ArdoiseCalculGame.vue';
+import EncrierCalculGame from './EncrierCalculGame.vue';
+// Maths — spécifiques
+import DroiteNumeriqueGame from './DroiteNumeriqueGame.vue';
+import TourDeBlocsGame from './TourDeBlocsGame.vue';
+import PartageGame from './PartageGame.vue';
+import HorlogeGame from './HorlogeGame.vue';
+import MarcheGame from './MarcheGame.vue';
 import ConfirmModal from '@/components/ui/ConfirmModal.vue';
 import CrossIcon from '@/components/icons/CrossIcon.vue';
 import NotebookBadge from '@/components/ui/NotebookBadge.vue';
@@ -28,12 +38,23 @@ const chapter = computed(() => getChapter(props.chapterId));
 const progressStore = useChapterProgressStore();
 
 // Mapping mécanique -> composant
-const mechanicComponents: Record<StepMechanic, Component> = {
+const mechanicComponents: Partial<Record<StepMechanic, Component>> = {
+  // Français
   'tri-verbes': TriVerbesGame,
-  'grimoire': GrimoireGame,
-  'potion': PotionGame,
+  'ardoise': ArdoiseGame,
+  'encrier': EncrierGame,
   'pont-accords': PontAccordsGame,
-  'potion-gn': PotionGnGame,
+  'encrier-gn': EncrierGnGame,
+  // Maths — réutilisées
+  'tri-nombres': TriNombresGame,
+  'ardoise-calcul': ArdoiseCalculGame,
+  'encrier-calcul': EncrierCalculGame,
+  // Maths — spécifiques
+  'droite-numerique': DroiteNumeriqueGame,
+  'tour-de-blocs': TourDeBlocsGame,
+  'partage': PartageGame,
+  'horloge': HorlogeGame,
+  'marche': MarcheGame,
 };
 
 // --- State ---
@@ -182,6 +203,10 @@ useBackNavigation(handleBack, computed(() => !showQuitConfirmation.value));
         :count="currentStep.questionCount"
         :verbs="currentStep.verbs ?? chapter?.verbs"
         :pronouns="currentStep.pronouns"
+        :number-range="currentStep.numberRange"
+        :operations="currentStep.operations"
+        :categories="currentStep.categories"
+        :fraction-denominators="currentStep.fractionDenominators"
         embedded
         @step-complete="onStepComplete"
         @home="handleBack"

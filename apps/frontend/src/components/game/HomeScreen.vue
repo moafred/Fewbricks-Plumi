@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { BOOKS, getChaptersForBook } from '@plumi/shared';
+import { getBooksForSubject, getChaptersForBook } from '@plumi/shared';
+import type { Subject } from '@plumi/shared';
 import { useChapterProgressStore } from '@/stores/chapter-progress';
 import SubjectCard from '@/components/game/SubjectCard.vue';
 import { BookIcon } from '@/components/icons';
@@ -11,26 +12,22 @@ defineEmits<{
 
 const progress = useChapterProgressStore();
 
-// Calcul des etoiles totales pour la matiere Francais (tous les livres)
-const totalStars = computed(() =>
-  BOOKS.reduce((sum, book) => {
+function computeSubjectStars(subject: Subject) {
+  const books = getBooksForSubject(subject);
+  const total = books.reduce((sum, book) => {
     const chapters = getChaptersForBook(book.id);
     return sum + chapters.reduce((s, ch) => s + progress.getStars(ch.id), 0);
-  }, 0),
-);
-
-const maxStars = computed(() =>
-  BOOKS.reduce((sum, book) => {
+  }, 0);
+  const max = books.reduce((sum, book) => {
     const chapters = getChaptersForBook(book.id);
     return sum + chapters.length * 3;
-  }, 0),
-);
+  }, 0);
+  if (max === 0) return 0;
+  return Math.round((total / max) * 5);
+}
 
-// Affichage simplifie : 5 etoiles proportionnelles a la progression globale
-const displayStars = computed(() => {
-  if (maxStars.value === 0) return 0;
-  return Math.round((totalStars.value / maxStars.value) * 5);
-});
+const frenchStars = computed(() => computeSubjectStars('francais'));
+const mathStars = computed(() => computeSubjectStars('maths'));
 </script>
 
 <template>
@@ -47,11 +44,11 @@ const displayStars = computed(() => {
     <!-- Grille des matieres -->
     <main class="flex-1 flex items-center justify-center px-2">
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 w-full max-w-lg">
-        <!-- Francais — actif -->
+        <!-- Francais -->
         <SubjectCard
           title="Francais"
           color="sky"
-          :stars="displayStars"
+          :stars="frenchStars"
           :max-stars="5"
           :locked="false"
           @select="$emit('select-subject', 'francais')"
@@ -59,18 +56,16 @@ const displayStars = computed(() => {
           <BookIcon :size="64" class="text-sky-500" />
         </SubjectCard>
 
-        <!-- Mathematiques — verrouille -->
+        <!-- Mathematiques -->
         <SubjectCard
           title="Maths"
           color="meadow"
-          :stars="0"
+          :stars="mathStars"
           :max-stars="5"
-          :locked="true"
-          locked-label="Bientôt"
+          :locked="false"
+          @select="$emit('select-subject', 'maths')"
         >
-          <div class="text-5xl text-meadow-400">
-            123
-          </div>
+          <BookIcon :size="64" class="text-meadow-500" />
         </SubjectCard>
       </div>
     </main>

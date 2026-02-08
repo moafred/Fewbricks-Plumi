@@ -1,20 +1,21 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import type { GamePhase, AnswerResult, GnPotionItem } from '@plumi/shared';
-import { generateGnPotionItems } from '@plumi/shared';
+import type { GamePhase, AnswerResult, VerbEncrierItem, Tense, Pronoun, VerbId } from '@plumi/shared';
+import { generateEncrierItems } from '@plumi/shared';
 
 const DISCOVERY_DELAY = 1500;
 
-export const usePotionGnStore = defineStore('potion-gn', () => {
+export const useEncrierStore = defineStore('encrier', () => {
     // --- State ---
     const phase = ref<GamePhase>('discovery');
-    const items = ref<GnPotionItem[]>([]);
+    const items = ref<VerbEncrierItem[]>([]);
     const currentIndex = ref(0);
     const score = ref(0);
     const lastResult = ref<AnswerResult | null>(null);
     const selectedChoice = ref<string | null>(null);
     const correctForm = ref<string | null>(null);
     const results = ref<(AnswerResult | null)[]>([]);
+    const currentTenses = ref<Tense[]>(['present']);
 
     let phaseTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -50,14 +51,20 @@ export const usePotionGnStore = defineStore('potion-gn', () => {
         if (p === 'discovery') {
             transitionTo('challenge', DISCOVERY_DELAY);
         } else if (p === 'response') {
+            // Just answered, briefly show result then go to resolution (correction)
             transitionTo('resolution', 500);
         }
     }
 
     // --- Actions ---
-    function startGame(count: number = 10) {
+    function startGame(
+        tenses: Tense[] = ['present'],
+        count: number = 10,
+        options?: { pronouns?: Pronoun[]; verbs?: VerbId[] },
+    ) {
         clearTimer();
-        items.value = generateGnPotionItems(count);
+        currentTenses.value = tenses;
+        items.value = generateEncrierItems(tenses, count, options);
         currentIndex.value = 0;
         score.value = 0;
         lastResult.value = null;
@@ -124,6 +131,7 @@ export const usePotionGnStore = defineStore('potion-gn', () => {
         selectedChoice,
         correctForm,
         results,
+        currentTenses,
         // Getters
         currentItem,
         isFinished,

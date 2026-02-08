@@ -1,21 +1,20 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import type { GamePhase, AnswerResult, GrimoireItem, Tense, VerbId, Pronoun } from '@plumi/shared';
-import { generateGrimoireItems } from '@plumi/shared';
+import type { GamePhase, AnswerResult, EncrierCalculItem, MathOperation } from '@plumi/shared';
+import { generateEncrierCalculItems } from '@plumi/shared';
 
 const DISCOVERY_DELAY = 1500;
 
-export const useGrimoireStore = defineStore('grimoire', () => {
+export const useEncrierCalculStore = defineStore('encrier-calcul', () => {
   // --- State ---
   const phase = ref<GamePhase>('discovery');
-  const items = ref<GrimoireItem[]>([]);
+  const items = ref<EncrierCalculItem[]>([]);
   const currentIndex = ref(0);
   const score = ref(0);
   const lastResult = ref<AnswerResult | null>(null);
   const selectedChoice = ref<string | null>(null);
   const correctForm = ref<string | null>(null);
   const results = ref<(AnswerResult | null)[]>([]);
-  const currentTense = ref<Tense>('present');
 
   let phaseTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -50,18 +49,21 @@ export const useGrimoireStore = defineStore('grimoire', () => {
   function onPhaseEnter(p: GamePhase) {
     if (p === 'discovery') {
       transitionTo('challenge', DISCOVERY_DELAY);
+    } else if (p === 'response') {
+      transitionTo('resolution', 500);
     }
   }
 
   // --- Actions ---
   function startGame(
-    tense: Tense = 'present',
     count: number = 10,
-    options?: { verbs?: VerbId[]; pronouns?: Pronoun[] },
+    options?: { operations?: MathOperation[]; numberRange?: [number, number] },
   ) {
     clearTimer();
-    currentTense.value = tense;
-    items.value = generateGrimoireItems(count, { tense, verbs: options?.verbs, pronouns: options?.pronouns });
+    items.value = generateEncrierCalculItems(count, {
+      operations: options?.operations,
+      numberRange: options?.numberRange,
+    });
     currentIndex.value = 0;
     score.value = 0;
     lastResult.value = null;
@@ -79,10 +81,10 @@ export const useGrimoireStore = defineStore('grimoire', () => {
     const item = currentItem.value;
     if (!item) return;
 
-    const correct = choice === item.correctForm;
+    const correct = choice === item.correctAnswer;
     lastResult.value = correct ? 'correct' : 'incorrect';
     selectedChoice.value = choice;
-    correctForm.value = item.correctForm;
+    correctForm.value = item.correctAnswer;
     results.value[currentIndex.value] = lastResult.value;
 
     if (correct) {
@@ -90,7 +92,7 @@ export const useGrimoireStore = defineStore('grimoire', () => {
     }
 
     phase.value = 'response';
-    transitionTo('resolution', 200);
+    onPhaseEnter('response');
   }
 
   function nextItem() {
@@ -115,12 +117,10 @@ export const useGrimoireStore = defineStore('grimoire', () => {
     selectedChoice.value = null;
     correctForm.value = null;
     results.value = [];
-    currentTense.value = 'present';
     phase.value = 'discovery';
   }
 
   return {
-    // State
     phase,
     items,
     currentIndex,
@@ -129,12 +129,9 @@ export const useGrimoireStore = defineStore('grimoire', () => {
     selectedChoice,
     correctForm,
     results,
-    currentTense,
-    // Getters
     currentItem,
     isFinished,
     progress,
-    // Actions
     startGame,
     submitAnswer,
     nextItem,

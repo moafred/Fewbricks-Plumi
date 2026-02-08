@@ -15,8 +15,8 @@ import { shuffle } from './utils.js';
 // TYPES — Union discriminée par gapTarget
 // ═══════════════════════════════════════════════════════════════════════════
 
-/** Champs communs à tout item Potion */
-interface PotionItemBase {
+/** Champs communs à tout item Encrier */
+interface EncrierItemBase {
   id: string;
   /** La phrase avec le trou (ex: "Je _____ content.") */
   sentence: string;
@@ -28,8 +28,8 @@ interface PotionItemBase {
   choices: string[];
 }
 
-/** Potion conjugaison — trou sur le verbe */
-export interface VerbPotionItem extends PotionItemBase {
+/** Encrier conjugaison — trou sur le verbe */
+export interface VerbEncrierItem extends EncrierItemBase {
   gapTarget: 'verb';
   verbId: VerbId;
   infinitive: string;
@@ -37,8 +37,8 @@ export interface VerbPotionItem extends PotionItemBase {
   tense: Tense;
 }
 
-/** Potion GN — trou sur déterminant, adjectif ou nom */
-export interface GnPotionItem extends PotionItemBase {
+/** Encrier GN — trou sur déterminant, adjectif ou nom */
+export interface GnEncrierItem extends EncrierItemBase {
   gapTarget: Exclude<GapTarget, 'verb'>;
   nounId: string;
   adjectiveId: string;
@@ -50,7 +50,7 @@ export interface GnPotionItem extends PotionItemBase {
 }
 
 /** Union discriminée — le frontend peut checker gapTarget pour le rendu conditionnel */
-export type PotionItem = VerbPotionItem | GnPotionItem;
+export type EncrierItem = VerbEncrierItem | GnEncrierItem;
 
 // ═══════════════════════════════════════════════════════════════════════════
 // TEMPLATES CONJUGAISON — Indexés par VerbId → Pronoun → string[]
@@ -202,7 +202,7 @@ const TEMPLATE_INDEX: TemplateIndex = {
 };
 
 /** Aplatit l'index en liste de templates pour le tirage aléatoire */
-interface PotionTemplate {
+interface EncrierTemplate {
   verbId: VerbId;
   pronoun: Pronoun;
   template: string;
@@ -212,8 +212,8 @@ function flattenTemplates(
   index: TemplateIndex,
   verbFilter?: VerbId[],
   pronounFilter?: Pronoun[],
-): PotionTemplate[] {
-  const result: PotionTemplate[] = [];
+): EncrierTemplate[] {
+  const result: EncrierTemplate[] = [];
   for (const [verbId, pronounMap] of Object.entries(index)) {
     if (verbFilter && !verbFilter.includes(verbId as VerbId)) continue;
     if (!pronounMap) continue;
@@ -241,13 +241,13 @@ function adjustElision(sentence: string, verbForm: string): string {
 // GÉNÉRATEUR CONJUGAISON (backward compat)
 // ═══════════════════════════════════════════════════════════════════════════
 
-/** Génère des items Potion conjugaison (trou = verbe). */
-export function generatePotionItems(
+/** Génère des items Encrier conjugaison (trou = verbe). */
+export function generateEncrierItems(
   tenses: Tense[],
   count: number = 10,
   options?: { pronouns?: Pronoun[]; verbs?: VerbId[] },
-): VerbPotionItem[] {
-  const items: VerbPotionItem[] = [];
+): VerbEncrierItem[] {
+  const items: VerbEncrierItem[] = [];
   const allTemplates = flattenTemplates(TEMPLATE_INDEX, options?.verbs, options?.pronouns);
 
   if (allTemplates.length === 0) return [];
@@ -321,7 +321,7 @@ export function generatePotionItems(
 // TEMPLATES GN
 // ═══════════════════════════════════════════════════════════════════════════
 
-interface GnPotionTemplate {
+interface GnEncrierTemplate {
   /** Patron de phrase avec placeholders : %DET%, %ADJ%, %NOUN% */
   template: string;
   /** Quel élément est le trou */
@@ -329,7 +329,7 @@ interface GnPotionTemplate {
 }
 
 // Phrases à trous GN — vocabulaire adapté CE1 (5-8 mots)
-const GN_TEMPLATES: GnPotionTemplate[] = [
+const GN_TEMPLATES: GnEncrierTemplate[] = [
   // Trou = déterminant
   { template: '%DET% %NOUN% est joli.', gapTarget: 'determiner' },
   { template: 'Je vois %DET% %NOUN%.', gapTarget: 'determiner' },
@@ -349,7 +349,7 @@ const GN_TEMPLATES: GnPotionTemplate[] = [
   { template: 'Voilà %DET% %ADJ% %NOUN% !', gapTarget: 'noun' },
 ];
 
-export interface GnPotionOptions {
+export interface GnEncrierOptions {
   themes?: VocabularyTheme[];
   targetKinds?: Exclude<GapTarget, 'verb'>[];
 }
@@ -358,8 +358,8 @@ export interface GnPotionOptions {
 // GÉNÉRATEUR GN
 // ═══════════════════════════════════════════════════════════════════════════
 
-/** Génère des items Potion GN (trou = déterminant, adjectif ou nom). */
-export function generateGnPotionItems(count: number = 10, options?: GnPotionOptions): GnPotionItem[] {
+/** Génère des items Encrier GN (trou = déterminant, adjectif ou nom). */
+export function generateGnEncrierItems(count: number = 10, options?: GnEncrierOptions): GnEncrierItem[] {
   const allowedThemes = options?.themes;
   const allowedTargets = options?.targetKinds ?? ['determiner', 'adjective', 'noun'];
 
@@ -368,7 +368,7 @@ export function generateGnPotionItems(count: number = 10, options?: GnPotionOpti
 
   if (nouns.length === 0 || templates.length === 0) return [];
 
-  const items: GnPotionItem[] = [];
+  const items: GnEncrierItem[] = [];
   let attempts = 0;
 
   while (items.length < count && attempts < count * 10) {

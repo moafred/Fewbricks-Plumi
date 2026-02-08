@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { Book, Chapter } from '@plumi/shared';
-import { BOOKS, getChaptersForBook } from '@plumi/shared';
+import { ALL_BOOKS, getChaptersForBook } from '@plumi/shared';
 import { useChapterProgressStore } from '@/stores/chapter-progress';
 import NotebookButton from '@/components/ui/NotebookButton.vue';
 import ChapterCard from '@/components/game/ChapterCard.vue';
@@ -20,7 +20,7 @@ const emit = defineEmits<{
 
 const progressStore = useChapterProgressStore();
 
-const book = computed<Book | undefined>(() => BOOKS.find((b) => b.id === props.bookId));
+const book = computed<Book | undefined>(() => ALL_BOOKS.find((b) => b.id === props.bookId));
 const chapters = computed<Chapter[]>(() => getChaptersForBook(props.bookId));
 
 const colorAccentClasses: Record<string, string> = {

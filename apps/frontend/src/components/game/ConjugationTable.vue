@@ -39,15 +39,11 @@ const tenseLabels: Record<Tense, string> = {
       {{ infinitive }} {{ tenseLabels[tense] }}
     </h4>
 
-    <!-- Lignes pronom → forme -->
-    <div class="flex flex-col gap-2">
-      <div
-        v-for="form in conjugation.forms"
-        :key="form.pronoun"
-        class="flex items-center justify-between px-4 py-3 rounded-xl bg-sky-50/60 min-h-[52px]"
-      >
+    <!-- Lignes pronom → forme (grille alignée à gauche) -->
+    <div class="inline-grid grid-cols-[auto_auto] gap-x-4 gap-y-2">
+      <template v-for="form in conjugation.forms" :key="form.pronoun">
         <span
-          class="font-bold text-base md:text-lg"
+          class="font-bold text-base md:text-lg text-right"
           :class="pronounColors[form.pronoun] ?? 'text-stone-600'"
         >
           {{ form.pronoun }}
@@ -55,7 +51,7 @@ const tenseLabels: Record<Tense, string> = {
         <span class="font-learning text-lg md:text-xl text-stone-800 font-semibold">
           {{ form.form }}
         </span>
-      </div>
+      </template>
     </div>
   </div>
 </template>

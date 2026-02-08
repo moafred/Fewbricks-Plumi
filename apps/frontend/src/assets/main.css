@@ -91,6 +91,9 @@
   --color-stone-900: #343740;
   --color-stone-950: #22242a;
 
+  /* Fond de page — blanc cassé très léger */
+  --color-page: #FCFDFC;
+
   /* Fonts — 2 typos max : Lexend (UI) + Belle Allure GS (pédago) */
   --font-sans: 'Lexend', system-ui, sans-serif;
   --font-learning: 'Belle Allure GS', 'Arial', cursive;
@@ -161,65 +164,81 @@
 body {
   font-family: var(--font-sans);
   min-height: 100vh;
-  background-color: #fff;
+  @apply bg-page;
 }
 
-/* --- Biomes — Fonds atmosphériques clairs par livre --- */
+/* --- Thèmes visuels — Fonds atmosphériques clairs par livre --- */
 
-.biome-parchment {
+.theme-jardin {
   background:
-    radial-gradient(ellipse at 50% 30%, rgba(250,240,213,0.3) 0%, transparent 60%),
-    linear-gradient(180deg, #f5f0e3 0%, #ede7d9 50%, #f5f0e3 100%);
+    radial-gradient(ellipse at 40% 60%, rgba(227,193,111,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 65% 25%, rgba(245,168,152,0.08) 0%, transparent 40%),
+    linear-gradient(180deg, var(--color-gold-50) 0%, var(--color-gold-100) 35%, var(--color-coral-50) 65%, var(--color-gold-50) 100%);
 }
 
-.biome-home {
-  background:
-    radial-gradient(ellipse at 50% 30%, rgba(78,171,197,0.12) 0%, transparent 60%),
-    radial-gradient(ellipse at 50% 80%, rgba(143,217,182,0.1) 0%, transparent 50%),
-    linear-gradient(180deg, #eef8fa 0%, #f0f6f5 50%, #f7f8f9 100%);
-}
-
-.biome-jardin {
-  background:
-    radial-gradient(ellipse at 30% 70%, rgba(133,222,178,0.2) 0%, transparent 50%),
-    radial-gradient(ellipse at 70% 30%, rgba(79,196,142,0.12) 0%, transparent 40%),
-    linear-gradient(180deg, #f0faf5 0%, #d6f3e5 40%, #f0faf5 100%);
-}
-
-.biome-fondations {
+.theme-fondations {
   background:
     radial-gradient(ellipse at 40% 30%, rgba(143,177,233,0.2) 0%, transparent 50%),
     radial-gradient(ellipse at 60% 80%, rgba(99,108,126,0.08) 0%, transparent 40%),
-    linear-gradient(180deg, #f0f6fe 0%, #ddeafc 35%, #f7f8f9 100%);
+    linear-gradient(180deg, var(--color-sky-50) 0%, var(--color-sky-100) 35%, var(--color-stone-50) 100%);
 }
 
-.biome-clairiere {
+.theme-clairiere {
   background:
     radial-gradient(ellipse at 25% 60%, rgba(106,130,82,0.12) 0%, transparent 50%),
     radial-gradient(ellipse at 75% 40%, rgba(133,222,178,0.1) 0%, transparent 45%),
-    linear-gradient(180deg, #f4f7ef 0%, #e5ecda 40%, #f7f8f9 100%);
+    linear-gradient(180deg, var(--color-moss-50) 0%, var(--color-moss-100) 40%, var(--color-stone-50) 100%);
 }
 
-.biome-futur {
+.theme-futur {
   background:
     radial-gradient(ellipse at 50% 85%, rgba(227,193,111,0.2) 0%, transparent 50%),
     radial-gradient(ellipse at 30% 50%, rgba(212,166,74,0.1) 0%, transparent 50%),
-    linear-gradient(180deg, #fdf9ef 0%, #faf0d5 40%, #f7f8f9 100%);
+    linear-gradient(180deg, var(--color-gold-50) 0%, var(--color-gold-100) 40%, var(--color-stone-50) 100%);
 }
 
-.biome-brumes {
+.theme-brumes {
   background:
-    radial-gradient(ellipse at 40% 50%, rgba(143,177,233,0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 60% 70%, rgba(182,187,197,0.1) 0%, transparent 45%),
-    linear-gradient(180deg, #f0f6fe 0%, #edeef1 40%, #d8dbe0 70%, #f7f8f9 100%);
+    radial-gradient(ellipse at 40% 50%, rgba(245,168,152,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 70%, rgba(224,119,97,0.08) 0%, transparent 45%),
+    linear-gradient(180deg, var(--color-coral-50) 0%, var(--color-coral-100) 40%, var(--color-stone-50) 100%);
 }
 
-.biome-flux {
+.theme-flux {
   background:
     radial-gradient(ellipse at 20% 30%, rgba(227,193,111,0.12) 0%, transparent 40%),
     radial-gradient(ellipse at 80% 70%, rgba(133,222,178,0.1) 0%, transparent 40%),
     radial-gradient(ellipse at 50% 50%, rgba(143,177,233,0.12) 0%, transparent 50%),
-    linear-gradient(180deg, #f0f6fe 0%, #fdf9ef 30%, #f0faf5 55%, #f7f8f9 100%);
+    linear-gradient(180deg, var(--color-sky-50) 0%, var(--color-gold-50) 30%, var(--color-meadow-50) 55%, var(--color-stone-50) 100%);
+}
+
+.theme-atelier {
+  background:
+    radial-gradient(ellipse at 35% 65%, rgba(133,222,178,0.18) 0%, transparent 50%),
+    radial-gradient(ellipse at 65% 35%, rgba(79,196,142,0.1) 0%, transparent 40%),
+    linear-gradient(180deg, var(--color-meadow-50) 0%, var(--color-meadow-100) 45%, var(--color-meadow-50) 100%);
+}
+
+.theme-bibliotheque {
+  background:
+    radial-gradient(ellipse at 35% 40%, rgba(143,177,233,0.18) 0%, transparent 50%),
+    radial-gradient(ellipse at 65% 75%, rgba(90,143,212,0.08) 0%, transparent 40%),
+    linear-gradient(180deg, var(--color-sky-50) 0%, var(--color-sky-100) 45%, var(--color-sky-50) 100%);
+}
+
+.theme-arcanes {
+  background:
+    radial-gradient(ellipse at 55% 80%, rgba(227,193,111,0.18) 0%, transparent 50%),
+    radial-gradient(ellipse at 35% 45%, rgba(212,166,74,0.1) 0%, transparent 45%),
+    linear-gradient(180deg, var(--color-gold-50) 0%, var(--color-gold-200) 35%, var(--color-gold-50) 100%);
+}
+
+.theme-symphonie {
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(227,193,111,0.12) 0%, transparent 45%),
+    radial-gradient(ellipse at 30% 70%, rgba(245,168,152,0.1) 0%, transparent 45%),
+    radial-gradient(ellipse at 70% 60%, rgba(133,222,178,0.08) 0%, transparent 40%),
+    linear-gradient(180deg, var(--color-gold-50) 0%, var(--color-gold-100) 30%, var(--color-coral-50) 55%, var(--color-meadow-50) 75%, var(--color-gold-50) 100%);
 }
 
 /* --- Célébration bonne réponse --- */
@@ -293,15 +312,17 @@ body {
 /* --- Accessibilité — Désactivation animations continues --- */
 
 @media (prefers-reduced-motion: reduce) {
-  .biome-parchment,
-  .biome-home,
-  .biome-jardin,
-  .biome-fondations,
-  .biome-clairiere,
-  .biome-futur,
-  .biome-brumes,
-  .biome-flux {
-    background: linear-gradient(180deg, #eef8fa 0%, #edeef1 50%, #f7f8f9 100%);
+  .theme-jardin,
+  .theme-fondations,
+  .theme-clairiere,
+  .theme-futur,
+  .theme-brumes,
+  .theme-flux,
+  .theme-atelier,
+  .theme-bibliotheque,
+  .theme-arcanes,
+  .theme-symphonie {
+    background: linear-gradient(180deg, var(--color-sky-50) 0%, var(--color-stone-100) 50%, var(--color-stone-50) 100%);
   }
 
   *,

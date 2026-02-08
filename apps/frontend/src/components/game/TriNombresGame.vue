@@ -1,26 +1,22 @@
 <script setup lang="ts">
-import { ref, computed, watch, onUnmounted } from 'vue';
-import type { VerbId, Tense, Pronoun, AnswerResult } from '@plumi/shared';
-import { getInfinitive } from '@plumi/shared';
-import { useGameStore } from '@/stores/game';
+import { computed, watch, onUnmounted } from 'vue';
+import type { AnswerResult } from '@plumi/shared';
+import { useTriNombresStore } from '@/stores/tri-nombres';
 import { useKeyboardNavigation, useBackNavigation } from '@/composables';
 import CategoryButton from './CategoryButton.vue';
-import WordCard from './WordCard.vue';
+import type { CategoryButtonState } from './CategoryButton.vue';
 import ProgressStars from './ProgressStars.vue';
 import GameResult from './GameResult.vue';
 import KeyboardGuide from '@/components/ui/KeyboardGuide.vue';
 import KeyboardHintsBar from '@/components/ui/KeyboardHintsBar.vue';
-import TenseBadge from '@/components/ui/TenseBadge.vue';
-import type { CategoryButtonState } from './CategoryButton.vue';
+import NotebookCard from '@/components/ui/NotebookCard.vue';
 
 const props = withDefaults(defineProps<{
-  tense?: Tense;
   embedded?: boolean;
   count?: number;
-  pronouns?: Pronoun[];
-  verbs?: VerbId[];
+  numberRange?: [number, number];
+  categories?: string[];
 }>(), {
-  tense: 'present',
   embedded: false,
   count: 10,
 });
@@ -30,27 +26,22 @@ const emit = defineEmits<{
   'step-complete': [payload: { score: number; total: number; results: (AnswerResult | null)[] }];
 }>();
 
-const game = useGameStore();
+const game = useTriNombresStore();
 
-// Les deux choix possibles — dynamiques selon les verbes du chapitre
-const categoryChoices = ref<VerbId[]>(
-  props.verbs && props.verbs.length === 2 ? [...props.verbs] : ['etre', 'avoir'],
-);
+const categoryChoices = computed(() => game.currentCategories);
 const isChallenge = computed(() => game.phase === 'challenge');
 
 const { focusedIndex, resetFocus } = useKeyboardNavigation(
   categoryChoices,
-  (verbId) => game.submitAnswer(verbId),
+  (category) => game.submitAnswer(category),
   isChallenge,
 );
 
-// Reset focus quand on passe à un nouvel item
 watch(
   () => game.currentIndex,
   () => resetFocus(),
 );
 
-// Navigation retour vers l'accueil (désactivée en mode embedded, ChapterRunner gère)
 const canGoBack = computed(() => !props.embedded);
 useBackNavigation(() => emit('home'), canGoBack);
 
@@ -63,7 +54,6 @@ function clearResolutionTimer() {
   }
 }
 
-// Auto-advance after resolution phase
 watch(
   () => game.phase,
   (phase) => {
@@ -80,26 +70,23 @@ onUnmounted(() => {
   clearResolutionTimer();
 });
 
-function onTap(verbId: VerbId) {
-  game.submitAnswer(verbId);
+function onTap(category: string) {
+  game.submitAnswer(category);
 }
 
-function categoryState(verbId: VerbId): CategoryButtonState {
-  const { phase, lastResult, lastCorrectVerb } = game;
+function categoryState(category: string): CategoryButtonState {
+  const { phase, lastResult, lastCorrectCategory } = game;
 
   if (phase === 'discovery') return 'idle';
   if (phase === 'challenge') return 'waiting';
 
-  // response or resolution
   if (lastResult === 'correct') {
-    return verbId === lastCorrectVerb ? 'correct' : 'idle';
+    return category === lastCorrectCategory ? 'correct' : 'idle';
   }
-  // incorrect
-  if (verbId === lastCorrectVerb) return 'reveal';
+  if (category === lastCorrectCategory) return 'reveal';
   return 'incorrect';
 }
 
-// Emettre step-complete en mode embedded
 if (props.embedded) {
   watch(
     () => game.isFinished,
@@ -115,21 +102,21 @@ if (props.embedded) {
   );
 }
 
-game.startGame(props.tense, props.count, {
-  pronouns: props.pronouns,
-  verbs: props.verbs,
+game.startGame(props.count, {
+  numberRange: props.numberRange,
+  categories: props.categories,
 });
 </script>
 
 <template>
-  <div class="tri-verbes-game flex flex-col items-center justify-between min-h-screen px-4 py-6 gap-4">
+  <div class="tri-nombres-game flex flex-col items-center justify-between min-h-screen px-4 py-6 gap-4">
     <!-- Finished: show results -->
     <template v-if="game.isFinished && !embedded">
       <div class="flex-1 flex items-center justify-center w-full">
         <GameResult
           :score="game.score"
           :total="game.items.length"
-          @replay="game.startGame(game.currentTense)"
+          @replay="game.startGame()"
           @home="emit('home')"
         />
       </div>
@@ -137,9 +124,8 @@ game.startGame(props.tense, props.count, {
 
     <!-- Playing -->
     <template v-else>
-      <!-- Header: tense badge + progress stars -->
+      <!-- Header: progress stars -->
       <div class="w-full max-w-md flex flex-col gap-2">
-        <TenseBadge :tense="game.currentTense" />
         <ProgressStars
           :results="game.results"
           :current="game.currentIndex"
@@ -148,42 +134,40 @@ game.startGame(props.tense, props.count, {
 
       <!-- Instruction -->
       <p class="text-lg md:text-xl text-stone-600 text-center">
-        <template v-if="game.phase === 'discovery'">Le mot apparaît...</template>
+        <template v-if="game.phase === 'discovery'">Un nombre apparaît...</template>
         <template v-else-if="game.phase === 'challenge'">Dans quelle catégorie ?</template>
         <template v-else-if="game.lastResult === 'correct'">Bien joué !</template>
         <template v-else>
-          C'est <strong class="text-meadow-600">{{ game.currentItem?.infinitive }}</strong>
+          C'est <strong class="text-meadow-600">{{ game.lastCorrectCategory }}</strong>
         </template>
       </p>
 
-      <!-- Word card -->
+      <!-- Number card -->
       <div class="flex-1 flex items-center justify-center w-full">
-        <WordCard
-          v-if="game.currentItem"
-          :pronoun="game.currentItem.pronoun"
-          :form="game.currentItem.form"
-          :phase="game.phase"
-        />
+        <NotebookCard v-if="game.currentItem" class="px-12 py-8">
+          <span class="text-4xl md:text-6xl font-bold text-sky-600">
+            {{ game.currentItem.number }}
+          </span>
+        </NotebookCard>
       </div>
 
-      <!-- Sorting hats -->
+      <!-- Sorting hats (catégories) -->
       <div class="flex flex-col items-center gap-6 pb-8">
         <div class="flex items-center justify-center gap-10 md:gap-16">
           <CategoryButton
-            v-for="(verbId, idx) in categoryChoices"
-            :key="verbId"
-            :verb-id="verbId"
-            :label="getInfinitive(verbId)"
-            :state="categoryState(verbId)"
+            v-for="(category, idx) in categoryChoices"
+            :key="category"
+            :verb-id="category as any"
+            :label="category"
+            :state="categoryState(category)"
             :focused="focusedIndex === idx && game.phase === 'challenge'"
-            @tap="onTap"
+            @tap="onTap(category)"
           />
         </div>
 
-        <!-- Keyboard Hints -->
         <KeyboardHintsBar v-if="game.phase === 'challenge'">
-           <KeyboardGuide mode="cluster" label="choisir" />
-           <KeyboardGuide mode="single" key-name="espace" label="valider" />
+          <KeyboardGuide mode="cluster" label="choisir" />
+          <KeyboardGuide mode="single" key-name="espace" label="valider" />
         </KeyboardHintsBar>
       </div>
     </template>

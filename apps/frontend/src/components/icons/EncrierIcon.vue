@@ -10,36 +10,39 @@ withDefaults(defineProps<{ size?: number }>(), { size: 24 });
     fill="none"
     aria-hidden="true"
   >
-    <!-- Chapeau de tri : pointe et large bord -->
+    <!-- Encrier : pot d'encre trapézoïdal -->
     <path
-      d="M12 2L8 14H4L3 18C3 18 7 20 12 20C17 20 21 18 21 18L20 14H16L12 2Z"
+      d="M6 10H18L17 20H7L6 10Z"
       fill="currentColor"
-      opacity="0.2"
+      opacity="0.15"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linejoin="round"
     />
+    <!-- Bord supérieur évasé -->
     <path
-      d="M12 2L8 14H4L3 18C3 18 7 20 12 20C17 20 21 18 21 18L20 14H16L12 2Z"
+      d="M5 10C5 9 6 8 8 8H16C18 8 19 9 19 10"
       stroke="currentColor"
       stroke-width="1.5"
       stroke-linecap="round"
       stroke-linejoin="round"
     />
+    <!-- Surface d'encre -->
     <path
-      d="M3 18C3 18 7 20 12 20C17 20 21 18 21 18"
+      d="M8 12H16"
+      stroke="currentColor"
+      stroke-width="1"
+      stroke-linecap="round"
+    />
+    <!-- Plume posée en travers -->
+    <line
+      x1="14"
+      y1="4"
+      x2="10"
+      y2="9"
       stroke="currentColor"
       stroke-width="1.5"
       stroke-linecap="round"
-    />
-    <!-- Hat band -->
-    <path
-      d="M8 14H16"
-      stroke="currentColor"
-      stroke-width="1.5"
-      stroke-linecap="round"
-    />
-    <!-- Star on hat -->
-    <path
-      d="M12 7L12.5 8.5L14 9L12.5 9.5L12 11L11.5 9.5L10 9L11.5 8.5L12 7Z"
-      fill="currentColor"
     />
   </svg>
 </template>

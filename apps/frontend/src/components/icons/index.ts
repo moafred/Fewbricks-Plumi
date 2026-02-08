@@ -1,10 +1,10 @@
+export { default as ArdoiseIcon } from './ArdoiseIcon.vue';
 export { default as BookIcon } from './BookIcon.vue';
 export { default as BridgeIcon } from './BridgeIcon.vue';
+export { default as CategoryIcon } from './CategoryIcon.vue';
 export { default as CrossIcon } from './CrossIcon.vue';
-export { default as GrimoireIcon } from './GrimoireIcon.vue';
-export { default as HatIcon } from './HatIcon.vue';
+export { default as EncrierIcon } from './EncrierIcon.vue';
 export { default as HomeIcon } from './HomeIcon.vue';
-export { default as PotionIcon } from './PotionIcon.vue';
 export { default as SparkleIcon } from './SparkleIcon.vue';
 export { default as StarEmptyIcon } from './StarEmptyIcon.vue';
 export { default as StarFilledIcon } from './StarFilledIcon.vue';

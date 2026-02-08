@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, computed, watch, ref } from 'vue';
-import { usePotionGnStore } from '@/stores/potion-gn';
-import type { AnswerResult } from '@plumi/shared';
+import { useEncrierCalculStore } from '@/stores/encrier-calcul';
+import type { AnswerResult, MathOperation } from '@plumi/shared';
 import { useKeyboardNavigation, useBackNavigation } from '@/composables';
 import SentenceGap from '@/components/game/SentenceGap.vue';
 import GameHeader from '@/components/game/GameHeader.vue';
@@ -19,6 +19,8 @@ import { storeToRefs } from 'pinia';
 const props = withDefaults(defineProps<{
   embedded?: boolean;
   count?: number;
+  numberRange?: [number, number];
+  operations?: MathOperation[];
 }>(), {
   embedded: false,
   count: 10,
@@ -29,7 +31,7 @@ const emit = defineEmits<{
   'step-complete': [payload: { score: number; total: number; results: (AnswerResult | null)[] }];
 }>();
 
-const store = usePotionGnStore();
+const store = useEncrierCalculStore();
 const {
   currentItem,
   phase,
@@ -37,10 +39,9 @@ const {
   progress,
   lastResult,
   selectedChoice,
-  isFinished
+  isFinished,
 } = storeToRefs(store);
 
-// Keyboard Navigation
 const choices = computed(() => currentItem.value?.choices ?? []);
 const isChallenge = computed(() => phase.value === 'challenge');
 
@@ -48,15 +49,14 @@ const { focusedIndex, resetFocus } = useKeyboardNavigation(
   choices,
   (choice) => store.submitAnswer(choice),
   isChallenge,
-  2 // Grid cols
+  2,
 );
 
 watch(
   () => store.currentIndex,
-  () => resetFocus()
+  () => resetFocus(),
 );
 
-// Back Navigation
 const showQuitConfirmation = ref(false);
 
 function handleBack() {
@@ -69,7 +69,6 @@ function handleBack() {
 
 useBackNavigation(handleBack, computed(() => !props.embedded && !showQuitConfirmation.value));
 
-// Emettre step-complete en mode embedded
 if (props.embedded) {
   watch(
     () => store.isFinished,
@@ -86,7 +85,10 @@ if (props.embedded) {
 }
 
 onMounted(() => {
-  store.startGame(props.count);
+  store.startGame(props.count, {
+    operations: props.operations,
+    numberRange: props.numberRange,
+  });
 });
 
 onUnmounted(() => {
@@ -97,20 +99,18 @@ function choiceState(choice: string, index: number): ChoiceState {
   if (phase.value === 'challenge' || phase.value === 'discovery') {
     return (phase.value === 'challenge' && index === focusedIndex.value) ? 'focused' : 'idle';
   }
-  if (choice === currentItem.value?.correctForm) return 'correct';
+  if (choice === currentItem.value?.correctAnswer) return 'correct';
   if (choice === selectedChoice.value) return 'incorrect';
   return 'dimmed';
 }
 
-// Mot à afficher dans le trou après réponse
 const gapWord = computed(() => {
   if (phase.value === 'response' || phase.value === 'resolution') {
-    return currentItem.value?.correctForm;
+    return currentItem.value?.correctAnswer;
   }
   return undefined;
 });
 
-// Toujours correct quand on affiche (on montre la bonne réponse)
 const isGapCorrect = computed(() => !!gapWord.value);
 </script>
 
@@ -119,20 +119,19 @@ const isGapCorrect = computed(() => !!gapWord.value);
 
     <GameHeader
       v-if="!embedded"
-      label="Potion GN"
+      label="Calcul"
       :current="progress.current + 1"
       :total="progress.total"
-      color-class="text-moss-600"
+      color-class="text-gold-400"
       @back="handleBack"
     />
 
     <!-- Finished State -->
     <GameFinished
       v-if="isFinished && !embedded"
-      title="Potion GN Complétée !"
+      title="Calcul Terminé !"
       :score="score"
       :total="progress.total"
-      title-color="text-moss-600"
       @home="$emit('home')"
       @replay="store.startGame()"
     />
@@ -140,18 +139,13 @@ const isGapCorrect = computed(() => !!gapWord.value);
     <!-- Game Area -->
     <template v-else-if="currentItem">
 
-      <ChallengeCard hint="Complète la phrase !">
+      <ChallengeCard hint="Complète le calcul !">
         <SentenceGap
           :sentence="currentItem.sentence"
           :filled-word="gapWord"
           :is-correct="isGapCorrect"
           :is-wrong="false"
         />
-        <template #footer>
-          <div class="text-moss-600 font-sans text-sm">
-            ({{ currentItem.hint }})
-          </div>
-        </template>
       </ChallengeCard>
 
       <!-- Choices -->
@@ -169,7 +163,7 @@ const isGapCorrect = computed(() => !!gapWord.value);
 
         <KeyboardHintsBar v-if="phase === 'challenge'">
           <KeyboardGuide mode="cluster" label="choisir" />
-          <KeyboardGuide mode="single" key-name="espace" label="verser" />
+          <KeyboardGuide mode="single" key-name="espace" label="valider" />
         </KeyboardHintsBar>
       </div>
 
@@ -182,7 +176,7 @@ const isGapCorrect = computed(() => !!gapWord.value);
 
     <ConfirmModal
       v-if="showQuitConfirmation && !embedded"
-      title="Quitter la Potion GN ?"
+      title="Quitter le calcul ?"
       message="Si tu sors maintenant, tu devras recommencer."
       confirm-label="Quitter"
       cancel-label="Continuer"

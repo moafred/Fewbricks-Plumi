@@ -1,15 +1,15 @@
 import { describe, it, expect } from 'vitest';
-import { generateGrimoireItems } from './grimoire.js';
+import { generateArdoiseItems } from './ardoise.js';
 
-describe('generateGrimoireItems', () => {
+describe('generateArdoiseItems', () => {
   it('generates items for all pronouns by default', () => {
-    const items = generateGrimoireItems(12, { tense: 'present' });
+    const items = generateArdoiseItems(12, { tense: 'present' });
     const pronouns = new Set(items.map((i) => i.pronoun));
     expect(pronouns.size).toBeGreaterThan(1);
   });
 
   it('filters by pronouns when specified', () => {
-    const items = generateGrimoireItems(6, {
+    const items = generateArdoiseItems(6, {
       tense: 'present',
       pronouns: ['je', 'tu'],
     });
@@ -20,7 +20,7 @@ describe('generateGrimoireItems', () => {
   });
 
   it('filters by verbs when specified', () => {
-    const items = generateGrimoireItems(6, {
+    const items = generateArdoiseItems(6, {
       tense: 'present',
       verbs: ['etre'],
     });
@@ -31,7 +31,7 @@ describe('generateGrimoireItems', () => {
   });
 
   it('combines pronoun and verb filters', () => {
-    const items = generateGrimoireItems(4, {
+    const items = generateArdoiseItems(4, {
       tense: 'present',
       verbs: ['avoir'],
       pronouns: ['nous', 'vous'],

@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import { ref, computed, watch, onUnmounted } from 'vue';
-import type { VerbId, Tense, Pronoun, AnswerResult } from '@plumi/shared';
-import { getInfinitive } from '@plumi/shared';
-import { useGameStore } from '@/stores/game';
+import { computed, watch, onUnmounted } from 'vue';
+import type { Tense, VerbId, Pronoun, AnswerResult } from '@plumi/shared';
+import { useArdoiseStore } from '@/stores/ardoise';
 import { useKeyboardNavigation, useBackNavigation } from '@/composables';
-import CategoryButton from './CategoryButton.vue';
-import WordCard from './WordCard.vue';
-import ProgressStars from './ProgressStars.vue';
-import GameResult from './GameResult.vue';
+import FormChoice from './FormChoice.vue';
+import type { FormChoiceState } from './FormChoice.vue';
 import KeyboardGuide from '@/components/ui/KeyboardGuide.vue';
 import KeyboardHintsBar from '@/components/ui/KeyboardHintsBar.vue';
 import TenseBadge from '@/components/ui/TenseBadge.vue';
-import type { CategoryButtonState } from './CategoryButton.vue';
+import ChoiceGrid from './ChoiceGrid.vue';
+import WordCard from './WordCard.vue';
+import ProgressStars from './ProgressStars.vue';
+import GameResult from './GameResult.vue';
 
 const props = withDefaults(defineProps<{
   tense?: Tense;
   embedded?: boolean;
   count?: number;
-  pronouns?: Pronoun[];
   verbs?: VerbId[];
+  pronouns?: Pronoun[];
 }>(), {
   tense: 'present',
   embedded: false,
@@ -30,18 +30,17 @@ const emit = defineEmits<{
   'step-complete': [payload: { score: number; total: number; results: (AnswerResult | null)[] }];
 }>();
 
-const game = useGameStore();
+const game = useArdoiseStore();
 
-// Les deux choix possibles — dynamiques selon les verbes du chapitre
-const categoryChoices = ref<VerbId[]>(
-  props.verbs && props.verbs.length === 2 ? [...props.verbs] : ['etre', 'avoir'],
-);
+// Navigation clavier (grille 2x2)
+const choices = computed(() => game.currentItem?.choices ?? []);
 const isChallenge = computed(() => game.phase === 'challenge');
 
 const { focusedIndex, resetFocus } = useKeyboardNavigation(
-  categoryChoices,
-  (verbId) => game.submitAnswer(verbId),
+  choices,
+  (choice) => game.submitAnswer(choice),
   isChallenge,
+  2, // 2 colonnes pour la grille 2×2
 );
 
 // Reset focus quand on passe à un nouvel item
@@ -63,7 +62,6 @@ function clearResolutionTimer() {
   }
 }
 
-// Auto-advance after resolution phase
 watch(
   () => game.phase,
   (phase) => {
@@ -80,23 +78,24 @@ onUnmounted(() => {
   clearResolutionTimer();
 });
 
-function onTap(verbId: VerbId) {
-  game.submitAnswer(verbId);
+function onTap(choice: string) {
+  game.submitAnswer(choice);
 }
 
-function categoryState(verbId: VerbId): CategoryButtonState {
-  const { phase, lastResult, lastCorrectVerb } = game;
+function choiceState(choice: string): FormChoiceState {
+  const { phase, lastResult, selectedChoice, correctForm } = game;
 
   if (phase === 'discovery') return 'idle';
   if (phase === 'challenge') return 'waiting';
 
   // response or resolution
   if (lastResult === 'correct') {
-    return verbId === lastCorrectVerb ? 'correct' : 'idle';
+    return choice === selectedChoice ? 'correct' : 'idle';
   }
   // incorrect
-  if (verbId === lastCorrectVerb) return 'reveal';
-  return 'incorrect';
+  if (choice === correctForm) return 'reveal';
+  if (choice === selectedChoice) return 'incorrect';
+  return 'idle';
 }
 
 // Emettre step-complete en mode embedded
@@ -116,13 +115,13 @@ if (props.embedded) {
 }
 
 game.startGame(props.tense, props.count, {
-  pronouns: props.pronouns,
   verbs: props.verbs,
+  pronouns: props.pronouns,
 });
 </script>
 
 <template>
-  <div class="tri-verbes-game flex flex-col items-center justify-between min-h-screen px-4 py-6 gap-4">
+  <div class="ardoise-game flex flex-col items-center justify-between min-h-screen px-4 py-6 gap-4">
     <!-- Finished: show results -->
     <template v-if="game.isFinished && !embedded">
       <div class="flex-1 flex items-center justify-center w-full">
@@ -147,38 +146,40 @@ game.startGame(props.tense, props.count, {
       </div>
 
       <!-- Instruction -->
-      <p class="text-lg md:text-xl text-stone-600 text-center">
-        <template v-if="game.phase === 'discovery'">Le mot apparaît...</template>
-        <template v-else-if="game.phase === 'challenge'">Dans quelle catégorie ?</template>
+      <p class="text-xl md:text-2xl font-bold text-stone-700 text-center drop-shadow-sm">
+        <template v-if="game.phase === 'discovery'">La formule apparaît...</template>
+        <template v-else-if="game.phase === 'challenge'">Quelle est la bonne formule ?</template>
         <template v-else-if="game.lastResult === 'correct'">Bien joué !</template>
         <template v-else>
-          C'est <strong class="text-meadow-600">{{ game.currentItem?.infinitive }}</strong>
+          C'était <strong class="text-meadow-600">{{ game.correctForm }}</strong>
         </template>
       </p>
 
-      <!-- Word card -->
-      <div class="flex-1 flex items-center justify-center w-full">
-        <WordCard
-          v-if="game.currentItem"
-          :pronoun="game.currentItem.pronoun"
-          :form="game.currentItem.form"
-          :phase="game.phase"
-        />
-      </div>
-
-      <!-- Sorting hats -->
-      <div class="flex flex-col items-center gap-6 pb-8">
-        <div class="flex items-center justify-center gap-10 md:gap-16">
-          <CategoryButton
-            v-for="(verbId, idx) in categoryChoices"
-            :key="verbId"
-            :verb-id="verbId"
-            :label="getInfinitive(verbId)"
-            :state="categoryState(verbId)"
-            :focused="focusedIndex === idx && game.phase === 'challenge'"
-            @tap="onTap"
+      <!-- Prompt: pronoun → infinitive -->
+      <div class="flex-1 flex items-center justify-center w-full py-12">
+        <div class="w-full max-w-2xl px-4 flex justify-center">
+          <WordCard
+            v-if="game.currentItem"
+            :pronoun="game.currentItem.pronoun"
+            :form="game.currentItem.infinitive"
+            :phase="game.phase"
+            separator="→"
           />
         </div>
+      </div>
+
+      <!-- 2×2 grid of choices -->
+      <div class="flex flex-col items-center gap-8 pb-12 w-full">
+        <ChoiceGrid max-width="2xl">
+          <FormChoice
+            v-for="(choice, index) in game.currentItem?.choices"
+            :key="choice"
+            :label="choice"
+            :state="choiceState(choice)"
+            :focused="focusedIndex === index && game.phase === 'challenge'"
+            @tap="onTap"
+          />
+        </ChoiceGrid>
 
         <!-- Keyboard Hints -->
         <KeyboardHintsBar v-if="game.phase === 'challenge'">

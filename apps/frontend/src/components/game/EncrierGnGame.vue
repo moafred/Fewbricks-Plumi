@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, computed, watch, ref } from 'vue';
-import { usePotionStore } from '@/stores/potion';
-import type { Tense, Pronoun, AnswerResult, VerbId } from '@plumi/shared';
+import { useEncrierGnStore } from '@/stores/encrier-gn';
+import type { AnswerResult } from '@plumi/shared';
 import { useKeyboardNavigation, useBackNavigation } from '@/composables';
 import SentenceGap from '@/components/game/SentenceGap.vue';
 import GameHeader from '@/components/game/GameHeader.vue';
@@ -16,13 +16,9 @@ import KeyboardHintsBar from '@/components/ui/KeyboardHintsBar.vue';
 import ConfirmModal from '@/components/ui/ConfirmModal.vue';
 import { storeToRefs } from 'pinia';
 
-// Props
 const props = withDefaults(defineProps<{
-  tense: Tense | Tense[];
   embedded?: boolean;
   count?: number;
-  pronouns?: Pronoun[];
-  verbs?: VerbId[];
 }>(), {
   embedded: false,
   count: 10,
@@ -33,7 +29,7 @@ const emit = defineEmits<{
   'step-complete': [payload: { score: number; total: number; results: (AnswerResult | null)[] }];
 }>();
 
-const store = usePotionStore();
+const store = useEncrierGnStore();
 const {
   currentItem,
   phase,
@@ -59,11 +55,6 @@ watch(
   () => store.currentIndex,
   () => resetFocus()
 );
-
-// Handle tense prop: can be single or array
-const tenses = computed(() => {
-  return Array.isArray(props.tense) ? props.tense : [props.tense];
-});
 
 // Back Navigation
 const showQuitConfirmation = ref(false);
@@ -95,7 +86,7 @@ if (props.embedded) {
 }
 
 onMounted(() => {
-  store.startGame(tenses.value, props.count, { pronouns: props.pronouns, verbs: props.verbs });
+  store.startGame(props.count);
 });
 
 onUnmounted(() => {
@@ -111,7 +102,7 @@ function choiceState(choice: string, index: number): ChoiceState {
   return 'dimmed';
 }
 
-// Determine what valid word to show in the gap
+// Mot à afficher dans le trou après réponse
 const gapWord = computed(() => {
   if (phase.value === 'response' || phase.value === 'resolution') {
     return currentItem.value?.correctForm;
@@ -119,10 +110,8 @@ const gapWord = computed(() => {
   return undefined;
 });
 
-// Is the gap word effectively "correct" logic for styling?
-// Always true if we show it (since we only show the correct answer in the gap per spec)
+// Toujours correct quand on affiche (on montre la bonne réponse)
 const isGapCorrect = computed(() => !!gapWord.value);
-
 </script>
 
 <template>
@@ -130,27 +119,28 @@ const isGapCorrect = computed(() => !!gapWord.value);
 
     <GameHeader
       v-if="!embedded"
-      label="Potion"
+      label="Encrier GN"
       :current="progress.current + 1"
       :total="progress.total"
-      color-class="text-gold-400"
+      color-class="text-moss-600"
       @back="handleBack"
     />
 
     <!-- Finished State -->
     <GameFinished
       v-if="isFinished && !embedded"
-      title="Potion Complétée !"
+      title="Encrier GN Complétée !"
       :score="score"
       :total="progress.total"
+      title-color="text-moss-600"
       @home="$emit('home')"
-      @replay="store.startGame(tenses)"
+      @replay="store.startGame()"
     />
 
     <!-- Game Area -->
     <template v-else-if="currentItem">
 
-      <ChallengeCard hint="Complète la formule !">
+      <ChallengeCard hint="Complète la phrase !">
         <SentenceGap
           :sentence="currentItem.sentence"
           :filled-word="gapWord"
@@ -158,8 +148,8 @@ const isGapCorrect = computed(() => !!gapWord.value);
           :is-wrong="false"
         />
         <template #footer>
-          <div class="text-sky-400 font-sans text-sm">
-            ({{ currentItem.infinitive }})
+          <div class="text-moss-600 font-sans text-sm">
+            ({{ currentItem.hint }})
           </div>
         </template>
       </ChallengeCard>
@@ -192,7 +182,7 @@ const isGapCorrect = computed(() => !!gapWord.value);
 
     <ConfirmModal
       v-if="showQuitConfirmation && !embedded"
-      title="Quitter la Potion ?"
+      title="Quitter la Encrier GN ?"
       message="Si tu sors maintenant, tu devras recommencer."
       confirm-label="Quitter"
       cancel-label="Continuer"
