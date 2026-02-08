@@ -161,6 +161,7 @@
 body {
   font-family: var(--font-sans);
   min-height: 100vh;
+  background-color: #fff;
 }
 
 /* --- Biomes — Fonds atmosphériques clairs par livre --- */
@@ -173,9 +174,9 @@ body {
 
 .biome-home {
   background:
-    radial-gradient(ellipse at 50% 30%, rgba(143,177,233,0.15) 0%, transparent 60%),
-    radial-gradient(ellipse at 50% 80%, rgba(227,193,111,0.1) 0%, transparent 50%),
-    linear-gradient(180deg, #f0f6fe 0%, #edeef1 50%, #f7f8f9 100%);
+    radial-gradient(ellipse at 50% 30%, rgba(78,171,197,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 80%, rgba(143,217,182,0.1) 0%, transparent 50%),
+    linear-gradient(180deg, #eef8fa 0%, #f0f6f5 50%, #f7f8f9 100%);
 }
 
 .biome-jardin {
@@ -300,7 +301,7 @@ body {
   .biome-futur,
   .biome-brumes,
   .biome-flux {
-    background: linear-gradient(180deg, #f0f6fe 0%, #edeef1 50%, #f7f8f9 100%);
+    background: linear-gradient(180deg, #eef8fa 0%, #edeef1 50%, #f7f8f9 100%);
   }
 
   *,

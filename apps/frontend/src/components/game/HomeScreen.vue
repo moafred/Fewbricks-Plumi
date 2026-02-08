@@ -2,8 +2,6 @@
 import { computed } from 'vue';
 import { BOOKS, getChaptersForBook } from '@plumi/shared';
 import { useChapterProgressStore } from '@/stores/chapter-progress';
-import PlumiMascot from '@/components/game/PlumiMascot.vue';
-import PlumiVariants from '@/components/game/PlumiVariants.vue';
 import SubjectCard from '@/components/game/SubjectCard.vue';
 import { BookIcon } from '@/components/icons';
 
@@ -38,15 +36,13 @@ const displayStars = computed(() => {
 <template>
   <div class="home-screen flex flex-col min-h-screen p-6 gap-8">
     <!-- Header — Logo Plumi -->
-    <header class="flex items-center gap-3 pt-4">
-      <PlumiMascot state="idle" size="sm" />
-      <h1 class="text-4xl font-bold text-sky-600">
-        Plumi
-      </h1>
+    <header class="flex justify-center pt-4">
+      <img
+        src="/plumi-landing.png"
+        alt="Plumi"
+        class="h-40 w-auto animate-float"
+      />
     </header>
-
-    <!-- Preview des variantes Plumi (temporaire) -->
-    <PlumiVariants />
 
     <!-- Grille des matieres -->
     <main class="flex-1 flex items-center justify-center px-2">

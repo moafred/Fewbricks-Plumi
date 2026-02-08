@@ -56,13 +56,13 @@ const animationClass = computed(() => {
 const glowClass = computed(() => {
   switch (props.state) {
     case 'challenge':
-      return 'drop-shadow-[0_0_30px_rgba(143,177,233,0.5)]';
+      return 'drop-shadow-[0_0_30px_rgba(78,171,197,0.5)]';
     case 'celebration':
-      return 'drop-shadow-[0_0_40px_rgba(143,177,233,0.7)]';
+      return 'drop-shadow-[0_0_40px_rgba(78,171,197,0.7)]';
     case 'encouragement':
       return 'drop-shadow-[0_0_25px_rgba(224,119,97,0.5)]';
     default:
-      return 'drop-shadow-[0_0_30px_rgba(143,177,233,0.4)]';
+      return 'drop-shadow-[0_0_30px_rgba(78,171,197,0.4)]';
   }
 });
 </script>
@@ -80,7 +80,7 @@ const glowClass = computed(() => {
       <path
         d="M 100 20 Q 120 40 130 60 Q 140 80 135 100 Q 130 120 120 140 Q 110 160 100 180 L 100 20 Z"
         fill="url(#plumeGradient)"
-        stroke="#e3c16f"
+        stroke="#5bbfad"
         stroke-width="2"
       />
       <!-- Tige -->
@@ -89,32 +89,32 @@ const glowClass = computed(() => {
         y1="20"
         x2="100"
         y2="180"
-        stroke="#8e5e0e"
+        stroke="#2e5a6e"
         stroke-width="3"
         stroke-linecap="round"
       />
       <!-- Barbes de la plume -->
       <path
         d="M 100 40 Q 115 50 120 70"
-        stroke="#e3c16f"
+        stroke="#5bbfad"
         stroke-width="1.5"
         fill="none"
       />
       <path
         d="M 100 60 Q 110 70 115 90"
-        stroke="#e3c16f"
+        stroke="#5bbfad"
         stroke-width="1.5"
         fill="none"
       />
       <path
         d="M 100 80 Q 108 88 110 110"
-        stroke="#e3c16f"
+        stroke="#5bbfad"
         stroke-width="1.5"
         fill="none"
       />
       <!-- Particules lumineuses (pour états challenge/celebration) -->
       <template v-if="state === 'challenge' || state === 'celebration'">
-        <circle cx="80" cy="50" r="3" fill="#e3c16f" opacity="0.8">
+        <circle cx="80" cy="50" r="3" fill="#6dd8c0" opacity="0.8">
           <animate
             attributeName="opacity"
             values="0.8;0.2;0.8"
@@ -122,7 +122,7 @@ const glowClass = computed(() => {
             repeatCount="indefinite"
           />
         </circle>
-        <circle cx="120" cy="60" r="2" fill="#d4a64a" opacity="0.7">
+        <circle cx="120" cy="60" r="2" fill="#4eabc5" opacity="0.7">
           <animate
             attributeName="opacity"
             values="0.7;0.1;0.7"
@@ -130,7 +130,7 @@ const glowClass = computed(() => {
             repeatCount="indefinite"
           />
         </circle>
-        <circle cx="90" cy="80" r="2.5" fill="#e3c16f" opacity="0.6">
+        <circle cx="90" cy="80" r="2.5" fill="#6dd8c0" opacity="0.6">
           <animate
             attributeName="opacity"
             values="0.6;0.2;0.6"
@@ -139,12 +139,12 @@ const glowClass = computed(() => {
           />
         </circle>
       </template>
-      <!-- Gradient pour la plume -->
+      <!-- Gradient pour la plume — turquoise vers menthe (logo Plumi) -->
       <defs>
-        <linearGradient id="plumeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:#faf0d5;stop-opacity:1" />
-          <stop offset="50%" style="stop-color:#e3c16f;stop-opacity:1" />
-          <stop offset="100%" style="stop-color:#d4a64a;stop-opacity:1" />
+        <linearGradient id="plumeGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:#4eabc5;stop-opacity:1" />
+          <stop offset="50%" style="stop-color:#5bbfad;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#8fd9b6;stop-opacity:1" />
         </linearGradient>
       </defs>
     </svg>
