@@ -24,6 +24,14 @@ function formatFraction(numerator: number, denominator: number): string {
 }
 
 /**
+ * Dénominateurs de secours pour générer des distracteurs quand le pool
+ * du chapitre est trop petit (ex: fractionDenominators: [2]).
+ * Pédagogiquement pertinent : montrer 1/3 comme distracteur de 1/2
+ * force l'enfant à distinguer les dénominateurs.
+ */
+const FALLBACK_DENOMINATORS = [2, 3, 4, 5, 6];
+
+/**
  * Génère des fractions distractrices plausibles.
  * Erreurs fréquentes : même dénominateur ±1, numérateur inversé,
  * ou fraction avec un dénominateur différent.
@@ -57,8 +65,9 @@ function generateFractionDistractors(
     candidates.add(formatFraction(denominator - numerator, denominator));
   }
 
-  // Même numérateur, dénominateur différent
-  for (const d of allDenominators) {
+  // Même numérateur, dénominateur différent (pool du chapitre + fallback)
+  const expandedDenominators = new Set([...allDenominators, ...FALLBACK_DENOMINATORS]);
+  for (const d of expandedDenominators) {
     if (d !== denominator && numerator <= d) {
       candidates.add(formatFraction(numerator, d));
     }

@@ -55,5 +55,9 @@ postgres_data/
 # Production environment
 .env.production
 
+# Mobile build artifacts
+*.apk
+*.ipa
+
 # Docker
 docker-compose.override.yml
