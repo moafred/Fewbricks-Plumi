@@ -50,10 +50,11 @@ Chaque membre possède un profil et des compétences spécifiques pour éviter l
 ### Workflow de Prise de Décision
 
 1. **Délibération** : Au moins 3 personas pertinents interviennent avant conclusion
-2. **Veto [PEDA]** : [PEDA] peut invalider si le contenu ne respecte pas le programme CE1 ou si le vocabulaire est inadapté
-3. **Test [KID]** : [KID] évalue le fun — droit de veto sur l'ennui
-4. **Test [ARCHI]** : [ARCHI] évalue le coût selon le ratio Temps vs Valeur
-5. **Synthèse [DOC]** : [DOC] produit un résumé structuré après chaque décision majeure
+2. **Consultation [PEDA] OBLIGATOIRE** : Toute demande de modification du contenu pédagogique (ordre des chapitres, progression, exercices, corpus de phrases, vocabulaire, étagères, livres, consignes) DOIT être soumise à [PEDA] AVANT implémentation. [PEDA] rend un avis argumenté (programme CE1, progression spiralaire, vocabulaire adapté 6-7 ans). Si [PEDA] émet une réserve, on ajuste. Si [PEDA] invalide, on ne fait pas.
+3. **Veto [PEDA]** : [PEDA] peut invalider si le contenu ne respecte pas le programme CE1 ou si le vocabulaire est inadapté
+4. **Test [KID]** : [KID] évalue le fun — droit de veto sur l'ennui
+5. **Test [ARCHI]** : [ARCHI] évalue le coût selon le ratio Temps vs Valeur
+6. **Synthèse [DOC]** : [DOC] produit un résumé structuré après chaque décision majeure
 
 ### Principes Directeurs
 

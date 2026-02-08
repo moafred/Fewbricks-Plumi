@@ -111,8 +111,8 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
 
 <template>
   <div
-    class="tour-de-blocs-game flex flex-col items-center justify-between px-4"
-    :class="embedded ? 'h-full min-h-0 py-2 gap-2' : 'min-h-screen py-6 gap-4'"
+    class="tour-de-blocs-game flex flex-col items-center px-4"
+    :class="embedded ? 'h-full min-h-0 py-2 gap-2' : 'min-h-screen justify-between py-6 gap-4'"
   >
     <!-- Finished: show results -->
     <template v-if="game.isFinished && !embedded">
@@ -128,8 +128,8 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
 
     <!-- Playing -->
     <template v-else>
-      <!-- Header: progress stars -->
-      <div class="w-full max-w-md flex flex-col gap-2">
+      <!-- Header: progress stars (mode standalone uniquement, ChapterRunner affiche les siennes) -->
+      <div v-if="!embedded" class="w-full max-w-md flex flex-col gap-2">
         <ProgressStars
           :results="game.results"
           :current="game.currentIndex"
@@ -139,15 +139,15 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
       <!-- Instruction -->
       <p class="text-xl md:text-2xl font-bold text-stone-700 text-center drop-shadow-sm">
         <template v-if="game.phase === 'discovery'">Observe ce nombre...</template>
-        <template v-else-if="game.phase === 'challenge'">Decompose ce nombre !</template>
-        <template v-else-if="game.lastResult === 'correct'">Bien joue !</template>
+        <template v-else-if="game.phase === 'challenge'">Décompose ce nombre !</template>
+        <template v-else-if="game.lastResult === 'correct'">Bien joué !</template>
         <template v-else>
-          C'etait <strong class="text-meadow-600">{{ game.correctForm }}</strong>
+          C'était <strong class="text-meadow-600">{{ game.correctForm }}</strong>
         </template>
       </p>
 
       <!-- Number display -->
-      <div class="flex-1 flex items-center justify-center w-full" :class="embedded ? 'py-2' : 'py-12'">
+      <div class="flex-1 flex items-center justify-center w-full" :class="embedded ? '' : 'py-12'">
         <div class="w-full max-w-2xl px-4 flex justify-center">
           <NotebookCard v-if="game.currentItem" :class="embedded ? 'px-6 py-3' : 'px-12 py-8'" :padding="embedded ? 'sm' : 'md'">
             <div class="flex flex-col items-center gap-2">

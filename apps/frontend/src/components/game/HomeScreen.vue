@@ -31,13 +31,13 @@ const mathStars = computed(() => computeSubjectStars('maths'));
 </script>
 
 <template>
-  <div class="home-screen flex flex-col min-h-screen p-6 gap-8">
+  <div class="home-screen flex flex-col min-h-screen p-6">
     <!-- Header — Logo Plumi -->
     <header class="flex justify-center pt-4">
       <img
         src="/plumi-landing.png"
         alt="Plumi"
-        class="h-40 w-auto animate-float"
+        class="h-60 w-auto animate-float"
       />
     </header>
 

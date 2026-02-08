@@ -1,5 +1,5 @@
-import type { Book, Chapter, Subject } from './types.js';
-import { MATH_BOOKS, MATH_CHAPTERS } from './math-chapters.js';
+import type { Book, Chapter, Shelf, Subject } from './types.js';
+import { MATH_BOOKS, MATH_CHAPTERS, MATH_SHELVES } from './math-chapters.js';
 
 export const BOOKS: Book[] = [
   {
@@ -752,6 +752,56 @@ export const ALL_BOOKS: Book[] = [...BOOKS, ...MATH_BOOKS];
 export const ALL_CHAPTERS: Chapter[] = [...CHAPTERS, ...MATH_CHAPTERS];
 
 // ═══════════════════════════════════════════════════════════════════════════
+// ÉTAGÈRES — Groupement pédagogique des livres
+// L'ordre des étagères et des livres dans chaque étagère définit
+// l'ordre pédagogique recommandé (alternance conjugaison / grammaire).
+// ═══════════════════════════════════════════════════════════════════════════
+
+export const FRENCH_SHELVES: Shelf[] = [
+  {
+    id: 'conjugaison-decouverte',
+    subject: 'francais',
+    title: 'Conjugaison Découverte',
+    bookIds: [1, 2, 3],
+    color: 'dawn',
+  },
+  {
+    id: 'grammaire',
+    subject: 'francais',
+    title: 'Grammaire',
+    bookIds: [12, 13, 14],
+    color: 'sky',
+  },
+  {
+    id: 'conjugaison-avancee',
+    subject: 'francais',
+    title: 'Conjugaison Avancée',
+    bookIds: [4, 5, 7],
+    color: 'gold',
+  },
+  {
+    id: 'conjugaison-expert',
+    subject: 'francais',
+    title: 'Conjugaison Expert',
+    bookIds: [8, 9, 11],
+    color: 'coral',
+  },
+  {
+    id: 'revision-francais',
+    subject: 'francais',
+    title: 'Révision',
+    bookIds: [10, 6],
+    color: 'moss',
+  },
+];
+
+export const ALL_SHELVES: Shelf[] = [...FRENCH_SHELVES, ...MATH_SHELVES];
+
+export function getShelvesForSubject(subject: Subject): Shelf[] {
+  return ALL_SHELVES.filter((s) => s.subject === subject);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
 // HELPERS
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -771,6 +821,14 @@ export function getBookForChapter(chapterId: number): Book | undefined {
   return ALL_BOOKS.find((b) => b.chapters.includes(chapterId));
 }
 
+/**
+ * Retourne les livres d'une matière dans l'ordre pédagogique des étagères.
+ * Cet ordre pilote le système de recommandation automatiquement.
+ */
 export function getBooksForSubject(subject: Subject): Book[] {
-  return ALL_BOOKS.filter((b) => (b.subject ?? 'francais') === subject);
+  const shelves = getShelvesForSubject(subject);
+  const orderedIds = shelves.flatMap((s) => s.bookIds);
+  return orderedIds
+    .map((id) => ALL_BOOKS.find((b) => b.id === id))
+    .filter((b): b is Book => b !== undefined);
 }

@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { BOOKS, CHAPTERS } from './chapters.js';
+import { BOOKS, CHAPTERS, FRENCH_SHELVES, ALL_SHELVES, getBooksForSubject } from './chapters.js';
+import { MATH_BOOKS, MATH_SHELVES } from './math-chapters.js';
 
 describe('BOOKS', () => {
   it('has 14 books (13 main + 1 bonus)', () => {
@@ -64,6 +65,46 @@ describe('CHAPTERS', () => {
       for (const step of ch.steps) {
         expect(step.questionCount).toBeGreaterThanOrEqual(3);
         expect(step.questionCount).toBeLessThanOrEqual(6);
+      }
+    }
+  });
+});
+
+describe('SHELVES', () => {
+  it('every French book appears in exactly one shelf', () => {
+    const shelfBookIds = FRENCH_SHELVES.flatMap((s) => s.bookIds);
+    const frenchBookIds = BOOKS.map((b) => b.id);
+    expect(shelfBookIds.sort()).toEqual(frenchBookIds.sort());
+    // Pas de doublons
+    expect(new Set(shelfBookIds).size).toBe(shelfBookIds.length);
+  });
+
+  it('every Math book appears in exactly one shelf', () => {
+    const shelfBookIds = MATH_SHELVES.flatMap((s) => s.bookIds);
+    const mathBookIds = MATH_BOOKS.map((b) => b.id);
+    expect(shelfBookIds.sort()).toEqual(mathBookIds.sort());
+    expect(new Set(shelfBookIds).size).toBe(shelfBookIds.length);
+  });
+
+  it('ALL_SHELVES contains all French + Math shelves', () => {
+    expect(ALL_SHELVES).toHaveLength(FRENCH_SHELVES.length + MATH_SHELVES.length);
+  });
+
+  it('getBooksForSubject returns books in shelf order', () => {
+    const frBooks = getBooksForSubject('francais');
+    const expectedOrder = FRENCH_SHELVES.flatMap((s) => s.bookIds);
+    expect(frBooks.map((b) => b.id)).toEqual(expectedOrder);
+
+    const mathBooks = getBooksForSubject('maths');
+    const expectedMathOrder = MATH_SHELVES.flatMap((s) => s.bookIds);
+    expect(mathBooks.map((b) => b.id)).toEqual(expectedMathOrder);
+  });
+
+  it('each shelf references valid book IDs', () => {
+    const allBookIds = new Set([...BOOKS, ...MATH_BOOKS].map((b) => b.id));
+    for (const shelf of ALL_SHELVES) {
+      for (const bookId of shelf.bookIds) {
+        expect(allBookIds.has(bookId)).toBe(true);
       }
     }
   });

@@ -110,8 +110,8 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
 
 <template>
   <div
-    class="marche-game flex flex-col items-center justify-between px-4"
-    :class="embedded ? 'h-full min-h-0 py-2 gap-2' : 'min-h-screen py-6 gap-4'"
+    class="marche-game flex flex-col items-center px-4"
+    :class="embedded ? 'h-full min-h-0 py-2 gap-2' : 'min-h-screen justify-between py-6 gap-4'"
   >
     <!-- Finished: show results -->
     <template v-if="game.isFinished && !embedded">
@@ -127,8 +127,8 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
 
     <!-- Playing -->
     <template v-else>
-      <!-- Header: progress stars -->
-      <div class="w-full max-w-md flex flex-col gap-2">
+      <!-- Header: progress stars (mode standalone uniquement, ChapterRunner affiche les siennes) -->
+      <div v-if="!embedded" class="w-full max-w-md flex flex-col gap-2">
         <ProgressStars
           :results="game.results"
           :current="game.currentIndex"
@@ -137,23 +137,41 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
 
       <!-- Instruction -->
       <p class="text-xl md:text-2xl font-bold text-stone-700 text-center drop-shadow-sm">
-        <template v-if="game.phase === 'discovery'">Regarde le prix...</template>
-        <template v-else-if="game.phase === 'challenge'">Combien faut-il payer ?</template>
-        <template v-else-if="game.lastResult === 'correct'">Bien joue !</template>
+        <template v-if="game.phase === 'discovery'">Regarde bien...</template>
+        <template v-else-if="game.phase === 'challenge'">{{ game.currentItem?.question }}</template>
+        <template v-else-if="game.lastResult === 'correct'">Bien joué !</template>
         <template v-else>
-          C'etait <strong class="text-meadow-600">{{ game.correctForm }}</strong>
+          C'était <strong class="text-meadow-600">{{ game.correctForm }}</strong>
         </template>
       </p>
 
-      <!-- Price display -->
-      <div class="flex-1 flex items-center justify-center w-full" :class="embedded ? 'py-2' : 'py-12'">
+      <!-- Articles display -->
+      <div class="flex-1 flex items-center justify-center w-full" :class="embedded ? '' : 'py-8'">
         <div class="w-full max-w-2xl px-4 flex justify-center">
-          <NotebookCard v-if="game.currentItem" :class="embedded ? 'px-6 py-3' : 'px-12 py-8'" :padding="embedded ? 'sm' : 'md'">
-            <div class="flex flex-col items-center gap-2">
-              <span class="text-lg text-stone-500 font-medium">Prix :</span>
-              <span class="text-4xl md:text-6xl font-bold text-gold-600 font-learning">
-                {{ game.currentItem.priceLabel }}
-              </span>
+          <NotebookCard v-if="game.currentItem" :class="embedded ? 'px-5 py-3' : 'px-6 py-5'" :padding="embedded ? 'sm' : 'md'">
+            <div class="flex flex-col gap-3">
+              <!-- Section achats -->
+              <div class="flex flex-col gap-1">
+                <span class="text-sm md:text-base font-semibold text-stone-400 uppercase tracking-wide">Tu achètes</span>
+                <div
+                  v-for="article in game.currentItem.articles"
+                  :key="article.name"
+                  class="flex items-center justify-between gap-4 rounded-lg bg-gold-50/50 px-3 py-2"
+                >
+                  <span class="text-lg md:text-2xl font-medium text-stone-700">{{ article.name }}</span>
+                  <span class="text-lg md:text-2xl font-bold text-gold-600 font-learning tabular-nums">{{ article.priceLabel }}</span>
+                </div>
+              </div>
+              <!-- Section paiement (rendu de monnaie) -->
+              <template v-if="game.currentItem.type === 'change'">
+                <div class="flex flex-col gap-1">
+                  <span class="text-sm md:text-base font-semibold text-stone-400 uppercase tracking-wide">Tu donnes</span>
+                  <div class="flex items-center justify-between gap-4 rounded-lg bg-sky-50/50 px-3 py-2">
+                    <span class="text-lg md:text-2xl font-medium text-stone-700">Billet</span>
+                    <span class="text-lg md:text-2xl font-bold text-sky-600 font-learning tabular-nums">{{ game.currentItem.givenAmountLabel }}</span>
+                  </div>
+                </div>
+              </template>
             </div>
           </NotebookCard>
         </div>

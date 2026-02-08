@@ -1,4 +1,4 @@
-import type { Book, Chapter } from './types.js';
+import type { Book, Chapter, Shelf } from './types.js';
 
 // ═══════════════════════════════════════════════════════════════════════════
 // LIVRES MATHS — 8 cahiers (IDs 101-108, pas de collision avec FR 1-10)
@@ -77,6 +77,41 @@ export const MATH_BOOKS: Book[] = [
     color: 'coral',
     theme: 'revision-maths',
     isBonus: true,
+  },
+];
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ÉTAGÈRES MATHS — Groupement pédagogique
+// ═══════════════════════════════════════════════════════════════════════════
+
+export const MATH_SHELVES: Shelf[] = [
+  {
+    id: 'nombres-calcul',
+    subject: 'maths',
+    title: 'Nombres et Calcul',
+    bookIds: [101, 102, 103],
+    color: 'sky',
+  },
+  {
+    id: 'calcul-avance',
+    subject: 'maths',
+    title: 'Calcul Avancé',
+    bookIds: [104, 106],
+    color: 'gold',
+  },
+  {
+    id: 'grandeurs-geometrie',
+    subject: 'maths',
+    title: 'Grandeurs et Géométrie',
+    bookIds: [105, 107],
+    color: 'meadow',
+  },
+  {
+    id: 'revision-maths',
+    subject: 'maths',
+    title: 'Révision',
+    bookIds: [108],
+    color: 'coral',
   },
 ];
 

@@ -1,7 +1,7 @@
 # Charger les variables d'environnement
 -include .env
 
-.PHONY: init upgrade install env up-db db-wait build-shared generate migrate dev storybook typecheck lint help
+.PHONY: init upgrade install env up-db db-wait build-shared generate migrate dev storybook typecheck lint build-android build-ios build-mobile help
 
 # Afficher l'aide par défaut
 help:
@@ -13,6 +13,11 @@ help:
 	@echo "  make typecheck : Vérifie les types TypeScript"
 	@echo "  make lint      : Lint du code"
 	@echo "  make install   : Installe les dépendances"
+	@echo ""
+	@echo "Mobile :"
+	@echo "  make build-android : Build APK debug (plumi-debug.apk)"
+	@echo "  make build-ios     : Build + sync iOS (nécessite macOS)"
+	@echo "  make build-mobile  : Build + sync toutes les plateformes"
 
 # Initialisation complète du projet
 init: env install up-db db-wait build-shared generate migrate
@@ -61,3 +66,21 @@ dev:
 
 storybook:
 	pnpm --filter @plumi/frontend storybook
+
+# --- Mobile ---
+
+# Android — build + APK debug
+build-android: build-shared
+	pnpm --filter @plumi/frontend build:mobile
+	cd apps/frontend/android && ./gradlew assembleDebug
+	cp apps/frontend/android/app/build/outputs/apk/debug/app-debug.apk ./plumi-debug.apk
+	@echo "APK généré : plumi-debug.apk"
+
+# iOS — build + sync (nécessite macOS + Xcode)
+build-ios: build-shared
+	pnpm --filter @plumi/frontend build:mobile
+	@echo "Ouvre Xcode : cd apps/frontend && npx cap open ios"
+
+# Mobile — sync les deux plateformes
+build-mobile: build-shared
+	pnpm --filter @plumi/frontend build:mobile

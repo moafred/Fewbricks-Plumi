@@ -659,6 +659,241 @@ export const GRAMMAR_SENTENCES: GrammarSentence[] = [
     isValid: true,
     sentenceType: 'declarative',
   },
+
+  // ─── Déclaratives ambiguës pour la ponctuation ─────────────────────────────
+  // Ces phrases déclaratives, sans mot-question, empêchent le pattern-matching
+  // (l'enfant doit lire le sens, pas chercher "Où" ou "Quel")
+  {
+    id: 'gs-61',
+    words: [
+      { word: 'Tu', role: 'noun', group: 'subject-group' },
+      { word: 'manges', role: 'verb', group: 'verb-group' },
+      { word: 'une', role: 'complement' },
+      { word: 'pomme', role: 'complement' },
+    ],
+    punctuation: '.',
+    isValid: true,
+    sentenceType: 'declarative',
+  },
+  {
+    id: 'gs-62',
+    words: [
+      { word: 'Il', role: 'noun', group: 'subject-group' },
+      { word: 'fait', role: 'verb', group: 'verb-group' },
+      { word: 'beau', role: 'complement' },
+      { word: 'dehors', role: 'complement' },
+    ],
+    punctuation: '.',
+    isValid: true,
+    sentenceType: 'declarative',
+  },
+  {
+    id: 'gs-63',
+    words: [
+      { word: 'Nous', role: 'noun', group: 'subject-group' },
+      { word: 'partons', role: 'verb', group: 'verb-group' },
+      { word: 'demain', role: 'complement' },
+    ],
+    punctuation: '.',
+    isValid: true,
+    sentenceType: 'declarative',
+  },
+  {
+    id: 'gs-64',
+    words: [
+      { word: 'Elle', role: 'noun', group: 'subject-group' },
+      { word: 'aime', role: 'verb', group: 'verb-group' },
+      { word: 'les', role: 'complement' },
+      { word: 'gâteaux', role: 'complement' },
+    ],
+    punctuation: '.',
+    isValid: true,
+    sentenceType: 'declarative',
+  },
+
+  // ─── Interrogatives sans mot-question (intonation seule) ───────────────────
+  {
+    id: 'gs-65',
+    words: [
+      { word: 'Il', role: 'noun', group: 'subject-group' },
+      { word: 'pleut', role: 'verb', group: 'verb-group' },
+      { word: 'encore', role: 'complement' },
+    ],
+    punctuation: '?',
+    isValid: true,
+    sentenceType: 'interrogative',
+  },
+  {
+    id: 'gs-66',
+    words: [
+      { word: 'Nous', role: 'noun', group: 'subject-group' },
+      { word: 'allons', role: 'verb', group: 'verb-group' },
+      { word: 'au', role: 'complement' },
+      { word: 'parc', role: 'complement' },
+    ],
+    punctuation: '?',
+    isValid: true,
+    sentenceType: 'interrogative',
+  },
+
+  // ─── Exclamatives sans "Quel" / "Comme" ───────────────────────────────────
+  {
+    id: 'gs-67',
+    words: [
+      { word: 'Il', role: 'noun', group: 'subject-group' },
+      { word: 'neige', role: 'verb', group: 'verb-group' },
+    ],
+    punctuation: '!',
+    isValid: true,
+    sentenceType: 'exclamative',
+  },
+  {
+    id: 'gs-68',
+    words: [
+      { word: 'La', role: 'determiner', group: 'subject-group' },
+      { word: 'récréation', role: 'noun', group: 'subject-group' },
+      { word: 'est', role: 'verb', group: 'verb-group' },
+      { word: 'finie', role: 'adjective' },
+    ],
+    punctuation: '!',
+    isValid: true,
+    sentenceType: 'exclamative',
+  },
+
+  // ─── Phrases avec adjectifs — enrichissement pour repérage ch. 37-39 ───────
+
+  // Adjectif attribut du sujet (après le verbe être)
+  {
+    id: 'gs-51',
+    words: [
+      { word: 'Le', role: 'determiner', group: 'subject-group' },
+      { word: 'papillon', role: 'noun', group: 'subject-group' },
+      { word: 'est', role: 'verb', group: 'verb-group' },
+      { word: 'joli', role: 'adjective' },
+    ],
+    punctuation: '.',
+    isValid: true,
+    sentenceType: 'declarative',
+  },
+  {
+    id: 'gs-52',
+    words: [
+      { word: 'Les', role: 'determiner', group: 'subject-group' },
+      { word: 'fraises', role: 'noun', group: 'subject-group' },
+      { word: 'sont', role: 'verb', group: 'verb-group' },
+      { word: 'rouges', role: 'adjective' },
+    ],
+    punctuation: '.',
+    isValid: true,
+    sentenceType: 'declarative',
+  },
+  {
+    id: 'gs-53',
+    words: [
+      { word: 'La', role: 'determiner', group: 'subject-group' },
+      { word: 'soupe', role: 'noun', group: 'subject-group' },
+      { word: 'est', role: 'verb', group: 'verb-group' },
+      { word: 'chaude', role: 'adjective' },
+    ],
+    punctuation: '.',
+    isValid: true,
+    sentenceType: 'declarative',
+  },
+  {
+    id: 'gs-54',
+    words: [
+      { word: 'Le', role: 'determiner', group: 'subject-group' },
+      { word: 'ciel', role: 'noun', group: 'subject-group' },
+      { word: 'est', role: 'verb', group: 'verb-group' },
+      { word: 'gris', role: 'adjective' },
+    ],
+    punctuation: '.',
+    isValid: true,
+    sentenceType: 'declarative',
+  },
+
+  // Adjectif épithète avant le nom (dans le groupe sujet)
+  {
+    id: 'gs-55',
+    words: [
+      { word: 'La', role: 'determiner', group: 'subject-group' },
+      { word: 'gentille', role: 'adjective', group: 'subject-group' },
+      { word: 'maîtresse', role: 'noun', group: 'subject-group' },
+      { word: 'sourit', role: 'verb', group: 'verb-group' },
+    ],
+    punctuation: '.',
+    isValid: true,
+    sentenceType: 'declarative',
+  },
+  {
+    id: 'gs-56',
+    words: [
+      { word: 'Le', role: 'determiner', group: 'subject-group' },
+      { word: 'vieux', role: 'adjective', group: 'subject-group' },
+      { word: 'chêne', role: 'noun', group: 'subject-group' },
+      { word: 'est', role: 'verb', group: 'verb-group' },
+      { word: 'immense', role: 'adjective' },
+    ],
+    punctuation: '.',
+    isValid: true,
+    sentenceType: 'declarative',
+  },
+  {
+    id: 'gs-57',
+    words: [
+      { word: 'Les', role: 'determiner', group: 'subject-group' },
+      { word: 'jolies', role: 'adjective', group: 'subject-group' },
+      { word: 'fleurs', role: 'noun', group: 'subject-group' },
+      { word: 'poussent', role: 'verb', group: 'verb-group' },
+      { word: 'dans', role: 'complement' },
+      { word: 'le', role: 'complement' },
+      { word: 'pré', role: 'complement' },
+    ],
+    punctuation: '.',
+    isValid: true,
+    sentenceType: 'declarative',
+  },
+
+  // Adjectif épithète après le nom (dans le groupe sujet)
+  {
+    id: 'gs-58',
+    words: [
+      { word: 'Le', role: 'determiner', group: 'subject-group' },
+      { word: 'manteau', role: 'noun', group: 'subject-group' },
+      { word: 'rouge', role: 'adjective', group: 'subject-group' },
+      { word: 'est', role: 'verb', group: 'verb-group' },
+      { word: 'chaud', role: 'adjective' },
+    ],
+    punctuation: '.',
+    isValid: true,
+    sentenceType: 'declarative',
+  },
+  {
+    id: 'gs-59',
+    words: [
+      { word: 'La', role: 'determiner', group: 'subject-group' },
+      { word: 'robe', role: 'noun', group: 'subject-group' },
+      { word: 'bleue', role: 'adjective', group: 'subject-group' },
+      { word: 'est', role: 'verb', group: 'verb-group' },
+      { word: 'neuve', role: 'adjective' },
+    ],
+    punctuation: '.',
+    isValid: true,
+    sentenceType: 'declarative',
+  },
+  {
+    id: 'gs-60',
+    words: [
+      { word: 'Un', role: 'determiner', group: 'subject-group' },
+      { word: 'gros', role: 'adjective', group: 'subject-group' },
+      { word: 'nuage', role: 'noun', group: 'subject-group' },
+      { word: 'noir', role: 'adjective', group: 'subject-group' },
+      { word: 'arrive', role: 'verb', group: 'verb-group' },
+    ],
+    punctuation: '.',
+    isValid: true,
+    sentenceType: 'declarative',
+  },
 ];
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -667,6 +902,7 @@ export const GRAMMAR_SENTENCES: GrammarSentence[] = [
 // ═══════════════════════════════════════════════════════════════════════════
 
 export const NOT_SENTENCES: NotASentence[] = [
+  // ─── Sans verbe (groupes nominaux, compléments isolés) ─────────────────────
   { id: 'ns-01', text: 'le petit chat', reason: 'no-verb' },
   { id: 'ns-02', text: 'une jolie fleur rouge', reason: 'no-verb' },
   { id: 'ns-03', text: 'dans le jardin', reason: 'no-verb' },
@@ -675,18 +911,34 @@ export const NOT_SENTENCES: NotASentence[] = [
   { id: 'ns-06', text: 'sur la table', reason: 'no-verb' },
   { id: 'ns-07', text: 'du chocolat chaud', reason: 'no-verb' },
   { id: 'ns-08', text: 'mon cartable bleu', reason: 'no-verb' },
-  { id: 'ns-09', text: 'le chat mange', reason: 'no-capital' },
-  { id: 'ns-10', text: 'La fille chante bien', reason: 'no-punctuation' },
-  { id: 'ns-11', text: 'le garçon joue', reason: 'no-capital' },
   { id: 'ns-12', text: 'des bonbons rouges', reason: 'no-verb' },
-  { id: 'ns-13', text: 'et aussi demain', reason: 'fragment' },
-  { id: 'ns-14', text: 'parce que le chat', reason: 'fragment' },
   { id: 'ns-15', text: 'les petites souris grises', reason: 'no-verb' },
   { id: 'ns-16', text: 'au parc avec papa', reason: 'no-verb' },
   { id: 'ns-17', text: 'devant la maison', reason: 'no-verb' },
   { id: 'ns-18', text: 'un beau soleil jaune', reason: 'no-verb' },
-  { id: 'ns-19', text: 'Le chien court vite', reason: 'no-punctuation' },
   { id: 'ns-20', text: 'très très grand', reason: 'no-verb' },
+
+  // ─── Sans majuscule (piège : tout le reste est correct) ────────────────────
+  { id: 'ns-09', text: 'le chat mange.', reason: 'no-capital' },
+  { id: 'ns-11', text: 'le garçon joue.', reason: 'no-capital' },
+  { id: 'ns-21', text: 'les oiseaux chantent.', reason: 'no-capital' },
+  { id: 'ns-22', text: 'la fille lit un livre.', reason: 'no-capital' },
+
+  // ─── Sans ponctuation (piège : majuscule + sujet + verbe mais pas de point) ─
+  { id: 'ns-10', text: 'La fille chante bien', reason: 'no-punctuation' },
+  { id: 'ns-19', text: 'Le chien court vite', reason: 'no-punctuation' },
+  { id: 'ns-23', text: 'Maman prépare le repas', reason: 'no-punctuation' },
+  { id: 'ns-24', text: 'Le soleil brille fort', reason: 'no-punctuation' },
+
+  // ─── Fragments ambigus (verbe présent mais pas de phrase complète) ─────────
+  { id: 'ns-13', text: 'et aussi demain', reason: 'fragment' },
+  { id: 'ns-14', text: 'parce que le chat', reason: 'fragment' },
+  { id: 'ns-25', text: 'quand il pleut', reason: 'fragment' },
+  { id: 'ns-26', text: 'mange une pomme', reason: 'fragment' },
+  { id: 'ns-27', text: 'court dans le jardin', reason: 'fragment' },
+  { id: 'ns-28', text: 'qui chante fort', reason: 'fragment' },
+  { id: 'ns-29', text: 'pour aller à la piscine', reason: 'fragment' },
+  { id: 'ns-30', text: 'mais pas toujours', reason: 'fragment' },
 ];
 
 // ═══════════════════════════════════════════════════════════════════════════

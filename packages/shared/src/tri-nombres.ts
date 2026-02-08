@@ -27,8 +27,8 @@ function classify(n: number, categories: [string, string]): string {
     return n < 50 ? '< 50' : '≥ 50';
   }
 
-  // Fallback générique pour d'éventuelles futures catégories
-  return isEven(n) ? catA : catB;
+  // Pas de fallback silencieux : toute nouvelle catégorie doit être explicitement gérée
+  throw new Error(`[tri-nombres] Catégories non supportées : "${catA}" / "${catB}"`);
 }
 
 /**

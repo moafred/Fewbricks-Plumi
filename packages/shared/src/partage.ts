@@ -53,7 +53,7 @@ function generateFractionDistractors(
   }
 
   // Confusion numérateur/dénominateur inversés (si différent)
-  if (numerator !== denominator && denominator <= denominator) {
+  if (numerator !== denominator && denominator - numerator >= 1) {
     candidates.add(formatFraction(denominator - numerator, denominator));
   }
 

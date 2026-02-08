@@ -13,6 +13,8 @@ export type {
   ChapterStep,
   Chapter,
   Book,
+  ShelfId,
+  Shelf,
   RewardType,
   Reward,
   ThemeId,
@@ -53,13 +55,16 @@ export {
   BOOKS,
   ALL_BOOKS,
   ALL_CHAPTERS,
+  FRENCH_SHELVES,
+  ALL_SHELVES,
   getChaptersForBook,
   getChapter,
   getBookForChapter,
   getBooksForSubject,
+  getShelvesForSubject,
 } from './chapters.js';
 
-export { MATH_BOOKS, MATH_CHAPTERS } from './math-chapters.js';
+export { MATH_BOOKS, MATH_CHAPTERS, MATH_SHELVES } from './math-chapters.js';
 
 export type {
   AdditionFact,
@@ -163,5 +168,5 @@ export { generatePartageItems } from './partage.js';
 export type { HorlogeItem, HorlogeOptions } from './horloge.js';
 export { generateHorlogeItems } from './horloge.js';
 
-export type { MarcheItem, MarcheOptions } from './marche.js';
+export type { MarcheItem, MarcheOptions, MarcheArticle, MarcheQuestionType } from './marche.js';
 export { generateMarcheItems } from './marche.js';

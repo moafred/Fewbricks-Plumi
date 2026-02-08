@@ -256,6 +256,31 @@ export interface BookLesson {
   sections: BookLessonSection[];
 }
 
+// ═══════════════════════════════════════════════════════════════════════════
+// ÉTAGÈRES — Groupement pédagogique des livres
+// ═══════════════════════════════════════════════════════════════════════════
+
+export type ShelfId =
+  // Français
+  | 'conjugaison-decouverte'
+  | 'grammaire'
+  | 'conjugaison-avancee'
+  | 'conjugaison-expert'
+  | 'revision-francais'
+  // Maths
+  | 'nombres-calcul'
+  | 'calcul-avance'
+  | 'grandeurs-geometrie'
+  | 'revision-maths';
+
+export interface Shelf {
+  id: ShelfId;
+  subject: Subject;
+  title: string;
+  bookIds: number[];
+  color: 'sky' | 'meadow' | 'gold' | 'coral' | 'moss' | 'dawn';
+}
+
 export type RewardType = 'star' | 'badge' | 'world-element' | 'companion' | 'cosmetic';
 
 export interface Reward {

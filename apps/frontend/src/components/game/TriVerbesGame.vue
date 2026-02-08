@@ -125,8 +125,8 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
 
 <template>
   <div
-    class="tri-verbes-game flex flex-col items-center justify-between px-4"
-    :class="embedded ? 'h-full min-h-0 py-2 gap-2' : 'min-h-screen py-6 gap-4'"
+    class="tri-verbes-game flex flex-col items-center px-4"
+    :class="embedded ? 'h-full min-h-0 py-2 gap-2' : 'min-h-screen justify-between py-6 gap-4'"
   >
     <!-- Finished: show results -->
     <template v-if="game.isFinished && !embedded">

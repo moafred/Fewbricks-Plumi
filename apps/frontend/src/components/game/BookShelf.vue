@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { Subject } from '@plumi/shared';
-import { getBooksForSubject, getChaptersForBook } from '@plumi/shared';
+import type { Subject, Shelf } from '@plumi/shared';
+import { getShelvesForSubject, getChaptersForBook, ALL_BOOKS } from '@plumi/shared';
 import { useChapterProgressStore } from '@/stores/chapter-progress';
 import BookCard from './BookCard.vue';
+import ShelfSection from './ShelfSection.vue';
 import NotebookButton from '@/components/ui/NotebookButton.vue';
 import { HomeIcon } from '@/components/icons';
 
@@ -20,11 +21,15 @@ defineEmits<{
 
 const progress = useChapterProgressStore();
 
-const books = computed(() => getBooksForSubject(props.subject));
+const shelves = computed(() => getShelvesForSubject(props.subject));
 
 const shelfTitle = computed(() =>
   props.subject === 'maths' ? 'Mes Cahiers de Maths' : 'Mes Cahiers de Français',
 );
+
+function getBook(bookId: number) {
+  return ALL_BOOKS.find((b) => b.id === bookId);
+}
 
 function bookStars(bookId: number): number {
   const chapters = getChaptersForBook(bookId);
@@ -34,6 +39,14 @@ function bookStars(bookId: number): number {
 function bookMaxStars(bookId: number): number {
   const chapters = getChaptersForBook(bookId);
   return chapters.length * 3;
+}
+
+function shelfStars(shelf: Shelf): number {
+  return shelf.bookIds.reduce((sum, id) => sum + bookStars(id), 0);
+}
+
+function shelfMaxStars(shelf: Shelf): number {
+  return shelf.bookIds.reduce((sum, id) => sum + bookMaxStars(id), 0);
 }
 </script>
 
@@ -53,20 +66,27 @@ function bookMaxStars(bookId: number): number {
       </h1>
     </header>
 
-    <!-- Books grid -->
-    <main class="flex-1 flex items-center justify-center p-2">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 w-full max-w-5xl">
+    <!-- Étagères -->
+    <main class="flex-1 flex flex-col gap-8 w-full max-w-5xl mx-auto">
+      <ShelfSection
+        v-for="shelf in shelves"
+        :key="shelf.id"
+        :title="shelf.title"
+        :color="shelf.color"
+        :stars="shelfStars(shelf)"
+        :max-stars="shelfMaxStars(shelf)"
+      >
         <BookCard
-          v-for="book in books"
-          :key="book.id"
-          :book="book"
-          :stars="bookStars(book.id)"
-          :max-stars="bookMaxStars(book.id)"
-          :is-recommended="progress.getRecommendedBookIdForSubject(subject) === book.id"
-          :is-locked="!!book.isBonus && !progress.isBonusUnlockedForSubject(subject)"
-          @select="(bookId) => $emit('select-book', bookId)"
+          v-for="bookId in shelf.bookIds"
+          :key="bookId"
+          :book="getBook(bookId)!"
+          :stars="bookStars(bookId)"
+          :max-stars="bookMaxStars(bookId)"
+          :is-recommended="progress.getRecommendedBookIdForSubject(subject) === bookId"
+          :is-locked="!!getBook(bookId)?.isBonus && !progress.isBonusUnlockedForSubject(subject)"
+          @select="(id) => $emit('select-book', id)"
         />
-      </div>
+      </ShelfSection>
     </main>
   </div>
 </template>
