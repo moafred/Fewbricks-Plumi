@@ -88,6 +88,20 @@ export const CONJUGATIONS: VerbConjugation[] = [
       { pronoun: 'ils/elles', form: 'regardent' },
     ],
   },
+  // 2ème groupe (-ir) — présent
+  {
+    id: 'finir',
+    infinitive: 'finir',
+    tense: 'present',
+    forms: [
+      { pronoun: 'je', form: 'finis' },
+      { pronoun: 'tu', form: 'finis' },
+      { pronoun: 'il/elle/on', form: 'finit' },
+      { pronoun: 'nous', form: 'finissons' },
+      { pronoun: 'vous', form: 'finissez' },
+      { pronoun: 'ils/elles', form: 'finissent' },
+    ],
+  },
   // 3ème groupe — irréguliers fréquents — présent
   {
     id: 'aller',
@@ -275,6 +289,20 @@ export const CONJUGATIONS: VerbConjugation[] = [
       { pronoun: 'nous', form: 'regarderons' },
       { pronoun: 'vous', form: 'regarderez' },
       { pronoun: 'ils/elles', form: 'regarderont' },
+    ],
+  },
+  // 2ème groupe (-ir) — futur
+  {
+    id: 'finir',
+    infinitive: 'finir',
+    tense: 'futur',
+    forms: [
+      { pronoun: 'je', form: 'finirai' },
+      { pronoun: 'tu', form: 'finiras' },
+      { pronoun: 'il/elle/on', form: 'finira' },
+      { pronoun: 'nous', form: 'finirons' },
+      { pronoun: 'vous', form: 'finirez' },
+      { pronoun: 'ils/elles', form: 'finiront' },
     ],
   },
   // 3ème groupe — irréguliers fréquents — futur
@@ -466,6 +494,20 @@ export const CONJUGATIONS: VerbConjugation[] = [
       { pronoun: 'ils/elles', form: 'regardaient' },
     ],
   },
+  // 2ème groupe (-ir) — imparfait
+  {
+    id: 'finir',
+    infinitive: 'finir',
+    tense: 'imparfait',
+    forms: [
+      { pronoun: 'je', form: 'finissais' },
+      { pronoun: 'tu', form: 'finissais' },
+      { pronoun: 'il/elle/on', form: 'finissait' },
+      { pronoun: 'nous', form: 'finissions' },
+      { pronoun: 'vous', form: 'finissiez' },
+      { pronoun: 'ils/elles', form: 'finissaient' },
+    ],
+  },
   // 3ème groupe — irréguliers fréquents — imparfait
   {
     id: 'aller',
@@ -616,6 +658,7 @@ const VERB_INFINITIVES: Record<VerbId, string> = {
   manger: 'manger',
   chanter: 'chanter',
   regarder: 'regarder',
+  finir: 'finir',
   aller: 'aller',
   faire: 'faire',
   dire: 'dire',

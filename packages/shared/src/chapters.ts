@@ -94,6 +94,40 @@ export const BOOKS: Book[] = [
     color: 'dawn',
     theme: 'symphonie',
   },
+  // ─── Nouveaux cahiers — grammaire + verbe finir ──────────────────────────
+  {
+    id: 11,
+    title: 'Cahier 11 : Verbes -IR',
+    subtitle: 'Le verbe FINIR',
+    tenses: ['present', 'futur', 'imparfait'],
+    chapters: [31, 32, 33],
+    color: 'meadow',
+    theme: 'verger',
+  },
+  {
+    id: 12,
+    title: 'Cahier 12 : La Phrase',
+    subtitle: 'Phrase et ponctuation',
+    chapters: [34, 35, 36],
+    color: 'sky',
+    theme: 'ecole',
+  },
+  {
+    id: 13,
+    title: "Cahier 13 : L'Adjectif",
+    subtitle: "L'adjectif qualificatif",
+    chapters: [37, 38, 39],
+    color: 'gold',
+    theme: 'galerie',
+  },
+  {
+    id: 14,
+    title: 'Cahier 14 : Sujet et Verbe',
+    subtitle: 'Identifier sujet et verbe',
+    chapters: [40, 41, 42],
+    color: 'coral',
+    theme: 'observatoire',
+  },
 ];
 
 /**
@@ -540,7 +574,7 @@ export const CHAPTERS: Chapter[] = [
     id: 30,
     title: 'Boss Final — La Symphonie',
     narrative: 'Tous les verbes, tous les temps ! Le grand final !',
-    verbs: ['etre', 'avoir', 'jouer', 'manger', 'aller', 'faire', 'pouvoir', 'voir', 'vouloir', 'prendre'],
+    verbs: ['etre', 'avoir', 'jouer', 'manger', 'aller', 'faire', 'pouvoir', 'voir', 'vouloir', 'prendre', 'finir'],
     tense: 'mixed',
     steps: [
       { mechanic: 'ardoise', questionCount: 4 },
@@ -548,6 +582,164 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'tri-verbes', verbs: ['etre', 'aller'], questionCount: 3 },
       { mechanic: 'tri-verbes', verbs: ['avoir', 'faire'], questionCount: 3 },
       { mechanic: 'encrier', questionCount: 4, isBoss: true },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // LIVRE 11 — Verbes -IR (FINIR, 2e groupe)
+  // Particularité pédagogique : le -ISS- au pluriel (finissons, finissez, finissent)
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: 31,
+    title: 'Découvrir FINIR au présent',
+    narrative: "Bienvenue au Verger ! Découvre le verbe FINIR. Attention au -ISS- !",
+    verbs: ['finir'],
+    tense: 'present',
+    steps: [
+      { mechanic: 'ardoise', pronouns: ['je', 'tu'], verbs: ['finir'], questionCount: 3 },
+      { mechanic: 'ardoise', pronouns: ['il/elle/on', 'nous', 'vous', 'ils/elles'], verbs: ['finir'], questionCount: 3 },
+      { mechanic: 'encrier', pronouns: ['je', 'tu', 'il/elle/on'], verbs: ['finir'], questionCount: 3 },
+      { mechanic: 'encrier', verbs: ['finir'], questionCount: 4, isBoss: true },
+    ],
+  },
+  {
+    id: 32,
+    title: 'FINIR au futur et à l\'imparfait',
+    narrative: 'FINIR change de temps ! Le futur et l\'imparfait aussi ont le -ISS-.',
+    verbs: ['finir'],
+    tense: 'mixed',
+    steps: [
+      { mechanic: 'ardoise', pronouns: ['je', 'tu', 'il/elle/on'], verbs: ['finir'], questionCount: 3 },
+      { mechanic: 'ardoise', pronouns: ['nous', 'vous', 'ils/elles'], verbs: ['finir'], questionCount: 3 },
+      { mechanic: 'encrier', verbs: ['finir'], questionCount: 4 },
+      { mechanic: 'encrier', verbs: ['finir'], questionCount: 4, isBoss: true },
+    ],
+  },
+  {
+    id: 33,
+    title: 'FINIR vs CHANTER',
+    narrative: 'FINIR ou CHANTER ? Le duo du programme ! Sauras-tu les reconnaître ?',
+    verbs: ['finir', 'chanter'],
+    tense: 'present',
+    steps: [
+      { mechanic: 'tri-verbes', verbs: ['finir', 'chanter'], questionCount: 4 },
+      { mechanic: 'ardoise', verbs: ['finir', 'chanter'], questionCount: 4 },
+      { mechanic: 'encrier', verbs: ['finir', 'chanter'], questionCount: 4 },
+      { mechanic: 'encrier', verbs: ['finir', 'chanter'], questionCount: 4, isBoss: true },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // LIVRE 12 — La Phrase (phrase, ponctuation)
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: 34,
+    subject: 'francais',
+    title: 'Qu\'est-ce qu\'une phrase ?',
+    narrative: 'Une phrase commence par une majuscule, finit par un point, et a un sens. À toi de trier !',
+    steps: [
+      { mechanic: 'tri-phrases', questionCount: 4 },
+      { mechanic: 'tri-phrases', questionCount: 4 },
+      { mechanic: 'tri-phrases', questionCount: 4, isBoss: true },
+    ],
+  },
+  {
+    id: 35,
+    subject: 'francais',
+    title: 'Les signes de ponctuation',
+    narrative: 'Le point, le point d\'interrogation, le point d\'exclamation : chaque signe a un rôle !',
+    steps: [
+      { mechanic: 'tri-phrases', questionCount: 3 },
+      { mechanic: 'ponctuation', questionCount: 4 },
+      { mechanic: 'ponctuation', questionCount: 4, isBoss: true },
+    ],
+  },
+  {
+    id: 36,
+    subject: 'francais',
+    title: 'Maître de la phrase',
+    narrative: 'Tu connais les phrases et la ponctuation ? Prouve-le !',
+    steps: [
+      { mechanic: 'tri-phrases', questionCount: 3 },
+      { mechanic: 'ponctuation', questionCount: 3 },
+      { mechanic: 'tri-phrases', questionCount: 3 },
+      { mechanic: 'ponctuation', questionCount: 4, isBoss: true },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // LIVRE 13 — L'Adjectif qualificatif
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: 37,
+    subject: 'francais',
+    title: 'Trouver l\'adjectif',
+    narrative: 'L\'adjectif décrit le nom : petit, grand, rouge, joli... Trouve-le dans la phrase !',
+    steps: [
+      { mechanic: 'reperage', target: 'adjective', questionCount: 4 },
+      { mechanic: 'reperage', target: 'adjective', questionCount: 4 },
+      { mechanic: 'reperage', target: 'adjective', questionCount: 4, isBoss: true },
+    ],
+  },
+  {
+    id: 38,
+    subject: 'francais',
+    title: 'L\'adjectif dans le GN',
+    narrative: 'L\'adjectif s\'accorde avec le nom. Masculin, féminin, singulier, pluriel !',
+    steps: [
+      { mechanic: 'reperage', target: 'adjective', questionCount: 3 },
+      { mechanic: 'pont-accords', questionCount: 4 },
+      { mechanic: 'pont-accords', questionCount: 4, isBoss: true },
+    ],
+  },
+  {
+    id: 39,
+    subject: 'francais',
+    title: 'Maître des adjectifs',
+    narrative: 'Trouver, accorder, compléter... Tu es un vrai expert des adjectifs !',
+    steps: [
+      { mechanic: 'reperage', target: 'adjective', questionCount: 3 },
+      { mechanic: 'pont-accords', questionCount: 3 },
+      { mechanic: 'encrier-gn', questionCount: 3 },
+      { mechanic: 'reperage', target: 'adjective', questionCount: 4, isBoss: true },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // LIVRE 14 — Sujet et Verbe
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: 40,
+    subject: 'francais',
+    title: 'Trouve le verbe',
+    narrative: 'Le verbe, c\'est l\'action dans la phrase. Mange, court, chante... Trouve-le !',
+    steps: [
+      { mechanic: 'reperage', target: 'verb', questionCount: 4 },
+      { mechanic: 'reperage', target: 'verb', questionCount: 4 },
+      { mechanic: 'reperage', target: 'verb', questionCount: 4, isBoss: true },
+    ],
+  },
+  {
+    id: 41,
+    subject: 'francais',
+    title: 'Trouve le sujet',
+    narrative: 'Le sujet, c\'est celui qui fait l\'action. Qui mange ? Qui court ? Trouve-le !',
+    steps: [
+      { mechanic: 'reperage', target: 'subject', questionCount: 4 },
+      { mechanic: 'reperage', target: 'subject', questionCount: 4 },
+      { mechanic: 'reperage', target: 'subject', questionCount: 4, isBoss: true },
+    ],
+  },
+  {
+    id: 42,
+    subject: 'francais',
+    title: 'Sujet et Verbe',
+    narrative: 'Le sujet ET le verbe ! Tu sais tout trouver maintenant !',
+    steps: [
+      { mechanic: 'reperage', target: 'verb', questionCount: 3 },
+      { mechanic: 'reperage', target: 'subject', questionCount: 3 },
+      { mechanic: 'reperage', target: 'verb', questionCount: 3 },
+      { mechanic: 'reperage', target: 'subject', questionCount: 4, isBoss: true },
     ],
   },
 ];

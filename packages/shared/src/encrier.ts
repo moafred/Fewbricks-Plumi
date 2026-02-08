@@ -120,6 +120,16 @@ const TEMPLATE_INDEX: TemplateIndex = {
     'ils/elles': ['Ils %GAP% les poissons.', 'Elles %GAP% le coucher de soleil.'],
   },
 
+  // ─── FINIR ────────────────────────────────────────────────────────────────
+  finir: {
+    'je': ['Je %GAP% mon dessin.', 'Je %GAP% mes devoirs.', 'Je %GAP% mon repas.'],
+    'tu': ['Tu %GAP% ton exercice.', 'Tu %GAP% ton assiette.', 'Tu %GAP% ton travail.'],
+    'il/elle/on': ['Elle %GAP% son livre.', 'Il %GAP% son puzzle.', 'On %GAP% la partie.'],
+    'nous': ['Nous %GAP% notre goûter.', 'Nous %GAP% nos devoirs.', 'Nous %GAP% le jeu.'],
+    'vous': ['Vous %GAP% votre dessin.', 'Vous %GAP% votre repas.'],
+    'ils/elles': ['Ils %GAP% leurs exercices.', 'Elles %GAP% leur histoire.', 'Ils %GAP% le cours.'],
+  },
+
   // ─── ALLER ─────────────────────────────────────────────────────────────────
   aller: {
     'je': ['Je %GAP% à l\'école.', 'Je %GAP% au parc.', 'Je %GAP% chez mamie.'],

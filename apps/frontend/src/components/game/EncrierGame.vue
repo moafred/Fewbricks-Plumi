@@ -2,7 +2,7 @@
 import { onMounted, onUnmounted, computed, watch, ref } from 'vue';
 import { useEncrierStore } from '@/stores/encrier';
 import type { Tense, Pronoun, AnswerResult, VerbId } from '@plumi/shared';
-import { useKeyboardNavigation, useBackNavigation } from '@/composables';
+import { useKeyboardNavigation, useBackNavigation, useSyncGameProgress } from '@/composables';
 import SentenceGap from '@/components/game/SentenceGap.vue';
 import GameHeader from '@/components/game/GameHeader.vue';
 import ChallengeCard from '@/components/game/ChallengeCard.vue';
@@ -123,6 +123,7 @@ const gapWord = computed(() => {
 // Always true if we show it (since we only show the correct answer in the gap per spec)
 const isGapCorrect = computed(() => !!gapWord.value);
 
+useSyncGameProgress(() => store.results, () => store.currentIndex);
 </script>
 
 <template>
@@ -181,8 +182,8 @@ const isGapCorrect = computed(() => !!gapWord.value);
         </ChoiceGrid>
 
         <KeyboardHintsBar v-if="phase === 'challenge'">
-          <KeyboardGuide mode="cluster" label="choisir" />
-          <KeyboardGuide mode="single" key-name="espace" label="valider" />
+          <KeyboardGuide mode="cluster" label="Flèches pour choisir" />
+          <KeyboardGuide mode="single" key-name="espace" label="Appuie pour valider" />
         </KeyboardHintsBar>
       </div>
 

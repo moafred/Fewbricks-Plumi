@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<Props>(), {
   glow: true,
 });
 
-const isWideKey = computed(() => ['space', 'backspace'].includes(props.keyName));
+const isWideKey = computed(() => ['space', 'backspace', 'espace', 'retour'].includes(props.keyName));
 
 // Tailles selon le contexte
 const sizeClasses = computed(() => {

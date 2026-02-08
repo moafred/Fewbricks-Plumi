@@ -2,7 +2,7 @@
 import { computed, watch, onUnmounted } from 'vue';
 import type { AnswerResult } from '@plumi/shared';
 import { useTriNombresStore } from '@/stores/tri-nombres';
-import { useKeyboardNavigation, useBackNavigation } from '@/composables';
+import { useKeyboardNavigation, useBackNavigation, useSyncGameProgress } from '@/composables';
 import CategoryButton from './CategoryButton.vue';
 import type { CategoryButtonState } from './CategoryButton.vue';
 import ProgressStars from './ProgressStars.vue';
@@ -106,6 +106,8 @@ game.startGame(props.count, {
   numberRange: props.numberRange,
   categories: props.categories,
 });
+
+useSyncGameProgress(() => game.results, () => game.currentIndex);
 </script>
 
 <template>
@@ -160,17 +162,18 @@ game.startGame(props.count, {
           <CategoryButton
             v-for="(category, idx) in categoryChoices"
             :key="category"
-            :verb-id="category as any"
+            :category-id="category"
             :label="category"
             :state="categoryState(category)"
+            :color-scheme="idx === 0 ? 'meadow' : 'gold'"
             :focused="focusedIndex === idx && game.phase === 'challenge'"
-            @tap="onTap(category)"
+            @tap="onTap"
           />
         </div>
 
         <KeyboardHintsBar v-if="game.phase === 'challenge'">
-          <KeyboardGuide mode="cluster" label="choisir" />
-          <KeyboardGuide mode="single" key-name="espace" label="valider" />
+          <KeyboardGuide mode="cluster" label="Flèches pour choisir" />
+          <KeyboardGuide mode="single" key-name="espace" label="Appuie pour valider" />
         </KeyboardHintsBar>
       </div>
     </template>

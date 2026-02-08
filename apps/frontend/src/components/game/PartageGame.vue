@@ -2,7 +2,7 @@
 import { computed, watch, onUnmounted } from 'vue';
 import type { AnswerResult } from '@plumi/shared';
 import { usePartageStore } from '@/stores/partage';
-import { useKeyboardNavigation, useBackNavigation } from '@/composables';
+import { useKeyboardNavigation, useBackNavigation, useSyncGameProgress } from '@/composables';
 import FormChoice from './FormChoice.vue';
 import type { FormChoiceState } from './FormChoice.vue';
 import KeyboardGuide from '@/components/ui/KeyboardGuide.vue';
@@ -135,6 +135,8 @@ if (props.embedded) {
 }
 
 game.startGame(props.count, { fractionDenominators: props.fractionDenominators });
+
+useSyncGameProgress(() => game.results, () => game.currentIndex);
 </script>
 
 <template>
@@ -219,8 +221,8 @@ game.startGame(props.count, { fractionDenominators: props.fractionDenominators }
         </ChoiceGrid>
 
         <KeyboardHintsBar v-if="game.phase === 'challenge'">
-          <KeyboardGuide mode="cluster" label="choisir" />
-          <KeyboardGuide mode="single" key-name="espace" label="valider" />
+          <KeyboardGuide mode="cluster" label="Flèches pour choisir" />
+          <KeyboardGuide mode="single" key-name="espace" label="Appuie pour valider" />
         </KeyboardHintsBar>
       </div>
     </template>

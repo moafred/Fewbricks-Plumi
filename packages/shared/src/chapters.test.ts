@@ -2,8 +2,8 @@ import { describe, it, expect } from 'vitest';
 import { BOOKS, CHAPTERS } from './chapters.js';
 
 describe('BOOKS', () => {
-  it('has 6 books (5 main + 1 bonus)', () => {
-    expect(BOOKS).toHaveLength(6);
+  it('has 14 books (13 main + 1 bonus)', () => {
+    expect(BOOKS).toHaveLength(14);
   });
 
   it('each book references valid chapter IDs', () => {
@@ -27,8 +27,8 @@ describe('BOOKS', () => {
 });
 
 describe('CHAPTERS', () => {
-  it('has 18 chapters (6 books x 3)', () => {
-    expect(CHAPTERS).toHaveLength(18);
+  it('has 42 chapters (14 books x 3)', () => {
+    expect(CHAPTERS).toHaveLength(42);
   });
 
   it('each chapter has at least 3 steps', () => {
@@ -43,8 +43,8 @@ describe('CHAPTERS', () => {
     }
   });
 
-  it('duel chapters include tri-verbes mechanic', () => {
-    const duels = CHAPTERS.filter((c) => c.verbs.length > 1 && c.tense !== 'mixed');
+  it('duel chapters (2 verbs, non-mixed) include tri-verbes mechanic', () => {
+    const duels = CHAPTERS.filter((c) => c.verbs && c.verbs.length === 2 && c.tense !== 'mixed');
     for (const ch of duels) {
       const mechanics = ch.steps.map((s) => s.mechanic);
       expect(mechanics).toContain('tri-verbes');
@@ -52,7 +52,7 @@ describe('CHAPTERS', () => {
   });
 
   it('single-verb chapters do not use tri-verbes', () => {
-    const singles = CHAPTERS.filter((c) => c.verbs.length === 1);
+    const singles = CHAPTERS.filter((c) => c.verbs && c.verbs.length === 1);
     for (const ch of singles) {
       const mechanics = ch.steps.map((s) => s.mechanic);
       expect(mechanics).not.toContain('tri-verbes');

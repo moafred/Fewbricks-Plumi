@@ -20,7 +20,7 @@ const tenseLabels: Record<Tense, string> = {
 </script>
 
 <template>
-  <span class="self-center px-3 py-1 rounded-full bg-sky-100 text-sky-700 text-sm font-medium">
+  <span class="shrink-0 self-center px-3 py-1 rounded-full bg-sky-100 text-sky-700 text-sm font-medium">
     {{ tenseLabels[tense] }}
   </span>
 </template>

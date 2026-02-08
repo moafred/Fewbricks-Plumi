@@ -30,6 +30,7 @@ export type {
   BookLesson,
   Subject,
   MathOperation,
+  ReperageTarget,
 } from './types.js';
 
 export { PRONOUNS, TENSES, MECHANIC_DISPLAY_NAMES } from './types.js';
@@ -113,6 +114,31 @@ export { generateEncrierItems, generateGnEncrierItems } from './encrier.js';
 
 export type { PontAccordsItem, PontAccordsSlot, PontAccordsOptions } from './pont-accords.js';
 export { generatePontAccordsItems } from './pont-accords.js';
+
+// Français — grammaire
+export type {
+  WordRole,
+  AnnotatedWord,
+  GrammarSentence,
+  NotASentence,
+} from './grammar-sentences.js';
+export {
+  GRAMMAR_SENTENCES,
+  NOT_SENTENCES,
+  buildSentenceText,
+  getSubjectWords,
+  getVerbWords,
+  getAdjectiveWords,
+} from './grammar-sentences.js';
+
+export type { PhraseSortingItem, PhraseSortingOptions } from './tri-phrases.js';
+export { generatePhraseSortingItems } from './tri-phrases.js';
+
+export type { PonctuationItem } from './ponctuation.js';
+export { generatePonctuationItems } from './ponctuation.js';
+
+export type { ReperageWord, ReperageItem, ReperageOptions } from './reperage.js';
+export { generateReperageItems } from './reperage.js';
 
 // Maths — mini-jeux réutilisés
 export type { MathSortingItem, MathSortingOptions } from './tri-nombres.js';

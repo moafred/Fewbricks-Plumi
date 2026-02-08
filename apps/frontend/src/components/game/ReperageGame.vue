@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, computed, watch, ref } from 'vue';
-import { useEncrierCalculStore } from '@/stores/encrier-calcul';
-import type { AnswerResult, MathOperation } from '@plumi/shared';
-import { useKeyboardNavigation, useBackNavigation, useSyncGameProgress } from '@/composables';
-import SentenceGap from '@/components/game/SentenceGap.vue';
+import { useReperageStore } from '@/stores/reperage';
+import type { AnswerResult, ReperageTarget } from '@plumi/shared';
+import { useBackNavigation, useSyncGameProgress } from '@/composables';
 import GameHeader from '@/components/game/GameHeader.vue';
 import ChallengeCard from '@/components/game/ChallengeCard.vue';
-import ChoiceButton from '@/components/game/ChoiceButton.vue';
-import type { ChoiceState } from '@/components/game/ChoiceButton.vue';
-import ChoiceGrid from '@/components/game/ChoiceGrid.vue';
+import WordChip from '@/components/game/WordChip.vue';
+import type { WordChipState } from '@/components/game/WordChip.vue';
 import ResolutionContinueButton from '@/components/game/ResolutionContinueButton.vue';
 import GameFinished from '@/components/game/GameFinished.vue';
 import KeyboardGuide from '@/components/ui/KeyboardGuide.vue';
@@ -19,11 +17,11 @@ import { storeToRefs } from 'pinia';
 const props = withDefaults(defineProps<{
   embedded?: boolean;
   count?: number;
-  numberRange?: [number, number];
-  operations?: MathOperation[];
+  target?: ReperageTarget;
 }>(), {
   embedded: false,
   count: 10,
+  target: 'verb',
 });
 
 const emit = defineEmits<{
@@ -31,32 +29,52 @@ const emit = defineEmits<{
   'step-complete': [payload: { score: number; total: number; results: (AnswerResult | null)[] }];
 }>();
 
-const store = useEncrierCalculStore();
+const store = useReperageStore();
 const {
   currentItem,
   phase,
   score,
   progress,
   lastResult,
-  selectedChoice,
+  selectedWordIndex,
   isFinished,
 } = storeToRefs(store);
 
-const choices = computed(() => currentItem.value?.choices ?? []);
+// Keyboard navigation — custom pour les mots
+const focusedWordIndex = ref(0);
 const isChallenge = computed(() => phase.value === 'challenge');
+const wordCount = computed(() => currentItem.value?.words.length ?? 0);
 
-const { focusedIndex, resetFocus } = useKeyboardNavigation(
-  choices,
-  (choice) => store.submitAnswer(choice),
-  isChallenge,
-  2,
-);
+function handleKeydown(e: KeyboardEvent) {
+  if (!isChallenge.value || wordCount.value === 0) return;
+
+  if (e.key === 'ArrowRight') {
+    e.preventDefault();
+    focusedWordIndex.value = (focusedWordIndex.value + 1) % wordCount.value;
+  } else if (e.key === 'ArrowLeft') {
+    e.preventDefault();
+    focusedWordIndex.value = (focusedWordIndex.value - 1 + wordCount.value) % wordCount.value;
+  } else if (e.key === ' ' || e.key === 'Enter') {
+    e.preventDefault();
+    store.submitAnswer(focusedWordIndex.value);
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeydown);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown);
+  store.resetGame();
+});
 
 watch(
   () => store.currentIndex,
-  () => resetFocus(),
+  () => { focusedWordIndex.value = 0; },
 );
 
+// Back Navigation
 const showQuitConfirmation = ref(false);
 
 function handleBack() {
@@ -69,6 +87,7 @@ function handleBack() {
 
 useBackNavigation(handleBack, computed(() => !props.embedded && !showQuitConfirmation.value));
 
+// Emettre step-complete en mode embedded
 if (props.embedded) {
   watch(
     () => store.isFinished,
@@ -85,33 +104,32 @@ if (props.embedded) {
 }
 
 onMounted(() => {
-  store.startGame(props.count, {
-    operations: props.operations,
-    numberRange: props.numberRange,
-  });
+  store.startGame(props.count, props.target);
 });
 
-onUnmounted(() => {
-  store.resetGame();
-});
-
-function choiceState(choice: string, index: number): ChoiceState {
-  if (phase.value === 'challenge' || phase.value === 'discovery') {
-    return (phase.value === 'challenge' && index === focusedIndex.value) ? 'focused' : 'idle';
+function wordState(wordIndex: number): WordChipState {
+  if (phase.value === 'discovery') return 'dimmed';
+  if (phase.value === 'challenge') {
+    return wordIndex === focusedWordIndex.value ? 'focused' : 'idle';
   }
-  if (choice === currentItem.value?.correctAnswer) return 'correct';
-  if (choice === selectedChoice.value) return 'incorrect';
+
+  // response or resolution
+  const item = currentItem.value;
+  if (!item) return 'dimmed';
+
+  const isTarget = item.correctIndices.includes(wordIndex);
+  const isSelected = wordIndex === selectedWordIndex.value;
+
+  if (lastResult.value === 'correct') {
+    if (isTarget) return 'correct';
+    return 'dimmed';
+  }
+
+  // incorrect
+  if (isTarget) return 'target';
+  if (isSelected) return 'incorrect';
   return 'dimmed';
 }
-
-const gapWord = computed(() => {
-  if (phase.value === 'response' || phase.value === 'resolution') {
-    return currentItem.value?.correctAnswer;
-  }
-  return undefined;
-});
-
-const isGapCorrect = computed(() => !!gapWord.value);
 
 useSyncGameProgress(() => store.results, () => store.currentIndex);
 </script>
@@ -124,48 +142,46 @@ useSyncGameProgress(() => store.results, () => store.currentIndex);
 
     <GameHeader
       v-if="!embedded"
-      label="Calcul"
+      label="Repérage"
       :current="progress.current + 1"
       :total="progress.total"
-      color-class="text-gold-400"
+      color-class="text-coral-600"
       @back="handleBack"
     />
 
     <!-- Finished State -->
     <GameFinished
       v-if="isFinished && !embedded"
-      title="Calcul Terminé !"
+      title="Repérage Terminé !"
       :score="score"
       :total="progress.total"
+      title-color="text-coral-600"
       @home="$emit('home')"
-      @replay="store.startGame()"
+      @replay="store.startGame(count, target)"
     />
 
     <!-- Game Area -->
     <template v-else-if="currentItem">
 
-      <ChallengeCard hint="Complète le calcul !" :compact="embedded">
-        <SentenceGap
-          :sentence="currentItem.sentence"
-          :filled-word="gapWord"
-          :is-correct="isGapCorrect"
-          :is-wrong="false"
+      <ChallengeCard :hint="currentItem.hint" :compact="embedded" />
+
+      <!-- Mots de la phrase -->
+      <div class="flex flex-wrap items-center justify-center gap-3 md:gap-4 px-2">
+        <WordChip
+          v-for="(word, idx) in currentItem.words"
+          :key="`${currentItem.id}-${idx}`"
+          :word="word.word"
+          :state="wordState(idx)"
+          :disabled="phase !== 'challenge'"
+          @tap="store.submitAnswer(idx)"
         />
-      </ChallengeCard>
+        <!-- Ponctuation (non cliquable) -->
+        <span class="text-xl md:text-2xl font-learning text-stone-400">
+          {{ currentItem.sentence.slice(-1) }}
+        </span>
+      </div>
 
-      <!-- Choices -->
-      <div class="flex flex-col items-center w-full" :class="embedded ? 'gap-2 pb-2' : 'gap-10 pb-12'">
-        <ChoiceGrid>
-          <ChoiceButton
-            v-for="(choice, index) in currentItem.choices"
-            :key="choice"
-            :label="choice"
-            :state="choiceState(choice, index)"
-            :disabled="phase !== 'challenge'"
-            @select="store.submitAnswer(choice)"
-          />
-        </ChoiceGrid>
-
+      <div class="flex flex-col items-center w-full" :class="embedded ? 'gap-2 pb-2' : 'gap-6 pb-8'">
         <KeyboardHintsBar v-if="phase === 'challenge'">
           <KeyboardGuide mode="cluster" label="Flèches pour choisir" />
           <KeyboardGuide mode="single" key-name="espace" label="Appuie pour valider" />
@@ -182,7 +198,7 @@ useSyncGameProgress(() => store.results, () => store.currentIndex);
 
     <ConfirmModal
       v-if="showQuitConfirmation && !embedded"
-      title="Quitter le calcul ?"
+      title="Quitter le Repérage ?"
       message="Si tu sors maintenant, tu devras recommencer."
       confirm-label="Quitter"
       cancel-label="Continuer"

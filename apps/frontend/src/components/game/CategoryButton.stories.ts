@@ -9,34 +9,38 @@ const meta: Meta<typeof CategoryButton> = {
       control: 'select',
       options: ['idle', 'waiting', 'correct', 'incorrect', 'reveal'],
     },
+    colorScheme: {
+      control: 'select',
+      options: ['meadow', 'gold', 'sky', 'coral'],
+    },
   },
 };
 
 export default meta;
 type Story = StoryObj<typeof CategoryButton>;
 
-export const EtreIdle: Story = {
-  args: { verbId: 'etre', label: 'être', state: 'idle' },
+export const MeadowIdle: Story = {
+  args: { categoryId: 'etre', label: 'être', state: 'idle', colorScheme: 'meadow' },
 };
 
-export const EtreWaiting: Story = {
-  args: { verbId: 'etre', label: 'être', state: 'waiting' },
+export const MeadowWaiting: Story = {
+  args: { categoryId: 'etre', label: 'être', state: 'waiting', colorScheme: 'meadow' },
 };
 
-export const EtreCorrect: Story = {
-  args: { verbId: 'etre', label: 'être', state: 'correct' },
+export const MeadowCorrect: Story = {
+  args: { categoryId: 'etre', label: 'être', state: 'correct', colorScheme: 'meadow' },
 };
 
-export const AvoirWaiting: Story = {
-  args: { verbId: 'avoir', label: 'avoir', state: 'waiting' },
+export const GoldWaiting: Story = {
+  args: { categoryId: 'avoir', label: 'avoir', state: 'waiting', colorScheme: 'gold' },
 };
 
-export const AvoirIncorrect: Story = {
-  args: { verbId: 'avoir', label: 'avoir', state: 'incorrect' },
+export const GoldIncorrect: Story = {
+  args: { categoryId: 'avoir', label: 'avoir', state: 'incorrect', colorScheme: 'gold' },
 };
 
-export const AvoirReveal: Story = {
-  args: { verbId: 'avoir', label: 'avoir', state: 'reveal' },
+export const GoldReveal: Story = {
+  args: { categoryId: 'avoir', label: 'avoir', state: 'reveal', colorScheme: 'gold' },
 };
 
 export const BothWaiting: Story = {
@@ -44,9 +48,17 @@ export const BothWaiting: Story = {
     components: { CategoryButton },
     template: `
       <div style="display: flex; gap: 24px;">
-        <CategoryButton verb-id="etre" label="être" state="waiting" />
-        <CategoryButton verb-id="avoir" label="avoir" state="waiting" />
+        <CategoryButton category-id="phrase" label="Phrase" state="waiting" color-scheme="meadow" />
+        <CategoryButton category-id="non-phrase" label="Pas une phrase" state="waiting" color-scheme="gold" />
       </div>
     `,
   }),
+};
+
+export const SkyWaiting: Story = {
+  args: { categoryId: 'sky-cat', label: 'Catégorie A', state: 'waiting', colorScheme: 'sky' },
+};
+
+export const CoralWaiting: Story = {
+  args: { categoryId: 'coral-cat', label: 'Catégorie B', state: 'waiting', colorScheme: 'coral' },
 };

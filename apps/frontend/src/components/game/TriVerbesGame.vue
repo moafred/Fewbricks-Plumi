@@ -3,7 +3,7 @@ import { ref, computed, watch, onUnmounted } from 'vue';
 import type { VerbId, Tense, Pronoun, AnswerResult } from '@plumi/shared';
 import { getInfinitive } from '@plumi/shared';
 import { useGameStore } from '@/stores/game';
-import { useKeyboardNavigation, useBackNavigation } from '@/composables';
+import { useKeyboardNavigation, useBackNavigation, useSyncGameProgress } from '@/composables';
 import CategoryButton from './CategoryButton.vue';
 import WordCard from './WordCard.vue';
 import ProgressStars from './ProgressStars.vue';
@@ -80,8 +80,8 @@ onUnmounted(() => {
   clearResolutionTimer();
 });
 
-function onTap(verbId: VerbId) {
-  game.submitAnswer(verbId);
+function onTap(categoryId: string) {
+  game.submitAnswer(categoryId as VerbId);
 }
 
 function categoryState(verbId: VerbId): CategoryButtonState {
@@ -119,6 +119,8 @@ game.startGame(props.tense, props.count, {
   pronouns: props.pronouns,
   verbs: props.verbs,
 });
+
+useSyncGameProgress(() => game.results, () => game.currentIndex);
 </script>
 
 <template>
@@ -140,12 +142,13 @@ game.startGame(props.tense, props.count, {
 
     <!-- Playing -->
     <template v-else>
-      <!-- Header: tense badge + progress stars -->
-      <div class="w-full max-w-md flex flex-col gap-2">
+      <!-- Header: tense badge + progress stars (mode standalone uniquement) -->
+      <div v-if="!embedded" class="w-full max-w-md flex items-center justify-center gap-3">
         <TenseBadge :tense="game.currentTense" />
         <ProgressStars
           :results="game.results"
           :current="game.currentIndex"
+          class="flex-1"
         />
       </div>
 
@@ -176,9 +179,10 @@ game.startGame(props.tense, props.count, {
           <CategoryButton
             v-for="(verbId, idx) in categoryChoices"
             :key="verbId"
-            :verb-id="verbId"
+            :category-id="verbId"
             :label="getInfinitive(verbId)"
             :state="categoryState(verbId)"
+            :color-scheme="idx === 0 ? 'meadow' : 'gold'"
             :focused="focusedIndex === idx && game.phase === 'challenge'"
             @tap="onTap"
           />
@@ -186,8 +190,8 @@ game.startGame(props.tense, props.count, {
 
         <!-- Keyboard Hints -->
         <KeyboardHintsBar v-if="game.phase === 'challenge'">
-           <KeyboardGuide mode="cluster" label="choisir" />
-           <KeyboardGuide mode="single" key-name="espace" label="valider" />
+           <KeyboardGuide mode="cluster" label="Flèches pour choisir" />
+           <KeyboardGuide mode="single" key-name="espace" label="Appuie pour valider" />
         </KeyboardHintsBar>
       </div>
     </template>

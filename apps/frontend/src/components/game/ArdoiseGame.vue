@@ -2,7 +2,7 @@
 import { computed, watch, onUnmounted } from 'vue';
 import type { Tense, VerbId, Pronoun, AnswerResult } from '@plumi/shared';
 import { useArdoiseStore } from '@/stores/ardoise';
-import { useKeyboardNavigation, useBackNavigation } from '@/composables';
+import { useKeyboardNavigation, useBackNavigation, useSyncGameProgress } from '@/composables';
 import FormChoice from './FormChoice.vue';
 import type { FormChoiceState } from './FormChoice.vue';
 import KeyboardGuide from '@/components/ui/KeyboardGuide.vue';
@@ -118,6 +118,8 @@ game.startGame(props.tense, props.count, {
   verbs: props.verbs,
   pronouns: props.pronouns,
 });
+
+useSyncGameProgress(() => game.results, () => game.currentIndex);
 </script>
 
 <template>
@@ -139,12 +141,13 @@ game.startGame(props.tense, props.count, {
 
     <!-- Playing -->
     <template v-else>
-      <!-- Header: tense badge + progress stars -->
-      <div class="w-full max-w-md flex flex-col gap-2">
+      <!-- Header: tense badge + progress stars (mode standalone uniquement) -->
+      <div v-if="!embedded" class="w-full max-w-md flex items-center justify-center gap-3">
         <TenseBadge :tense="game.currentTense" />
         <ProgressStars
           :results="game.results"
           :current="game.currentIndex"
+          class="flex-1"
         />
       </div>
 
@@ -187,8 +190,8 @@ game.startGame(props.tense, props.count, {
 
         <!-- Keyboard Hints -->
         <KeyboardHintsBar v-if="game.phase === 'challenge'">
-           <KeyboardGuide mode="cluster" label="choisir" />
-           <KeyboardGuide mode="single" key-name="espace" label="valider" />
+           <KeyboardGuide mode="cluster" label="Flèches pour choisir" />
+           <KeyboardGuide mode="single" key-name="espace" label="Appuie pour valider" />
         </KeyboardHintsBar>
       </div>
     </template>

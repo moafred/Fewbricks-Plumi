@@ -1,15 +1,19 @@
 <script setup lang="ts">
-import { ref, computed, type Component } from 'vue';
+import { ref, computed, watch, type Component } from 'vue';
 import type { StepMechanic, AnswerResult, Tense } from '@plumi/shared';
 import { getChapter } from '@plumi/shared';
 import { useChapterProgressStore } from '@/stores/chapter-progress';
-import { useBackNavigation } from '@/composables';
+import { useBackNavigation, useProvideGameProgress } from '@/composables';
 import ChapterResult from './ChapterResult.vue';
 import TriVerbesGame from './TriVerbesGame.vue';
 import ArdoiseGame from './ArdoiseGame.vue';
 import EncrierGame from './EncrierGame.vue';
 import PontAccordsGame from './PontAccordsGame.vue';
 import EncrierGnGame from './EncrierGnGame.vue';
+// Français — grammaire
+import TriPhrasesGame from './TriPhrasesGame.vue';
+import PonctuationGame from './PonctuationGame.vue';
+import ReperageGame from './ReperageGame.vue';
 // Maths — réutilisées
 import TriNombresGame from './TriNombresGame.vue';
 import ArdoiseCalculGame from './ArdoiseCalculGame.vue';
@@ -22,8 +26,9 @@ import HorlogeGame from './HorlogeGame.vue';
 import MarcheGame from './MarcheGame.vue';
 import ConfirmModal from '@/components/ui/ConfirmModal.vue';
 import CrossIcon from '@/components/icons/CrossIcon.vue';
-import NotebookBadge from '@/components/ui/NotebookBadge.vue';
 import NotebookButton from '@/components/ui/NotebookButton.vue';
+import TenseBadge from '@/components/ui/TenseBadge.vue';
+import ProgressStars from './ProgressStars.vue';
 
 const props = defineProps<{
   chapterId: number;
@@ -36,6 +41,7 @@ const emit = defineEmits<{
 
 const chapter = computed(() => getChapter(props.chapterId));
 const progressStore = useChapterProgressStore();
+const { gameProgress, resetGameProgress } = useProvideGameProgress();
 
 // Mapping mécanique -> composant
 const mechanicComponents: Partial<Record<StepMechanic, Component>> = {
@@ -45,6 +51,10 @@ const mechanicComponents: Partial<Record<StepMechanic, Component>> = {
   'encrier': EncrierGame,
   'pont-accords': PontAccordsGame,
   'encrier-gn': EncrierGnGame,
+  // Français — grammaire
+  'tri-phrases': TriPhrasesGame,
+  'ponctuation': PonctuationGame,
+  'reperage': ReperageGame,
   // Maths — réutilisées
   'tri-nombres': TriNombresGame,
   'ardoise-calcul': ArdoiseCalculGame,
@@ -78,6 +88,15 @@ const stepTense = computed<Tense>(() => {
   if (!t || t === 'mixed') return 'present';
   return t;
 });
+
+// TenseBadge uniquement pour les chapitres avec un temps défini (français)
+const hasTense = computed(() => {
+  const t = chapter.value?.tense;
+  return !!t && t !== 'mixed';
+});
+
+// Reset la progression intra-étape quand on change d'étape
+watch(currentStepIndex, () => resetGameProgress());
 
 // Progression visuelle
 const totalScore = computed(() => stepScores.value.reduce((sum, s) => sum + s.score, 0));
@@ -142,19 +161,29 @@ useBackNavigation(handleBack, computed(() => !showQuitConfirmation.value));
 <template>
   <div class="h-dvh flex flex-col w-full overflow-hidden">
 
-    <!-- Header (in-flow, pas fixed) -->
-    <header class="shrink-0 flex items-center justify-between px-4 py-3">
+    <!-- Header compact : ✕  [Présent]  Étape 1/4  ★☆ -->
+    <header class="shrink-0 flex items-center px-4 py-2 gap-2">
       <NotebookButton variant="icon" size="sm" @click="handleBack">
-        <CrossIcon :size="32" class="text-stone-400" />
+        <CrossIcon :size="28" class="text-stone-400" />
       </NotebookButton>
 
-      <NotebookBadge v-if="!showingResult">
-        <span class="text-sky-600 font-bold">
-          Étape {{ currentStepIndex + 1 }} / {{ steps.length }}
-        </span>
-      </NotebookBadge>
+      <template v-if="!showingResult">
+        <TenseBadge v-if="hasTense" :tense="stepTense" />
 
-      <div class="w-10"></div>
+        <span class="text-sky-600 font-bold text-sm">
+          Étape {{ currentStepIndex + 1 }}/{{ steps.length }}
+        </span>
+
+        <div class="flex-1" />
+
+        <ProgressStars
+          v-if="gameProgress.results.length > 0"
+          :results="gameProgress.results"
+          :current="gameProgress.current"
+        />
+      </template>
+
+      <div v-else class="flex-1" />
     </header>
 
     <!-- Mini-jeu en cours -->
@@ -170,6 +199,7 @@ useBackNavigation(handleBack, computed(() => !showQuitConfirmation.value));
         :operations="currentStep.operations"
         :categories="currentStep.categories"
         :fraction-denominators="currentStep.fractionDenominators"
+        :target="currentStep.target"
         embedded
         @step-complete="onStepComplete"
         @home="handleBack"

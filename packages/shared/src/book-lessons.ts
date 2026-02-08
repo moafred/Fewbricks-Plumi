@@ -414,6 +414,138 @@ export const BOOK_LESSONS: BookLesson[] = [
       },
     ],
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // LIVRE 11 — Verbes -IR (FINIR, 2e groupe)
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    bookId: 11,
+    title: 'Le verbe FINIR',
+    introduction:
+      'FINIR est le premier verbe du 2e groupe ! Il se conjugue avec -ISS- au pluriel. Finis, finit, mais finissons !',
+    sections: [
+      {
+        title: 'FINIR au présent',
+        verbId: 'finir',
+        tense: 'present',
+        examples: [
+          { sentence: 'Je finis mon dessin.', highlight: 'finis' },
+          { sentence: 'Nous finissons nos devoirs.', highlight: 'finissons' },
+          { sentence: 'Ils finissent le repas.', highlight: 'finissent' },
+        ],
+        tip: { text: 'Avec nous, vous, ils : le -ISS- apparaît ! Fini-SS-ons, fini-SS-ez, fini-SS-ent.' },
+      },
+      {
+        title: 'FINIR au futur',
+        verbId: 'finir',
+        tense: 'futur',
+        examples: [
+          { sentence: 'Je finirai demain.', highlight: 'finirai' },
+          { sentence: 'Nous finirons bientôt.', highlight: 'finirons' },
+        ],
+        tip: { text: 'Au futur, c\'est facile : finir + ai, as, a, ons, ez, ont !' },
+      },
+      {
+        title: 'FINIR à l\'imparfait',
+        verbId: 'finir',
+        tense: 'imparfait',
+        examples: [
+          { sentence: 'Je finissais lentement.', highlight: 'finissais' },
+          { sentence: 'Nous finissions ensemble.', highlight: 'finissions' },
+        ],
+        tip: { text: 'À l\'imparfait aussi, le -ISS- est là : finissais, finissait, finissions...' },
+      },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // LIVRE 12 — La Phrase
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    bookId: 12,
+    title: 'La Phrase et la Ponctuation',
+    introduction:
+      'Une phrase commence par une majuscule, contient un verbe, et se termine par un point. Apprends à la reconnaître !',
+    sections: [
+      {
+        title: 'Qu\'est-ce qu\'une phrase ?',
+        examples: [
+          { sentence: 'Le chat dort.', highlight: 'Le' },
+          { sentence: 'Les enfants jouent dans la cour.', highlight: 'Les' },
+        ],
+        tip: { text: 'Une phrase a 3 choses : une Majuscule au début, un Verbe, un Point à la fin.' },
+      },
+      {
+        title: 'Les signes de ponctuation',
+        examples: [
+          { sentence: 'Le chat dort.', highlight: '.' },
+          { sentence: 'Tu viens jouer ?', highlight: '?' },
+          { sentence: 'Nous avons gagné !', highlight: '!' },
+        ],
+        tip: { text: 'Le point (.) raconte, le point d\'interrogation (?) pose une question, le point d\'exclamation (!) montre une émotion.' },
+      },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // LIVRE 13 — L'Adjectif qualificatif
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    bookId: 13,
+    title: 'L\'Adjectif Qualificatif',
+    introduction:
+      'L\'adjectif donne des informations sur le nom : la couleur, la taille, la forme... Il s\'accorde avec le nom !',
+    sections: [
+      {
+        title: 'Reconnaître l\'adjectif',
+        examples: [
+          { sentence: 'Le petit chat dort.', highlight: 'petit' },
+          { sentence: 'La fleur est rouge.', highlight: 'rouge' },
+          { sentence: 'Les grands arbres.', highlight: 'grands' },
+        ],
+        tip: { text: 'L\'adjectif dit comment est le nom. Petit, grand, joli, rouge, bleu...' },
+      },
+      {
+        title: 'L\'accord de l\'adjectif',
+        examples: [
+          { sentence: 'Le chat est petit.', highlight: 'petit' },
+          { sentence: 'La chatte est petite.', highlight: 'petite' },
+          { sentence: 'Les chats sont petits.', highlight: 'petits' },
+        ],
+        tip: { text: 'L\'adjectif s\'accorde : féminin = +E, pluriel = +S. Petit → petite → petits → petites.' },
+      },
+    ],
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // LIVRE 14 — Sujet et Verbe
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    bookId: 14,
+    title: 'Le Sujet et le Verbe',
+    introduction:
+      'Dans chaque phrase, il y a un sujet (qui fait l\'action) et un verbe (l\'action). Apprends à les trouver !',
+    sections: [
+      {
+        title: 'Trouver le verbe',
+        examples: [
+          { sentence: 'Le chat mange un poisson.', highlight: 'mange' },
+          { sentence: 'Les enfants jouent.', highlight: 'jouent' },
+          { sentence: 'Le soleil brille.', highlight: 'brille' },
+        ],
+        tip: { text: 'Le verbe, c\'est l\'action ! Mange, joue, court, dort... Que fait-on ?' },
+      },
+      {
+        title: 'Trouver le sujet',
+        examples: [
+          { sentence: 'Le chat mange un poisson.', highlight: 'Le chat' },
+          { sentence: 'Les enfants jouent.', highlight: 'Les enfants' },
+          { sentence: 'Maman prépare le repas.', highlight: 'Maman' },
+        ],
+        tip: { text: 'Pour trouver le sujet, demande : « Qui est-ce qui + verbe ? » Qui est-ce qui mange ? Le chat !' },
+      },
+    ],
+  },
 ];
 
 /** Toutes les leçons (français + maths) */

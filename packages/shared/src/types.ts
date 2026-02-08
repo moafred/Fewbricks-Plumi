@@ -9,6 +9,8 @@ export type VerbId =
   | 'manger'
   | 'chanter'
   | 'regarder'
+  // 2ème groupe (-ir)
+  | 'finir'
   // 3ème groupe — irréguliers fréquents
   | 'aller'
   | 'faire'
@@ -113,9 +115,13 @@ export type Subject = 'francais' | 'maths';
 
 export type MathOperation = 'addition' | 'subtraction' | 'multiplication';
 
+export type ReperageTarget = 'verb' | 'subject' | 'adjective';
+
 export type StepMechanic =
-  // Français
+  // Français — conjugaison
   | 'tri-verbes' | 'ardoise' | 'encrier' | 'pont-accords' | 'encrier-gn'
+  // Français — grammaire
+  | 'tri-phrases' | 'ponctuation' | 'reperage'
   // Maths — réutilisées
   | 'tri-nombres' | 'ardoise-calcul' | 'encrier-calcul'
   // Maths — spécifiques
@@ -125,12 +131,16 @@ export type StepMechanic =
  * Display names for mini-game mechanics (educational terminology)
  */
 export const MECHANIC_DISPLAY_NAMES: Record<StepMechanic, string> = {
-  // Français
+  // Français — conjugaison
   'tri-verbes': 'Trier les Verbes',
   'ardoise': 'Choisir la Bonne Forme',
   'encrier': 'Compléter la Phrase',
   'pont-accords': 'Le Pont des Accords',
   'encrier-gn': 'Les Groupes Nominaux',
+  // Français — grammaire
+  'tri-phrases': 'Phrase ou pas phrase ?',
+  'ponctuation': 'Le Bon Signe',
+  'reperage': 'Trouve le mot !',
   // Maths — réutilisées
   'tri-nombres': 'Trier les Nombres',
   'ardoise-calcul': 'Le Bon Résultat',
@@ -156,6 +166,8 @@ export interface ChapterStep {
   /** Catégories pour tri-nombres (ex: ['pair', 'impair']) */
   categories?: string[];
   fractionDenominators?: number[];
+  /** Cible pour le repérage (verbe, sujet, adjectif) */
+  target?: ReperageTarget;
 }
 
 export interface Chapter {
@@ -181,6 +193,10 @@ export type ThemeId =
   | 'bibliotheque'
   | 'arcanes'
   | 'symphonie'
+  | 'verger'
+  | 'ecole'
+  | 'galerie'
+  | 'observatoire'
   // Maths
   | 'nombres'
   | 'additions'

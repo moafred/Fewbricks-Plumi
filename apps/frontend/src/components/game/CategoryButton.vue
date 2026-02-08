@@ -1,23 +1,26 @@
 <script setup lang="ts">
-import type { VerbId } from '@plumi/shared';
 import { CategoryIcon } from '@/components/icons';
 
 export type CategoryButtonState = 'idle' | 'waiting' | 'correct' | 'incorrect' | 'reveal';
 
+export type CategoryColorScheme = 'meadow' | 'gold' | 'sky' | 'coral';
+
 const props = defineProps<{
-  verbId: VerbId;
+  categoryId: string;
   label: string;
   state: CategoryButtonState;
   focused?: boolean;
+  /** Schéma de couleurs (défaut: meadow pour index pair, gold pour impair) */
+  colorScheme?: CategoryColorScheme;
 }>();
 
 const emit = defineEmits<{
-  tap: [verbId: VerbId];
+  tap: [categoryId: string];
 }>();
 
 function handleTap() {
   if (props.state === 'waiting') {
-    emit('tap', props.verbId);
+    emit('tap', props.categoryId);
   }
 }
 </script>
@@ -26,10 +29,14 @@ function handleTap() {
   <button
     class="category-button flex flex-col items-center justify-center rounded-full w-32 h-32 md:w-36 md:h-36 text-xl md:text-2xl font-bold transition-all duration-200 select-none border-4"
     :class="[
-      // Base color per verb
-      verbId === 'etre'
-        ? 'bg-meadow-300 border-meadow-500 text-meadow-900'
-        : 'bg-gold-300 border-gold-500 text-gold-900',
+      // Base color per scheme
+      colorScheme === 'gold'
+        ? 'bg-gold-300 border-gold-500 text-gold-900'
+        : colorScheme === 'sky'
+          ? 'bg-sky-300 border-sky-500 text-sky-900'
+          : colorScheme === 'coral'
+            ? 'bg-coral-300 border-coral-500 text-coral-900'
+            : 'bg-meadow-300 border-meadow-500 text-meadow-900',
       // State modifiers
       {
         'opacity-50 cursor-default': state === 'idle',
