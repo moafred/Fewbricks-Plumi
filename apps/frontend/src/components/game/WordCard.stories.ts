@@ -17,12 +17,12 @@ export const TriVerbes: Story = {
   },
 };
 
-export const GrimoireWithSeparator: Story = {
+export const ArdoiseStacked: Story = {
   args: {
     pronoun: 'je',
     form: 'être',
     phase: 'challenge',
-    separator: '\u2192',
+    separator: '→',
   },
 };
 

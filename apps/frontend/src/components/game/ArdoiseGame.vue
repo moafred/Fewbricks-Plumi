@@ -3,10 +3,10 @@ import { computed, watch, onUnmounted } from 'vue';
 import type { Tense, VerbId, Pronoun, AnswerResult } from '@plumi/shared';
 import { useArdoiseStore } from '@/stores/ardoise';
 import { useKeyboardNavigation, useBackNavigation, useSyncGameProgress } from '@/composables';
+import GameLayout from '@/components/game/GameLayout.vue';
+import ChoicesSection from '@/components/game/ChoicesSection.vue';
 import FormChoice from './FormChoice.vue';
 import type { FormChoiceState } from './FormChoice.vue';
-import KeyboardGuide from '@/components/ui/KeyboardGuide.vue';
-import KeyboardHintsBar from '@/components/ui/KeyboardHintsBar.vue';
 import TenseBadge from '@/components/ui/TenseBadge.vue';
 import ChoiceGrid from './ChoiceGrid.vue';
 import WordCard from './WordCard.vue';
@@ -123,10 +123,7 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
 </script>
 
 <template>
-  <div
-    class="ardoise-game flex flex-col items-center px-4"
-    :class="embedded ? 'h-full min-h-0 py-2 gap-2' : 'min-h-screen justify-between py-6 gap-4'"
-  >
+  <GameLayout :embedded="embedded">
     <!-- Finished: show results -->
     <template v-if="game.isFinished && !embedded">
       <div class="flex-1 flex items-center justify-center w-full">
@@ -153,8 +150,8 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
 
       <!-- Instruction -->
       <p class="text-xl md:text-2xl font-bold text-stone-700 text-center drop-shadow-sm">
-        <template v-if="game.phase === 'discovery'">La formule apparaît...</template>
-        <template v-else-if="game.phase === 'challenge'">Quelle est la bonne formule ?</template>
+        <template v-if="game.phase === 'discovery'">Regarde bien...</template>
+        <template v-else-if="game.phase === 'challenge'">Quel est le bon mot ?</template>
         <template v-else-if="game.lastResult === 'correct'">Bien joué !</template>
         <template v-else>
           C'était <strong class="text-meadow-600">{{ game.correctForm }}</strong>
@@ -162,7 +159,7 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
       </p>
 
       <!-- Prompt: pronoun → infinitive -->
-      <div class="flex-1 flex items-center justify-center w-full" :class="embedded ? '' : 'py-12'">
+      <div class="flex-1 flex items-center justify-center w-full" :class="embedded ? '' : 'py-4'">
         <div class="w-full max-w-2xl px-4 flex justify-center">
           <WordCard
             v-if="game.currentItem"
@@ -176,7 +173,7 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
       </div>
 
       <!-- 2×2 grid of choices -->
-      <div class="flex flex-col items-center w-full" :class="embedded ? 'gap-2 pb-2' : 'gap-8 pb-12'">
+      <ChoicesSection :embedded="embedded" :phase="game.phase">
         <ChoiceGrid max-width="2xl">
           <FormChoice
             v-for="(choice, index) in game.currentItem?.choices"
@@ -187,13 +184,7 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
             @tap="onTap"
           />
         </ChoiceGrid>
-
-        <!-- Keyboard Hints -->
-        <KeyboardHintsBar v-if="game.phase === 'challenge'">
-           <KeyboardGuide mode="cluster" label="Flèches pour choisir" />
-           <KeyboardGuide mode="single" key-name="espace" label="Appuie pour valider" />
-        </KeyboardHintsBar>
-      </div>
+      </ChoicesSection>
     </template>
-  </div>
+  </GameLayout>
 </template>
