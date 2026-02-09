@@ -69,12 +69,14 @@ function shelfMaxStars(shelf: Shelf): number {
         {{ shelfTitle }}
       </h1>
 
-      <!-- Avatar enfant actif -->
-      <button
+      <!-- Avatar enfant actif (cliquable si 2+ enfants) -->
+      <component
+        :is="playerStore.children.length > 1 ? 'button' : 'div'"
         v-if="playerStore.activeChild"
-        class="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/70 hover:bg-white/90 active:scale-95 transition-all shadow-sm cursor-pointer"
-        aria-label="Changer de joueur"
-        @click="$emit('switch-child')"
+        class="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/70 shadow-sm"
+        :class="playerStore.children.length > 1 ? 'hover:bg-white/90 active:scale-95 transition-all cursor-pointer' : ''"
+        :aria-label="playerStore.children.length > 1 ? 'Changer de joueur' : undefined"
+        @click="playerStore.children.length > 1 && $emit('switch-child')"
       >
         <ChildAvatar
           :name="playerStore.activeChild.name"
@@ -84,7 +86,7 @@ function shelfMaxStars(shelf: Shelf): number {
         <span class="text-sm font-bold text-stone-600 hidden md:inline">
           {{ playerStore.activeChild.name }}
         </span>
-      </button>
+      </component>
     </header>
 
     <!-- Étagères -->

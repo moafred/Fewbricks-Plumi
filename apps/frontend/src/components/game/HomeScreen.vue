@@ -38,12 +38,14 @@ const mathStars = computed(() => computeSubjectStars('maths'));
   <div class="home-screen flex flex-col min-h-screen p-6">
     <!-- Header — Logo Plumi + avatar enfant -->
     <header class="relative flex justify-center pt-4">
-      <!-- Avatar badge — retour au sélecteur d'enfant -->
-      <button
+      <!-- Avatar badge — retour au sélecteur d'enfant (cliquable si 2+ enfants) -->
+      <component
+        :is="playerStore.children.length > 1 ? 'button' : 'div'"
         v-if="playerStore.activeChild"
-        class="absolute top-4 right-0 flex items-center gap-2 px-3 py-2 rounded-xl bg-white/70 hover:bg-white/90 active:scale-95 transition-all shadow-sm cursor-pointer"
-        aria-label="Changer de joueur"
-        @click="$emit('switch-child')"
+        class="absolute top-4 right-0 flex items-center gap-2 px-3 py-2 rounded-xl bg-white/70 shadow-sm"
+        :class="playerStore.children.length > 1 ? 'hover:bg-white/90 active:scale-95 transition-all cursor-pointer' : ''"
+        :aria-label="playerStore.children.length > 1 ? 'Changer de joueur' : undefined"
+        @click="playerStore.children.length > 1 && $emit('switch-child')"
       >
         <ChildAvatar
           :name="playerStore.activeChild.name"
@@ -53,7 +55,7 @@ const mathStars = computed(() => computeSubjectStars('maths'));
         <span class="text-sm font-bold text-stone-600 hidden md:inline">
           {{ playerStore.activeChild.name }}
         </span>
-      </button>
+      </component>
       <img
         src="/plumi-landing.png"
         alt="Plumi"
