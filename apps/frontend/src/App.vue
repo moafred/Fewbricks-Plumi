@@ -1,16 +1,20 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import type { Subject } from '@plumi/shared';
+import ChildSelector from '@/components/game/ChildSelector.vue';
 import HomeScreen from '@/components/game/HomeScreen.vue';
 import BookShelf from '@/components/game/BookShelf.vue';
 import BookView from '@/components/game/BookView.vue';
 import BookLessonScreen from '@/components/game/BookLessonScreen.vue';
 import ChapterRunner from '@/components/game/ChapterRunner.vue';
+import { usePlayerStore } from '@/stores/player';
 import { useBookTheme } from '@/composables';
 
-type Screen = 'home' | 'bookshelf' | 'book-view' | 'book-lesson' | 'chapter-runner';
+type Screen = 'child-selector' | 'home' | 'bookshelf' | 'book-view' | 'book-lesson' | 'chapter-runner';
 
-const screen = ref<Screen>('home');
+const playerStore = usePlayerStore();
+
+const screen = ref<Screen>(playerStore.hasChildren ? 'child-selector' : 'home');
 const selectedSubject = ref<Subject>('francais');
 const selectedBookId = ref<number>(1);
 
@@ -23,6 +27,15 @@ const activeBookId = computed(() =>
 const { bgClass } = useBookTheme(activeBookId);
 
 const selectedChapterId = ref<number>(1);
+
+function onSelectChild(childId: string) {
+  playerStore.switchChild(childId);
+  screen.value = 'home';
+}
+
+function onSwitchChild() {
+  screen.value = 'child-selector';
+}
 
 function onSelectBook(bookId: number) {
   selectedBookId.value = bookId;
@@ -46,10 +59,17 @@ function onChapterComplete() {
 
 <template>
   <div class="min-h-screen text-stone-800 transition-[background] duration-700" :class="bgClass">
+    <!-- Sélection d'enfant -->
+    <ChildSelector
+      v-if="screen === 'child-selector'"
+      @select="onSelectChild"
+    />
+
     <!-- Home screen — matieres -->
     <HomeScreen
-      v-if="screen === 'home'"
+      v-else-if="screen === 'home'"
       @select-subject="(subject: string) => { selectedSubject = subject as Subject; screen = 'bookshelf'; }"
+      @switch-child="onSwitchChild"
     />
 
     <!-- Bookshelf screen — cahiers -->
@@ -58,6 +78,7 @@ function onChapterComplete() {
       :subject="selectedSubject"
       @home="screen = 'home'"
       @select-book="onSelectBook"
+      @switch-child="onSwitchChild"
     />
 
     <!-- Book view -->

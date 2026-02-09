@@ -170,3 +170,6 @@ export { generateHorlogeItems } from './horloge.js';
 
 export type { MarcheItem, MarcheOptions, MarcheArticle, MarcheQuestionType } from './marche.js';
 export { generateMarcheItems } from './marche.js';
+
+export type { ChildProfile, AvatarColor } from './player.js';
+export { AVATAR_COLORS, MAX_CHILDREN } from './player.js';

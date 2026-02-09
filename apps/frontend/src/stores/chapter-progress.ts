@@ -12,6 +12,10 @@ export interface ChapterScore {
 
 const STORAGE_KEY = 'plumi-chapter-progress';
 
+function storageKeyForChild(childId: string | null): string {
+  return childId ? `${STORAGE_KEY}-${childId}` : STORAGE_KEY;
+}
+
 function computeStars(score: number, total: number): number {
   if (total === 0) return 1;
   const ratio = score / total;
@@ -23,19 +27,36 @@ function computeStars(score: number, total: number): number {
 export const useChapterProgressStore = defineStore('chapter-progress', () => {
   // --- State ---
   const completedChapters = ref<Map<number, ChapterScore>>(new Map());
+  const activeChildId = ref<string | null>(null);
 
   // --- Init from localStorage ---
-  function loadProgress() {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      const entries: [number, ChapterScore][] = JSON.parse(raw);
-      completedChapters.value = new Map(entries);
-    }
+  function loadProgress(childId?: string | null) {
+    const key = storageKeyForChild(childId ?? activeChildId.value);
+    const raw = localStorage.getItem(key);
+    completedChapters.value = raw ? new Map(JSON.parse(raw)) : new Map();
   }
 
   function saveProgress() {
+    const key = storageKeyForChild(activeChildId.value);
     const entries = Array.from(completedChapters.value.entries());
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+    localStorage.setItem(key, JSON.stringify(entries));
+  }
+
+  /**
+   * Charge la progression d'un enfant specifique.
+   * Gère la migration de l'ancienne clé globale vers le premier enfant.
+   */
+  function loadProgressForChild(childId: string) {
+    // Migration : si une progression globale existe, la copier vers ce profil
+    const globalData = localStorage.getItem(STORAGE_KEY);
+    const childKey = storageKeyForChild(childId);
+    if (globalData && !localStorage.getItem(childKey)) {
+      localStorage.setItem(childKey, globalData);
+      localStorage.removeItem(STORAGE_KEY);
+    }
+
+    activeChildId.value = childId;
+    loadProgress(childId);
   }
 
   // --- Getters ---
@@ -109,7 +130,8 @@ export const useChapterProgressStore = defineStore('chapter-progress', () => {
 
   function resetProgress() {
     completedChapters.value.clear();
-    localStorage.removeItem(STORAGE_KEY);
+    const key = storageKeyForChild(activeChildId.value);
+    localStorage.removeItem(key);
   }
 
   // Charger au demarrage
@@ -128,5 +150,6 @@ export const useChapterProgressStore = defineStore('chapter-progress', () => {
     isBonusUnlockedForSubject,
     completeChapter,
     resetProgress,
+    loadProgressForChild,
   };
 });

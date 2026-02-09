@@ -8,3 +8,4 @@ export { default as HomeIcon } from './HomeIcon.vue';
 export { default as SparkleIcon } from './SparkleIcon.vue';
 export { default as StarEmptyIcon } from './StarEmptyIcon.vue';
 export { default as StarFilledIcon } from './StarFilledIcon.vue';
+export { default as UserIcon } from './UserIcon.vue';

@@ -3,7 +3,9 @@ import { computed } from 'vue';
 import type { Subject, Shelf } from '@plumi/shared';
 import { getShelvesForSubject, getChaptersForBook, ALL_BOOKS } from '@plumi/shared';
 import { useChapterProgressStore } from '@/stores/chapter-progress';
+import { usePlayerStore } from '@/stores/player';
 import BookCard from './BookCard.vue';
+import ChildAvatar from './ChildAvatar.vue';
 import ShelfSection from './ShelfSection.vue';
 import NotebookButton from '@/components/ui/NotebookButton.vue';
 import { HomeIcon } from '@/components/icons';
@@ -17,9 +19,11 @@ const props = withDefaults(defineProps<{
 defineEmits<{
   home: [];
   'select-book': [bookId: number];
+  'switch-child': [];
 }>();
 
 const progress = useChapterProgressStore();
+const playerStore = usePlayerStore();
 
 const shelves = computed(() => getShelvesForSubject(props.subject));
 
@@ -61,9 +65,26 @@ function shelfMaxStars(shelf: Shelf): number {
       >
         <HomeIcon :size="28" class="text-sky-200" />
       </NotebookButton>
-      <h1 class="text-2xl md:text-3xl font-bold text-sky-600">
+      <h1 class="text-2xl md:text-3xl font-bold text-sky-600 flex-1">
         {{ shelfTitle }}
       </h1>
+
+      <!-- Avatar enfant actif -->
+      <button
+        v-if="playerStore.activeChild"
+        class="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/70 hover:bg-white/90 active:scale-95 transition-all shadow-sm cursor-pointer"
+        aria-label="Changer de joueur"
+        @click="$emit('switch-child')"
+      >
+        <ChildAvatar
+          :name="playerStore.activeChild.name"
+          :color="playerStore.activeChild.avatarColor"
+          size="sm"
+        />
+        <span class="text-sm font-bold text-stone-600 hidden md:inline">
+          {{ playerStore.activeChild.name }}
+        </span>
+      </button>
     </header>
 
     <!-- Étagères -->
