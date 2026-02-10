@@ -68,7 +68,7 @@ export interface Book {
   subtitle: string;
   tenses: Tense[];
   chapters: number[];
-  color: 'royal' | 'enchant' | 'magic' | 'gentle' | 'forest' | 'dawn';
+  color: 'royal' | 'enchant' | 'mist' | 'gentle' | 'forest' | 'dawn';
   isBonus?: boolean;
 }
 ```
@@ -722,8 +722,8 @@ const emit = defineEmits<{
 
 const messages: Record<number, string> = {
   1: 'Tu as fini l\'aventure !',
-  2: 'Bravo, tu maitrises le sort !',
-  3: 'Incroyable, tu es un vrai magicien !',
+  2: 'Bravo, tu progresses !',
+  3: 'Incroyable, tu es un champion !',
 };
 ```
 

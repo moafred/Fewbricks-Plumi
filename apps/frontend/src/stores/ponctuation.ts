@@ -3,8 +3,6 @@ import { ref, computed } from 'vue';
 import type { GamePhase, AnswerResult, PonctuationItem } from '@plumi/shared';
 import { generatePonctuationItems } from '@plumi/shared';
 
-const DISCOVERY_DELAY = 1500;
-
 export const usePonctuationStore = defineStore('ponctuation', () => {
   // --- State ---
   const phase = ref<GamePhase>('discovery');
@@ -48,7 +46,7 @@ export const usePonctuationStore = defineStore('ponctuation', () => {
 
   function onPhaseEnter(p: GamePhase) {
     if (p === 'discovery') {
-      transitionTo('challenge', DISCOVERY_DELAY);
+      transitionTo('challenge');
     } else if (p === 'response') {
       transitionTo('resolution', 500);
     }

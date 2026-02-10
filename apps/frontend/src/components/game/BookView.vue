@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 import type { Book, Chapter } from '@plumi/shared';
 import { ALL_BOOKS, getChaptersForBook } from '@plumi/shared';
+import { useRouter, useRoute } from 'vue-router';
 import { useChapterProgressStore } from '@/stores/chapter-progress';
 import NotebookButton from '@/components/ui/NotebookButton.vue';
 import ChapterCard from '@/components/game/ChapterCard.vue';
@@ -10,14 +11,11 @@ import { HomeIcon } from '@/components/icons';
 
 const props = defineProps<{
   bookId: number;
+  subject?: string;
 }>();
 
-const emit = defineEmits<{
-  back: [];
-  'play-chapter': [chapterId: number];
-  'open-lesson': [bookId: number];
-}>();
-
+const router = useRouter();
+const route = useRoute();
 const progressStore = useChapterProgressStore();
 
 const book = computed<Book | undefined>(() => ALL_BOOKS.find((b) => b.id === props.bookId));
@@ -65,7 +63,7 @@ function getConnectionLineColor(chapterId: number): string {
       <NotebookButton
         variant="icon"
         aria-label="Retour aux livres"
-        @click="$emit('back')"
+        @click="router.push({ name: 'bookshelf', params: { subject: route.params.subject } })"
       >
         <HomeIcon :size="28" class="text-sky-200" />
       </NotebookButton>
@@ -83,7 +81,7 @@ function getConnectionLineColor(chapterId: number): string {
       <div class="flex flex-col items-center gap-3 w-full max-w-md">
         <LessonCard
           :color-variant="(book?.color ?? 'sky') as 'sky' | 'meadow' | 'gold' | 'coral' | 'moss' | 'dawn'"
-          @click="$emit('open-lesson', book!.id)"
+          @click="router.push({ name: 'book-lesson', params: { subject: route.params.subject, bookId: props.bookId } })"
         />
 
         <!-- Ligne de connexion vers le premier chapitre -->
@@ -112,7 +110,7 @@ function getConnectionLineColor(chapterId: number): string {
           :max-stars="3"
           :is-recommended="isRecommended(chapter.id)"
           :color-variant="(book?.color ?? 'sky') as 'sky' | 'meadow' | 'gold' | 'coral' | 'moss' | 'dawn'"
-          @click="$emit('play-chapter', chapter.id)"
+          @click="router.push({ name: 'chapter-runner', params: { subject: route.params.subject, bookId: props.bookId, chapterId: chapter.id } })"
         />
       </div>
     </main>

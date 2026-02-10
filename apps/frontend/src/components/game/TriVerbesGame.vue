@@ -4,12 +4,12 @@ import type { VerbId, Tense, Pronoun, AnswerResult } from '@plumi/shared';
 import { getInfinitive } from '@plumi/shared';
 import { useGameStore } from '@/stores/game';
 import { useKeyboardNavigation, useBackNavigation, useSyncGameProgress } from '@/composables';
+import GameLayout from '@/components/game/GameLayout.vue';
+import ChoicesSection from '@/components/game/ChoicesSection.vue';
 import CategoryButton from './CategoryButton.vue';
 import WordCard from './WordCard.vue';
 import ProgressStars from './ProgressStars.vue';
 import GameResult from './GameResult.vue';
-import KeyboardGuide from '@/components/ui/KeyboardGuide.vue';
-import KeyboardHintsBar from '@/components/ui/KeyboardHintsBar.vue';
 import TenseBadge from '@/components/ui/TenseBadge.vue';
 import type { CategoryButtonState } from './CategoryButton.vue';
 
@@ -124,10 +124,7 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
 </script>
 
 <template>
-  <div
-    class="tri-verbes-game flex flex-col items-center px-4"
-    :class="embedded ? 'h-full min-h-0 py-2 gap-2' : 'min-h-screen justify-between py-6 gap-4'"
-  >
+  <GameLayout :embedded="embedded">
     <!-- Finished: show results -->
     <template v-if="game.isFinished && !embedded">
       <div class="flex-1 flex items-center justify-center w-full">
@@ -153,7 +150,7 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
       </div>
 
       <!-- Instruction -->
-      <p class="text-lg md:text-xl text-stone-600 text-center">
+      <p class="text-lg md:text-xl text-stone-600 text-center min-h-7">
         <template v-if="game.phase === 'discovery'">Le mot apparaît...</template>
         <template v-else-if="game.phase === 'challenge'">Dans quelle catégorie ?</template>
         <template v-else-if="game.lastResult === 'correct'">Bien joué !</template>
@@ -173,8 +170,8 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
         />
       </div>
 
-      <!-- Sorting hats -->
-      <div class="flex flex-col items-center" :class="embedded ? 'gap-2 pb-2' : 'gap-6 pb-8'">
+      <!-- Catégories de tri -->
+      <ChoicesSection :embedded="embedded" :phase="game.phase">
         <div class="flex items-center justify-center gap-10 md:gap-16">
           <CategoryButton
             v-for="(verbId, idx) in categoryChoices"
@@ -187,13 +184,7 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
             @tap="onTap"
           />
         </div>
-
-        <!-- Keyboard Hints -->
-        <KeyboardHintsBar v-if="game.phase === 'challenge'">
-           <KeyboardGuide mode="cluster" label="Flèches pour choisir" />
-           <KeyboardGuide mode="single" key-name="espace" label="Appuie pour valider" />
-        </KeyboardHintsBar>
-      </div>
+      </ChoicesSection>
     </template>
-  </div>
+  </GameLayout>
 </template>

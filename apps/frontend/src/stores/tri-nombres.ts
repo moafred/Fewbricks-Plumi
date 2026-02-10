@@ -3,8 +3,6 @@ import { ref, computed } from 'vue';
 import type { GamePhase, AnswerResult, MathSortingItem } from '@plumi/shared';
 import { generateMathSortingItems } from '@plumi/shared';
 
-const DISCOVERY_DELAY = 1500;
-
 export const useTriNombresStore = defineStore('tri-nombres', () => {
   // --- State ---
   const phase = ref<GamePhase>('discovery');
@@ -48,7 +46,7 @@ export const useTriNombresStore = defineStore('tri-nombres', () => {
 
   function onPhaseEnter(p: GamePhase) {
     if (p === 'discovery') {
-      transitionTo('challenge', DISCOVERY_DELAY);
+      transitionTo('challenge');
     }
   }
 

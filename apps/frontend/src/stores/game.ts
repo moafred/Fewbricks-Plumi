@@ -3,7 +3,6 @@ import { ref, computed } from 'vue';
 import type { GamePhase, AnswerResult, VerbId, SortingItem, Tense, Pronoun } from '@plumi/shared';
 import { generateSortingItems } from '@plumi/shared';
 
-const DISCOVERY_DELAY = 1500;
 const RESOLUTION_DELAY = 2000;
 
 export const useGameStore = defineStore('game', () => {
@@ -51,7 +50,7 @@ export const useGameStore = defineStore('game', () => {
   function onPhaseEnter(p: GamePhase) {
     if (p === 'discovery') {
       // After discovery delay, move to challenge
-      transitionTo('challenge', DISCOVERY_DELAY);
+      transitionTo('challenge');
     }
   }
 

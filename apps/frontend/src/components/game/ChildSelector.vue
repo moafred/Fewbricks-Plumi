@@ -1,14 +1,15 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
 import { usePlayerStore } from '@/stores/player';
 import ChildAvatar from './ChildAvatar.vue';
 
-defineEmits<{
-  select: [childId: string];
-  'add-child': [];
-  'replay-intro': [];
-}>();
-
+const router = useRouter();
 const playerStore = usePlayerStore();
+
+function selectChild(childId: string) {
+  playerStore.switchChild(childId);
+  router.push({ name: 'home' });
+}
 </script>
 
 <template>
@@ -23,7 +24,7 @@ const playerStore = usePlayerStore();
         v-for="child in playerStore.children"
         :key="child.id"
         class="flex flex-col items-center gap-2 p-4 rounded-2xl bg-white/80 backdrop-blur-sm border border-sky-200 shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer"
-        @click="$emit('select', child.id)"
+        @click="selectChild(child.id)"
       >
         <ChildAvatar
           :name="child.name"
@@ -39,7 +40,7 @@ const playerStore = usePlayerStore();
       <button
         v-if="playerStore.canAddChild"
         class="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border-2 border-dashed border-sky-300 text-sky-500 hover:bg-sky-50 hover:border-sky-400 active:scale-95 transition-all cursor-pointer min-h-[140px]"
-        @click="$emit('add-child')"
+        @click="router.push({ name: 'welcome-add-child' })"
       >
         <span class="text-5xl font-light leading-none">+</span>
         <span class="text-sm font-medium">Ajouter</span>
@@ -49,7 +50,7 @@ const playerStore = usePlayerStore();
     <!-- Revoir l'intro -->
     <button
       class="text-sm text-stone-400 hover:text-sky-500 transition-colors mt-4"
-      @click="$emit('replay-intro')"
+      @click="router.push({ name: 'welcome-replay' })"
     >
       Revoir l'intro de Plumi
     </button>

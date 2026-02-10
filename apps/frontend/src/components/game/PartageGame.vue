@@ -3,10 +3,10 @@ import { computed, watch, onUnmounted } from 'vue';
 import type { AnswerResult } from '@plumi/shared';
 import { usePartageStore } from '@/stores/partage';
 import { useKeyboardNavigation, useBackNavigation, useSyncGameProgress } from '@/composables';
+import GameLayout from '@/components/game/GameLayout.vue';
+import ChoicesSection from '@/components/game/ChoicesSection.vue';
 import FormChoice from './FormChoice.vue';
 import type { FormChoiceState } from './FormChoice.vue';
-import KeyboardGuide from '@/components/ui/KeyboardGuide.vue';
-import KeyboardHintsBar from '@/components/ui/KeyboardHintsBar.vue';
 import ChoiceGrid from './ChoiceGrid.vue';
 import ProgressStars from './ProgressStars.vue';
 import GameResult from './GameResult.vue';
@@ -140,10 +140,7 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
 </script>
 
 <template>
-  <div
-    class="partage-game flex flex-col items-center px-4"
-    :class="embedded ? 'h-full min-h-0 py-2 gap-2' : 'min-h-screen justify-between py-6 gap-4'"
-  >
+  <GameLayout :embedded="embedded">
     <!-- Finished: show results -->
     <template v-if="game.isFinished && !embedded">
       <div class="flex-1 flex items-center justify-center w-full">
@@ -208,7 +205,7 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
       </div>
 
       <!-- 2x2 grid of choices -->
-      <div class="flex flex-col items-center w-full" :class="embedded ? 'gap-2 pb-2' : 'gap-8 pb-12'">
+      <ChoicesSection :embedded="embedded" :phase="game.phase">
         <ChoiceGrid max-width="2xl">
           <FormChoice
             v-for="(choice, index) in game.currentItem?.choices"
@@ -219,12 +216,7 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
             @tap="onTap"
           />
         </ChoiceGrid>
-
-        <KeyboardHintsBar v-if="game.phase === 'challenge'">
-          <KeyboardGuide mode="cluster" label="Flèches pour choisir" />
-          <KeyboardGuide mode="single" key-name="espace" label="Appuie pour valider" />
-        </KeyboardHintsBar>
-      </div>
+      </ChoicesSection>
     </template>
-  </div>
+  </GameLayout>
 </template>

@@ -3,8 +3,6 @@ import { ref, computed } from 'vue';
 import type { GamePhase, AnswerResult, PontAccordsItem } from '@plumi/shared';
 import { generatePontAccordsItems } from '@plumi/shared';
 
-const DISCOVERY_DELAY = 1500;
-
 export const usePontAccordsStore = defineStore('pont-accords', () => {
     // --- State ---
     const phase = ref<GamePhase>('discovery');
@@ -48,7 +46,7 @@ export const usePontAccordsStore = defineStore('pont-accords', () => {
 
     function onPhaseEnter(p: GamePhase) {
         if (p === 'discovery') {
-            transitionTo('challenge', DISCOVERY_DELAY);
+            transitionTo('challenge');
         } else if (p === 'response') {
             transitionTo('resolution', 500);
         }

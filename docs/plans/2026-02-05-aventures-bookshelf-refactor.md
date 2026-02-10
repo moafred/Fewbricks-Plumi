@@ -31,7 +31,7 @@ Chaque livre = une **aventure narrative** qui mélange conjugaison ET grammaire,
 | 1 | Les Premiers Sorts | Le Jardin s'éveille | Présent + GN | royal | `['present']` | themes: toutes, singulier focus |
 | 2 | La Clairière Enchantée | La Forêt murmure | Accords + Présent | forest | `['present']` | themes: toutes, pluriel focus |
 | 3 | Les Sentiers du Futur | L'horizon s'ouvre | Futur + GN | enchant | `['futur']` | themes: toutes |
-| 4 | Les Brumes du Passé | Les souvenirs dansent | Imparfait + GN | magic | `['imparfait']` | themes: toutes |
+| 4 | Les Brumes du Passé | Les souvenirs dansent | Imparfait + GN | mist | `['imparfait']` | themes: toutes |
 | 5 | Le Flux Temporel | Bonus | Tous les temps | gentle | `['present','futur','imparfait','passe_compose']` | themes: toutes |
 
 ### Badge scolaire UI
@@ -97,7 +97,7 @@ export interface Adventure {
   title: string;
   subtitle: string;
   schoolTerms: string[];
-  color: 'royal' | 'enchant' | 'magic' | 'gentle' | 'forest';
+  color: 'royal' | 'enchant' | 'mist' | 'gentle' | 'forest';
   isBonus?: boolean;
   tenses: Tense[];
   gnThemes?: VocabularyTheme[];
@@ -223,7 +223,7 @@ const adventures: Adventure[] = [
     subtitle: 'Les souvenirs dansent',
     schoolTerms: ['Imparfait', 'GN'],
     tenses: ['imparfait'],
-    color: 'magic',
+    color: 'mist',
     games: ALL_GAMES,
   },
   {
@@ -361,7 +361,7 @@ export const ADVENTURES: Adventure[] = [
     subtitle: 'Les souvenirs dansent',
     schoolTerms: ['Imparfait', 'GN'],
     tenses: ['imparfait'],
-    color: 'magic',
+    color: 'mist',
     games: ALL_GAMES,
   },
   {

@@ -3,8 +3,6 @@ import { ref, computed } from 'vue';
 import type { GamePhase, AnswerResult, ArdoiseCalculItem, MathOperation } from '@plumi/shared';
 import { generateArdoiseCalculItems } from '@plumi/shared';
 
-const DISCOVERY_DELAY = 1500;
-
 export const useArdoiseCalculStore = defineStore('ardoise-calcul', () => {
   // --- State ---
   const phase = ref<GamePhase>('discovery');
@@ -48,7 +46,7 @@ export const useArdoiseCalculStore = defineStore('ardoise-calcul', () => {
 
   function onPhaseEnter(p: GamePhase) {
     if (p === 'discovery') {
-      transitionTo('challenge', DISCOVERY_DELAY);
+      transitionTo('challenge');
     }
   }
 

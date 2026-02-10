@@ -40,13 +40,13 @@ withDefaults(
   >
     <div
       v-if="hint"
-      class="absolute top-4 left-0 right-0 text-center font-bold uppercase tracking-widest drop-shadow-sm"
+      class="w-full text-center font-bold uppercase tracking-widest drop-shadow-sm"
       :class="variant === 'light' ? 'text-sky-600' : 'text-sky-700'"
     >
       {{ hint }}
     </div>
 
-    <div class="mt-4 mb-4 w-full">
+    <div class="w-full text-center" :class="hint ? 'mt-3 mb-4' : 'my-4'">
       <slot />
     </div>
 

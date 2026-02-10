@@ -3,8 +3,6 @@ import { ref, computed } from 'vue';
 import type { GamePhase, AnswerResult, MarcheItem } from '@plumi/shared';
 import { generateMarcheItems } from '@plumi/shared';
 
-const DISCOVERY_DELAY = 1500;
-
 export const useMarcheStore = defineStore('marche', () => {
   // --- State ---
   const phase = ref<GamePhase>('discovery');
@@ -48,7 +46,7 @@ export const useMarcheStore = defineStore('marche', () => {
 
   function onPhaseEnter(p: GamePhase) {
     if (p === 'discovery') {
-      transitionTo('challenge', DISCOVERY_DELAY);
+      transitionTo('challenge');
     }
   }
 

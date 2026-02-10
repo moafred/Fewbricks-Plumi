@@ -12,6 +12,8 @@ const props = defineProps<{
   focused?: boolean;
   /** Schéma de couleurs (défaut: meadow pour index pair, gold pour impair) */
   colorScheme?: CategoryColorScheme;
+  /** Afficher l'icône de catégorie (défaut: true) */
+  showIcon?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -52,7 +54,7 @@ function handleTap() {
     :disabled="state !== 'waiting'"
     @click="handleTap"
   >
-    <CategoryIcon :size="40" class="mb-1" />
+    <CategoryIcon v-if="showIcon !== false" :size="40" class="mb-1" />
     <span>{{ label }}</span>
   </button>
 </template>

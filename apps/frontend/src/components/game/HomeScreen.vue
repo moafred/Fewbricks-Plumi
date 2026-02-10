@@ -2,17 +2,14 @@
 import { computed } from 'vue';
 import { getBooksForSubject, getChaptersForBook } from '@plumi/shared';
 import type { Subject } from '@plumi/shared';
+import { useRouter } from 'vue-router';
 import { useChapterProgressStore } from '@/stores/chapter-progress';
 import { usePlayerStore } from '@/stores/player';
 import SubjectCard from '@/components/game/SubjectCard.vue';
 import ChildAvatar from '@/components/game/ChildAvatar.vue';
 import { BookIcon } from '@/components/icons';
 
-defineEmits<{
-  'select-subject': [subject: string];
-  'switch-child': [];
-}>();
-
+const router = useRouter();
 const progress = useChapterProgressStore();
 const playerStore = usePlayerStore();
 
@@ -35,17 +32,15 @@ const mathStars = computed(() => computeSubjectStars('maths'));
 </script>
 
 <template>
-  <div class="home-screen flex flex-col min-h-screen p-6">
+  <div class="home-screen flex flex-col h-screen p-4 md:p-6">
     <!-- Header — Logo Plumi + avatar enfant -->
-    <header class="relative flex justify-center pt-4">
-      <!-- Avatar badge — retour au sélecteur d'enfant (cliquable si 2+ enfants) -->
-      <component
-        :is="playerStore.children.length > 1 ? 'button' : 'div'"
+    <header class="relative flex justify-center shrink-0">
+      <!-- Avatar badge — accès à la liste des profils -->
+      <button
         v-if="playerStore.activeChild"
-        class="absolute top-4 right-0 flex items-center gap-2 px-3 py-2 rounded-xl bg-white/70 shadow-sm"
-        :class="playerStore.children.length > 1 ? 'hover:bg-white/90 active:scale-95 transition-all cursor-pointer' : ''"
-        :aria-label="playerStore.children.length > 1 ? 'Changer de joueur' : undefined"
-        @click="playerStore.children.length > 1 && $emit('switch-child')"
+        class="absolute top-2 right-0 flex items-center gap-2 px-3 py-2 rounded-xl bg-white/70 shadow-sm z-10 hover:bg-white/90 active:scale-95 transition-all cursor-pointer"
+        aria-label="Gérer les profils"
+        @click="router.push({ name: 'children' })"
       >
         <ChildAvatar
           :name="playerStore.activeChild.name"
@@ -55,25 +50,25 @@ const mathStars = computed(() => computeSubjectStars('maths'));
         <span class="text-sm font-bold text-stone-600 hidden md:inline">
           {{ playerStore.activeChild.name }}
         </span>
-      </component>
+      </button>
       <img
         src="/plumi-landing.png"
         alt="Plumi"
-        class="h-60 w-auto animate-float"
+        class="h-36 md:h-48 w-auto animate-float"
       />
     </header>
 
     <!-- Grille des matieres -->
-    <main class="flex-1 flex items-center justify-center px-2">
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 w-full max-w-lg">
+    <main class="flex-1 flex items-center justify-center px-2 min-h-0">
+      <div class="grid grid-cols-2 gap-4 md:gap-6 w-full max-w-lg">
         <!-- Francais -->
         <SubjectCard
-          title="Francais"
+          title="Français"
           color="sky"
           :stars="frenchStars"
           :max-stars="5"
           :locked="false"
-          @select="$emit('select-subject', 'francais')"
+          @select="router.push({ name: 'bookshelf', params: { subject: 'francais' } })"
         >
           <BookIcon :size="64" class="text-sky-500" />
         </SubjectCard>
@@ -85,7 +80,7 @@ const mathStars = computed(() => computeSubjectStars('maths'));
           :stars="mathStars"
           :max-stars="5"
           :locked="false"
-          @select="$emit('select-subject', 'maths')"
+          @select="router.push({ name: 'bookshelf', params: { subject: 'maths' } })"
         >
           <BookIcon :size="64" class="text-meadow-500" />
         </SubjectCard>

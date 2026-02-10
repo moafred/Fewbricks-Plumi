@@ -94,8 +94,8 @@ Etape 8    : BOSS          -> Mix de tout
 | Etoiles | Condition | Message Plumi |
 |---|---|---|
 | 1/3 | Chapitre termine (quel que soit le score) | "Tu as fini l'aventure !" |
-| 2/3 | >= 70% bonnes reponses au 1er essai | "Bravo, tu maitrises le sort !" |
-| 3/3 | >= 90% bonnes reponses au 1er essai | "Incroyable, tu es un vrai magicien !" |
+| 2/3 | >= 70% bonnes reponses au 1er essai | "Bravo, tu progresses !" |
+| 3/3 | >= 90% bonnes reponses au 1er essai | "Incroyable, tu es un champion !" |
 
 On obtient toujours au moins 1 etoile. Aucun verrouillage lie au score.
 
@@ -120,7 +120,7 @@ On obtient toujours au moins 1 etoile. Aucun verrouillage lie au score.
 | Recompense | Declencheur |
 |---|---|
 | Element du monde (arbre, animal...) | 1 etoile sur les 3 chapitres |
-| Compagnon magique | 3 etoiles sur les 3 chapitres |
+| Badge special | 3 etoiles sur les 3 chapitres |
 
 ## Delta Code
 

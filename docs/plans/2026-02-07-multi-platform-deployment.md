@@ -1159,7 +1159,7 @@ Create `docs/deployment/app-store-metadata.md`:
 
 ## App Information
 
-- **App Name**: Plumi — La Plume Magique
+- **App Name**: Plumi
 - **Subtitle**: Apprendre le Français CE1
 - **Category**: Education
 - **Age Rating**: 4+ (no objectionable content)
@@ -1191,7 +1191,7 @@ Plumi est une application éducative gamifiée pour les enfants de CE1 (6-7 ans)
 - Aucune collecte de données personnelles
 - Conforme RGPD
 
-Transformez l'apprentissage du français en aventure magique avec Plumi !
+Transformez l'apprentissage du français en aventure avec Plumi !
 
 ## Keywords (French)
 
@@ -1374,7 +1374,7 @@ Modify `apps/frontend/android/app/src/main/res/values/strings.xml`:
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Plumi</string>
-    <string name="title_activity_main">Plumi — La Plume Magique</string>
+    <string name="title_activity_main">Plumi</string>
     <string name="package_name">com.plumi.app</string>
     <string name="custom_url_scheme">com.plumi.app</string>
 </resources>
@@ -1511,7 +1511,7 @@ In Xcode:
 
 1. Go to [App Store Connect](https://appstoreconnect.apple.com)
 2. Create new app:
-   - Name: `Plumi — La Plume Magique`
+   - Name: `Plumi`
    - Primary Language: French
    - Bundle ID: `com.plumi.app`
    - SKU: `plumi-ios-001`

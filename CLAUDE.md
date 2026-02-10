@@ -1,5 +1,5 @@
 # Plumi — Apprendre le Français et les Mathématiques CE1
-
+coucou
 Application éducative gamifiée d'apprentissage du français et des mathématiques pour enfants CE1 (6-7 ans).
 Français : conjugaison (présent, futur, imparfait — être/avoir), extensible à toute la grammaire et l'orthographe.
 Mathématiques : nombres & calcul, grandeurs & mesures, espace & géométrie, données (programme 2024).
@@ -70,7 +70,7 @@ Chaque membre possède un profil et des compétences spécifiques pour éviter l
 
 ### Concept Narratif
 
-L'enfant est un élève de CE1 dans le **parcours d'apprentissage**. Sa plume d'écriture (**Plumi**) est son compagnon. Chaque conjugaison correcte = un sort qui fait vivre le monde (arbres, animaux, bâtiments). Les verbes **être** et **avoir** sont les deux premiers sorts fondamentaux.
+L'enfant est un élève de CE1 dans le **parcours d'apprentissage**. Sa plume d'écriture (**Plumi**) est son compagnon. Chaque bonne réponse fait progresser l'enfant et débloque des récompenses (étoiles, badges, éléments du monde). Les verbes **être** et **avoir** sont les deux premières leçons fondamentales.
 
 ### Mascotte — Plumi
 
@@ -215,7 +215,7 @@ pnpm-workspace.yaml
 | ---------------- | ------------------------- | ----------------------------------------------------- |
 | **Icons**        | Glyphes SVG atomiques     | `components/icons/StarFilledIcon.vue`, `CategoryIcon.vue`  |
 | **Atoms**        | Éléments UI purs          | `components/ui/ActionButton.vue`, `KeyboardGuide.vue`  |
-| **Molecules**    | Composants métier simples | `components/game/SpellChoice.vue`, `ChoiceButton.vue`, `ChallengeCard.vue` |
+| **Molecules**    | Composants métier simples | `components/game/ChoiceButton.vue`, `ChallengeCard.vue` |
 | **Organisms**    | Mini-jeux complets        | `components/game/EncrierGame.vue`, `ArdoiseGame.vue`  |
 | **Orchestrateur**| Gestion d'un chapitre     | `components/game/ChapterRunner.vue`                   |
 | **Navigation**   | Écrans de parcours        | `components/game/BookShelf.vue`, `BookView.vue`       |

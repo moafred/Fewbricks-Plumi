@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { getBookLesson } from '@plumi/shared';
+import { useRouter } from 'vue-router';
 import NotebookButton from '@/components/ui/NotebookButton.vue';
 import NarrativeCard from '@/components/game/NarrativeCard.vue';
 import ConjugationTable from '@/components/game/ConjugationTable.vue';
@@ -10,11 +11,10 @@ import { HomeIcon } from '@/components/icons';
 
 const props = defineProps<{
   bookId: number;
+  subject?: string;
 }>();
 
-defineEmits<{
-  back: [];
-}>();
+const router = useRouter();
 
 const lesson = computed(() => getBookLesson(props.bookId));
 </script>
@@ -26,7 +26,7 @@ const lesson = computed(() => getBookLesson(props.bookId));
       <NotebookButton
         variant="icon"
         aria-label="Retour au livre"
-        @click="$emit('back')"
+        @click="router.back()"
       >
         <HomeIcon :size="28" class="text-sky-200" />
       </NotebookButton>

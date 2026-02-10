@@ -3,8 +3,6 @@ import { ref, computed } from 'vue';
 import type { GamePhase, AnswerResult, VerbEncrierItem, Tense, Pronoun, VerbId } from '@plumi/shared';
 import { generateEncrierItems } from '@plumi/shared';
 
-const DISCOVERY_DELAY = 1500;
-
 export const useEncrierStore = defineStore('encrier', () => {
     // --- State ---
     const phase = ref<GamePhase>('discovery');
@@ -49,7 +47,7 @@ export const useEncrierStore = defineStore('encrier', () => {
 
     function onPhaseEnter(p: GamePhase) {
         if (p === 'discovery') {
-            transitionTo('challenge', DISCOVERY_DELAY);
+            transitionTo('challenge');
         } else if (p === 'response') {
             // Just answered, briefly show result then go to resolution (correction)
             transitionTo('resolution', 500);

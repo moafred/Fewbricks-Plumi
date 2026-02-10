@@ -3,8 +3,6 @@ import { ref, computed } from 'vue';
 import type { GamePhase, AnswerResult, DroiteNumeriqueItem } from '@plumi/shared';
 import { generateDroiteNumeriqueItems } from '@plumi/shared';
 
-const DISCOVERY_DELAY = 1500;
-
 export const useDroiteNumeriqueStore = defineStore('droite-numerique', () => {
   // --- State ---
   const phase = ref<GamePhase>('discovery');
@@ -48,7 +46,7 @@ export const useDroiteNumeriqueStore = defineStore('droite-numerique', () => {
 
   function onPhaseEnter(p: GamePhase) {
     if (p === 'discovery') {
-      transitionTo('challenge', DISCOVERY_DELAY);
+      transitionTo('challenge');
     }
   }
 

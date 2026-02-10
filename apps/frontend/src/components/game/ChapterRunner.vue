@@ -2,6 +2,7 @@
 import { ref, computed, watch, type Component } from 'vue';
 import type { StepMechanic, AnswerResult, Tense } from '@plumi/shared';
 import { getChapter } from '@plumi/shared';
+import { useRouter, useRoute } from 'vue-router';
 import { useChapterProgressStore } from '@/stores/chapter-progress';
 import { useBackNavigation, useProvideGameProgress } from '@/composables';
 import ChapterResult from './ChapterResult.vue';
@@ -32,12 +33,12 @@ import ProgressStars from './ProgressStars.vue';
 
 const props = defineProps<{
   chapterId: number;
+  subject?: string;
+  bookId?: number;
 }>();
 
-const emit = defineEmits<{
-  home: [];
-  'chapter-complete': [payload: { chapterId: number; score: number; total: number; stars: number }];
-}>();
+const router = useRouter();
+const route = useRoute();
 
 const chapter = computed(() => getChapter(props.chapterId));
 const progressStore = useChapterProgressStore();
@@ -135,13 +136,15 @@ function replay() {
   stepKey.value++;
 }
 
-function onContinue() {
-  emit('chapter-complete', {
-    chapterId: props.chapterId,
-    score: totalScore.value,
-    total: totalQuestions.value,
-    stars: stars.value,
+function goBackToBook() {
+  router.push({
+    name: 'book-view',
+    params: { subject: route.params.subject, bookId: route.params.bookId },
   });
+}
+
+function onContinue() {
+  goBackToBook();
 }
 
 // --- Quit confirmation ---
@@ -223,7 +226,7 @@ useBackNavigation(handleBack, computed(() => !showQuitConfirmation.value));
       message="Si tu sors maintenant, tu devras recommencer."
       confirm-label="Quitter"
       cancel-label="Continuer"
-      @confirm="$emit('home')"
+      @confirm="goBackToBook()"
       @cancel="showQuitConfirmation = false"
     />
   </div>

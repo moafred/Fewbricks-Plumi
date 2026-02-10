@@ -4,7 +4,7 @@
 
 | Champ         | Valeur                              |
 | ------------- | ----------------------------------- |
-| **Nom**       | Plumi -- La Plume Magique           |
+| **Nom**       | Plumi                               |
 | **Sous-titre**| Apprendre le Francais CE1           |
 | **Categorie** | Education                           |
 | **Age**       | 4+                                  |
@@ -17,11 +17,11 @@
 
 ### Description courte (80 caracteres max -- Google Play)
 
-Apprends la conjugaison et la grammaire en t'amusant avec Plumi, ta plume magique !
+Apprends le francais et les maths en t'amusant avec Plumi, ta plume d'ecriture !
 
 ### Description longue
 
-Plumi -- La Plume Magique est une application educative concue pour les enfants de CE1 (6-7 ans). Accompagne de Plumi, une plume d'ecriture lumineuse, votre enfant decouvre la conjugaison francaise a travers des mini-jeux amusants et bienveillants.
+Plumi est une application educative concue pour les enfants de CE1 (6-7 ans). Accompagne de Plumi, une plume d'ecriture lumineuse, votre enfant decouvre le francais et les mathematiques a travers des mini-jeux amusants et bienveillants.
 
 **Ce que votre enfant va apprendre :**
 - La conjugaison des verbes etre et avoir au present, futur et imparfait
@@ -35,9 +35,9 @@ Plumi -- La Plume Magique est une application educative concue pour les enfants 
 - Progression adaptee avec repetition espacee
 
 **Des mini-jeux varies :**
-- Le Tri Sorcier : distinguer etre et avoir
-- Le Grimoire : choisir la bonne forme conjuguee
-- La Potion : completer des phrases a trous
+- Le Tri de Verbes : distinguer etre et avoir
+- L'Ardoise : choisir la bonne forme conjuguee
+- L'Encrier : completer des phrases a trous
 - Le Pont des Accords : maitriser les accords du groupe nominal
 
 **Une application respectueuse :**
@@ -83,8 +83,8 @@ conjugaison,CE1,francais,grammaire,enfant,education,verbe,etre,avoir,primaire
 
 1. Ecran d'accueil avec Plumi (mascotte)
 2. Etagere des cahiers (BookShelf) avec progression visible
-3. Mini-jeu Tri Sorcier en action
-4. Mini-jeu Grimoire avec choix de conjugaison
+3. Mini-jeu Tri de Verbes en action
+4. Mini-jeu Ardoise avec choix de conjugaison
 5. Ecran de celebration apres reussite d'un chapitre
 
 ---

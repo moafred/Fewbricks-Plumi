@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 import type { Subject, Shelf } from '@plumi/shared';
 import { getShelvesForSubject, getChaptersForBook, ALL_BOOKS } from '@plumi/shared';
+import { useRouter } from 'vue-router';
 import { useChapterProgressStore } from '@/stores/chapter-progress';
 import { usePlayerStore } from '@/stores/player';
 import BookCard from './BookCard.vue';
@@ -16,12 +17,7 @@ const props = withDefaults(defineProps<{
   subject: 'francais',
 });
 
-defineEmits<{
-  home: [];
-  'select-book': [bookId: number];
-  'switch-child': [];
-}>();
-
+const router = useRouter();
 const progress = useChapterProgressStore();
 const playerStore = usePlayerStore();
 
@@ -61,7 +57,7 @@ function shelfMaxStars(shelf: Shelf): number {
       <NotebookButton
         variant="icon"
         aria-label="Retour à l'accueil"
-        @click="$emit('home')"
+        @click="router.push({ name: 'home' })"
       >
         <HomeIcon :size="28" class="text-sky-200" />
       </NotebookButton>
@@ -69,14 +65,12 @@ function shelfMaxStars(shelf: Shelf): number {
         {{ shelfTitle }}
       </h1>
 
-      <!-- Avatar enfant actif (cliquable si 2+ enfants) -->
-      <component
-        :is="playerStore.children.length > 1 ? 'button' : 'div'"
+      <!-- Avatar enfant actif — accès à la liste des profils -->
+      <button
         v-if="playerStore.activeChild"
-        class="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/70 shadow-sm"
-        :class="playerStore.children.length > 1 ? 'hover:bg-white/90 active:scale-95 transition-all cursor-pointer' : ''"
-        :aria-label="playerStore.children.length > 1 ? 'Changer de joueur' : undefined"
-        @click="playerStore.children.length > 1 && $emit('switch-child')"
+        class="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/70 shadow-sm hover:bg-white/90 active:scale-95 transition-all cursor-pointer"
+        aria-label="Gérer les profils"
+        @click="router.push({ name: 'children' })"
       >
         <ChildAvatar
           :name="playerStore.activeChild.name"
@@ -86,7 +80,7 @@ function shelfMaxStars(shelf: Shelf): number {
         <span class="text-sm font-bold text-stone-600 hidden md:inline">
           {{ playerStore.activeChild.name }}
         </span>
-      </component>
+      </button>
     </header>
 
     <!-- Étagères -->
@@ -107,7 +101,7 @@ function shelfMaxStars(shelf: Shelf): number {
           :max-stars="bookMaxStars(bookId)"
           :is-recommended="progress.getRecommendedBookIdForSubject(subject) === bookId"
           :is-locked="!!getBook(bookId)?.isBonus && !progress.isBonusUnlockedForSubject(subject)"
-          @select="(id) => $emit('select-book', id)"
+          @select="(id) => router.push({ name: 'book-view', params: { subject: props.subject, bookId: id } })"
         />
       </ShelfSection>
     </main>

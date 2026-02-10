@@ -3,8 +3,6 @@ import { ref, computed } from 'vue';
 import type { GamePhase, AnswerResult, HorlogeItem } from '@plumi/shared';
 import { generateHorlogeItems } from '@plumi/shared';
 
-const DISCOVERY_DELAY = 1500;
-
 export const useHorlogeStore = defineStore('horloge', () => {
   // --- State ---
   const phase = ref<GamePhase>('discovery');
@@ -48,7 +46,7 @@ export const useHorlogeStore = defineStore('horloge', () => {
 
   function onPhaseEnter(p: GamePhase) {
     if (p === 'discovery') {
-      transitionTo('challenge', DISCOVERY_DELAY);
+      transitionTo('challenge');
     }
   }
 

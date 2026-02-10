@@ -3,8 +3,6 @@ import { ref, computed } from 'vue';
 import type { GamePhase, AnswerResult, PartageItem } from '@plumi/shared';
 import { generatePartageItems } from '@plumi/shared';
 
-const DISCOVERY_DELAY = 1500;
-
 export const usePartageStore = defineStore('partage', () => {
   // --- State ---
   const phase = ref<GamePhase>('discovery');
@@ -48,7 +46,7 @@ export const usePartageStore = defineStore('partage', () => {
 
   function onPhaseEnter(p: GamePhase) {
     if (p === 'discovery') {
-      transitionTo('challenge', DISCOVERY_DELAY);
+      transitionTo('challenge');
     }
   }
 

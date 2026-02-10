@@ -164,7 +164,7 @@ export const MATH_CHAPTERS: Chapter[] = [
     id: 1004,
     subject: 'maths',
     title: 'Premiers Calculs',
-    narrative: 'Additionner, c\'est magique ! Découvrons les petites additions.',
+    narrative: 'Additionner, c\'est super ! Découvrons les petites additions.',
     steps: [
       { mechanic: 'ardoise-calcul', operations: ['addition'], numberRange: [1, 5], questionCount: 3 },
       { mechanic: 'ardoise-calcul', operations: ['addition'], numberRange: [1, 9], questionCount: 3 },

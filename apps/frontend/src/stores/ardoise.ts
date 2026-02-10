@@ -3,8 +3,6 @@ import { ref, computed } from 'vue';
 import type { GamePhase, AnswerResult, ArdoiseItem, Tense, VerbId, Pronoun } from '@plumi/shared';
 import { generateArdoiseItems } from '@plumi/shared';
 
-const DISCOVERY_DELAY = 1500;
-
 export const useArdoiseStore = defineStore('ardoise', () => {
   // --- State ---
   const phase = ref<GamePhase>('discovery');
@@ -49,7 +47,7 @@ export const useArdoiseStore = defineStore('ardoise', () => {
 
   function onPhaseEnter(p: GamePhase) {
     if (p === 'discovery') {
-      transitionTo('challenge', DISCOVERY_DELAY);
+      transitionTo('challenge');
     }
   }
 

@@ -137,7 +137,7 @@ export interface BookInfo {
   title: string;
   subtitle: string;
   tense?: Tense;
-  color: 'royal' | 'enchant' | 'magic' | 'gentle' | 'forest';
+  color: 'royal' | 'enchant' | 'mist' | 'gentle' | 'forest';
   isBonus?: boolean;
   games: GameButton[];
 }
@@ -169,7 +169,7 @@ import { HatIcon, GrimoireIcon, PotionIcon, BridgeIcon } from '@/components/icon
 import { type Component } from 'vue';
 
 const gameIcons: Record<MiniGame, { component: Component; colorClass: string }> = {
-  'tri-sorcier': { component: HatIcon, colorClass: 'text-magic-300' },
+  'tri-sorcier': { component: HatIcon, colorClass: 'text-mist-300' },
   'grimoire': { component: GrimoireIcon, colorClass: 'text-royal-300' },
   'potion': { component: PotionIcon, colorClass: 'text-enchant-300' },
   'pont-accords': { component: BridgeIcon, colorClass: 'text-forest-300' },
@@ -230,7 +230,7 @@ const GRAMMAR_GAMES: GameButton[] = [
 const books: BookInfo[] = [
   { id: 1, title: 'Fondations', subtitle: 'Présent', tense: 'present', color: 'royal', games: CONJUGATION_GAMES },
   { id: 2, title: 'Prophéties', subtitle: 'Futur', tense: 'futur', color: 'enchant', games: CONJUGATION_GAMES },
-  { id: 3, title: 'Souvenirs', subtitle: 'Imparfait', tense: 'imparfait', color: 'magic', games: CONJUGATION_GAMES },
+  { id: 3, title: 'Souvenirs', subtitle: 'Imparfait', tense: 'imparfait', color: 'mist', games: CONJUGATION_GAMES },
   { id: 4, title: 'Le Temps', subtitle: 'Bonus', tense: 'passe_compose', color: 'gentle', isBonus: true, games: CONJUGATION_GAMES },
   { id: 5, title: 'La Forêt', subtitle: 'Accords', color: 'forest', games: GRAMMAR_GAMES },
 ];

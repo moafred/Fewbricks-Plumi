@@ -35,7 +35,7 @@ L'accueil actuel (2 mini-jeux) devient un écran épuré avec un unique bouton "
 ```
 ┌─────────────────────────┐
 │         Plumi           │
-│    La Plume Magique     │
+│    Apprendre en s'amusant │
 │                         │
 │    ┌───────────────┐    │
 │    │   ✨ Jouer    │    │

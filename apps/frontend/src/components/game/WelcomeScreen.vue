@@ -2,6 +2,7 @@
 import { ref, nextTick } from 'vue';
 import { AVATAR_COLORS } from '@plumi/shared';
 import type { AvatarColor } from '@plumi/shared';
+import { useRouter, useRoute } from 'vue-router';
 import { usePlayerStore } from '@/stores/player';
 import PlumiMascot from './PlumiMascot.vue';
 import ChildAvatar from './ChildAvatar.vue';
@@ -18,10 +19,8 @@ const props = withDefaults(
   { mode: 'onboarding' },
 );
 
-const emit = defineEmits<{
-  complete: [childId: string];
-  close: [];
-}>();
+const router = useRouter();
+const route = useRoute();
 
 const playerStore = usePlayerStore();
 
@@ -46,24 +45,24 @@ const colorSwatches: Record<AvatarColor, string> = {
 // --- Textes narratifs — prêts pour vocalisation audio future ---
 const speeches = {
   meet: {
-    title: 'Salut !',
-    // Texte adapté CE1 (vocabulaire simple, phrases courtes)
-    text: 'Je suis Plumi, ta plume magique ! Ensemble, on va apprendre plein de choses en s\'amusant !',
-    button: 'Bonjour Plumi !',
+    title: 'Coucou !',
+    // Texte adapté CE1 (vocabulaire simple, phrases courtes, ton aventure)
+    text: 'Je suis Plumi, ta plume ! Ensemble, on va apprendre le français et les maths en s\'amusant. Prêt pour l\'aventure ?',
+    button: 'Oui !',
   },
   identity: {
-    title: 'Et toi, comment tu t\'appelles ?',
+    title: 'Comment tu t\'appelles ?',
     text: 'Choisis ton prénom et ta couleur préférée !',
     button: 'C\'est moi !',
   },
   celebration: {
     // `title` sera dynamique : "Bienvenue [Prénom] !"
-    text: 'Ton aventure commence maintenant !',
+    text: 'Ton aventure commence ! Ouvre tes cahiers et gagne des étoiles !',
     button: 'C\'est parti !',
   },
   replayEnd: {
-    title: 'On continue !',
-    text: 'Plumi est toujours là pour t\'accompagner !',
+    title: 'Coucou !',
+    text: 'Plumi est là ! On continue l\'aventure ?',
     button: 'Retour',
   },
 };
@@ -85,34 +84,35 @@ function goToCelebration() {
 
 function finish() {
   if (props.mode === 'replay') {
-    emit('close');
+    router.push({ name: 'children' });
     return;
   }
   // En onboarding, le dernier enfant créé est l'actif
   const last = playerStore.children[playerStore.children.length - 1];
   if (last) {
-    emit('complete', last.id);
+    playerStore.switchChild(last.id);
+    if (route.name === 'welcome-add-child') {
+      // Retour au sélecteur pour que le parent voie le nouvel enfant
+      router.push(playerStore.children.length > 1 ? { name: 'children' } : { name: 'home' });
+    } else {
+      router.push({ name: 'home' });
+    }
   }
 }
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center min-h-screen p-6 gap-6 relative">
-    <!-- Sous-titre discret pour le parent -->
-    <p class="absolute top-4 left-0 right-0 text-center text-xs text-stone-400">
-      Plumi — Apprendre en s'amusant — CE1
-    </p>
-
+  <div class="flex flex-col items-center justify-center h-screen p-4 md:p-6 gap-4 md:gap-6">
     <!-- ========== ÉTAPE 1 : RENCONTRE ========== -->
     <template v-if="step === 'meet'">
-      <PlumiMascot state="idle" size="lg" class="animate-fade-in" />
+      <PlumiMascot state="idle" size="md" class="animate-fade-in" />
 
-      <NotebookCard variant="light" padding="lg" rounded="lg" class="max-w-md animate-slide-down">
-        <div class="flex flex-col items-center gap-4">
-          <h1 class="text-4xl md:text-5xl font-bold text-sky-600 font-learning">
+      <NotebookCard variant="light" padding="md" rounded="lg" class="max-w-md animate-slide-down">
+        <div class="flex flex-col items-center gap-3">
+          <h1 class="text-3xl md:text-4xl font-bold text-sky-600 font-learning">
             {{ speeches.meet.title }}
           </h1>
-          <p class="text-lg md:text-xl text-stone-700 leading-relaxed text-center">
+          <p class="text-base md:text-lg text-stone-700 leading-relaxed text-center">
             {{ speeches.meet.text }}
           </p>
         </div>
@@ -130,11 +130,11 @@ function finish() {
 
     <!-- ========== ÉTAPE 2 : IDENTITÉ (onboarding uniquement) ========== -->
     <template v-if="step === 'identity'">
-      <PlumiMascot state="challenge" size="md" class="animate-fade-in" />
+      <PlumiMascot state="challenge" size="sm" class="animate-fade-in" />
 
-      <NotebookCard variant="light" padding="lg" rounded="lg" class="max-w-md animate-slide-down">
-        <div class="flex flex-col items-center gap-6">
-          <h1 class="text-2xl md:text-3xl font-bold text-sky-600 text-center">
+      <NotebookCard variant="light" padding="md" rounded="lg" class="max-w-md animate-slide-down">
+        <div class="flex flex-col items-center gap-3">
+          <h1 class="text-xl md:text-2xl font-bold text-sky-600 text-center">
             {{ speeches.identity.title }}
           </h1>
 
@@ -142,7 +142,7 @@ function finish() {
           <ChildAvatar
             :name="childName || '?'"
             :color="childColor"
-            size="lg"
+            size="md"
           />
 
           <!-- Champ prénom -->
@@ -152,7 +152,7 @@ function finish() {
             type="text"
             maxlength="12"
             placeholder="Ton prénom"
-            class="w-full h-16 px-6 text-2xl font-bold text-center text-stone-700 bg-white/90 border-2 border-sky-200 rounded-2xl focus:border-sky-400 focus:outline-none transition-colors placeholder:text-stone-400"
+            class="w-full h-12 md:h-14 px-6 text-xl font-bold text-center text-stone-700 bg-white/90 border-2 border-sky-200 rounded-2xl focus:border-sky-400 focus:outline-none transition-colors placeholder:text-stone-400"
             @keydown.enter="goToCelebration"
           >
 
@@ -164,7 +164,7 @@ function finish() {
             <button
               v-for="color in AVATAR_COLORS"
               :key="color"
-              class="w-12 h-12 rounded-full transition-all active:scale-90"
+              class="w-10 h-10 rounded-full transition-all active:scale-90"
               :class="[
                 colorSwatches[color],
                 childColor === color ? 'ring-4 ring-offset-2 ring-sky-500 scale-110' : 'hover:scale-105',
@@ -189,11 +189,11 @@ function finish() {
 
     <!-- ========== ÉTAPE 3 : CÉLÉBRATION ========== -->
     <template v-if="step === 'celebration'">
-      <PlumiMascot state="celebration" size="lg" class="animate-fade-in" />
+      <PlumiMascot state="celebration" size="md" class="animate-fade-in" />
 
-      <NotebookCard variant="light" padding="lg" rounded="lg" class="max-w-md animate-slide-down">
-        <div class="flex flex-col items-center gap-4">
-          <h1 class="text-3xl md:text-4xl font-bold text-gold-500 font-learning text-center">
+      <NotebookCard variant="light" padding="md" rounded="lg" class="max-w-md animate-slide-down">
+        <div class="flex flex-col items-center gap-3">
+          <h1 class="text-2xl md:text-3xl font-bold text-gold-500 font-learning text-center">
             <template v-if="mode === 'onboarding'">
               Bienvenue {{ createdName }} !
             </template>
@@ -201,7 +201,7 @@ function finish() {
               {{ speeches.replayEnd.title }}
             </template>
           </h1>
-          <p class="text-lg md:text-xl text-stone-700 leading-relaxed text-center">
+          <p class="text-base md:text-lg text-stone-700 leading-relaxed text-center">
             {{ mode === 'onboarding' ? speeches.celebration.text : speeches.replayEnd.text }}
           </p>
         </div>

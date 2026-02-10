@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { SparkleIcon } from '@/components/icons';
 
 const props = withDefaults(
   defineProps<{
@@ -34,37 +33,23 @@ const isIdle = computed(() => !props.filledWord && !props.showSolution);
     <span class="whitespace-pre-wrap">{{ parts[0] }}</span>
 
     <!-- The Gap -->
-    <div
-      class="relative inline-flex items-center justify-center min-w-[80px] md:min-w-[120px] px-3 py-1 transition-all duration-500"
+    <span
+      class="inline-flex items-baseline justify-center min-w-[80px] md:min-w-[120px] px-1 transition-all duration-500"
       :class="[
-        // Idle state: Gold hole
-        isIdle
-          ? 'border-b-4 border-gold-400 bg-gold-100/40 rounded-t-lg animate-sparkle'
-          : '',
-
-        // Correct state: Green and bold
+        // Correct state
         (isCorrect || showSolution) && !isWrong
-          ? 'text-meadow-600 font-bold scale-110 transform'
+          ? 'text-meadow-600 font-bold'
           : '',
 
-        // Wrong state: Red and crossed out
+        // Wrong state
         isWrong
           ? 'text-coral-500 line-through decoration-4 decoration-coral-400'
           : ''
       ]"
     >
-      <!-- Content -->
-      <span v-if="filledWord || showSolution" class="relative z-10">
-        {{ filledWord }}
-      </span>
-      <span v-else class="opacity-0">mot</span>
-
-      <!-- Particules lumineuses (Idle) -->
-      <template v-if="isIdle">
-        <SparkleIcon :size="16" class="absolute -top-2 -right-2 text-gold-300 animate-sparkle" />
-        <SparkleIcon :size="16" class="absolute -bottom-2 -left-2 text-gold-300 animate-sparkle" />
-      </template>
-    </div>
+      <span v-if="filledWord || showSolution">{{ filledWord }}</span>
+      <span v-else class="text-sky-300 font-bold text-base md:text-2xl">_ _ _ _ _ _</span>
+    </span>
 
     <!-- After Gap -->
     <span class="whitespace-pre-wrap">{{ parts[1] }}</span>

@@ -3,8 +3,6 @@ import { ref, computed } from 'vue';
 import type { GamePhase, AnswerResult, TourDeBlocsItem } from '@plumi/shared';
 import { generateTourDeBlocsItems } from '@plumi/shared';
 
-const DISCOVERY_DELAY = 1500;
-
 export const useTourDeBlocsStore = defineStore('tour-de-blocs', () => {
   // --- State ---
   const phase = ref<GamePhase>('discovery');
@@ -48,7 +46,7 @@ export const useTourDeBlocsStore = defineStore('tour-de-blocs', () => {
 
   function onPhaseEnter(p: GamePhase) {
     if (p === 'discovery') {
-      transitionTo('challenge', DISCOVERY_DELAY);
+      transitionTo('challenge');
     }
   }
 

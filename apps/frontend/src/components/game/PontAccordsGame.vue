@@ -3,6 +3,8 @@ import { onMounted, onUnmounted, computed, watch, ref } from 'vue';
 import { usePontAccordsStore } from '@/stores/pont-accords';
 import type { AnswerResult } from '@plumi/shared';
 import { useKeyboardNavigation, useBackNavigation, useSyncGameProgress } from '@/composables';
+import GameLayout from '@/components/game/GameLayout.vue';
+import ChoicesSection from '@/components/game/ChoicesSection.vue';
 import GameHeader from '@/components/game/GameHeader.vue';
 import ChallengeCard from '@/components/game/ChallengeCard.vue';
 import ChoiceButton from '@/components/game/ChoiceButton.vue';
@@ -10,8 +12,6 @@ import type { ChoiceState } from '@/components/game/ChoiceButton.vue';
 import ChoiceGrid from '@/components/game/ChoiceGrid.vue';
 import ResolutionContinueButton from '@/components/game/ResolutionContinueButton.vue';
 import GameFinished from '@/components/game/GameFinished.vue';
-import KeyboardGuide from '@/components/ui/KeyboardGuide.vue';
-import KeyboardHintsBar from '@/components/ui/KeyboardHintsBar.vue';
 import ConfirmModal from '@/components/ui/ConfirmModal.vue';
 import { storeToRefs } from 'pinia';
 
@@ -126,10 +126,7 @@ useSyncGameProgress(() => store.results, () => store.currentIndex);
 </script>
 
 <template>
-  <div
-    class="flex flex-col items-center w-full max-w-4xl mx-auto"
-    :class="embedded ? 'h-full min-h-0 justify-between p-3 gap-3' : 'justify-center min-h-[80vh] p-4 gap-8'"
-  >
+  <GameLayout :embedded="embedded">
 
     <GameHeader
       v-if="!embedded"
@@ -176,7 +173,7 @@ useSyncGameProgress(() => store.results, () => store.currentIndex);
       </ChallengeCard>
 
       <!-- Choices -->
-      <div class="flex flex-col items-center w-full" :class="embedded ? 'gap-2 pb-2' : 'gap-10 pb-12'">
+      <ChoicesSection :embedded="embedded" :phase="phase">
         <ChoiceGrid>
           <ChoiceButton
             v-for="(choice, index) in currentItem.choices"
@@ -187,12 +184,7 @@ useSyncGameProgress(() => store.results, () => store.currentIndex);
             @select="store.submitAnswer(choice)"
           />
         </ChoiceGrid>
-
-        <KeyboardHintsBar v-if="phase === 'challenge'">
-          <KeyboardGuide mode="cluster" label="Flèches pour choisir" />
-          <KeyboardGuide mode="single" key-name="espace" label="Appuie pour valider" />
-        </KeyboardHintsBar>
-      </div>
+      </ChoicesSection>
 
       <ResolutionContinueButton
         :visible="phase === 'resolution'"
@@ -211,5 +203,5 @@ useSyncGameProgress(() => store.results, () => store.currentIndex);
       @confirm="$emit('home')"
       @cancel="showQuitConfirmation = false"
     />
-  </div>
+  </GameLayout>
 </template>
