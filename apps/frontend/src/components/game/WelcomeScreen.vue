@@ -47,7 +47,7 @@ const speeches = {
   meet: {
     title: 'Coucou !',
     // Texte adapté CE1 (vocabulaire simple, phrases courtes, ton aventure)
-    text: 'Je suis Plumi, ta plume ! Ensemble, on va apprendre le français et les maths en s\'amusant. Prêt pour l\'aventure ?',
+    text: 'Je suis Plumi, ta plume ! Ensemble, avec tes parents, on va s\'entraîner et réussir tes exercices de français et de maths. On commence ?',
     button: 'Oui !',
   },
   identity: {

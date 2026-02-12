@@ -56,6 +56,9 @@ const mathStars = computed(() => computeSubjectStars('maths'));
         alt="Plumi"
         class="h-36 md:h-48 w-auto animate-float"
       />
+      <h2 class="text-xl md:text-2xl font-bold text-sky-500/80 mt-[-1rem] font-learning">
+        Niveau CE1
+      </h2>
     </header>
 
     <!-- Grille des matieres -->
