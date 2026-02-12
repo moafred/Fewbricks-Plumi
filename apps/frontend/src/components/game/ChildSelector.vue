@@ -13,7 +13,7 @@ function selectChild(childId: string) {
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center min-h-screen p-6 gap-8">
+  <div class="flex flex-col items-center justify-center flex-1 p-6 gap-8">
     <h1 class="text-3xl md:text-4xl font-bold text-sky-600">
       Qui joue aujourd'hui ?
     </h1>

@@ -51,7 +51,7 @@ function shelfMaxStars(shelf: Shelf): number {
 </script>
 
 <template>
-  <div class="bookshelf flex flex-col min-h-screen p-6 gap-6">
+  <div class="bookshelf flex flex-col flex-1 p-6 gap-6">
     <!-- Header -->
     <header class="flex items-center gap-4">
       <NotebookButton

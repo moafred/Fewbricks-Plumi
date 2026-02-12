@@ -57,7 +57,7 @@ function getConnectionLineColor(chapterId: number): string {
 </script>
 
 <template>
-  <div v-if="book" class="book-view flex flex-col min-h-screen p-6 gap-8">
+  <div v-if="book" class="book-view flex flex-col flex-1 p-6 gap-8">
     <!-- Header -->
     <header class="flex items-center gap-4">
       <NotebookButton

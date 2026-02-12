@@ -19,7 +19,7 @@ defineEmits<{
 </script>
 
 <template>
-  <div :class="[compact ? 'h-10' : 'h-16', 'flex items-center justify-center w-full']">
+  <div :class="[compact ? 'h-16 pt-4' : 'h-24 pt-6', 'flex items-center justify-center w-full shrink-0']">
     <div v-if="visible" class="animate-fade-in">
       <ActionButton variant="primary" @click="$emit('continue')">
         Continuer →

@@ -102,7 +102,7 @@ function finish() {
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center h-screen p-4 md:p-6 gap-4 md:gap-6">
+  <div class="flex flex-col items-center justify-center flex-1 p-4 md:p-6 gap-4 md:gap-6">
     <!-- ========== ÉTAPE 1 : RENCONTRE ========== -->
     <template v-if="step === 'meet'">
       <PlumiMascot state="idle" size="md" class="animate-fade-in" />

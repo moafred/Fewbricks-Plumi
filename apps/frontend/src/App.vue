@@ -17,9 +17,9 @@ const { bgClass } = useBookTheme(activeBookId);
 </script>
 
 <template>
-  <div class="min-h-screen text-stone-800 transition-[background] duration-700" :class="bgClass">
+  <div class="flex flex-col min-h-screen text-stone-800 transition-[background] duration-700 pt-safe pl-safe pr-safe pb-safe" :class="bgClass">
     <RouterView v-slot="{ Component, route: currentRoute }">
-      <component :is="Component" :key="currentRoute.fullPath" />
+      <component :is="Component" :key="currentRoute.fullPath" class="flex-1" />
     </RouterView>
   </div>
 </template>

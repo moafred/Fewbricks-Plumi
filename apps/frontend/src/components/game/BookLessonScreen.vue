@@ -20,7 +20,7 @@ const lesson = computed(() => getBookLesson(props.bookId));
 </script>
 
 <template>
-  <div v-if="lesson" class="book-lesson-screen flex flex-col min-h-screen p-6 gap-8">
+  <div v-if="lesson" class="book-lesson-screen flex flex-col flex-1 p-6 gap-8">
     <!-- Header -->
     <header class="flex items-center gap-4">
       <NotebookButton

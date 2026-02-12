@@ -32,7 +32,7 @@ const mathStars = computed(() => computeSubjectStars('maths'));
 </script>
 
 <template>
-  <div class="home-screen flex flex-col h-screen p-4 md:p-6">
+  <div class="home-screen flex flex-col flex-1 p-4 md:p-6">
     <!-- Header — Logo Plumi + avatar enfant -->
     <header class="relative flex justify-center shrink-0">
       <!-- Avatar badge — accès à la liste des profils -->

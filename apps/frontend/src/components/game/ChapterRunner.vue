@@ -162,7 +162,7 @@ useBackNavigation(handleBack, computed(() => !showQuitConfirmation.value));
 </script>
 
 <template>
-  <div class="h-dvh flex flex-col w-full overflow-hidden">
+  <div class="flex-1 flex flex-col w-full overflow-hidden">
 
     <!-- Header compact : ✕  [Présent]  Étape 1/4  ★☆ -->
     <header class="shrink-0 flex items-center px-4 py-2 gap-2">
