@@ -15,7 +15,7 @@ withDefaults(defineProps<{
 <template>
   <div
     class="flex flex-col items-center w-full max-w-4xl mx-auto"
-    :class="embedded ? 'h-full min-h-0 justify-center p-3 pb-4 gap-6' : 'justify-center min-h-[80vh] p-4 pb-8 gap-8'"
+    :class="embedded ? 'h-full min-h-0 justify-center p-3 pb-4 gap-4 md:gap-6' : 'justify-center min-h-[80vh] p-4 pb-8 gap-6 md:gap-8'"
   >
     <slot />
   </div>

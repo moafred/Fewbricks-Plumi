@@ -17,7 +17,7 @@ defineEmits<{
 
 <template>
   <button
-    class="w-10 h-10 rounded-full transition-all active:scale-90"
+    class="w-12 h-12 rounded-full transition-all active:scale-90"
     :class="[
       colorClass,
       selected ? 'ring-4 ring-offset-2 ring-sky-500 scale-110' : 'hover:scale-105',

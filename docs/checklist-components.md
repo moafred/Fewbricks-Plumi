@@ -57,6 +57,8 @@ Cette checklist doit etre suivie **avant chaque commit** contenant du code avec 
 | `GameFinished` | Ecran de fin de jeu |
 | `SubjectCard` | Carte de matiere (ecran d'accueil) |
 | `BookCard` | Carte de cahier (bookshelf) |
+| `ScreenLayout` | Conteneur d'ecran (padding/gap responsive) |
+| `ScreenHeader` | Header d'ecran avec bouton retour |
 
 ## Exemples de Patterns a Detecter
 

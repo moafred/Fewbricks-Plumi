@@ -27,14 +27,14 @@ const isIdle = computed(() => !props.filledWord && !props.showSolution);
 
 <template>
   <div
-    class="flex flex-wrap items-baseline justify-center gap-x-2 gap-y-4 text-3xl md:text-5xl font-learning text-stone-800 leading-normal text-center select-none"
+    class="flex flex-wrap items-baseline justify-center gap-x-2 gap-y-4 text-2xl md:text-4xl font-learning text-stone-800 leading-normal text-center select-none"
   >
     <!-- Before Gap -->
     <span class="whitespace-pre-wrap">{{ parts[0] }}</span>
 
     <!-- The Gap -->
     <span
-      class="inline-flex items-baseline justify-center min-w-20 md:min-w-30 px-1 transition-all duration-500"
+      class="inline-flex items-baseline justify-center min-w-16 md:min-w-24 px-1 transition-all duration-500"
       :class="[
         // Correct state
         (isCorrect || showSolution) && !isWrong

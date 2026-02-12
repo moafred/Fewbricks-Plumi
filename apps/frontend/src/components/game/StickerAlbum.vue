@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 import { useStickerStore } from '@/stores/stickers';
-import NotebookButton from '@/components/ui/NotebookButton.vue';
 import NotebookCard from '@/components/ui/NotebookCard.vue';
-import { HomeIcon, SparkleIcon, StarFilledIcon } from '@/components/icons';
+import { StarFilledIcon } from '@/components/icons';
 import StickerVisual from './StickerVisual.vue';
+import ScreenLayout from './ScreenLayout.vue';
+import ScreenHeader from './ScreenHeader.vue';
 
 const router = useRouter();
 const stickerStore = useStickerStore();
@@ -15,27 +16,20 @@ function goBack() {
 </script>
 
 <template>
-  <div class="sticker-album flex flex-col flex-1 p-6 gap-6">
+  <ScreenLayout>
     <!-- Header -->
-    <header class="flex items-center gap-4">
-      <NotebookButton
-        variant="icon"
-        aria-label="Retour à l'accueil"
-        @click="goBack"
-      >
-        <HomeIcon :size="28" class="text-sky-200" />
-      </NotebookButton>
-      <h1 class="text-2xl md:text-3xl font-bold text-sky-600 flex-1">
+    <ScreenHeader back-label="Retour à l'accueil" @back="goBack">
+      <h1 class="text-lg md:text-2xl font-bold text-sky-600 flex-1">
         Mon Album de Stickers
       </h1>
-      
+
       <div class="flex items-center gap-2 px-3 py-1 bg-gold-50 rounded-full border border-gold-200">
         <StarFilledIcon :size="20" class="text-gold-400" />
         <span class="text-sm font-bold text-gold-600">
           {{ stickerStore.unlockedCount }} / {{ stickerStore.totalCount }}
         </span>
       </div>
-    </header>
+    </ScreenHeader>
 
     <main class="flex-1 max-w-4xl mx-auto w-full">
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
@@ -74,7 +68,7 @@ function goBack() {
         <p class="text-sm">Continue tes entraînements pour en débloquer !</p>
       </div>
     </main>
-  </div>
+  </ScreenLayout>
 </template>
 
 <style scoped>

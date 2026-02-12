@@ -25,7 +25,7 @@ function handleTap() {
 
 <template>
   <button
-    class="form-choice relative flex items-center justify-center rounded-2xl h-20 md:h-24 w-full text-xl md:text-2xl font-bold transition-all duration-200 select-none border-3"
+    class="form-choice relative flex items-center justify-center rounded-2xl h-20 md:h-24 w-full text-lg md:text-xl font-bold transition-all duration-200 select-none border-3 truncate"
     :class="[
       {
         'bg-stone-100 border-stone-200 text-stone-400 opacity-50 cursor-default': state === 'idle',

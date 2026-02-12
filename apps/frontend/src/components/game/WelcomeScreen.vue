@@ -122,7 +122,7 @@ function finish() {
       <ActionButton
         variant="primary"
         size="lg"
-        class="w-64 md:w-80 animate-fade-in"
+        class="w-full max-w-xs md:max-w-sm animate-fade-in"
         @click="mode === 'onboarding' ? goToIdentity() : (step = 'celebration')"
       >
         {{ speeches.meet.button }}
@@ -177,7 +177,7 @@ function finish() {
       <ActionButton
         variant="primary"
         size="lg"
-        class="w-64 md:w-80"
+        class="w-full max-w-xs md:max-w-sm"
         :disabled="!childName.trim()"
         @click="goToCelebration"
       >
@@ -208,7 +208,7 @@ function finish() {
       <ActionButton
         variant="secondary"
         size="lg"
-        class="w-64 md:w-80 animate-fade-in"
+        class="w-full max-w-xs md:max-w-sm animate-fade-in"
         @click="finish"
       >
         {{ mode === 'onboarding' ? speeches.celebration.button : speeches.replayEnd.button }}

@@ -22,7 +22,7 @@ const maxWidthClasses: Record<string, string> = {
 </script>
 
 <template>
-  <div class="grid grid-cols-2 gap-6 w-full px-6" :class="maxWidthClasses[maxWidth]">
+  <div class="grid grid-cols-2 gap-4 md:gap-6 w-full px-3 md:px-6" :class="maxWidthClasses[maxWidth]">
     <slot />
   </div>
 </template>

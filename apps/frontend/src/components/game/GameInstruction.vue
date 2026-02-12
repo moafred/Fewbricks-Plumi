@@ -12,7 +12,7 @@ defineProps<{
 </script>
 
 <template>
-  <p class="text-xl md:text-2xl font-bold text-stone-700 text-center drop-shadow-sm min-h-[2rem] flex items-center justify-center">
+  <p class="text-xl md:text-2xl font-bold text-stone-700 text-center drop-shadow-sm min-h-[3rem] flex items-center justify-center">
     <template v-if="phase === 'discovery'">{{ discovery ?? 'Regarde bien...' }}</template>
     <template v-else-if="phase === 'challenge'">{{ challenge }}</template>
     <template v-else-if="lastResult === 'correct'">Bien joué !</template>

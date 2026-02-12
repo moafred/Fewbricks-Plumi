@@ -14,12 +14,12 @@ function selectChild(childId: string) {
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center flex-1 p-6 gap-8">
+  <div class="flex flex-col items-center justify-center flex-1 p-4 md:p-6 gap-6 md:gap-8">
     <h1 class="text-3xl md:text-4xl font-bold text-sky-600">
       Qui joue aujourd'hui ?
     </h1>
 
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-lg">
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 max-w-lg">
       <!-- Enfants existants -->
       <ProfileCard
         v-for="child in playerStore.children"

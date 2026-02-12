@@ -21,9 +21,9 @@ const { showBurst, showWobble } = useGameFeedback(() => props.state);
   <button
     :disabled="disabled"
     class="
-      relative h-20 md:h-24 rounded-2xl text-2xl md:text-3xl font-learning
+      relative h-20 md:h-24 rounded-2xl text-xl md:text-2xl font-learning
       transition-all duration-200 border-b-4 active:border-b-0 active:translate-y-1
-      flex items-center justify-center overflow-visible
+      flex items-center justify-center overflow-visible px-2
     "
     :class="[
       {

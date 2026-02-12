@@ -8,8 +8,8 @@ import { usePlayerStore } from '@/stores/player';
 import BookCard from './BookCard.vue';
 import AvatarBadge from './AvatarBadge.vue';
 import ShelfSection from './ShelfSection.vue';
-import NotebookButton from '@/components/ui/NotebookButton.vue';
-import { HomeIcon } from '@/components/icons';
+import ScreenLayout from './ScreenLayout.vue';
+import ScreenHeader from './ScreenHeader.vue';
 
 const props = withDefaults(defineProps<{
   subject?: Subject;
@@ -51,17 +51,10 @@ function shelfMaxStars(shelf: Shelf): number {
 </script>
 
 <template>
-  <div class="bookshelf flex flex-col flex-1 p-6 gap-6">
+  <ScreenLayout>
     <!-- Header -->
-    <header class="flex items-center gap-4">
-      <NotebookButton
-        variant="icon"
-        aria-label="Retour à l'accueil"
-        @click="router.push({ name: 'home' })"
-      >
-        <HomeIcon :size="28" class="text-sky-200" />
-      </NotebookButton>
-      <h1 class="text-2xl md:text-3xl font-bold text-sky-600 flex-1">
+    <ScreenHeader back-label="Retour à l'accueil" @back="router.push({ name: 'home' })">
+      <h1 class="text-xl md:text-2xl font-bold text-sky-600 flex-1">
         {{ shelfTitle }}
       </h1>
 
@@ -72,7 +65,7 @@ function shelfMaxStars(shelf: Shelf): number {
         :avatar-color="playerStore.activeChild.avatarColor"
         @click="router.push({ name: 'children' })"
       />
-    </header>
+    </ScreenHeader>
 
     <!-- Étagères -->
     <main class="flex-1 flex flex-col gap-8 w-full max-w-5xl mx-auto">
@@ -96,5 +89,5 @@ function shelfMaxStars(shelf: Shelf): number {
         />
       </ShelfSection>
     </main>
-  </div>
+  </ScreenLayout>
 </template>

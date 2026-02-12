@@ -10,6 +10,7 @@ import AvatarBadge from '@/components/game/AvatarBadge.vue';
 import ParentGuideModal from './ParentGuideModal.vue';
 import { BookIcon, SparkleIcon, InfoIcon } from '@/components/icons';
 import NotebookButton from '@/components/ui/NotebookButton.vue';
+import ScreenLayout from './ScreenLayout.vue';
 
 const router = useRouter();
 const progress = useChapterProgressStore();
@@ -36,7 +37,7 @@ const mathStars = computed(() => computeSubjectStars('maths'));
 </script>
 
 <template>
-  <div class="home-screen flex flex-col flex-1 p-4 md:p-6">
+  <ScreenLayout gap="none">
     <!-- Header — Logo Plumi + avatar enfant -->
     <header class="relative flex justify-center shrink-0">
       <!-- Parent Guide button (left) -->
@@ -113,5 +114,5 @@ const mathStars = computed(() => computeSubjectStars('maths'));
       :is-open="showParentGuide"
       @close="showParentGuide = false"
     />
-  </div>
+  </ScreenLayout>
 </template>

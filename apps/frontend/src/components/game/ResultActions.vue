@@ -8,7 +8,7 @@
 </script>
 
 <template>
-  <div class="flex gap-4 mt-4">
+  <div class="flex flex-wrap justify-center gap-3 mt-4">
     <slot />
   </div>
 </template>

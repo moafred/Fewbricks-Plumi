@@ -33,7 +33,7 @@ const messages: Record<number, string> = {
 <template>
   <div class="chapter-result flex flex-col items-center justify-center gap-6 animate-celebrate">
     <div class="flex flex-col items-center gap-2">
-      <h2 class="text-3xl md:text-5xl font-bold text-sky-600 text-center">
+      <h2 class="text-2xl md:text-4xl font-bold text-sky-600 text-center">
         {{ messages[stars] }}
       </h2>
       <p v-if="stars < 3" class="text-stone-500 font-medium">
@@ -59,7 +59,7 @@ const messages: Record<number, string> = {
     <!-- Sticker Unlocked Badge -->
     <div 
       v-if="stars === 3 && hasSticker" 
-      class="flex flex-col items-center gap-3 p-6 bg-white rounded-3xl border-4 border-gold-300 shadow-xl animate-bounce"
+      class="flex flex-col items-center gap-3 p-4 md:p-6 bg-white rounded-3xl border-4 border-gold-300 shadow-xl animate-bounce"
     >
       <div class="flex items-center gap-2">
         <SparkleIcon :size="24" class="text-gold-400 animate-pulse" />

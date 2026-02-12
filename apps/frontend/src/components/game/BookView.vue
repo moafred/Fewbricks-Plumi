@@ -4,10 +4,10 @@ import type { Book, Chapter } from '@plumi/shared';
 import { ALL_BOOKS, getChaptersForBook } from '@plumi/shared';
 import { useRouter, useRoute } from 'vue-router';
 import { useChapterProgressStore } from '@/stores/chapter-progress';
-import NotebookButton from '@/components/ui/NotebookButton.vue';
 import ChapterCard from '@/components/game/ChapterCard.vue';
 import LessonCard from '@/components/game/LessonCard.vue';
-import { HomeIcon } from '@/components/icons';
+import ScreenLayout from './ScreenLayout.vue';
+import ScreenHeader from './ScreenHeader.vue';
 
 const props = defineProps<{
   bookId: number;
@@ -57,23 +57,16 @@ function getConnectionLineColor(chapterId: number): string {
 </script>
 
 <template>
-  <div v-if="book" class="book-view flex flex-col flex-1 p-6 gap-8">
+  <ScreenLayout v-if="book" gap="md">
     <!-- Header -->
-    <header class="flex items-center gap-4">
-      <NotebookButton
-        variant="icon"
-        aria-label="Retour aux livres"
-        @click="router.push({ name: 'bookshelf', params: { subject: route.params.subject } })"
-      >
-        <HomeIcon :size="28" class="text-sky-200" />
-      </NotebookButton>
+    <ScreenHeader back-label="Retour aux livres" @back="router.push({ name: 'bookshelf', params: { subject: route.params.subject } })">
       <div>
-        <h1 class="text-2xl md:text-3xl font-bold drop-shadow-lg" :class="accentColor">
+        <h1 class="text-xl md:text-2xl font-bold drop-shadow-lg" :class="accentColor">
           {{ book.title }}
         </h1>
         <p class="text-sm text-stone-500 drop-shadow-md">{{ book.subtitle }}</p>
       </div>
-    </header>
+    </ScreenHeader>
 
     <!-- Chemin des chapitres -->
     <main class="flex-1 flex flex-col items-center gap-6 py-4">
@@ -114,5 +107,5 @@ function getConnectionLineColor(chapterId: number): string {
         />
       </div>
     </main>
-  </div>
+  </ScreenLayout>
 </template>
