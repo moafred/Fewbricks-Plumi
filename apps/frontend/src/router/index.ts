@@ -128,11 +128,14 @@ const router = createRouter({
 router.beforeEach((to) => {
   const playerStore = usePlayerStore();
 
-  // Pages welcome toujours accessibles
-  if (to.name?.toString().startsWith('welcome')) return;
+  // Pages welcome et parent-guide toujours accessibles
+  if (to.name?.toString().startsWith('welcome') || to.name === 'parent-guide') return;
 
-  // Pas d'enfants → onboarding
-  if (!playerStore.hasChildren) return { name: 'welcome' };
+  // Pas d'enfants → parent-guide (si pas encore vu) ou welcome
+  if (!playerStore.hasChildren) {
+    const hasSeenGuide = localStorage.getItem('plumi:hasSeenParentGuide') === 'true';
+    return hasSeenGuide ? { name: 'welcome' } : { name: 'parent-guide' };
+  }
 
   // Pas d'enfant actif → auto-sélection ou sélecteur
   if (!playerStore.activeChild) {
