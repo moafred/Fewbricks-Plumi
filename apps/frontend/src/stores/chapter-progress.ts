@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import type { Subject } from '@plumi/shared';
 import { BOOKS, getBooksForSubject, getChaptersForBook } from '@plumi/shared';
+import { getItem, setItem, removeItem } from '@/services/storage';
 
 export interface ChapterScore {
   chapterId: number;
@@ -29,17 +30,17 @@ export const useChapterProgressStore = defineStore('chapter-progress', () => {
   const completedChapters = ref<Map<number, ChapterScore>>(new Map());
   const activeChildId = ref<string | null>(null);
 
-  // --- Init from localStorage ---
+  // --- Init from StorageService ---
   function loadProgress(childId?: string | null) {
     const key = storageKeyForChild(childId ?? activeChildId.value);
-    const raw = localStorage.getItem(key);
+    const raw = getItem(key);
     completedChapters.value = raw ? new Map(JSON.parse(raw)) : new Map();
   }
 
   function saveProgress() {
     const key = storageKeyForChild(activeChildId.value);
     const entries = Array.from(completedChapters.value.entries());
-    localStorage.setItem(key, JSON.stringify(entries));
+    setItem(key, JSON.stringify(entries));
   }
 
   /**
@@ -48,11 +49,11 @@ export const useChapterProgressStore = defineStore('chapter-progress', () => {
    */
   function loadProgressForChild(childId: string) {
     // Migration : si une progression globale existe, la copier vers ce profil
-    const globalData = localStorage.getItem(STORAGE_KEY);
+    const globalData = getItem(STORAGE_KEY);
     const childKey = storageKeyForChild(childId);
-    if (globalData && !localStorage.getItem(childKey)) {
-      localStorage.setItem(childKey, globalData);
-      localStorage.removeItem(STORAGE_KEY);
+    if (globalData && !getItem(childKey)) {
+      setItem(childKey, globalData);
+      removeItem(STORAGE_KEY);
     }
 
     activeChildId.value = childId;
@@ -131,7 +132,7 @@ export const useChapterProgressStore = defineStore('chapter-progress', () => {
   function resetProgress() {
     completedChapters.value.clear();
     const key = storageKeyForChild(activeChildId.value);
-    localStorage.removeItem(key);
+    removeItem(key);
   }
 
   // Charger au demarrage
