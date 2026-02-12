@@ -5,6 +5,7 @@ import {
 } from 'vue-router';
 import { usePlayerStore } from '@/stores/player';
 
+import ParentGuideScreen from '@/components/game/ParentGuideScreen.vue';
 import WelcomeScreen from '@/components/game/WelcomeScreen.vue';
 import ChildSelector from '@/components/game/ChildSelector.vue';
 import HomeScreen from '@/components/game/HomeScreen.vue';
@@ -15,6 +16,13 @@ import BookLessonScreen from '@/components/game/BookLessonScreen.vue';
 import ChapterRunner from '@/components/game/ChapterRunner.vue';
 
 const routes: RouteRecordRaw[] = [
+  // --- Parent Guide ---
+  {
+    path: '/parent-guide',
+    name: 'parent-guide',
+    component: ParentGuideScreen,
+  },
+
   // --- Onboarding / Welcome ---
   {
     path: '/welcome',
