@@ -133,6 +133,7 @@ export const MATH_CHAPTERS: Chapter[] = [
       { mechanic: 'ardoise-calcul', operations: ['addition'], numberRange: [1, 10], questionCount: 3 },
       { mechanic: 'tri-nombres', categories: ['pair', 'impair'], numberRange: [1, 99], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-math-1001', name: 'Le Renard Pair' },
   },
   {
     id: 1002,
@@ -145,6 +146,7 @@ export const MATH_CHAPTERS: Chapter[] = [
       { mechanic: 'ardoise-calcul', operations: ['addition'], numberRange: [1, 20], questionCount: 3 },
       { mechanic: 'tri-nombres', categories: ['< 50', '≥ 50'], numberRange: [1, 99], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-math-1002', name: 'L\'Ours des Grandeurs' },
   },
   {
     id: 1003,
@@ -157,6 +159,7 @@ export const MATH_CHAPTERS: Chapter[] = [
       { mechanic: 'tri-nombres', categories: ['< 50', '≥ 50'], numberRange: [1, 99], questionCount: 4 },
       { mechanic: 'ardoise-calcul', operations: ['addition'], numberRange: [1, 20], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-math-1003', name: 'Le Roi des Nombres' },
   },
 
   // ─── LIVRE 102 : Les Additions ──────────────────────────────────────
@@ -171,6 +174,7 @@ export const MATH_CHAPTERS: Chapter[] = [
       { mechanic: 'encrier-calcul', operations: ['addition'], numberRange: [1, 9], questionCount: 3 },
       { mechanic: 'encrier-calcul', operations: ['addition'], numberRange: [1, 9], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-math-1004', name: "L'Ecureuil Calculateur" },
   },
   {
     id: 1005,
@@ -183,6 +187,7 @@ export const MATH_CHAPTERS: Chapter[] = [
       { mechanic: 'ardoise-calcul', operations: ['addition'], numberRange: [1, 10], questionCount: 4 },
       { mechanic: 'encrier-calcul', operations: ['addition'], numberRange: [1, 10], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-math-1005', name: 'La Marmotte des Compléments' },
   },
   {
     id: 1006,
@@ -195,6 +200,7 @@ export const MATH_CHAPTERS: Chapter[] = [
       { mechanic: 'ardoise-calcul', operations: ['addition'], numberRange: [5, 20], questionCount: 4 },
       { mechanic: 'encrier-calcul', operations: ['addition'], numberRange: [1, 20], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-math-1006', name: 'Le Castor des Sommes' },
   },
 
   // ─── LIVRE 103 : Les Soustractions ──────────────────────────────────
@@ -209,6 +215,7 @@ export const MATH_CHAPTERS: Chapter[] = [
       { mechanic: 'encrier-calcul', operations: ['subtraction'], numberRange: [1, 10], questionCount: 3 },
       { mechanic: 'encrier-calcul', operations: ['subtraction'], numberRange: [1, 10], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-math-1007', name: 'Le Petit Chat Perdu' },
   },
   {
     id: 1008,
@@ -221,6 +228,7 @@ export const MATH_CHAPTERS: Chapter[] = [
       { mechanic: 'ardoise-calcul', operations: ['addition', 'subtraction'], numberRange: [1, 15], questionCount: 4 },
       { mechanic: 'encrier-calcul', operations: ['addition', 'subtraction'], numberRange: [1, 15], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-math-1008', name: 'Le Magicien du Moins' },
   },
   {
     id: 1009,
@@ -233,6 +241,7 @@ export const MATH_CHAPTERS: Chapter[] = [
       { mechanic: 'ardoise-calcul', operations: ['addition', 'subtraction'], numberRange: [5, 20], questionCount: 4 },
       { mechanic: 'encrier-calcul', operations: ['addition', 'subtraction'], numberRange: [1, 20], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-math-1009', name: 'Le Champion du Calcul' },
   },
 
   // ─── LIVRE 104 : Les Multiplications ────────────────────────────────
@@ -247,6 +256,7 @@ export const MATH_CHAPTERS: Chapter[] = [
       { mechanic: 'encrier-calcul', operations: ['multiplication'], numberRange: [1, 10], questionCount: 3 },
       { mechanic: 'encrier-calcul', operations: ['multiplication'], numberRange: [1, 10], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-math-1010', name: 'Le Lapin des Doubles' },
   },
   {
     id: 1011,
@@ -259,6 +269,7 @@ export const MATH_CHAPTERS: Chapter[] = [
       { mechanic: 'ardoise-calcul', operations: ['multiplication'], numberRange: [1, 10], questionCount: 4 },
       { mechanic: 'encrier-calcul', operations: ['multiplication'], numberRange: [1, 10], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-math-1011', name: 'Le Grillon des Tables' },
   },
   {
     id: 1012,
@@ -271,6 +282,7 @@ export const MATH_CHAPTERS: Chapter[] = [
       { mechanic: 'ardoise-calcul', operations: ['addition', 'subtraction', 'multiplication'], numberRange: [1, 10], questionCount: 4 },
       { mechanic: 'encrier-calcul', operations: ['addition', 'multiplication'], numberRange: [1, 10], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-math-1012', name: "L'Araignée Multiplieuse" },
   },
 
   // ─── LIVRE 105 : Grandeurs et Mesures ───────────────────────────────
@@ -285,6 +297,7 @@ export const MATH_CHAPTERS: Chapter[] = [
       { mechanic: 'ardoise-calcul', operations: ['addition'], numberRange: [1, 12], questionCount: 3 },
       { mechanic: 'horloge', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-math-1013', name: 'Le Hibou Horloger' },
   },
   {
     id: 1014,
@@ -297,6 +310,7 @@ export const MATH_CHAPTERS: Chapter[] = [
       { mechanic: 'ardoise-calcul', operations: ['addition'], numberRange: [1, 20], questionCount: 3 },
       { mechanic: 'marche', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-math-1014', name: 'Le Cochon Tirelire' },
   },
   {
     id: 1015,
@@ -309,6 +323,7 @@ export const MATH_CHAPTERS: Chapter[] = [
       { mechanic: 'ardoise-calcul', operations: ['addition', 'subtraction'], numberRange: [1, 50], questionCount: 4 },
       { mechanic: 'marche', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-math-1015', name: 'La Girafe des Mesures' },
   },
 
   // ─── LIVRE 106 : Les Fractions ──────────────────────────────────────
@@ -323,6 +338,7 @@ export const MATH_CHAPTERS: Chapter[] = [
       { mechanic: 'ardoise-calcul', operations: ['addition'], numberRange: [1, 10], questionCount: 3 },
       { mechanic: 'partage', fractionDenominators: [2, 3, 4], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-math-1016', name: 'La Souris Gourmande' },
   },
   {
     id: 1017,
@@ -335,6 +351,7 @@ export const MATH_CHAPTERS: Chapter[] = [
       { mechanic: 'partage', fractionDenominators: [2, 3, 4, 5, 6], questionCount: 4 },
       { mechanic: 'partage', fractionDenominators: [2, 3, 4, 5, 6, 8], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-math-1017', name: 'Le Rat des Parts' },
   },
   {
     id: 1018,
@@ -347,6 +364,7 @@ export const MATH_CHAPTERS: Chapter[] = [
       { mechanic: 'partage', fractionDenominators: [2, 3, 4, 5, 6, 8, 10], questionCount: 4 },
       { mechanic: 'partage', fractionDenominators: [2, 3, 4, 5, 6, 8, 10], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-math-1018', name: 'Le Maître du Gâteau' },
   },
 
   // ─── LIVRE 107 : Géométrie et Espace ────────────────────────────────
@@ -361,6 +379,7 @@ export const MATH_CHAPTERS: Chapter[] = [
       { mechanic: 'ardoise-calcul', operations: ['addition', 'subtraction'], numberRange: [1, 20], questionCount: 3 },
       { mechanic: 'droite-numerique', numberRange: [0, 100], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-math-1019', name: "L'Oiseau Migrateur" },
   },
   {
     id: 1020,
@@ -373,6 +392,7 @@ export const MATH_CHAPTERS: Chapter[] = [
       { mechanic: 'ardoise-calcul', operations: ['addition'], numberRange: [10, 50], questionCount: 3 },
       { mechanic: 'tour-de-blocs', numberRange: [10, 99], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-math-1020', name: 'Le Singe Bâtisseur' },
   },
   {
     id: 1021,
@@ -385,6 +405,7 @@ export const MATH_CHAPTERS: Chapter[] = [
       { mechanic: 'tour-de-blocs', numberRange: [100, 999], questionCount: 4 },
       { mechanic: 'tour-de-blocs', numberRange: [100, 999], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-math-1021', name: "L'Eléphant des Sommets" },
   },
 
   // ─── LIVRE 108 : Révision Maths (bonus) ─────────────────────────────
@@ -399,6 +420,7 @@ export const MATH_CHAPTERS: Chapter[] = [
       { mechanic: 'tri-nombres', categories: ['pair', 'impair'], numberRange: [1, 99], questionCount: 4 },
       { mechanic: 'encrier-calcul', operations: ['addition', 'subtraction', 'multiplication'], numberRange: [1, 20], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-math-1022', name: 'Le Génie du Calcul' },
   },
   {
     id: 1023,
@@ -411,6 +433,7 @@ export const MATH_CHAPTERS: Chapter[] = [
       { mechanic: 'partage', fractionDenominators: [2, 3, 4, 5, 6], questionCount: 4 },
       { mechanic: 'ardoise-calcul', operations: ['addition', 'subtraction'], numberRange: [1, 50], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-math-1023', name: 'L\'Expert du Marché' },
   },
   {
     id: 1024,
@@ -424,5 +447,6 @@ export const MATH_CHAPTERS: Chapter[] = [
       { mechanic: 'horloge', questionCount: 3 },
       { mechanic: 'encrier-calcul', operations: ['addition', 'subtraction', 'multiplication'], numberRange: [1, 20], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-math-1024', name: 'Le Grand Maître Maths' },
   },
 ];

@@ -143,6 +143,13 @@ function goBackToBook() {
   });
 }
 
+function goToLesson() {
+  router.push({
+    name: 'book-lesson',
+    params: { subject: route.params.subject, bookId: route.params.bookId },
+  });
+}
+
 function onContinue() {
   goBackToBook();
 }
@@ -212,11 +219,13 @@ useBackNavigation(handleBack, computed(() => !showQuitConfirmation.value));
     <!-- Résultat du chapitre -->
     <div v-else-if="showingResult" class="flex-1 min-h-0 flex items-center justify-center w-full">
       <ChapterResult
+        :chapter-id="chapterId"
         :score="totalScore"
         :total="totalQuestions"
         :stars="stars"
         @replay="replay"
         @continue="onContinue"
+        @read-lesson="goToLesson"
       />
     </div>
 

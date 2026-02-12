@@ -21,7 +21,7 @@
  *   @click="handleClick"
  * />
  */
-import { StarFilledIcon, StarEmptyIcon } from '@/components/icons';
+import { StarFilledIcon, StarEmptyIcon, SparkleIcon } from '@/components/icons';
 
 const props = defineProps<{
   title: string;
@@ -58,6 +58,14 @@ const colors = colorClasses[props.colorVariant] ?? colorClasses.sky;
     ]"
     @click="$emit('click')"
   >
+    <!-- Sticker débloqué (3 étoiles) -->
+    <div 
+      v-if="stars === 3"
+      class="absolute -top-3 -right-3 w-10 h-10 rounded-full bg-gold-400 flex items-center justify-center shadow-lg border-2 border-white rotate-12 z-10"
+    >
+      <SparkleIcon :size="20" class="text-white" />
+    </div>
+
     <div class="flex items-center justify-between gap-4">
       <div class="flex-1 text-left">
         <h3 class="text-lg font-bold" :class="colors.title">{{ title }}</h3>

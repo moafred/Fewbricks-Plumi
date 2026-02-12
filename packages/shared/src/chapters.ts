@@ -154,6 +154,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'encrier', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
       { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-1', name: 'Le Chat du Présent' },
   },
   {
     id: 2,
@@ -167,6 +168,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'encrier', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
       { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-2', name: "Le Lapin d'Avoir" },
   },
   {
     id: 3,
@@ -185,6 +187,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'encrier', questionCount: 4 },
       { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-3', name: 'Le Hibou des Verbes' },
   },
 
 {
@@ -200,6 +203,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'encrier', pronouns: ['nous', 'vous', 'ils/elles'], questionCount: 3 },
       { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-4', name: "L'Oiseau de l'Être" },
   },
   {
     id: 5,
@@ -214,6 +218,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'encrier', pronouns: ['nous', 'vous', 'ils/elles'], questionCount: 3 },
       { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-5', name: "L'Ourson de l'Avoir" },
   },
   {
     id: 6,
@@ -228,6 +233,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'encrier', questionCount: 4 },
       { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-6', name: 'Le Blaireau du Duel' },
   },
 
 {
@@ -242,6 +248,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'pont-accords', questionCount: 4 },
       { mechanic: 'encrier-gn', questionCount: 4 },
     ],
+    sticker: { id: 'st-fr-7', name: 'Le Cerf des Accords' },
   },
   {
     id: 8,
@@ -255,6 +262,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'pont-accords', questionCount: 4 },
       { mechanic: 'encrier-gn', questionCount: 4 },
     ],
+    sticker: { id: 'st-fr-8', name: "L'Ecureuil du Pluriel" },
   },
   {
     id: 9,
@@ -269,6 +277,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'pont-accords', questionCount: 4 },
       { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-9', name: 'Le Loup du Groupe Nominal' },
   },
 
 {
@@ -287,6 +296,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'encrier', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
       { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-10', name: 'Le Phénix du Futur' },
   },
   {
     id: 11,
@@ -304,6 +314,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'encrier', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
       { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-11', name: 'Le Coq de Demain' },
   },
   {
     id: 12,
@@ -318,6 +329,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'encrier', questionCount: 4 },
       { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-12', name: "L'Aigle du Temps" },
   },
 
 {
@@ -336,6 +348,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'encrier', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
       { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-13', name: 'La Tortue des Souvenirs' },
   },
   {
     id: 14,
@@ -353,6 +366,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'encrier', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
       { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-14', name: "L'Eléphant de l'Imparfait" },
   },
   {
     id: 15,
@@ -367,6 +381,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'encrier', questionCount: 4 },
       { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-15', name: 'Le Hibou du Passé' },
   },
 
 {
@@ -381,6 +396,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'ardoise', questionCount: 4 },
       { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-16', name: 'Le Maître du Temps' },
   },
   {
     id: 17,
@@ -394,6 +410,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'ardoise', questionCount: 4 },
       { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-17', name: 'Le Gardien des Verbes' },
   },
   {
     id: 18,
@@ -407,6 +424,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'encrier', questionCount: 4 },
       { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-18', name: 'Le Dragon du Flux' },
   },
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -424,6 +442,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'encrier', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
       { mechanic: 'tri-verbes', verbs: ['jouer', 'manger'], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-19', name: "Le Castor de l'Atelier" },
   },
   {
     id: 20,
@@ -437,6 +456,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'encrier', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
       { mechanic: 'tri-verbes', verbs: ['chanter', 'regarder'], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-20', name: 'Le Rossignol Chanteur' },
   },
   {
     id: 21,
@@ -451,6 +471,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'tri-verbes', verbs: ['manger', 'regarder'], questionCount: 3 },
       { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-21', name: 'Le Singe Joueur' },
   },
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -468,6 +489,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'encrier', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
       { mechanic: 'tri-verbes', verbs: ['aller', 'venir'], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-22', name: 'Le Kangourou Voyageur' },
   },
   {
     id: 23,
@@ -481,6 +503,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'encrier', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
       { mechanic: 'tri-verbes', verbs: ['faire', 'dire'], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-23', name: 'Le Perroquet Bavard' },
   },
   {
     id: 24,
@@ -495,6 +518,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'tri-verbes', verbs: ['venir', 'dire'], questionCount: 3 },
       { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-24', name: 'Le Renard Rusé' },
   },
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -512,6 +536,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'encrier', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
       { mechanic: 'tri-verbes', verbs: ['pouvoir', 'vouloir'], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-25', name: 'Le Lion Volontaire' },
   },
   {
     id: 26,
@@ -525,6 +550,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'encrier', pronouns: ['je', 'tu', 'il/elle/on'], questionCount: 3 },
       { mechanic: 'tri-verbes', verbs: ['voir', 'prendre'], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-26', name: 'Le Lynx Observateur' },
   },
   {
     id: 27,
@@ -539,6 +565,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'tri-verbes', verbs: ['vouloir', 'prendre'], questionCount: 3 },
       { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-27', name: 'Le Magicien des Arcanes' },
   },
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -556,6 +583,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'encrier', questionCount: 4 },
       { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-28', name: "Le Chef d'Orchestre" },
   },
   {
     id: 29,
@@ -569,6 +597,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'encrier', questionCount: 4 },
       { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-29', name: 'Le Poète des Temps' },
   },
   {
     id: 30,
@@ -583,6 +612,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'tri-verbes', verbs: ['avoir', 'faire'], questionCount: 3 },
       { mechanic: 'encrier', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-30', name: 'Le Phénix Suprême' },
   },
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -601,6 +631,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'encrier', pronouns: ['je', 'tu', 'il/elle/on'], verbs: ['finir'], questionCount: 3 },
       { mechanic: 'encrier', verbs: ['finir'], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-31', name: "L'Abeille Finisseuse" },
   },
   {
     id: 32,
@@ -614,6 +645,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'encrier', verbs: ['finir'], questionCount: 4 },
       { mechanic: 'encrier', verbs: ['finir'], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-32', name: 'La Fourmi Patiente' },
   },
   {
     id: 33,
@@ -627,6 +659,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'encrier', verbs: ['finir', 'chanter'], questionCount: 4 },
       { mechanic: 'encrier', verbs: ['finir', 'chanter'], questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-33', name: 'Le Duo Gagnant' },
   },
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -642,6 +675,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'tri-phrases', questionCount: 4 },
       { mechanic: 'tri-phrases', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-34', name: 'La Chouette Majuscule' },
   },
   {
     id: 35,
@@ -653,6 +687,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'ponctuation', questionCount: 4 },
       { mechanic: 'ponctuation', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-35', name: "Le Point d'Interrogation" },
   },
   {
     id: 36,
@@ -665,6 +700,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'tri-phrases', questionCount: 3 },
       { mechanic: 'ponctuation', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-36', name: 'Le Capitaine de la Phrase' },
   },
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -680,6 +716,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'reperage', target: 'adjective', questionCount: 4 },
       { mechanic: 'reperage', target: 'adjective', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-37', name: 'Le Peintre des Couleurs' },
   },
   {
     id: 38,
@@ -691,6 +728,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'pont-accords', questionCount: 4 },
       { mechanic: 'pont-accords', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-38', name: 'Le Caméléon des Accords' },
   },
   {
     id: 39,
@@ -703,6 +741,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'encrier-gn', questionCount: 3 },
       { mechanic: 'reperage', target: 'adjective', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-39', name: "L'Expert des Qualités" },
   },
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -718,6 +757,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'reperage', target: 'verb', questionCount: 4 },
       { mechanic: 'reperage', target: 'verb', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-40', name: 'Le Détective du Verbe' },
   },
   {
     id: 41,
@@ -729,6 +769,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'reperage', target: 'subject', questionCount: 4 },
       { mechanic: 'reperage', target: 'subject', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-41', name: "L'Enquêteur du Sujet" },
   },
   {
     id: 42,
@@ -741,6 +782,7 @@ export const CHAPTERS: Chapter[] = [
       { mechanic: 'reperage', target: 'verb', questionCount: 3 },
       { mechanic: 'reperage', target: 'subject', questionCount: 4, isBoss: true },
     ],
+    sticker: { id: 'st-fr-42', name: 'Le Juge de la Phrase' },
   },
 ];
 

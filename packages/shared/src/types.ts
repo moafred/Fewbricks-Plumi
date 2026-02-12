@@ -179,6 +179,11 @@ export interface Chapter {
   verbs?: VerbId[];
   tense?: Tense | 'mixed';
   steps: ChapterStep[];
+  /** Sticker débloqué avec 3 étoiles */
+  sticker?: {
+    id: string;
+    name: string;
+  };
 }
 
 export type ThemeId =

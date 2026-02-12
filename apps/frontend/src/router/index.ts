@@ -8,6 +8,7 @@ import { usePlayerStore } from '@/stores/player';
 import WelcomeScreen from '@/components/game/WelcomeScreen.vue';
 import ChildSelector from '@/components/game/ChildSelector.vue';
 import HomeScreen from '@/components/game/HomeScreen.vue';
+import StickerAlbum from '@/components/game/StickerAlbum.vue';
 import BookShelf from '@/components/game/BookShelf.vue';
 import BookView from '@/components/game/BookView.vue';
 import BookLessonScreen from '@/components/game/BookLessonScreen.vue';
@@ -46,6 +47,13 @@ const routes: RouteRecordRaw[] = [
     path: '/home',
     name: 'home',
     component: HomeScreen,
+  },
+
+  // --- Album de stickers ---
+  {
+    path: '/album',
+    name: 'album',
+    component: StickerAlbum,
   },
 
   // --- Bibliothèque ---

@@ -7,7 +7,8 @@ import { useChapterProgressStore } from '@/stores/chapter-progress';
 import { usePlayerStore } from '@/stores/player';
 import SubjectCard from '@/components/game/SubjectCard.vue';
 import ChildAvatar from '@/components/game/ChildAvatar.vue';
-import { BookIcon } from '@/components/icons';
+import { BookIcon, SparkleIcon } from '@/components/icons';
+import NotebookButton from '@/components/ui/NotebookButton.vue';
 
 const router = useRouter();
 const progress = useChapterProgressStore();
@@ -35,6 +36,17 @@ const mathStars = computed(() => computeSubjectStars('maths'));
   <div class="home-screen flex flex-col flex-1 p-4 md:p-6">
     <!-- Header — Logo Plumi + avatar enfant -->
     <header class="relative flex justify-center shrink-0">
+      <!-- Album badge -->
+      <div class="absolute top-2 left-0 z-10">
+        <NotebookButton
+          variant="icon"
+          aria-label="Mon Album"
+          @click="router.push({ name: 'album' })"
+        >
+          <SparkleIcon :size="28" class="text-gold-400" />
+        </NotebookButton>
+      </div>
+
       <!-- Avatar badge — accès à la liste des profils -->
       <button
         v-if="playerStore.activeChild"
