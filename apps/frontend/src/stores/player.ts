@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import type { ChildProfile, AvatarColor } from '@plumi/shared';
 import { MAX_CHILDREN } from '@plumi/shared';
+import { getItem, setItem, removeItem } from '@/services/storage';
 import { useChapterProgressStore } from './chapter-progress';
 
 const STORAGE_KEY = 'plumi-children';
@@ -11,21 +12,21 @@ export const usePlayerStore = defineStore('player', () => {
   const children = ref<ChildProfile[]>([]);
   const activeChildId = ref<string | null>(null);
 
-  // --- Init from localStorage ---
+  // --- Init from StorageService ---
   function load() {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = getItem(STORAGE_KEY);
     if (raw) {
       children.value = JSON.parse(raw);
     }
-    activeChildId.value = localStorage.getItem(ACTIVE_KEY);
+    activeChildId.value = getItem(ACTIVE_KEY);
   }
 
   function save() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(children.value));
+    setItem(STORAGE_KEY, JSON.stringify(children.value));
     if (activeChildId.value) {
-      localStorage.setItem(ACTIVE_KEY, activeChildId.value);
+      setItem(ACTIVE_KEY, activeChildId.value);
     } else {
-      localStorage.removeItem(ACTIVE_KEY);
+      removeItem(ACTIVE_KEY);
     }
   }
 
@@ -57,7 +58,7 @@ export const usePlayerStore = defineStore('player', () => {
       activeChildId.value = children.value[0]?.id ?? null;
     }
     // Nettoyer la progression de l'enfant supprimé
-    localStorage.removeItem(`plumi-chapter-progress-${id}`);
+    removeItem(`plumi-chapter-progress-${id}`);
     save();
   }
 
