@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { getBooksForSubject, getChaptersForBook } from '@plumi/shared';
 import type { Subject } from '@plumi/shared';
 import { useRouter } from 'vue-router';
@@ -7,12 +7,15 @@ import { useChapterProgressStore } from '@/stores/chapter-progress';
 import { usePlayerStore } from '@/stores/player';
 import SubjectCard from '@/components/game/SubjectCard.vue';
 import ChildAvatar from '@/components/game/ChildAvatar.vue';
-import { BookIcon, SparkleIcon } from '@/components/icons';
+import ParentGuideModal from './ParentGuideModal.vue';
+import { BookIcon, SparkleIcon, InfoIcon } from '@/components/icons';
 import NotebookButton from '@/components/ui/NotebookButton.vue';
 
 const router = useRouter();
 const progress = useChapterProgressStore();
 const playerStore = usePlayerStore();
+
+const showParentGuide = ref(false);
 
 function computeSubjectStars(subject: Subject) {
   const books = getBooksForSubject(subject);
@@ -36,8 +39,19 @@ const mathStars = computed(() => computeSubjectStars('maths'));
   <div class="home-screen flex flex-col flex-1 p-4 md:p-6">
     <!-- Header — Logo Plumi + avatar enfant -->
     <header class="relative flex justify-center shrink-0">
-      <!-- Album badge -->
+      <!-- Parent Guide button (left) -->
       <div class="absolute top-2 left-0 z-10">
+        <NotebookButton
+          variant="icon"
+          aria-label="Guide pour les parents"
+          @click="showParentGuide = true"
+        >
+          <InfoIcon :size="28" class="text-sky-500" />
+        </NotebookButton>
+      </div>
+
+      <!-- Album badge (moved) -->
+      <div class="absolute top-2 left-16 z-10">
         <NotebookButton
           variant="icon"
           aria-label="Mon Album"
@@ -101,5 +115,11 @@ const mathStars = computed(() => computeSubjectStars('maths'));
         </SubjectCard>
       </div>
     </main>
+
+    <!-- Parent Guide Modal -->
+    <ParentGuideModal
+      :is-open="showParentGuide"
+      @close="showParentGuide = false"
+    />
   </div>
 </template>
