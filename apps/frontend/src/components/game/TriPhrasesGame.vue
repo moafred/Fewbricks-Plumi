@@ -5,9 +5,10 @@ import { useTriPhrasesStore } from '@/stores/tri-phrases';
 import { useKeyboardNavigation, useBackNavigation, useSyncGameProgress } from '@/composables';
 import GameLayout from '@/components/game/GameLayout.vue';
 import ChoicesSection from '@/components/game/ChoicesSection.vue';
+import GameHeader from '@/components/game/GameHeader.vue';
+import GameInstruction from '@/components/game/GameInstruction.vue';
 import CategoryButton from './CategoryButton.vue';
 import type { CategoryButtonState } from './CategoryButton.vue';
-import ProgressStars from './ProgressStars.vue';
 import GameResult from './GameResult.vue';
 import NotebookCard from '@/components/ui/NotebookCard.vue';
 
@@ -26,6 +27,8 @@ const emit = defineEmits<{
 
 const game = useTriPhrasesStore();
 
+const { progress } = game;
+
 const categoryChoices = computed(() => game.currentCategories);
 const isChallenge = computed(() => game.phase === 'challenge');
 
@@ -41,7 +44,10 @@ watch(
 );
 
 const canGoBack = computed(() => !props.embedded);
-useBackNavigation(() => emit('home'), canGoBack);
+function handleBack() {
+  emit('home');
+}
+useBackNavigation(handleBack, canGoBack);
 
 let resolutionTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -107,6 +113,15 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
 
 <template>
   <GameLayout :embedded="embedded">
+    <GameHeader
+      v-if="!embedded"
+      label="Phrases"
+      :current="progress.current + 1"
+      :total="progress.total"
+      color-class="text-coral-500"
+      @back="handleBack"
+    />
+
     <!-- Finished: show results -->
     <template v-if="game.isFinished && !embedded">
       <div class="flex-1 flex items-center justify-center w-full">
@@ -121,23 +136,14 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
 
     <!-- Playing -->
     <template v-else>
-      <!-- Header: progress stars (mode standalone uniquement, ChapterRunner affiche les siennes) -->
-      <div v-if="!embedded" class="w-full max-w-md flex flex-col gap-2">
-        <ProgressStars
-          :results="game.results"
-          :current="game.currentIndex"
-        />
-      </div>
-
       <!-- Instruction -->
-      <p class="text-lg md:text-xl text-stone-600 text-center min-h-7">
-        <template v-if="game.phase === 'discovery'">Lis bien le texte...</template>
-        <template v-else-if="game.phase === 'challenge'">Phrase ou pas phrase ?</template>
-        <template v-else-if="game.lastResult === 'correct'">Bien joué !</template>
-        <template v-else>
-          C'est <strong class="text-meadow-600">{{ game.lastCorrectCategory }}</strong>
-        </template>
-      </p>
+      <GameInstruction
+        :phase="game.phase"
+        :last-result="game.lastResult"
+        discovery="Lis bien le texte..."
+        challenge="Phrase ou pas phrase ?"
+        :correct-answer="game.lastCorrectCategory ?? ''"
+      />
 
       <!-- Text card -->
       <div class="flex-1 flex items-center justify-center w-full">

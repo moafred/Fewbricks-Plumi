@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { useGameFeedback } from '@/composables/useGameFeedback';
+import ChoiceFeedback from '@/components/game/ChoiceFeedback.vue';
 
 export type ChoiceState = 'idle' | 'focused' | 'correct' | 'incorrect' | 'dimmed';
 
@@ -13,24 +14,7 @@ defineEmits<{
   select: [label: string];
 }>();
 
-// Célébration : anneau + particules sur bonne réponse
-const showBurst = ref(false);
-// Wobble : secousse douce sur mauvaise réponse
-const showWobble = ref(false);
-
-watch(
-  () => props.state,
-  (newState) => {
-    if (newState === 'correct') {
-      showBurst.value = true;
-      setTimeout(() => (showBurst.value = false), 600);
-    }
-    if (newState === 'incorrect') {
-      showWobble.value = true;
-      setTimeout(() => (showWobble.value = false), 500);
-    }
-  },
-);
+const { showBurst, showWobble } = useGameFeedback(() => props.state);
 </script>
 
 <template>
@@ -55,23 +39,6 @@ watch(
   >
     {{ label }}
 
-    <!-- Célébration — anneau expansif + 8 particules -->
-    <template v-if="showBurst">
-      <span
-        class="pointer-events-none absolute inset-0 rounded-2xl border-2 border-meadow-400"
-        style="animation: celebration-ring 0.6s ease-out forwards"
-      />
-      <span
-        v-for="i in 8"
-        :key="i"
-        class="pointer-events-none absolute left-1/2 top-1/2 h-2 w-2 rounded-full bg-gold-400"
-        :style="{
-          '--dx': `${Math.cos((i * Math.PI) / 4) * 48}px`,
-          '--dy': `${Math.sin((i * Math.PI) / 4) * 48}px`,
-          animation: 'celebration-particle 0.5s ease-out forwards',
-          animationDelay: `${i * 25}ms`,
-        }"
-      />
-    </template>
+    <ChoiceFeedback :active="showBurst" />
   </button>
 </template>

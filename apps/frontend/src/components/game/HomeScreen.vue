@@ -6,7 +6,7 @@ import { useRouter } from 'vue-router';
 import { useChapterProgressStore } from '@/stores/chapter-progress';
 import { usePlayerStore } from '@/stores/player';
 import SubjectCard from '@/components/game/SubjectCard.vue';
-import ChildAvatar from '@/components/game/ChildAvatar.vue';
+import AvatarBadge from '@/components/game/AvatarBadge.vue';
 import ParentGuideModal from './ParentGuideModal.vue';
 import { BookIcon, SparkleIcon, InfoIcon } from '@/components/icons';
 import NotebookButton from '@/components/ui/NotebookButton.vue';
@@ -62,21 +62,13 @@ const mathStars = computed(() => computeSubjectStars('maths'));
       </div>
 
       <!-- Avatar badge — accès à la liste des profils -->
-      <button
+      <AvatarBadge
         v-if="playerStore.activeChild"
-        class="absolute top-2 right-0 flex items-center gap-2 px-3 py-2 rounded-xl bg-white/70 shadow-sm z-10 hover:bg-white/90 active:scale-95 transition-all cursor-pointer"
-        aria-label="Gérer les profils"
+        :name="playerStore.activeChild.name"
+        :avatar-color="playerStore.activeChild.avatarColor"
+        class="absolute top-2 right-0 z-10"
         @click="router.push({ name: 'children' })"
-      >
-        <ChildAvatar
-          :name="playerStore.activeChild.name"
-          :color="playerStore.activeChild.avatarColor"
-          size="sm"
-        />
-        <span class="text-sm font-bold text-stone-600 hidden md:inline">
-          {{ playerStore.activeChild.name }}
-        </span>
-      </button>
+      />
       <img
         src="/plumi-landing.png"
         alt="Plumi"

@@ -22,6 +22,7 @@
     "cap:open:android": "cap open android",
     "cap:run:ios": "cap run ios",
     "cap:run:android": "cap run android",
+    "cap:assets": "capacitor-assets generate --iconBackgroundColor '#F0F7FF' --splashBackgroundColor '#F0F7FF' --android --ios",
     "build:mobile": "vite build && cap sync"
   },
   "dependencies": {

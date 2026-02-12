@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { CategoryIcon } from '@/components/icons';
+import { useGameFeedback } from '@/composables/useGameFeedback';
+import ChoiceFeedback from '@/components/game/ChoiceFeedback.vue';
 
 export type CategoryButtonState = 'idle' | 'waiting' | 'correct' | 'incorrect' | 'reveal';
 
@@ -20,6 +22,8 @@ const emit = defineEmits<{
   tap: [categoryId: string];
 }>();
 
+const { showBurst, showWobble } = useGameFeedback(() => props.state);
+
 function handleTap() {
   if (props.state === 'waiting') {
     emit('tap', props.categoryId);
@@ -29,7 +33,7 @@ function handleTap() {
 
 <template>
   <button
-    class="category-button flex flex-col items-center justify-center rounded-full w-32 h-32 md:w-36 md:h-36 text-xl md:text-2xl font-bold transition-all duration-200 select-none border-4"
+    class="category-button relative flex flex-col items-center justify-center rounded-full w-32 h-32 md:w-36 md:h-36 text-xl md:text-2xl font-bold transition-all duration-200 select-none border-4"
     :class="[
       // Base color per scheme
       colorScheme === 'gold'
@@ -50,11 +54,14 @@ function handleTap() {
         'opacity-60 scale-95': state === 'incorrect',
         'ring-4 ring-stone-400/60': state === 'reveal',
       },
+      showWobble ? 'animate-wobble' : '',
     ]"
     :disabled="state !== 'waiting'"
     @click="handleTap"
   >
     <CategoryIcon v-if="showIcon !== false" :size="40" class="mb-1" />
     <span>{{ label }}</span>
+
+    <ChoiceFeedback :active="showBurst" variant="full" />
   </button>
 </template>

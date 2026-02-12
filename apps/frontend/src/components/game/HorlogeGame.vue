@@ -193,8 +193,8 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
                   :y="100 - 65 * Math.cos((h * 30 * Math.PI) / 180)"
                   text-anchor="middle"
                   dominant-baseline="central"
-                  class="fill-stone-600 text-xs font-bold"
-                  style="font-size: 12px;"
+                  class="fill-stone-600 font-bold"
+                  font-size="12"
                 >
                   {{ h }}
                 </text>

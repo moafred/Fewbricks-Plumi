@@ -168,8 +168,10 @@ export function generateNumericDistractors(
   correctAnswer: number,
   count: number = 3,
   range: [number, number] = [0, 99],
+  exclude: number[] = [],
 ): number[] {
   const candidates = new Set<number>();
+  const toExclude = new Set([correctAnswer, ...exclude]);
 
   // Erreurs fréquentes
   candidates.add(correctAnswer + 1);
@@ -179,9 +181,9 @@ export function generateNumericDistractors(
   candidates.add(correctAnswer + 2);
   candidates.add(correctAnswer - 2);
 
-  // Filtrer : dans la plage, positif, différent de la bonne réponse
+  // Filtrer : dans la plage, positif, pas dans la liste d'exclusion
   const valid = [...candidates].filter(
-    (n) => n >= range[0] && n <= range[1] && n !== correctAnswer,
+    (n) => n >= range[0] && n <= range[1] && !toExclude.has(n),
   );
 
   const result = shuffle(valid).slice(0, count);
@@ -189,7 +191,7 @@ export function generateNumericDistractors(
   // Compléter avec des aléatoires si pas assez
   while (result.length < count) {
     const random = Math.floor(Math.random() * (range[1] - range[0] + 1)) + range[0];
-    if (random !== correctAnswer && !result.includes(random)) {
+    if (!toExclude.has(random) && !result.includes(random)) {
       result.push(random);
     }
   }

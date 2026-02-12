@@ -142,9 +142,9 @@ export const MATH_CHAPTERS: Chapter[] = [
     narrative: 'Quel nombre est le plus grand ? Le plus petit ? À toi de jouer !',
     steps: [
       { mechanic: 'ardoise-calcul', operations: ['addition'], numberRange: [1, 10], questionCount: 3 },
-      { mechanic: 'tri-nombres', categories: ['< 50', '≥ 50'], numberRange: [10, 99], questionCount: 4 },
+      { mechanic: 'tri-nombres', categories: ['unité < 5', 'unité ≥ 5'], numberRange: [10, 99], questionCount: 4 },
       { mechanic: 'ardoise-calcul', operations: ['addition'], numberRange: [1, 20], questionCount: 3 },
-      { mechanic: 'tri-nombres', categories: ['< 50', '≥ 50'], numberRange: [1, 99], questionCount: 4, isBoss: true },
+      { mechanic: 'tri-nombres', categories: ['multiple de 10', 'pas multiple de 10'], numberRange: [1, 99], questionCount: 4, isBoss: true },
     ],
     sticker: { id: 'st-math-1002', name: 'L\'Ours des Grandeurs' },
   },
@@ -156,7 +156,7 @@ export const MATH_CHAPTERS: Chapter[] = [
     steps: [
       { mechanic: 'tri-nombres', categories: ['pair', 'impair'], numberRange: [1, 99], questionCount: 4 },
       { mechanic: 'ardoise-calcul', operations: ['addition'], numberRange: [1, 20], questionCount: 4 },
-      { mechanic: 'tri-nombres', categories: ['< 50', '≥ 50'], numberRange: [1, 99], questionCount: 4 },
+      { mechanic: 'tri-nombres', categories: ['multiple de 5', 'pas multiple de 5'], numberRange: [1, 99], questionCount: 4 },
       { mechanic: 'ardoise-calcul', operations: ['addition'], numberRange: [1, 20], questionCount: 4, isBoss: true },
     ],
     sticker: { id: 'st-math-1003', name: 'Le Roi des Nombres' },

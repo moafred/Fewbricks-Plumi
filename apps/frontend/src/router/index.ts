@@ -4,6 +4,7 @@ import {
   type RouteRecordRaw,
 } from 'vue-router';
 import { usePlayerStore } from '@/stores/player';
+import { getItem } from '@/services/storage';
 
 import ParentGuideScreen from '@/components/game/ParentGuideScreen.vue';
 import WelcomeScreen from '@/components/game/WelcomeScreen.vue';
@@ -133,7 +134,7 @@ router.beforeEach((to) => {
 
   // Pas d'enfants → parent-guide (si pas encore vu) ou welcome
   if (!playerStore.hasChildren) {
-    const hasSeenGuide = localStorage.getItem('plumi:hasSeenParentGuide') === 'true';
+    const hasSeenGuide = getItem('plumi:hasSeenParentGuide') === 'true';
     return hasSeenGuide ? { name: 'welcome' } : { name: 'parent-guide' };
   }
 

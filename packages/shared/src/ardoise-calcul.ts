@@ -30,6 +30,7 @@ interface RawFact {
   expression: string;
   correctAnswer: number;
   operation: MathOperation;
+  operands: number[];
 }
 
 function collectFacts(options?: ArdoiseCalculOptions): RawFact[] {
@@ -39,14 +40,14 @@ function collectFacts(options?: ArdoiseCalculOptions): RawFact[] {
 
   if (ops.includes('addition')) {
     for (const f of getAdditionFacts(min, max, min, max)) {
-      facts.push({ expression: `${f.a} + ${f.b}`, correctAnswer: f.result, operation: 'addition' });
+      facts.push({ expression: `${f.a} + ${f.b}`, correctAnswer: f.result, operation: 'addition', operands: [f.a, f.b] });
     }
   }
 
   if (ops.includes('subtraction')) {
     for (const f of getSubtractionFacts(max * 2)) {
       if (f.a >= min && f.a <= max * 2 && f.result >= 0) {
-        facts.push({ expression: `${f.a} - ${f.b}`, correctAnswer: f.result, operation: 'subtraction' });
+        facts.push({ expression: `${f.a} - ${f.b}`, correctAnswer: f.result, operation: 'subtraction', operands: [f.a, f.b] });
       }
     }
   }
@@ -54,7 +55,7 @@ function collectFacts(options?: ArdoiseCalculOptions): RawFact[] {
   if (ops.includes('multiplication')) {
     for (const f of getMultiplicationFacts()) {
       if (f.a >= min && f.a <= max) {
-        facts.push({ expression: `${f.a} × ${f.b}`, correctAnswer: f.result, operation: 'multiplication' });
+        facts.push({ expression: `${f.a} × ${f.b}`, correctAnswer: f.result, operation: 'multiplication', operands: [f.a, f.b] });
       }
     }
   }
@@ -78,7 +79,7 @@ export function generateArdoiseCalculItems(
 
   for (let i = 0; i < Math.min(count, allFacts.length); i++) {
     const fact = allFacts[i];
-    const distractors = generateNumericDistractors(fact.correctAnswer, 3, [0, maxResult]);
+    const distractors = generateNumericDistractors(fact.correctAnswer, 3, [0, maxResult], fact.operands);
     const choices = shuffle([fact.correctAnswer, ...distractors].map(String));
 
     items.push({

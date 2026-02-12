@@ -371,6 +371,127 @@ Les 5 mini-jeux supportent un mode `embedded` pour fonctionner comme étape dans
 
 ---
 
+## Protection des Enfants & Conformité [PARENT] [ARCHI]
+
+**Plumi applique le niveau de protection le plus strict** — conforme RGPD-K (France), Apple Kids Category et Google Designed for Families.
+
+### Données Personnelles — Politique Zéro Collecte
+
+- **RGPD-K / CNIL** : Consentement parental obligatoire < 15 ans (article 45 loi Informatique et Libertés). Minimisation des données. Pas de profilage. Pas de transmission à des tiers.
+- **COPPA** (si distribution US) : Pas de collecte de données personnelles (PII, identifiants appareil, géolocalisation) sans consentement parental vérifié.
+
+### Règles Plumi — Intransigeables
+
+| Interdit | Raison |
+| -------- | ------ |
+| Tracking / analytics tiers | Apple Kids 5.1.4, COPPA |
+| SDK tiers collectant des données | Apple Kids 1.3, CNIL rec. 8 |
+| Lien externe sans parental gate | Apple Kids, Google Families |
+| Publicité (toute forme) | Apple Kids, COPPA, éthique |
+| Compte enfant / email enfant | RGPD-K, CNIL rec. 4 |
+| Transmission réseau de PII | RGPD-K, COPPA |
+
+### Stockage & Synchro
+
+- **Données stockées localement** : `localStorage` / `IndexedDB` uniquement. Profil local, pas de compte.
+- **Synchro serveur** (si implémentée) : consentement parental préalable obligatoire (parental gate + opt-in explicite).
+
+### Parental Gate
+
+- Requis pour : accès paramètres, liens externes, export de données.
+- Implémentation : tâche de niveau adulte (calcul, compréhension de texte), randomisée pour éviter la mémorisation par l'enfant.
+
+---
+
+## Accessibilité Enfants [UI] [PEDA]
+
+### Accessibilité Cognitive — W3C COGA adapté 6-7 ans
+
+- **Navigation prévisible** : même position des boutons d'un écran à l'autre. Max 2-3 niveaux de profondeur.
+- **Langage simple** : phrases de 5-8 mots, vocabulaire familier (école, maison, jeux). 1 consigne à la fois.
+- **Prévention d'erreur** : confirmation avant toute action irréversible. Aide accessible en 1 tap.
+- **Pas de double tâche** : l'enfant ne doit jamais lire ET décider simultanément — l'audio supporte la lecture.
+- **Charge cognitive** : max 4 choix simultanés (loi de Hick). Pas plus de 3 éléments visuels en compétition.
+
+### Dyslexie (9-15% de la population)
+
+- Police sans-serif arrondie (Inter/Nunito). Interlignage 1.5+.
+- Pas de justification (alignement à gauche). Pas d'italique pour le contenu pédagogique.
+- Pas de texte en majuscules complètes.
+
+### Daltonisme
+
+- **Ne jamais encoder l'information uniquement par la couleur.** Toujours doubler avec une icône ou un motif :
+  - Correct = couleur verte + icône check
+  - Erreur = couleur rouge + icône croix
+  - Progression = couleur + remplissage de barre
+
+### Motricité Fine
+
+- Touch targets 80px+ (déjà en place). Espacement 12px+ entre cibles.
+- Zones de tap plus larges que le visuel (padding invisible).
+- Gestes limités : tap, swipe, drag. Pas de pinch, rotate, long-press ou multi-doigt.
+
+### Préférences Système
+
+- Respecter `prefers-reduced-motion` : réduire les animations à de simples fondus.
+- Respecter `prefers-color-scheme` si pertinent.
+
+---
+
+## Audio & Vocalisation [AUDIO] [PEDA]
+
+### Stratégie
+
+- **Audio pré-enregistré** (pas de TTS) pour les consignes et feedbacks. Voix chaleureuse, encourageante, expressive.
+- **Débit** : ~120-140 mots/min (adapté 6-7 ans, plus lent que le standard adulte de 150-160).
+- **Pauses** : 0.8-1.2s entre les phrases. 1.5-2.0s entre consigne et action attendue.
+
+### Principes
+
+- Chaque écran a un audio de contexte. Chaque consigne est vocalisée automatiquement.
+- L'enfant peut réécouter à tout moment (bouton replay visible, 1 tap).
+- Les feedbacks sonores sont distincts et cohérents :
+  - Correct : ton ascendant bref (200-400ms) + encouragement verbal
+  - Erreur : ton doux et neutre (200-300ms) + correction bienveillante. **Jamais** de buzzer ou son négatif
+  - Célébration : flourish musical (1-2s) en fin de chapitre
+  - Transition : swoosh ou carillon subtil (100-200ms)
+  - Tap : clic ou pop léger (50-100ms) sur chaque élément interactif
+
+### Mode Silencieux
+
+- L'app **DOIT** rester fonctionnelle sans son. Les consignes textuelles sont toujours affichées en complément de l'audio.
+- Pas de contenu uniquement audio — tout a un équivalent visuel.
+
+### Format & Chargement
+
+- MP3 ~64kbps (voix). Nommage : `{context}-{action}.mp3` (ex: `ardoise-correct.mp3`).
+- Pre-fetch de tous les audios de la session avant le gameplay. Objectif : zéro latence perceptible entre action et retour sonore.
+
+---
+
+## Résilience & Mode Hors Ligne [ARCHI]
+
+### Offline-First
+
+- **Tout le contenu pédagogique** (chapitres, conjugaisons, phrases, audio) est embarqué dans le bundle ou pré-caché par le Service Worker.
+- Seule la progression est synchronisée (quand le réseau est disponible).
+- Après le premier chargement, 100% des fonctionnalités éducatives fonctionnent sans connexion.
+
+### Dégradation Gracieuse
+
+- Si le réseau tombe pendant une session : la session continue normalement. La synchro reprend silencieusement au retour du réseau.
+- **Pas d'écran d'erreur technique** : l'enfant ne doit **JAMAIS** voir un message d'erreur technique (stack trace, code HTTP, "Network error").
+- En cas de problème : retry silencieux ou redirection vers l'écran d'accueil avec message adapté ("Oups, Plumi a besoin d'un petit moment !").
+
+### Sauvegarde Locale
+
+- Progression sauvegardée en `localStorage` / `IndexedDB` à chaque étape terminée.
+- Synchro serveur en arrière-plan quand disponible (queue de retry pour les opérations échouées).
+- Jamais de perte de progression, même en cas de fermeture brutale de l'app.
+
+---
+
 ## Tags de l'Équipe
 
 Invoquer systématiquement les personas par leurs tags `[LEAD]`, `[PEDA]`, `[GAME]`, `[ARCHI]`, `[UI]`, `[AUDIO]`, `[KID]`, `[PARENT]`, `[DOC]` pour simuler une expertise ciblée.

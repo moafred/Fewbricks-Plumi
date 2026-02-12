@@ -4,6 +4,7 @@ import { useStickerStore } from '@/stores/stickers';
 import NotebookButton from '@/components/ui/NotebookButton.vue';
 import NotebookCard from '@/components/ui/NotebookCard.vue';
 import { HomeIcon, SparkleIcon, StarFilledIcon } from '@/components/icons';
+import StickerVisual from './StickerVisual.vue';
 
 const router = useRouter();
 const stickerStore = useStickerStore();
@@ -51,13 +52,12 @@ function goBack() {
           >
             <!-- Sticker Placeholder -->
             <div 
-              class="w-16 h-16 rounded-full flex items-center justify-center relative"
-              :class="stickerStore.isStickerUnlocked(sticker.id) ? 'bg-gold-100' : 'bg-stone-200'"
+              class="w-20 h-20 rounded-full flex items-center justify-center relative"
+              :class="stickerStore.isStickerUnlocked(sticker.id) ? 'bg-white shadow-inner border border-gold-100' : 'bg-stone-200'"
             >
-              <SparkleIcon 
+              <StickerVisual
                 v-if="stickerStore.isStickerUnlocked(sticker.id)"
-                :size="32" 
-                class="text-gold-400 animate-sparkle" 
+                :id="sticker.id"
               />
               <span v-else class="text-stone-400 text-2xl font-bold">?</span>
             </div>

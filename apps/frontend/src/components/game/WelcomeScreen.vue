@@ -8,6 +8,7 @@ import PlumiMascot from './PlumiMascot.vue';
 import ChildAvatar from './ChildAvatar.vue';
 import ActionButton from '@/components/ui/ActionButton.vue';
 import NotebookCard from '@/components/ui/NotebookCard.vue';
+import ColorSwatch from '@/components/ui/ColorSwatch.vue';
 
 type Step = 'meet' | 'identity' | 'celebration';
 
@@ -161,16 +162,13 @@ function finish() {
             {{ speeches.identity.text }}
           </p>
           <div class="flex gap-3 flex-wrap justify-center">
-            <button
+            <ColorSwatch
               v-for="color in AVATAR_COLORS"
               :key="color"
-              class="w-10 h-10 rounded-full transition-all active:scale-90"
-              :class="[
-                colorSwatches[color],
-                childColor === color ? 'ring-4 ring-offset-2 ring-sky-500 scale-110' : 'hover:scale-105',
-              ]"
-              :aria-label="color"
-              @click="childColor = color"
+              :color-class="colorSwatches[color]"
+              :selected="childColor === color"
+              :label="color"
+              @select="childColor = color"
             />
           </div>
         </div>

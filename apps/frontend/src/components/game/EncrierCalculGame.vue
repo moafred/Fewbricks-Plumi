@@ -7,10 +7,11 @@ import GameLayout from '@/components/game/GameLayout.vue';
 import ChoicesSection from '@/components/game/ChoicesSection.vue';
 import SentenceGap from '@/components/game/SentenceGap.vue';
 import GameHeader from '@/components/game/GameHeader.vue';
+import GameInstruction from '@/components/game/GameInstruction.vue';
 import ChallengeCard from '@/components/game/ChallengeCard.vue';
 import ChoiceButton from '@/components/game/ChoiceButton.vue';
 import type { ChoiceState } from '@/components/game/ChoiceButton.vue';
-import ChoiceGrid from '@/components/game/ChoiceGrid.vue';
+import ChoiceGrid from './ChoiceGrid.vue';
 import ResolutionContinueButton from '@/components/game/ResolutionContinueButton.vue';
 import GameFinished from '@/components/game/GameFinished.vue';
 import ConfirmModal from '@/components/ui/ConfirmModal.vue';
@@ -141,7 +142,14 @@ useSyncGameProgress(() => store.results, () => store.currentIndex);
     <!-- Game Area -->
     <template v-else-if="currentItem">
 
-      <ChallengeCard hint="Complète le calcul !" :compact="embedded">
+      <GameInstruction
+        :phase="phase"
+        :last-result="lastResult"
+        challenge="Complète le calcul !"
+        :correct-answer="currentItem.correctAnswer"
+      />
+
+      <ChallengeCard :compact="embedded">
         <SentenceGap
           :sentence="currentItem.sentence"
           :filled-word="gapWord"

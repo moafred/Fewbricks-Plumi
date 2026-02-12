@@ -5,12 +5,14 @@ import { useDroiteNumeriqueStore } from '@/stores/droite-numerique';
 import { useKeyboardNavigation, useBackNavigation, useSyncGameProgress } from '@/composables';
 import GameLayout from '@/components/game/GameLayout.vue';
 import ChoicesSection from '@/components/game/ChoicesSection.vue';
+import GameHeader from '@/components/game/GameHeader.vue';
+import GameInstruction from '@/components/game/GameInstruction.vue';
 import FormChoice from './FormChoice.vue';
 import type { FormChoiceState } from './FormChoice.vue';
 import ChoiceGrid from './ChoiceGrid.vue';
-import ProgressStars from './ProgressStars.vue';
 import GameResult from './GameResult.vue';
 import NotebookCard from '@/components/ui/NotebookCard.vue';
+import { SparkleIcon } from '@/components/icons';
 
 const props = withDefaults(defineProps<{
   embedded?: boolean;
@@ -27,6 +29,7 @@ const emit = defineEmits<{
 }>();
 
 const game = useDroiteNumeriqueStore();
+const { progress } = game;
 
 const choices = computed(() => game.currentItem?.choices ?? []);
 const isChallenge = computed(() => game.phase === 'challenge');
@@ -44,7 +47,10 @@ watch(
 );
 
 const canGoBack = computed(() => !props.embedded);
-useBackNavigation(() => emit('home'), canGoBack);
+function handleBack() {
+  emit('home');
+}
+useBackNavigation(handleBack, canGoBack);
 
 let resolutionTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -111,6 +117,15 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
 
 <template>
   <GameLayout :embedded="embedded">
+    <GameHeader
+      v-if="!embedded"
+      label="Droite Numérique"
+      :current="progress.current + 1"
+      :total="progress.total"
+      color-class="text-sky-600"
+      @back="handleBack"
+    />
+
     <!-- Finished: show results -->
     <template v-if="game.isFinished && !embedded">
       <div class="flex-1 flex items-center justify-center w-full">
@@ -125,45 +140,53 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
 
     <!-- Playing -->
     <template v-else>
-      <!-- Header: progress stars (mode standalone uniquement, ChapterRunner affiche les siennes) -->
-      <div v-if="!embedded" class="w-full max-w-md flex flex-col gap-2">
-        <ProgressStars
-          :results="game.results"
-          :current="game.currentIndex"
-        />
-      </div>
-
       <!-- Instruction -->
-      <p class="text-xl md:text-2xl font-bold text-stone-700 text-center drop-shadow-sm">
-        <template v-if="game.phase === 'discovery'">Place ce nombre sur la droite...</template>
-        <template v-else-if="game.phase === 'challenge'">Où se place ce nombre ?</template>
-        <template v-else-if="game.lastResult === 'correct'">Bien joué !</template>
-        <template v-else>
-          C'était <strong class="text-meadow-600">{{ game.correctForm }}</strong>
-        </template>
-      </p>
+      <GameInstruction
+        :phase="game.phase"
+        :last-result="game.lastResult"
+        discovery="Regarde bien la position..."
+        challenge="Quel est ce nombre ?"
+        :correct-answer="game.correctForm ?? ''"
+      />
 
-      <!-- Number display -->
-      <div class="flex-1 flex items-center justify-center w-full" :class="embedded ? '' : 'py-12'">
+      <!-- Line display -->
+      <div class="flex-1 flex items-center justify-center w-full" :class="embedded ? '' : 'py-8'">
         <div class="w-full max-w-2xl px-4 flex justify-center">
-          <NotebookCard v-if="game.currentItem" :class="embedded ? 'px-6 py-3' : 'px-12 py-8'" :padding="embedded ? 'sm' : 'md'">
-            <div class="flex flex-col items-center gap-4">
-              <span class="text-lg text-stone-500 font-medium">Nombre :</span>
-              <span class="text-4xl md:text-6xl font-bold text-sky-600 font-learning">
-                {{ game.currentItem.targetNumber }}
-              </span>
-              <!-- Droite numerique simplifiee -->
-              <div class="w-full mt-4 flex flex-col items-center gap-1">
-                <div class="relative w-full h-8">
-                  <div class="absolute top-1/2 left-0 right-0 h-0.5 bg-stone-300 -translate-y-1/2" />
-                  <div
-                    v-for="grad in game.currentItem.graduations"
-                    :key="grad"
-                    class="absolute top-0 flex flex-col items-center -translate-x-1/2"
-                    :style="{ left: `${((grad - game.currentItem.lineRange[0]) / (game.currentItem.lineRange[1] - game.currentItem.lineRange[0])) * 100}%` }"
+          <NotebookCard v-if="game.currentItem" :class="embedded ? 'px-6 py-6' : 'px-12 py-12'" :padding="embedded ? 'sm' : 'md'">
+            <div class="flex flex-col items-center w-full">
+              <!-- Droite numerique graduée -->
+              <div class="relative w-full h-24 flex items-end">
+                <!-- Ligne principale -->
+                <div class="absolute bottom-12 left-0 right-0 h-1 bg-stone-300 rounded-full" />
+                
+                <!-- Graduations -->
+                <div
+                  v-for="grad in game.currentItem.graduations"
+                  :key="grad"
+                  class="absolute bottom-6 flex flex-col items-center -translate-x-1/2"
+                  :style="{ left: `${((grad - game.currentItem.lineRange[0]) / (game.currentItem.lineRange[1] - game.currentItem.lineRange[0])) * 100}%` }"
+                >
+                  <div class="w-0.5 h-6 bg-stone-400" />
+                  <span class="text-sm font-bold text-stone-500 mt-1">{{ grad }}</span>
+                </div>
+
+                <!-- Marqueur (La Plume / Étoile) à la position cible -->
+                <div
+                  class="absolute bottom-12 flex flex-col items-center -translate-x-1/2 transition-all duration-500"
+                  :class="game.phase === 'challenge' ? 'translate-y-0' : 'translate-y-[-10px] scale-110'"
+                  :style="{ left: `${((game.currentItem.targetNumber - game.currentItem.lineRange[0]) / (game.currentItem.lineRange[1] - game.currentItem.lineRange[0])) * 100}%` }"
+                >
+                  <div class="relative flex flex-col items-center">
+                    <SparkleIcon :size="32" class="text-gold-400 drop-shadow-sm animate-bounce" />
+                    <!-- Flèche vers le bas -->
+                    <div class="w-1 h-4 bg-gold-500 rounded-full" />
+                  </div>
+                  <!-- Révélation du nombre en phase de résolution -->
+                  <div 
+                    v-if="game.phase === 'response' || game.phase === 'resolution'"
+                    class="mt-1 px-2 py-0.5 bg-meadow-100 text-meadow-700 rounded-md font-bold text-lg border border-meadow-200"
                   >
-                    <div class="w-0.5 h-4 bg-stone-400" />
-                    <span class="text-xs text-stone-500 mt-0.5">{{ grad }}</span>
+                    {{ game.currentItem.targetNumber }}
                   </div>
                 </div>
               </div>

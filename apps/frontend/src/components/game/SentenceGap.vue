@@ -34,7 +34,7 @@ const isIdle = computed(() => !props.filledWord && !props.showSolution);
 
     <!-- The Gap -->
     <span
-      class="inline-flex items-baseline justify-center min-w-[80px] md:min-w-[120px] px-1 transition-all duration-500"
+      class="inline-flex items-baseline justify-center min-w-20 md:min-w-30 px-1 transition-all duration-500"
       :class="[
         // Correct state
         (isCorrect || showSolution) && !isWrong

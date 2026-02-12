@@ -2,12 +2,12 @@
 import { useRouter } from 'vue-router';
 import ParentGuideContent from './ParentGuideContent.vue';
 import ActionButton from '@/components/ui/ActionButton.vue';
+import { setItem } from '@/services/storage';
 
 const router = useRouter();
 
 function startWithChild() {
-  // Set flag so guide doesn't show again on next launch
-  localStorage.setItem('plumi:hasSeenParentGuide', 'true');
+  setItem('plumi:hasSeenParentGuide', 'true');
   router.push({ name: 'welcome' });
 }
 </script>

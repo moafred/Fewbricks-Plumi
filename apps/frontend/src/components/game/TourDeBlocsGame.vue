@@ -5,10 +5,11 @@ import { useTourDeBlocsStore } from '@/stores/tour-de-blocs';
 import { useKeyboardNavigation, useBackNavigation, useSyncGameProgress } from '@/composables';
 import GameLayout from '@/components/game/GameLayout.vue';
 import ChoicesSection from '@/components/game/ChoicesSection.vue';
+import GameHeader from '@/components/game/GameHeader.vue';
+import GameInstruction from '@/components/game/GameInstruction.vue';
 import FormChoice from './FormChoice.vue';
 import type { FormChoiceState } from './FormChoice.vue';
 import ChoiceGrid from './ChoiceGrid.vue';
-import ProgressStars from './ProgressStars.vue';
 import GameResult from './GameResult.vue';
 import NotebookCard from '@/components/ui/NotebookCard.vue';
 
@@ -27,6 +28,7 @@ const emit = defineEmits<{
 }>();
 
 const game = useTourDeBlocsStore();
+const { progress } = game;
 
 const choices = computed(() => game.currentItem?.choices ?? []);
 const isChallenge = computed(() => game.phase === 'challenge');
@@ -44,7 +46,10 @@ watch(
 );
 
 const canGoBack = computed(() => !props.embedded);
-useBackNavigation(() => emit('home'), canGoBack);
+function handleBack() {
+  emit('home');
+}
+useBackNavigation(handleBack, canGoBack);
 
 let resolutionTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -111,6 +116,15 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
 
 <template>
   <GameLayout :embedded="embedded">
+    <GameHeader
+      v-if="!embedded"
+      label="Tour de Blocs"
+      :current="progress.current + 1"
+      :total="progress.total"
+      color-class="text-sky-600"
+      @back="handleBack"
+    />
+
     <!-- Finished: show results -->
     <template v-if="game.isFinished && !embedded">
       <div class="flex-1 flex items-center justify-center w-full">
@@ -125,67 +139,71 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
 
     <!-- Playing -->
     <template v-else>
-      <!-- Header: progress stars (mode standalone uniquement, ChapterRunner affiche les siennes) -->
-      <div v-if="!embedded" class="w-full max-w-md flex flex-col gap-2">
-        <ProgressStars
-          :results="game.results"
-          :current="game.currentIndex"
-        />
-      </div>
-
       <!-- Instruction -->
-      <p class="text-xl md:text-2xl font-bold text-stone-700 text-center drop-shadow-sm">
-        <template v-if="game.phase === 'discovery'">Observe ce nombre...</template>
-        <template v-else-if="game.phase === 'challenge'">Décompose ce nombre !</template>
-        <template v-else-if="game.lastResult === 'correct'">Bien joué !</template>
-        <template v-else>
-          C'était <strong class="text-meadow-600">{{ game.correctForm }}</strong>
-        </template>
-      </p>
+      <GameInstruction
+        :phase="game.phase"
+        :last-result="game.lastResult"
+        discovery="Observe les blocs..."
+        challenge="Quel est ce nombre ?"
+        :correct-answer="String(game.currentItem?.targetNumber)"
+      />
 
-      <!-- Number display -->
-      <div class="flex-1 flex items-center justify-center w-full" :class="embedded ? '' : 'py-12'">
+      <!-- Blocks display -->
+      <div class="flex-1 flex items-center justify-center w-full" :class="embedded ? '' : 'py-8'">
         <div class="w-full max-w-2xl px-4 flex justify-center">
-          <NotebookCard v-if="game.currentItem" :class="embedded ? 'px-6 py-3' : 'px-12 py-8'" :padding="embedded ? 'sm' : 'md'">
-            <div class="flex flex-col items-center gap-2">
-              <span class="text-4xl md:text-6xl font-bold text-sky-600 font-learning">
-                {{ game.currentItem.targetNumber }}
-              </span>
+          <NotebookCard v-if="game.currentItem" :class="embedded ? 'px-6 py-6' : 'px-12 py-12'" :padding="embedded ? 'sm' : 'md'">
+            <div class="flex flex-col items-center gap-6">
               <!-- Decomposition visuelle : centaines, dizaines, unites -->
-              <div class="flex items-end gap-3 mt-4">
+              <div class="flex items-end justify-center gap-6 min-h-[120px]">
                 <div
                   v-if="game.currentItem.correctDecomposition.hundreds > 0"
                   class="flex flex-col items-center gap-1"
                 >
-                  <div
-                    v-for="h in game.currentItem.correctDecomposition.hundreds"
-                    :key="'h-' + h"
-                    class="w-10 h-10 rounded-lg bg-coral-400/80 border-2 border-coral-300"
-                  />
-                  <span class="text-xs text-stone-500 font-medium">c</span>
+                  <div class="grid grid-cols-2 gap-1">
+                    <div
+                      v-for="h in game.currentItem.correctDecomposition.hundreds"
+                      :key="'h-' + h"
+                      class="w-8 h-8 rounded bg-coral-400 border-2 border-coral-500 shadow-sm"
+                    />
+                  </div>
+                  <span class="text-xs font-bold text-coral-600 uppercase">Centaines</span>
                 </div>
+                
                 <div
                   v-if="game.currentItem.correctDecomposition.tens > 0"
                   class="flex flex-col items-center gap-1"
                 >
-                  <div
-                    v-for="t in game.currentItem.correctDecomposition.tens"
-                    :key="'t-' + t"
-                    class="w-10 h-3 rounded bg-gold-400/80 border border-gold-300"
-                  />
-                  <span class="text-xs text-stone-500 font-medium">d</span>
+                  <div class="flex flex-col-reverse gap-0.5">
+                    <div
+                      v-for="t in game.currentItem.correctDecomposition.tens"
+                      :key="'t-' + t"
+                      class="w-10 h-3 rounded bg-gold-400 border border-gold-500 shadow-sm"
+                    />
+                  </div>
+                  <span class="text-xs font-bold text-gold-600 uppercase">Dizaines</span>
                 </div>
+
                 <div
                   v-if="game.currentItem.correctDecomposition.units > 0"
                   class="flex flex-col items-center gap-1"
                 >
-                  <div
-                    v-for="u in game.currentItem.correctDecomposition.units"
-                    :key="'u-' + u"
-                    class="w-3 h-3 rounded-sm bg-sky-400/80 border border-sky-300"
-                  />
-                  <span class="text-xs text-stone-500 font-medium">u</span>
+                  <div class="grid grid-cols-2 gap-0.5">
+                    <div
+                      v-for="u in game.currentItem.correctDecomposition.units"
+                      :key="'u-' + u"
+                      class="w-3 h-3 rounded-sm bg-sky-400 border border-sky-500 shadow-sm"
+                    />
+                  </div>
+                  <span class="text-xs font-bold text-sky-600 uppercase">Unités</span>
                 </div>
+              </div>
+
+              <!-- Révélation du nombre en phase de résolution -->
+              <div 
+                v-if="game.phase === 'response' || game.phase === 'resolution'"
+                class="px-6 py-2 bg-meadow-100 text-meadow-700 rounded-2xl font-learning text-4xl border-2 border-meadow-300 animate-celebrate"
+              >
+                {{ game.currentItem.targetNumber }}
               </div>
             </div>
           </NotebookCard>

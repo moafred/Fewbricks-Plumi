@@ -6,11 +6,11 @@ import { useGameStore } from '@/stores/game';
 import { useKeyboardNavigation, useBackNavigation, useSyncGameProgress } from '@/composables';
 import GameLayout from '@/components/game/GameLayout.vue';
 import ChoicesSection from '@/components/game/ChoicesSection.vue';
+import GameHeader from '@/components/game/GameHeader.vue';
+import GameInstruction from '@/components/game/GameInstruction.vue';
 import CategoryButton from './CategoryButton.vue';
 import WordCard from './WordCard.vue';
-import ProgressStars from './ProgressStars.vue';
 import GameResult from './GameResult.vue';
-import TenseBadge from '@/components/ui/TenseBadge.vue';
 import type { CategoryButtonState } from './CategoryButton.vue';
 
 const props = withDefaults(defineProps<{
@@ -32,6 +32,8 @@ const emit = defineEmits<{
 
 const game = useGameStore();
 
+const { progress } = game;
+
 // Les deux choix possibles — dynamiques selon les verbes du chapitre
 const categoryChoices = ref<VerbId[]>(
   props.verbs && props.verbs.length === 2 ? [...props.verbs] : ['etre', 'avoir'],
@@ -52,7 +54,10 @@ watch(
 
 // Navigation retour vers l'accueil (désactivée en mode embedded, ChapterRunner gère)
 const canGoBack = computed(() => !props.embedded);
-useBackNavigation(() => emit('home'), canGoBack);
+function handleBack() {
+  emit('home');
+}
+useBackNavigation(handleBack, canGoBack);
 
 let resolutionTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -125,6 +130,15 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
 
 <template>
   <GameLayout :embedded="embedded">
+    <GameHeader
+      v-if="!embedded"
+      label="Tri Verbes"
+      :current="progress.current + 1"
+      :total="progress.total"
+      color-class="text-meadow-600"
+      @back="handleBack"
+    />
+
     <!-- Finished: show results -->
     <template v-if="game.isFinished && !embedded">
       <div class="flex-1 flex items-center justify-center w-full">
@@ -139,25 +153,14 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
 
     <!-- Playing -->
     <template v-else>
-      <!-- Header: tense badge + progress stars (mode standalone uniquement) -->
-      <div v-if="!embedded" class="w-full max-w-md flex items-center justify-center gap-3">
-        <TenseBadge :tense="game.currentTense" />
-        <ProgressStars
-          :results="game.results"
-          :current="game.currentIndex"
-          class="flex-1"
-        />
-      </div>
-
       <!-- Instruction -->
-      <p class="text-lg md:text-xl text-stone-600 text-center min-h-7">
-        <template v-if="game.phase === 'discovery'">Le mot apparaît...</template>
-        <template v-else-if="game.phase === 'challenge'">Dans quelle catégorie ?</template>
-        <template v-else-if="game.lastResult === 'correct'">Bien joué !</template>
-        <template v-else>
-          C'est <strong class="text-meadow-600">{{ game.currentItem?.infinitive }}</strong>
-        </template>
-      </p>
+      <GameInstruction
+        :phase="game.phase"
+        :last-result="game.lastResult"
+        discovery="Le mot apparaît..."
+        challenge="Dans quelle catégorie ?"
+        :correct-answer="game.currentItem?.infinitive"
+      />
 
       <!-- Word card -->
       <div class="flex-1 flex items-center justify-center w-full">

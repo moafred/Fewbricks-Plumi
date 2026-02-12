@@ -35,6 +35,7 @@ interface RawGapItem {
   sentence: string;
   correctAnswer: number;
   operation: MathOperation;
+  exclude: number[];
 }
 
 function generateGapItems(options?: EncrierCalculOptions): RawGapItem[] {
@@ -54,12 +55,14 @@ function generateGapItems(options?: EncrierCalculOptions): RawGapItem[] {
           sentence: `${f.a} + ${f.b} = ${GAP}`,
           correctAnswer: f.result,
           operation: 'addition',
+          exclude: [f.a, f.b],
         });
       } else if (gapType === 'operand') {
         items.push({
           sentence: `${f.a} + ${GAP} = ${f.result}`,
           correctAnswer: f.b,
           operation: 'addition',
+          exclude: [f.a, f.result],
         });
       } else {
         const templates = MATH_WORD_TEMPLATES.filter((t) => t.operation === 'addition');
@@ -70,6 +73,7 @@ function generateGapItems(options?: EncrierCalculOptions): RawGapItem[] {
             sentence: `${text} Combien ? ${GAP}`,
             correctAnswer: f.result,
             operation: 'addition',
+            exclude: [f.a, f.b],
           });
         }
       }
@@ -87,12 +91,14 @@ function generateGapItems(options?: EncrierCalculOptions): RawGapItem[] {
           sentence: `${f.a} - ${f.b} = ${GAP}`,
           correctAnswer: f.result,
           operation: 'subtraction',
+          exclude: [f.a, f.b],
         });
       } else if (gapType === 'operand') {
         items.push({
           sentence: `${f.a} - ${GAP} = ${f.result}`,
           correctAnswer: f.b,
           operation: 'subtraction',
+          exclude: [f.a, f.result],
         });
       } else {
         const templates = MATH_WORD_TEMPLATES.filter((t) => t.operation === 'subtraction');
@@ -103,6 +109,7 @@ function generateGapItems(options?: EncrierCalculOptions): RawGapItem[] {
             sentence: `${text} Combien ? ${GAP}`,
             correctAnswer: f.result,
             operation: 'subtraction',
+            exclude: [f.a, f.b],
           });
         }
       }
@@ -120,12 +127,14 @@ function generateGapItems(options?: EncrierCalculOptions): RawGapItem[] {
           sentence: `${f.a} × ${f.b} = ${GAP}`,
           correctAnswer: f.result,
           operation: 'multiplication',
+          exclude: [f.a, f.b],
         });
       } else {
         items.push({
           sentence: `${GAP} × ${f.b} = ${f.result}`,
           correctAnswer: f.a,
           operation: 'multiplication',
+          exclude: [f.b, f.result],
         });
       }
     }
@@ -150,7 +159,7 @@ export function generateEncrierCalculItems(
 
   for (let i = 0; i < Math.min(count, allItems.length); i++) {
     const item = allItems[i];
-    const distractors = generateNumericDistractors(item.correctAnswer, 3, [0, maxAnswer]);
+    const distractors = generateNumericDistractors(item.correctAnswer, 3, [0, maxAnswer], item.exclude);
     const choices = shuffle([item.correctAnswer, ...distractors].map(String));
 
     result.push({

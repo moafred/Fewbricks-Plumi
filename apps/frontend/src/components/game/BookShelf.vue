@@ -6,7 +6,7 @@ import { useRouter } from 'vue-router';
 import { useChapterProgressStore } from '@/stores/chapter-progress';
 import { usePlayerStore } from '@/stores/player';
 import BookCard from './BookCard.vue';
-import ChildAvatar from './ChildAvatar.vue';
+import AvatarBadge from './AvatarBadge.vue';
 import ShelfSection from './ShelfSection.vue';
 import NotebookButton from '@/components/ui/NotebookButton.vue';
 import { HomeIcon } from '@/components/icons';
@@ -66,21 +66,12 @@ function shelfMaxStars(shelf: Shelf): number {
       </h1>
 
       <!-- Avatar enfant actif — accès à la liste des profils -->
-      <button
+      <AvatarBadge
         v-if="playerStore.activeChild"
-        class="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/70 shadow-sm hover:bg-white/90 active:scale-95 transition-all cursor-pointer"
-        aria-label="Gérer les profils"
+        :name="playerStore.activeChild.name"
+        :avatar-color="playerStore.activeChild.avatarColor"
         @click="router.push({ name: 'children' })"
-      >
-        <ChildAvatar
-          :name="playerStore.activeChild.name"
-          :color="playerStore.activeChild.avatarColor"
-          size="sm"
-        />
-        <span class="text-sm font-bold text-stone-600 hidden md:inline">
-          {{ playerStore.activeChild.name }}
-        </span>
-      </button>
+      />
     </header>
 
     <!-- Étagères -->

@@ -157,7 +157,7 @@ useSyncGameProgress(() => store.results, () => store.currentIndex);
             <span v-if="i !== currentItem.targetSlotIndex">{{ slot.label }}</span>
             <div
               v-else
-              class="inline-flex items-center justify-center min-w-[100px] px-3 py-1 border-b-4 rounded-t-lg transition-all duration-500"
+              class="inline-flex items-center justify-center min-w-25 px-3 py-1 border-b-4 rounded-t-lg transition-all duration-500"
               :class="gapClasses"
             >
               <span v-if="filledWord">{{ filledWord }}</span>

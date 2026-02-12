@@ -4,6 +4,7 @@ import { getChapter } from '@plumi/shared';
 import { StarFilledIcon, StarEmptyIcon, SparkleIcon } from '@/components/icons';
 import ActionButton from '@/components/ui/ActionButton.vue';
 import ResultActions from './ResultActions.vue';
+import StickerVisual from './StickerVisual.vue';
 
 const props = defineProps<{
   chapterId: number;
@@ -58,13 +59,18 @@ const messages: Record<number, string> = {
     <!-- Sticker Unlocked Badge -->
     <div 
       v-if="stars === 3 && hasSticker" 
-      class="flex flex-col items-center gap-2 p-6 bg-gold-50 rounded-3xl border-2 border-gold-200 shadow-xl animate-bounce"
+      class="flex flex-col items-center gap-3 p-6 bg-white rounded-3xl border-4 border-gold-300 shadow-xl animate-bounce"
     >
       <div class="flex items-center gap-2">
         <SparkleIcon :size="24" class="text-gold-400 animate-pulse" />
         <span class="text-xs font-bold text-gold-600 uppercase tracking-widest">Sticker débloqué !</span>
         <SparkleIcon :size="24" class="text-gold-400 animate-pulse" />
       </div>
+
+      <div class="w-24 h-24 bg-gold-50 rounded-full flex items-center justify-center border-2 border-gold-100 p-2">
+        <StickerVisual :id="chapter?.sticker?.id ?? ''" />
+      </div>
+
       <div class="text-2xl font-bold text-stone-700 font-learning">
         {{ stickerName }}
       </div>

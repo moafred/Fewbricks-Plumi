@@ -26,9 +26,9 @@ const isWideKey = computed(() => ['space', 'backspace', 'espace', 'retour'].incl
 // Tailles selon le contexte
 const sizeClasses = computed(() => {
   if (props.size === 'large') {
-    return isWideKey.value ? 'px-5 h-11 text-base min-w-[44px]' : 'w-11 h-11 text-xl';
+    return isWideKey.value ? 'px-5 h-11 text-base min-w-11' : 'w-11 h-11 text-xl';
   }
-  return isWideKey.value ? 'px-3 h-7 text-xs min-w-[28px]' : 'w-7 h-7 text-sm';
+  return isWideKey.value ? 'px-3 h-7 text-xs min-w-7' : 'w-7 h-7 text-sm';
 });
 
 // Couleurs thématiques adaptées au thème clair

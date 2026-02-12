@@ -2,7 +2,6 @@ import { Capacitor } from '@capacitor/core';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { App } from '@capacitor/app';
-import { Network } from '@capacitor/network';
 
 /**
  * Initialise les plugins Capacitor pour les plateformes natives
@@ -26,11 +25,6 @@ export async function initializeCapacitor(): Promise<void> {
   } catch {
     // SplashScreen non disponible
   }
-
-  // Monitorer la connexion réseau (mode hors-ligne)
-  Network.addListener('networkStatusChange', (status) => {
-    console.log('[Capacitor] Réseau:', status.connected ? 'connecté' : 'hors-ligne');
-  });
 
   // Gérer le bouton retour Android
   App.addListener('backButton', ({ canGoBack }) => {

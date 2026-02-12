@@ -17,6 +17,7 @@ const KNOWN_KEYS = [
   'plumi-children',
   'plumi-active-child',
   'plumi-chapter-progress',
+  'plumi:hasSeenParentGuide',
 ] as const;
 
 /**
