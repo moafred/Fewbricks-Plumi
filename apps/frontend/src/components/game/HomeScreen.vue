@@ -70,14 +70,17 @@ const mathStars = computed(() => computeSubjectStars('maths'));
         class="absolute top-2 right-0 z-10"
         @click="router.push({ name: 'children' })"
       />
-      <img
-        src="/plumi-landing.png"
-        alt="Plumi"
-        class="h-36 md:h-48 w-auto animate-float"
-      />
-      <h2 class="text-xl md:text-2xl font-bold text-sky-500/80 mt-[-1rem] font-learning">
-        Niveau CE1
-      </h2>
+      <!-- Vertical stack for mascot + label -->
+      <div class="flex flex-col items-center gap-2">
+        <img
+          src="/plumi-landing.png"
+          alt="Plumi"
+          class="h-36 md:h-48 w-auto animate-float"
+        />
+        <h2 class="text-xl md:text-2xl font-bold text-sky-500/80 font-learning">
+          Niveau CE1
+        </h2>
+      </div>
     </header>
 
     <!-- Grille des matieres -->
