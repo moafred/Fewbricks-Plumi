@@ -8,12 +8,13 @@ import './assets/main.css';
 
 const app = createApp(App);
 app.use(createPinia());
-app.use(router);
 
-// Initialise Capacitor + Storage avant le montage
-// Les stores Pinia lisent le cache sync au premier accès
+// Initialise Capacitor + Storage avant le montage du router
+// Router enregistré APRÈS storage init pour garantir cache peuplé
+// Évite le race condition où les stores lisent un cache vide
 initializeCapacitor()
   .then(() => initStorage())
   .then(() => {
+    app.use(router);
     app.mount('#app');
   });
