@@ -6,41 +6,40 @@ import {
 import { usePlayerStore } from '@/stores/player';
 import { getItem } from '@/services/storage';
 
-import ParentGuideScreen from '@/components/game/ParentGuideScreen.vue';
-import WelcomeScreen from '@/components/game/WelcomeScreen.vue';
-import ChildSelector from '@/components/game/ChildSelector.vue';
+// Eager imports — Critical path (loaded immediately)
 import HomeScreen from '@/components/game/HomeScreen.vue';
-import StickerAlbum from '@/components/game/StickerAlbum.vue';
 import BookShelf from '@/components/game/BookShelf.vue';
-import BookView from '@/components/game/BookView.vue';
-import BookLessonScreen from '@/components/game/BookLessonScreen.vue';
 import ChapterRunner from '@/components/game/ChapterRunner.vue';
+
+// Lazy imports — Non-critical screens (loaded on-demand)
+// ParentGuideScreen, WelcomeScreen, ChildSelector, StickerAlbum, BookView, BookLessonScreen
+// loaded via () => import() syntax in route definitions below
 
 const routes: RouteRecordRaw[] = [
   // --- Parent Guide ---
   {
     path: '/parent-guide',
     name: 'parent-guide',
-    component: ParentGuideScreen,
+    component: () => import('@/components/game/ParentGuideScreen.vue'),
   },
 
   // --- Onboarding / Welcome ---
   {
     path: '/welcome',
     name: 'welcome',
-    component: WelcomeScreen,
+    component: () => import('@/components/game/WelcomeScreen.vue'),
     props: { mode: 'onboarding' },
   },
   {
     path: '/welcome/add-child',
     name: 'welcome-add-child',
-    component: WelcomeScreen,
+    component: () => import('@/components/game/WelcomeScreen.vue'),
     props: { mode: 'onboarding' },
   },
   {
     path: '/welcome/replay',
     name: 'welcome-replay',
-    component: WelcomeScreen,
+    component: () => import('@/components/game/WelcomeScreen.vue'),
     props: { mode: 'replay' },
   },
 
@@ -48,7 +47,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/children',
     name: 'children',
-    component: ChildSelector,
+    component: () => import('@/components/game/ChildSelector.vue'),
   },
 
   // --- Accueil matières ---
@@ -62,7 +61,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/album',
     name: 'album',
-    component: StickerAlbum,
+    component: () => import('@/components/game/StickerAlbum.vue'),
   },
 
   // --- Bibliothèque ---
@@ -77,7 +76,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/:subject(francais|maths)/book/:bookId(\\d+)',
     name: 'book-view',
-    component: BookView,
+    component: () => import('@/components/game/BookView.vue'),
     props: (route) => ({
       subject: route.params.subject,
       bookId: Number(route.params.bookId),
@@ -88,7 +87,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/:subject(francais|maths)/book/:bookId(\\d+)/lesson',
     name: 'book-lesson',
-    component: BookLessonScreen,
+    component: () => import('@/components/game/BookLessonScreen.vue'),
     props: (route) => ({
       subject: route.params.subject,
       bookId: Number(route.params.bookId),

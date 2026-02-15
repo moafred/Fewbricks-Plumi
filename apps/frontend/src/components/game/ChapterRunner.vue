@@ -1,30 +1,11 @@
 <script setup lang="ts">
-import { ref, computed, watch, type Component } from 'vue';
+import { ref, computed, watch, defineAsyncComponent, type Component } from 'vue';
 import type { StepMechanic, AnswerResult, Tense } from '@plumi/shared';
 import { getChapter } from '@plumi/shared';
 import { useRouter, useRoute } from 'vue-router';
 import { useChapterProgressStore } from '@/stores/chapter-progress';
 import { useBackNavigation, useProvideGameProgress } from '@/composables';
 import ChapterResult from './ChapterResult.vue';
-import TriVerbesGame from './TriVerbesGame.vue';
-import ArdoiseGame from './ArdoiseGame.vue';
-import EncrierGame from './EncrierGame.vue';
-import PontAccordsGame from './PontAccordsGame.vue';
-import EncrierGnGame from './EncrierGnGame.vue';
-// Français — grammaire
-import TriPhrasesGame from './TriPhrasesGame.vue';
-import PonctuationGame from './PonctuationGame.vue';
-import ReperageGame from './ReperageGame.vue';
-// Maths — réutilisées
-import TriNombresGame from './TriNombresGame.vue';
-import ArdoiseCalculGame from './ArdoiseCalculGame.vue';
-import EncrierCalculGame from './EncrierCalculGame.vue';
-// Maths — spécifiques
-import DroiteNumeriqueGame from './DroiteNumeriqueGame.vue';
-import TourDeBlocsGame from './TourDeBlocsGame.vue';
-import PartageGame from './PartageGame.vue';
-import HorlogeGame from './HorlogeGame.vue';
-import MarcheGame from './MarcheGame.vue';
 import ConfirmModal from '@/components/ui/ConfirmModal.vue';
 import CrossIcon from '@/components/icons/CrossIcon.vue';
 import NotebookButton from '@/components/ui/NotebookButton.vue';
@@ -44,28 +25,28 @@ const chapter = computed(() => getChapter(props.chapterId));
 const progressStore = useChapterProgressStore();
 const { gameProgress, resetGameProgress } = useProvideGameProgress();
 
-// Mapping mécanique -> composant
+// Mapping mécanique -> composant (lazy-loaded pour réduire le bundle initial)
 const mechanicComponents: Partial<Record<StepMechanic, Component>> = {
   // Français
-  'tri-verbes': TriVerbesGame,
-  'ardoise': ArdoiseGame,
-  'encrier': EncrierGame,
-  'pont-accords': PontAccordsGame,
-  'encrier-gn': EncrierGnGame,
+  'tri-verbes': defineAsyncComponent(() => import('./TriVerbesGame.vue')),
+  'ardoise': defineAsyncComponent(() => import('./ArdoiseGame.vue')),
+  'encrier': defineAsyncComponent(() => import('./EncrierGame.vue')),
+  'pont-accords': defineAsyncComponent(() => import('./PontAccordsGame.vue')),
+  'encrier-gn': defineAsyncComponent(() => import('./EncrierGnGame.vue')),
   // Français — grammaire
-  'tri-phrases': TriPhrasesGame,
-  'ponctuation': PonctuationGame,
-  'reperage': ReperageGame,
+  'tri-phrases': defineAsyncComponent(() => import('./TriPhrasesGame.vue')),
+  'ponctuation': defineAsyncComponent(() => import('./PonctuationGame.vue')),
+  'reperage': defineAsyncComponent(() => import('./ReperageGame.vue')),
   // Maths — réutilisées
-  'tri-nombres': TriNombresGame,
-  'ardoise-calcul': ArdoiseCalculGame,
-  'encrier-calcul': EncrierCalculGame,
+  'tri-nombres': defineAsyncComponent(() => import('./TriNombresGame.vue')),
+  'ardoise-calcul': defineAsyncComponent(() => import('./ArdoiseCalculGame.vue')),
+  'encrier-calcul': defineAsyncComponent(() => import('./EncrierCalculGame.vue')),
   // Maths — spécifiques
-  'droite-numerique': DroiteNumeriqueGame,
-  'tour-de-blocs': TourDeBlocsGame,
-  'partage': PartageGame,
-  'horloge': HorlogeGame,
-  'marche': MarcheGame,
+  'droite-numerique': defineAsyncComponent(() => import('./DroiteNumeriqueGame.vue')),
+  'tour-de-blocs': defineAsyncComponent(() => import('./TourDeBlocsGame.vue')),
+  'partage': defineAsyncComponent(() => import('./PartageGame.vue')),
+  'horloge': defineAsyncComponent(() => import('./HorlogeGame.vue')),
+  'marche': defineAsyncComponent(() => import('./MarcheGame.vue')),
 };
 
 // --- State ---
