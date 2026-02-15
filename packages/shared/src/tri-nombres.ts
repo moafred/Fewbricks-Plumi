@@ -26,9 +26,6 @@ function classify(n: number, categories: [string, string]): string {
   if (catA === '< 50' && catB === '≥ 50') {
     return n < 50 ? '< 50' : '≥ 50';
   }
-  if (catA === 'unité < 5' && catB === 'unité ≥ 5') {
-    return (n % 10) < 5 ? 'unité < 5' : 'unité ≥ 5';
-  }
   if (catA === 'multiple de 5' && catB === 'pas multiple de 5') {
     return n % 5 === 0 ? 'multiple de 5' : 'pas multiple de 5';
   }

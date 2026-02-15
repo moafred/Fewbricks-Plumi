@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, watch, onUnmounted } from 'vue';
 import type { AnswerResult } from '@plumi/shared';
+import { getCategoryLabel } from '@plumi/shared';
 import { useTriNombresStore } from '@/stores/tri-nombres';
 import { useKeyboardNavigation, useBackNavigation, useSyncGameProgress } from '@/composables';
 import GameLayout from '@/components/game/GameLayout.vue';
@@ -30,6 +31,33 @@ const game = useTriNombresStore();
 
 const categoryChoices = computed(() => game.currentCategories);
 const isChallenge = computed(() => game.phase === 'challenge');
+
+/** Labels enfants mappés pour chaque catégorie */
+const categoryLabels = computed(() => {
+  return game.currentCategories.map(catId => ({
+    id: catId,
+    ...getCategoryLabel(catId),
+  }));
+});
+
+/** Narrative optionnelle affichée en phase discovery (ex: "Plumi trie les nombres...") */
+const currentNarrative = computed(() => {
+  return categoryLabels.value[0]?.narrative || null;
+});
+
+/** Instruction complète combinant les deux catégories */
+const currentInstruction = computed(() => {
+  const labels = categoryLabels.value;
+  if (labels.length === 2) {
+    return `${labels[0].instruction} Sinon, c'est "${labels[1].label}".`;
+  }
+  return labels[0]?.instruction || 'Dans quelle catégorie ?';
+});
+
+/** Label enfant pour une catégorie technique */
+function getCategoryDisplayLabel(categoryId: string): string {
+  return getCategoryLabel(categoryId).label;
+}
 
 const { focusedIndex, resetFocus } = useKeyboardNavigation(
   categoryChoices,
@@ -136,11 +164,13 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
 
       <!-- Instruction -->
       <p class="text-lg md:text-xl text-stone-600 text-center min-h-7">
-        <template v-if="game.phase === 'discovery'">Un nombre apparaît...</template>
-        <template v-else-if="game.phase === 'challenge'">Dans quelle catégorie ?</template>
+        <template v-if="game.phase === 'discovery'">
+          {{ currentNarrative || 'Un nombre apparaît...' }}
+        </template>
+        <template v-else-if="game.phase === 'challenge'">{{ currentInstruction }}</template>
         <template v-else-if="game.lastResult === 'correct'">Bien joué !</template>
-        <template v-else>
-          C'est <strong class="text-meadow-600">{{ game.lastCorrectCategory }}</strong>
+        <template v-else-if="game.lastCorrectCategory">
+          C'est <strong class="text-meadow-600">{{ getCategoryDisplayLabel(game.lastCorrectCategory) }}</strong>
         </template>
       </p>
 
@@ -160,7 +190,7 @@ useSyncGameProgress(() => game.results, () => game.currentIndex);
             v-for="(category, idx) in categoryChoices"
             :key="category"
             :category-id="category"
-            :label="category"
+            :label="getCategoryDisplayLabel(category)"
             :state="categoryState(category)"
             :color-scheme="idx === 0 ? 'meadow' : 'gold'"
             :focused="focusedIndex === idx && game.phase === 'challenge'"

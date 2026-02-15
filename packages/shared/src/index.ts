@@ -149,6 +149,9 @@ export { generateReperageItems } from './reperage.js';
 export type { MathSortingItem, MathSortingOptions } from './tri-nombres.js';
 export { generateMathSortingItems } from './tri-nombres.js';
 
+export type { CategoryLabelSet } from './math-category-labels.js';
+export { MATH_CATEGORY_LABELS, getCategoryLabel } from './math-category-labels.js';
+
 export type { ArdoiseCalculItem, ArdoiseCalculOptions } from './ardoise-calcul.js';
 export { generateArdoiseCalculItems } from './ardoise-calcul.js';
 
