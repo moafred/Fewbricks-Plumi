@@ -17,6 +17,7 @@ defineEmits<{
   replay: [];
   continue: [];
   'read-lesson': [];
+  'view-album': [];
 }>();
 
 const chapter = computed(() => getChapter(props.chapterId));
@@ -94,7 +95,16 @@ const messages: Record<number, string> = {
       >
         Rejouer
       </ActionButton>
+      <!-- Bouton album si sticker débloqué, sinon bouton continuer -->
       <ActionButton
+        v-if="stars === 3 && hasSticker"
+        variant="primary"
+        @click="$emit('view-album')"
+      >
+        Voir mes stickers
+      </ActionButton>
+      <ActionButton
+        v-else
         variant="primary"
         @click="$emit('continue')"
       >

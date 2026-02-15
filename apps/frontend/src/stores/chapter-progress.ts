@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import type { Subject } from '@plumi/shared';
-import { BOOKS, getBooksForSubject, getChaptersForBook } from '@plumi/shared';
+import { BOOKS, getBooksForSubject, getChaptersForBook, getChapter } from '@plumi/shared';
 import { getItem, setItem, removeItem } from '@/services/storage';
 
 export interface ChapterScore {
@@ -125,6 +125,18 @@ export const useChapterProgressStore = defineStore('chapter-progress', () => {
     // Garder le meilleur score
     if (!existing || stars > existing.stars) {
       completedChapters.value.set(chapterId, { chapterId, score, total, stars });
+
+      // Si on atteint 3 étoiles pour la première fois ET que le chapitre a un sticker
+      if ((!existing || existing.stars < 3) && stars === 3) {
+        const chapter = getChapter(chapterId);
+        if (chapter?.sticker) {
+          // Import dynamique pour éviter les dépendances circulaires
+          import('./stickers').then(({ useStickerStore }) => {
+            const stickerStore = useStickerStore();
+            stickerStore.markStickerUnlocked(chapter.sticker!.id);
+          });
+        }
+      }
     }
     saveProgress();
   }

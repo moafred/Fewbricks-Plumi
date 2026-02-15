@@ -135,6 +135,10 @@ function onContinue() {
   goBackToBook();
 }
 
+function handleViewAlbum() {
+  router.push({ name: 'album' });
+}
+
 // --- Quit confirmation ---
 const showQuitConfirmation = ref(false);
 
@@ -207,6 +211,7 @@ useBackNavigation(handleBack, computed(() => !showQuitConfirmation.value));
         @replay="replay"
         @continue="onContinue"
         @read-lesson="goToLesson"
+        @view-album="handleViewAlbum"
       />
     </div>
 
